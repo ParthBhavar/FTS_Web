@@ -1,0 +1,318 @@
+﻿
+@{
+    ViewBag.Title = "Registration of Establishment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">Registration of Establishment</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Establishment Details</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Establishment LIN:")
+                                    @Html.TextBox("LIN", "", new { @class = "form-control", placeholder = "Establishment LIN" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Establishment Name:")
+                                    @Html.TextBox("Name", "", new { @class = "form-control", placeholder = "Name" })
+                                </div>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Location:")
+                                    @Html.TextBox("Location", "", new { @class = "form-control", placeholder = "Location" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Location Address:")
+                                    @Html.TextArea("Address", "", new { @class = "form-control", rows = "3", placeholder = "Location Address" })
+                                </div>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Number of Employees:","", new { Style = "font-weight: bold" })
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("Directly Engaged Employees:")
+                                    @Html.TextBox("No of Employees", "", new { @class = "form-control" , @type = "number" , placeholder = "0" , @min = "0"})
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Label("Contract Employees:")
+                                    @Html.TextBox("No of Employees", "", new { @class = "form-control", @type = "number", placeholder = "0" , @min = "0" })
+                                </div>
+                                <div class="col-md-4">                                  
+                                    @Html.Label("Inter State Migrant Workers:")
+                                    @Html.TextBox("No of Employees", "", new { @class = "form-control", @type = "number", placeholder = "0" , @min = "0" })                                    
+                                </div>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Sector:")
+                                    @Html.DropDownList("Sector", new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Text = "Secotr 1", Value = "1"},
+                                        new SelectListItem {Text = "Sector 2", Value = "2"},
+                                        new SelectListItem {Text = "Sector 3", Value = "3"}
+                                    }, "Select Sector", new { @class = "form-control" })                                    
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Activity:")
+                                    @Html.DropDownList("Activity", new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Text = "Activity 1", Value = "1"},
+                                        new SelectListItem {Text = "Activity 2", Value = "2"},
+                                        new SelectListItem {Text = "Activity 3", Value = "3"}
+                                    }, "Select Activity", new { @class = "form-control" })
+                                </div>
+                            </div>                                                      
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("NIC Code Details:")
+                            @Html.TextArea("NICCode", "", new { @class = "form-control", rows = "2", placeholder = "NIC Details" })
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.Label("Establishment E-sign:") <br />
+                            @Html.ActionLink("E-signature", "RegistrationDtl", "Registration", new { area = "" }, new { @class = "btn btn-primary mr-2" })
+                        </div>*@
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Factory Details</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.Label("Details of Manufacturing Process:")
+                                    @Html.TextArea("Manufacure", "" , new { @class = "form-control", rows = "3", placeholder = "Manufacturing Details" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Full Address & Plan Approval Details:")
+                                    @Html.TextArea("Plan Approval", "", new { @class = "form-control", rows = "3", placeholder = "Plan Approval Details" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Name & Address of Occupier:")
+                                    @Html.TextArea("Name & Address of Occupier", "", new { @class = "form-control", rows = "3", placeholder = "Name & Address of Occupier" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Maximum Number Of Employed Workers:")
+                                    @Html.TextBox("Maximum no Of Employed Workers", "", new { @class = "form-control", @type = "number", placeholder = "0" , @min = "0" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Employer Details</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("Employer Name:")
+                                    @Html.TextBox("EmpName", "", new { @class = "form-control", placeholder = "Employer Name" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Label("Designation:")
+                                    @Html.TextBox("Designation", "", new { @class = "form-control", placeholder = "Designation" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Label("Employer Address:")
+                                    @Html.TextArea("EmpAddress", "", new { @class = "form-control", rows = "2", placeholder = "Employer Address" })
+                                </div>
+                            </div>                            
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Father's/Husband's Name:")
+                            @Html.TextBox("Name" , "", new { @class = "form-control", placeholder = "Father's/Husband's Name" })
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("Email:")
+                                    @Html.TextBox("Email", "", new { @class = "form-control", placeholder = "Email"})
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Label("Telephone No:")
+                                    @Html.TextBox("Telephone", "" , new { @class = "form-control", @type = "phone", onkeypress = "return isNumber(event)", maxlength = "10" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Label("Mobile No:")
+                                    @Html.TextBox("Mobile", "", new { @class = "form-control", @type = "phone", onkeypress = "return isNumber(event)", maxlength = "10" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Manager Details</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("Manager Name:")
+                                    @Html.TextBox("ManagerName", "", new { @class = "form-control", placeholder = "Manager Name" })
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.Label("Manager Address:")
+                                    @Html.TextArea("ManagerAddress", "", new { @class = "form-control", rows = "2", placeholder = "Manager Address" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("Manager Email:")
+                                    @Html.TextBox("ManagerEmail", "", new { @class = "form-control", placeholder = "Manager Email" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Label("Manager Telephone No:")
+                                    @Html.TextBox("ManagerTelephone", "", new { @class = "form-control", @type = "phone", onkeypress = "return isNumber(event)", maxlength = "10" })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Label("Manager Mobile No:")
+                                    @Html.TextBox("ManagerMobile", "", new { @class = "form-control", @type = "phone", onkeypress = "return isNumber(event)", maxlength = "10" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Contractor Details</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("Contractor Name:")
+                                    @Html.TextBox("ContractorName", "", new { @class = "form-control", placeholder = "Contractor Name" })
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.Label("Contractor Address:")
+                                    @Html.TextArea("ContractorAddress", "", new { @class = "form-control", rows = "2", placeholder = "Contractor Address" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Contractor Email:")
+                                    @Html.TextBox("ContractorEmail", "", new { @class = "form-control", placeholder = "Contractor Email" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Contractor Mobile No:")
+                                    @Html.TextBox("ContractorMobile", "", new { @class = "form-control", @type = "phone", onkeypress = "return isNumber(event)", maxlength = "10" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Name of Work:")
+                            @Html.TextBox("WorkName", "", new { @class = "form-control", placeholder = "Work Name" })
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Maximum No of Labour:")
+                                    @Html.TextBox("LabourNumber", "", new { @class = "form-control", @type = "number", @min = "0" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Date of Commencement:")
+                                    @Html.TextBox("Date", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Other Details</h4>
+
+                        <div class="form-group">
+                            @Html.Label("Other Details:")
+                            @Html.TextArea("OtherDetails", "", new { @class = "form-control", rows = "3", placeholder = "Other Details" })
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Sign Date:")
+                                    @Html.TextBox("SignDate", "", new { @class = "form-control datepicker", @Value = DateTime.Now.ToShortDateString(), placeholder = "dd/mm/yyyy" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Place:")
+                                    @Html.TextBox("Place", "", new { @class = "form-control", placeholder = "Place" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Signature of Employer:") <br />
+                            @Html.ActionLink("Employer Sign", "RegistrationDtl", "Registration", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.ActionLink("Submit", "RegistrationDtl", "Registration", new { area = "" }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Cancel", "RegistrationDtl", "Registration", new { area = "" }, new { @class = "btn btn-primary" })
+            </div>           
+
+        </div>
+    </div>
+}
+<script>
+
+        $(document).ready(function () {
+            $('.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
+        });
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+</script>

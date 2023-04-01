@@ -1,0 +1,73 @@
+﻿@model  IEnumerable<FTS.Model.Entities.EmployeeMasterModel>
+@{
+    ViewBag.Title = "Establishment Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <h5 class="card-header text-center border-1 p-3 mb-2">
+        <b>  User Profile </b>
+
+    </h5>
+
+    <div class="card-body">
+         @foreach (var item in Model)
+           {
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+               
+               @* <div class="form-group">
+                    <span class="font-weight-bolder" for="Text">FirstName :</span>
+                    @Html.DisplayFor(item.FirstName)
+                    @item.FirstName
+                </div>*@
+
+                <div class="form-group">
+                    <span class="font-weight-bolder" for="Text">FirstName :</span>
+                    @*@Html.DisplayFor(item.FirstName)*@
+                    @item.FirstName
+                </div>
+
+                <div class="form-group">
+                    <span class="font-weight-bolder" for="Text">MiddleName :</span>
+                    @*@Html.DisplayFor(item.FirstName)*@
+                    @item.MiddleName
+                </div>
+
+
+                <div class="form-group">
+                    <span class="font-weight-bolder" for="Text">LastName :</span>
+                    @*@Html.DisplayFor(item.FirstName)*@
+                    @item.LastName
+                </div>
+                <div class="form-group">
+                    <span class="font-weight-bolder" for="Text">EmailID :</span>
+                    @*@Html.DisplayFor(item.FirstName)*@
+                    @item.EmailID
+                </div>
+                <div class="form-group">
+                    <span class="font-weight-bolder" for="Text">MobileNo :</span>
+                    @*@Html.DisplayFor(item.FirstName)*@
+                    @item.MobileNo
+                </div>
+
+            </div>
+            <br /><br /><br />
+            @*<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                <div class="form-group">
+                    <span class="font-weight-bolder" for="Text"> Mobile No :</span>
+                    @Html.DisplayFor(model => model.MobileNo)
+                </div>
+            </div>
+            <br /><br /><br />
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                <div class="form-group">
+                    <span class="font-weight-bolder" for="Text"> Email :</span>
+                    @Html.DisplayFor(model => model.EmailId)
+                </div>
+            </div>*@
+
+        </div>
+        }
+    </div>
+</div>

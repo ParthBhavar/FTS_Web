@@ -1,0 +1,135 @@
+﻿@model  IEnumerable<FTS.Model.Entities.PositionMasterModel>
+@{
+     ViewBag.Title = "POSITION LIST";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/PositionMaster/AddPositionMaster/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i>Add New</a>
+                                            </div>
+                                    <table id="PositionList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                
+                                                  <th style="width:20%;" id="roleName">Position Name</th>
+                                                  <th  style="width:2%;" id="Edit">Action</th>
+                                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                <td valign="top" class="text-left">@item.PositionName </td>
+                                                <td>
+                                                     <a id="Edit" href="/PositionMaster/AddPositionMaster/?id=@item.EncryptedId" ><i class="fas fa-pen"></i></a>
+                                                  @*  <a id="Delete" onclick="return DeletePositionRecord(@item.PositionID);"><i class="fas fa-trash-alt"></i></a>
+*@
+                                                     <a id="Delete" onclick="DeleteConformation('DeletePositionRecord('+@item.PositionID+')')"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+      $( document ).ready(function() {
+       // RoleList();
+        //$('#RoleList').DataTable();
+        $('#PositionList').dataTable( {} );
+    });
+
+
+    function DeletePositionRecord(PositionID) {
+        debugger;
+                var myData = {
+                    PositionID: PositionID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/PositionMaster/DeletePositionRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+
+                            if (data.data.ErrorCode == 0) {
+                                swal({
+                                        text: data.data.ErrorMassage ,
+                                        type: "success",
+                                        confirmButtonText: "OK"
+                                 })
+                                 .then((value) => {
+                                        window.location.href = "/PositionMaster/Index";
+                                  });
+                                @*swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/PositionMaster/Index";
+                                });*@
+                             }
+                            else {
+                                swal({
+                                        title: 'Oops...',
+                                        text: data.data.ErrorMassage,
+                                        type: "error",
+                                        confirmButtonText: "OK"
+                                  })
+                               
+                             }
+
+
+                            @*if (data.data.errorCode == 0) {
+                                window.location.href = "/PositionMaster/Index";
+                                alert(data.data.errorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }*@
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+
+                       @* error: function() {
+                            alert('Something went wrong!');
+                        }*@
+                    })
+           
+    }
+
+        </script>
+
+}

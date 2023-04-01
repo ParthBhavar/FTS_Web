@@ -1,0 +1,377 @@
+﻿@model FTS.Model.Entities.CessProjectDetailsModel
+@{
+	ViewBag.Title = "Cess Collection Details";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken();
+	
+	<div class="content-wrapper">
+
+		<div class="row">
+			<div class="col-12 grid-margin stretch-card">
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">Cess Collection Details</h4>
+						 <div class="form-group-required">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+                         </div>
+						@Html.HiddenFor(e => e.EstablishmentID , new { @ID="EstablishmentID"})
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-12">
+									@Html.Label("Project: / પ્રોજેક્ટ:") <span class="text-danger"> *</span>
+									@Html.DropDownListFor(e => e.ProjectID, new SelectList(Model.Projectlist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="ProjectID", })
+									<span class="text-danger ValidationSpan" id="SpanProjectID" style="display:none;">Please Select Project Name</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-6">
+									@Html.Label("Establishment Name: / સ્થાપના નામ:")<span class="text-danger"> *</span>
+									@Html.HiddenFor(e => e.EstablishmentIDEdit, new { @ID="EstablishmentID"})
+									@Html.TextBoxFor(e => e.EstablishmentName, new { @class = "form-control", @ID="EstablishmentName", required = "required" })
+									<span class="text-danger ValidationSpan" id="SpanEstablishmentName" style="display:none;">Please Insert Establishment Name</span>
+								</div>
+
+								<div class="col-md-6">
+									@Html.Label("Government/Local Urban Body: / સરકાર/સ્થાનિક શહેરી સંસ્થા:") <span class="text-danger"> *</span>
+									@Html.DropDownListFor(e => e.TypeOfBodyID, new SelectList(Model.TypeOfBodylist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TypeOfBodyID", })
+									<span class="text-danger ValidationSpan" id="SpanTypeOfBodyID" style="display:none;">Please Select Type of Authority </span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+
+								<div class="col-md-6">
+									@Html.Label("Cess Payment: / સેસ ચુકવણી:") <span class="text-danger"> *</span>
+									@Html.DropDownListFor(e => e.CessPaymentID, new SelectList(Model.CessPaymentTypelist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="CessPaymentID", })
+									<span class="text-danger ValidationSpan" id="SpanCessPaymentID" style="display:none;">Please Select Cess Payment Type</span>
+								</div>
+
+								<div class="col-md-6">
+									@Html.Label("Amount: / રકમ:") <span class="text-danger"> *</span>
+									@Html.TextBoxFor(e => e.Amount, new { @class = "form-control", @ID="Amount", required = "required", @type="number", @step= "any" })
+									<span class="text-danger ValidationSpan" id="SpanAmount" style="display:none;">Please Insert Amount</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+
+								<div class="col-md-6">
+									@Html.Label("Challan Number: / ચલણ નંબર:") <span class="text-danger"> *</span>
+									@Html.TextBoxFor(e => e.ChallanNumber, new { @class = "form-control", @ID="ChallanNumber", required = "required" })
+									<span class="text-danger ValidationSpan" id="SpanChallanNumber" style="display:none;">Please Insert Challan Number</span>
+								</div>
+
+								<div class="col-md-6">
+									@Html.Label("Date: / તારીખ:") <span class="text-danger"> *</span>
+									<br>
+									@Html.TextBoxFor(e => e.Date, "{0:dd-MM-yyyy}", new { @class = "form-control", @ID="Date", required = "required" })
+									
+									<span class="text-danger ValidationSpan" id="SpanDate" style="display:none;">Please Insert Date</span>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-4">
+									@Html.Label("Challan Document: / ચલણ દસ્તાવેજ:") <span class="text-danger"> *</span>
+									<br>
+									<input type="file" id="Doc1" class="Doc1" onchange="return fileValidation()">
+									<span class="text-danger ValidationSpan" id="SpanDoc1" style="display:none;">Please Select file </span>
+								</div>
+
+								<div class="col-md-2">
+									<span>
+										@if (@Model.Doc1 != "")
+										{
+											<a href="/CessProjectDetails/DownloadFile/?FileName=@Model.Doc1"><i class="fas fa-download"></i></a>
+										}
+									</span>
+								</div>
+
+							@*	<div class="col-md-4">
+									@Html.Label("Document 2") <span class="text-danger"> *</span>
+									<br>
+									<input type="file" id="Doc2" class="Doc2" onchange="return fileValidation1()">
+									<span class="text-danger ValidationSpan" id="SpanDoc2" style="display:none;">Please Select file </span>
+								</div>*@
+
+								@*<div class="col-md-2">
+									<span>
+										@if (@Model.Doc1 != "")
+										{
+											<a href="/CessProjectDetails/DownloadFile/?FileName=@Model.Doc2"><i class="fas fa-download"></i></a>
+										}
+									</span>
+								</div>*@
+							</div>
+						</div>
+						@*<div class="form-group">
+							<div class="row">
+								<div class="col-md-4">
+									@Html.Label("Document 3") <span class="text-danger"> *</span>
+									<br>
+									<input type="file" id="Doc3" class="Doc3" onchange="return fileValidation2()">
+									<span class="text-danger ValidationSpan" id="SpanDoc3" style="display:none;">Please Select file </span>
+								</div>
+								<div class="col-md-2">
+									<span>
+										@if (@Model.Doc1 != "")
+										{
+											<a href="/CessProjectDetails/DownloadFile/?FileName=@Model.Doc3"><i class="fas fa-download"></i></a>
+										}
+									</span>
+								</div>
+
+								<div class="col-md-4">
+									@Html.Label("Document 4") <span class="text-danger"> *</span>
+									<br>
+									<input type="file" id="Doc4" class="Doc4" onchange="return fileValidation3()">
+									<span class="text-danger ValidationSpan" id="SpanDoc4" style="display:none;">Please Select file </span>
+								</div>
+
+								<div class="col-md-2">
+									<span>
+										@if (@Model.Doc1 != "")
+										{
+											<a href="/CessProjectDetails/DownloadFile/?FileName=@Model.Doc4"><i class="fas fa-download"></i></a>
+										}
+									</span>
+								</div>
+
+
+							</div>
+						</div>*@
+
+						<div class="form-group">
+                            <div class="row" style="display:none;">
+                                   <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+									</div>
+                                </div>
+                        </div>
+
+						<div class="form-group">
+							<input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitCessCollectionDetails()" />
+							@Html.ActionLink("Cancel", "index1", "CessProjectDetails", new { area = "" }, new { @class = "btn btn-primary" })
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<script>
+      $("#Date").kendoDatePicker(@*{
+       format :"dd-MM-yyyy"
+    }*@); 
+</script>
+
+
+	<script>
+
+		
+
+		function SubmitCessCollectionDetails() {
+
+			debugger;
+			var ErrorCnt = 0;
+			$('.ValidationSpan').hide();
+			if ($("#EstablishmentName").val() == "0" || $("#EstablishmentName").val() == "") {
+				ErrorCnt++;
+				$('#SpanEstablishmentName').show();
+			}
+			if ($("#ProjectID").val() == "0" || $("#ProjectID").val() == "") {
+				ErrorCnt++;
+				$('#SpanProjectID').show();
+			}
+			if ($("#TypeOfBodyID").val() == "0" || $("#TypeOfBodyID").val() == "") {
+				ErrorCnt++;
+				$('#SpanTypeOfBodyID').show();
+			}
+			if ($("#CessPaymentID").val() == "0" || $("#CessPaymentID").val() == "") {
+				ErrorCnt++;
+				$('#SpanCessPaymentID').show();
+			}
+			if ($("#Amount").val() == "0" || $("#Amount").val() == "") {
+				ErrorCnt++;
+				$('#SpanAmount').show();
+			}
+			if ($("#ChallanNumber").val() == "0" || $("#ChallanNumber").val() == "") {
+				ErrorCnt++;
+				$('#SpanChallanNumber').show();
+			}
+			if ($("#Date").val() == "0" || $("#Date").val() == "") {
+				ErrorCnt++;
+				$('#SpanDate').show();
+			}
+			if ($("#Doc1").val() == "0" || $("#Doc1").val() == "") {
+				ErrorCnt++;
+				$('#SpanDoc1').show();
+			}
+			@*if ($("#Doc2").val() == "0" || $("#Doc2").val() == "") {
+				ErrorCnt++;
+				$('#SpanDoc2').show();
+			}
+			if ($("#Doc3").val() == "0" || $("#Doc3").val() == "") {
+				ErrorCnt++;
+				$('#SpanDoc3').show();
+			}
+			if ($("#Doc4").val() == "0" || $("#Doc4").val() == "") {
+				ErrorCnt++;
+				$('#SpanDoc4').show();
+			}*@
+			if (ErrorCnt > 0) {
+				return false;
+			}
+			debugger;
+			if (ErrorCnt == 0) {
+				//var myData = {
+
+				var EstablishmentID = $('#EstablishmentID').val();
+				var EstablishmentName = $('#EstablishmentName').val();
+				var ProjectID = $('#ProjectID').val();
+				var TypeOfBodyID = $('#TypeOfBodyID').val();
+				var CessPaymentID = $('#CessPaymentID').val();
+				var Amount = $('#Amount').val();
+				var ChallanNumber = $('#ChallanNumber').val();
+				var Date = $('#Date').val();
+                var IsActive = $('#IsActive').val();
+				
+
+				var files = $('#Doc1').prop("files");
+				//var files1 = $('#Doc2').prop("files");
+				//var files2 = $('#Doc3').prop("files");
+				//var files3 = $('#Doc4').prop("files");
+
+
+				//IsDeleted: 0
+				var url = "/CessProjectDetails/SaveCessCollectionDetails?handler=MyUploader" + "&EstablishmentID=" + EstablishmentID + "&EstablishmentName=" + EstablishmentName + "&ProjectID=" + ProjectID + "&TypeOfBodyID=" + TypeOfBodyID + "&CessPaymentID=" + CessPaymentID + "&Amount=" + Amount + "&ChallanNumber=" + ChallanNumber + "&Date=" + Date  + "&IsActive=" + IsActive  ;
+				formData = new FormData();
+				formData.append("MyUploader", files[0]);
+				//formData.append("MyUploader", files1[0]);
+				//formData.append("MyUploader", files2[0]);
+				//formData.append("MyUploader", files3[0]);
+				//};
+				jQuery.ajax({
+					type: 'POST',
+					url: url,
+					headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+		         @* dataType: "json",*@
+					//data: myData,
+					data: formData,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function(repo) {
+						debugger;
+						if (repo.status.ErrorCode == 0) {
+							window.location.href = "/CessProjectDetails/Index1";
+							alert(repo.status.ErrorMassage);
+						
+
+						}
+						else {
+							alert('repo.status.ErrorMassage');
+						}
+
+					},
+
+					error: function(request, message, error) {
+						debugger;
+						alert(request.responseJSON);
+					}
+									});
+		}
+					}
+
+
+		function fileValidation() {
+			debugger;
+			var fileInput = document.getElementById('Doc1');
+
+			var filePath = fileInput.value;
+
+			// Allowing file type
+			var allowedExtensions =
+				/(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+
+			if (!allowedExtensions.exec(filePath)) {
+				alert('Invalid file type');
+				fileInput.value = '';
+				return false;
+			}
+
+		}
+
+
+		@*function fileValidation1() {
+			debugger;
+			var fileInput = document.getElementById('Doc2');
+
+			var filePath = fileInput.value;
+
+			// Allowing file type
+			var allowedExtensions =
+				/(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+
+			if (!allowedExtensions.exec(filePath)) {
+				alert('Invalid file type');
+				fileInput.value = '';
+				return false;
+			}
+
+		}*@
+
+		@*function fileValidation2() {
+			debugger;
+			var fileInput = document.getElementById('Doc3');
+
+			var filePath = fileInput.value;
+
+			// Allowing file type
+			var allowedExtensions =
+				/(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+
+			if (!allowedExtensions.exec(filePath)) {
+				alert('Invalid file type');
+				fileInput.value = '';
+				return false;
+			}
+
+		}*@
+
+		@*function fileValidation3() {
+			debugger;
+			var fileInput = document.getElementById('Doc4');
+
+			var filePath = fileInput.value;
+
+			// Allowing file type
+			var allowedExtensions =
+				/(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+
+			if (!allowedExtensions.exec(filePath)) {
+				alert('Invalid file type');
+				fileInput.value = '';
+				return false;
+			}
+
+		}*@
+	</script>
+}

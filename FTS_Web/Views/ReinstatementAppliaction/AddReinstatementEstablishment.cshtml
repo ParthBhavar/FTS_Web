@@ -1,0 +1,779 @@
+﻿@model FTS.Model.Entities.ReinstatementAppliactionModel
+@{
+    ViewBag.Title = "Reinstatement Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+         @Html.AntiForgeryToken();
+        <br />
+    <section>
+        <h3 style="font-weight:bold;">@ViewBag.Title</h3>
+    </section>   
+
+      @Html.HiddenFor(e => e.ApplicationID , new { @ID="getApplicationID"})
+       @Html.HiddenFor(e => e.ISNew , new { @ID="getISNew"})
+       @Html.HiddenFor(e => e.IP_Address , new { @ID="IP_Address"})
+ <div class="content-wrapper">
+       
+        <div class="row" id="Establis">
+               
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        
+                       <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab"  style="padding-bottom: 0rem;">
+              <a class="nav-link" id="step1-tab" data-bs-toggle="tab">Step 1</a>
+              <a class="nav-link active" id="step2-tab" data-bs-toggle="tab">Step 2</a>
+              <a class="nav-link" id="step3-tab" data-bs-toggle="tab">Step 3</a>
+              <a class="nav-link" id="step3-tab" data-bs-toggle="tab">Step 4</a>
+            </div>
+          </nav>
+           <br>
+           <div class="form-group-required">
+                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+           </div>
+           
+          <div>
+              <a id="Edit" class="btn btn-info"  onclick="Fn_AddNewEstablishdetails()" ><i class="fas fa-folder-plus"></i> More Eshtablisment</a>
+           </div>
+           <br>
+                         <div id="TextBoxContainer">
+
+                </div>
+                      <div class="form-group">
+                               <div class="row">
+                         <div class="col-md-5" style="margin-top: auto;">
+                              @Html.CheckBoxFor(e => e.isReqiredTradDetail, new { @ID="isReqiredTradDetail"})
+                               @Html.Label("If you Have Trade Union Detail than please select and press submit button")
+                                   
+                         </div>
+                        </div>   
+                        </div> 
+
+                          <div class="form-group"> 
+                               <div class="row">
+                               <div class="col-md-3" style="margin-top: auto;">
+                            @if(@Model.IsSubmit == true  && @Model.isReqiredTradDetail == true)
+                            {
+                               <a id="Edit" class="btn btn-info"  href="/ReinstatementAppliaction/AddReinstatementAppliaction?id=@Model.EncryptedId" > Previous</a>
+                               <a id="Edit" class="btn btn-info"  href="/ReinstatementAppliaction/AddReinstatementTradunion?ApplicationID=@Model.ApplicationID&ISNew=1" > Next</a>
+                            }
+                            else if (@Model.IsSubmit == true  && @Model.isReqiredTradDetail == false)
+                           {
+                              <a id="Edit" class="btn btn-info"  href="/ReinstatementAppliaction/AddReinstatementAppliaction?id=@Model.EncryptedId" > Previous</a>
+                              <a id="Edit" class="btn btn-info"  href="/ReinstatementAppliaction/AddUploadDocment?ApplicationID=@Model.ApplicationID" > Next</a>
+                            }
+                           else
+                            {
+                              <a id="Edit" class="btn btn-info"  href="/ReinstatementAppliaction/AddReinstatementAppliaction?id=@Model.EncryptedId" > Previous</a>
+                              <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitAppliaction();" />
+                            }
+                            @Html.ActionLink("Cancel", "index", "ReinstatementAppliaction", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>  
+                     
+                        </div>   
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+
+     </div>
+
+
+   <script>
+  //Global Varible Declare
+      var Districtlist;
+       var E = 0;
+     
+           $(document).ready(function () {
+            debugger;
+            if ($("#Pincode").val() == "0") {
+                 $("#Pincode").val(""); 
+              }
+               Districtlist = @Html.Raw(Json.Serialize(Model.Districtlist))
+                   @*  bindAreaDropdown(0,@Html.Raw(Json.Serialize(Model.AreaList)));
+                   bindEstablishDropdown(0);*@
+                     $('#isReqiredTradDetail').val(this.checked ? "true" : "false");
+                     
+                   GetEstablishmentRecord();
+                   
+               if ('@Model.isReqiredTradDetail' == "True") {
+                     $('#isReqiredTradDetail').val("true")
+               }
+
+            });
+
+
+     function bindEstablishDropdown(id) {
+             
+        $("#ddlEstablishmentCode_"+id).kendoMultiColumnComboBox({
+            dataTextField: "EstablishmentCode",
+            dataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "EstablishmentCode", title: "Regis. No", width: 100 },
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue","EstablishmentCode"],
+            dataSource: {
+                data: @Html.Raw(Json.Serialize(Model.EstablishmentList)),
+            },
+             change: function (e) {
+                
+                if (this.dataSource.data().length > 0) {
+            @*     a.TradunionID as DataValue
+        ,a.RegistrationName as DisplayValue
+        ,a.RegistrationNo as RegistrationNo
+        ,a.PAddress as PAddress
+        ,a.SAddress as SAddress
+        ,a.TalukaID as TalukaID
+        ,a.DistrictID as DistrictID
+        ,a.Pincode as Pincode*@
+        if (this.dataSource.data()[this.selectedIndex] != undefined) {
+                    $('#EstablishmentName_'+ id).val(this.dataSource.data()[this.selectedIndex].DisplayValue);
+                    $('#EstablishmentCode_'+ id).val(this.dataSource.data()[this.selectedIndex].EstablishmentCode);
+                     $('#ddlEstablishmentCode_'+id).val(this.dataSource.data()[this.selectedIndex].EstablishmentCode);
+        }
+                }
+            }
+
+        });
+    }
+
+     function bindAreaDropdown(id,list) {
+         
+        $("#ddlArea_"+id).kendoMultiColumnComboBox({
+            dataTextField: "DisplayValue",
+            dataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "DisplayValue", title: "Area Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue"],
+            dataSource: {
+                data: list
+            },
+            autoClose: false,
+            close: function (e) {
+                
+                if (this.dataSource.data().length > 0) {
+               if (this.dataSource.data()[this.selectedIndex] != undefined) {
+
+	            	var data = this.dataSource._pristineData.find(x => x.DataValue == this.value());
+
+                     if(data != undefined)
+                     {
+                     $('#ZoneID_'+id).val(data.ZoneID);
+                    $('#AreaID_'+id).val(data.DataValue);
+
+                  @* $('#ZoneID_'+id).val(this.dataSource.data()[this.selectedIndex].ZoneID);
+                    $('#AreaID_'+id).val(this.dataSource.data()[this.selectedIndex].DataValue);*@
+                     }
+                      else
+                          {
+                              $('#ddlArea').data("kendoMultiColumnComboBox").value('');
+                                 swal("Please Select Valid Area");
+                                   $('#ZoneID_'+id).val(0);
+                                   $('#AreaID_'+id).val(0);
+                          }
+                   
+                 }
+                else
+                {
+                        $("#ddlArea_"+id).data("kendoMultiColumnComboBox").value('');
+                            swal("Please Select Valid Area");
+                            $('#ZoneID_'+id).val(0);
+                            $('#AreaID_'+id).val(0);
+                  }
+                }
+            }
+
+        });
+    }
+
+ @*       //Distric Change Method
+      $(function () {
+        $("#DistrictID").change(function () {
+                
+                $.ajax({
+                    type: "GET",
+                    url: "/ReinstatementAppliaction/AllList",
+                    data: { mode: $("#EstablisDetailID").val(), DistrictID: $("#DistrictID").val() },
+                    success: function (response) {
+                        
+                        $("#ddlArea").kendoMultiColumnComboBox().empty();
+                        $("#TalukaID").empty();
+                        var row = "";
+                         for (var i = 0; i < response.data.talukalist.length; i++) {
+                            row += "<option value=" + response.data.talukalist[i].dataValue + ">" + response.data.talukalist[i].displayValue + "</option>";
+                        }
+                          $("#TalukaID").html(row).trigger('chosen:updated');
+
+                        if (response.data.areaList != "")
+                        {
+                      bindAreaDropdown(response.data.areaList);
+                     
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        //respone will be returned here
+                        $("#error").val(response.responseText);
+                    }
+                });
+            });
+        });*@
+
+
+        function callChangefunc(id){
+          $.ajax({
+                    type: "GET",
+                    url: "/ReinstatementAppliaction/AllList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#EstablisDetailID_"+id).val(), DistrictID: $("#DistrictID_"+id).val() },
+                    success: function (response) {
+                        debugger;
+                        $("#ddlArea_"+id).kendoMultiColumnComboBox().empty();
+                        $("#TalukaID_"+id).empty();
+                        var row = "";
+                         row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                          $("#TalukaID_"+id).html(row).trigger('chosen:updated');
+                          
+                        if (response.data.AreaList != "")
+                        {
+                             $("#DivArea_" + id).show();
+                      bindAreaDropdown(id,response.data.AreaList);
+                    
+                        }
+                        else {
+                    $("#DivArea_" + id).hide();
+                    $("#ZoneID_" + id).val(0);
+                    $("#AreaID_" + id).val(0);
+                }
+                    },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                    @*error: function (response) {
+                       respone will be returned here
+                        $("#error").val(response.responseText);
+                    }*@
+                     error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                });
+         }
+
+
+
+     function SubmitAppliaction() {
+            
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            
+               var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+
+        var i = E;
+          var v;
+          for (v = 0; v < i; ++v) {
+
+              var email = $("#Email_" + v + "").val();   
+
+               if ($("#DivEstablis_" + v + "").is(":visible")) {
+             if ($("#ddlEstablishmentCode_" + v + "").val() == "0" || $("#ddlEstablishmentCode_" + v + "").val() == "") 
+             {
+                ErrorCnt++;
+                $("#SpanddlEstablishmentCode_" + v + "").show();
+              }
+
+               if ($("#EstablishmentName_" + v + "").val() == "0" || $("#EstablishmentName_" + v + "").val() == "") 
+             {
+                ErrorCnt++;
+                $("#SpanEstablishmentName_" + v + "").show();
+              }
+
+             if ($("#PAddress_" + v + "").val() == "0" || $("#PAddress_" + v + "").val() == "") 
+             {
+                ErrorCnt++;
+                $("#SpanPAddress_" + v + "").show();
+              }
+
+               if ($("#Email_" + v + "").val() == "0" || $("#Email_" + v + "").val() == "") 
+             {
+                ErrorCnt++;
+                $("#SpanEmail_" + v + "").show();
+              }
+
+              if ($("#mobile_" + v + "").val() == "0" || $("#mobile_" + v + "").val() == "") 
+             {
+                ErrorCnt++;
+                $("#Spanmobile_" + v + "").show();
+             }
+
+                 if ($("#Email_" + v + "").val().length > 1 ) {
+                        if (!email.match(mailregEx)) {
+                         ErrorCnt++;
+                         $("#SpanEmail_" + v + "").show();
+                        }
+                        }
+
+              }
+          }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    XMLString: GetXMLString(),
+                    isReqiredTradDetail: $('#isReqiredTradDetail').val()
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ReinstatementAppliaction/SaveReiniEstablishmentRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                var ApplicationID = data.data.ApplicationID;
+                                var ISNew = data.data.ISNew;
+                                var isReqiredTradDetail = data.data.isReqiredTradDetail;
+                                if (isReqiredTradDetail == true) { 
+                                var Querystring = "ApplicationID=" + ApplicationID + "&ISNew=" + ISNew;
+                                window.location.href = "/ReinstatementAppliaction/AddReinstatementTradunion?" + Querystring;
+                           
+                                }
+                            else
+                            {
+                                    var Querystring = "ApplicationID=" + ApplicationID;
+                                    window.location.href = "/ReinstatementAppliaction/AddUploadDocment?" + Querystring;
+                            }
+                                
+                              }  
+                                // alert(data.data.errorMassage);
+                            
+                            else {
+                                swal(data.data.errorMassage);
+                            }
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+
+  function GetXMLString() {
+          debugger;
+            var xml = '';
+            xml += '<DataTable>';
+          var i = E;
+          var v;
+          for (v = 0; v < i; ++v) 
+          {
+               xml += '<DataRow>';
+              xml += "<" + "ApplicationID" + ">" + $("#ApplicationID_" + v + "").val() + "</" + "ApplicationID" + ">";
+              xml += "<" + "EstablisDetailID" + ">" + $("#EstablisDetailID_" + v + "").val() + "</" + "EstablisDetailID" + ">";
+              xml += "<" + "EstablishmentCode" + ">" + $("#ddlEstablishmentCode_" + v + "").val() + "</" + "EstablishmentCode" + ">";
+              xml += "<" + "EstablishmentName" + ">" + $("#EstablishmentName_" + v + "").val() + "</" + "EstablishmentName" + ">";
+              xml += "<" + "PAddress" + ">" + $("#PAddress_" + v + "").val() + "</" + "PAddress" + ">";
+              xml += "<" + "SAddress" + ">" + $("#SAddress_" + v + "").val() + "</" + "SAddress" + ">";
+              xml += "<" + "Pincode" + ">" + $("#Pincode_" + v + "").val() + "</" + "Pincode" + ">";
+              xml += "<" + "DistrictID" + ">" + $("#DistrictID_" + v + "").val() + "</" + "DistrictID" + ">";
+              xml += "<" + "TalukaID" + ">" + $("#TalukaID_" + v + "").val() + "</" + "TalukaID" + ">";
+              xml += "<" + "ZoneID" + ">" + $("#ZoneID_" + v + "").val() + "</" + "ZoneID" + ">";
+              xml += "<" + "AreaID" + ">" + $("#AreaID_" + v + "").val() + "</" + "AreaID" + ">";
+              xml += "<" + "Email" + ">" + $("#Email_" + v + "").val() + "</" + "Email" + ">";
+              xml += "<" + "mobile" + ">" + $("#mobile_" + v + "").val() + "</" + "mobile" + ">";
+   @*           xml += "<" + "IsActive" + ">" + $("#IsActive_" + v + "").val() + "</" + "IsActive" + ">";*@
+
+              if ($("#IsActive_" + v + "").val() == "true") {
+                  xml += "<" + "IsActive" + ">" + 1 + "</" + "IsActive" + ">";
+              }
+              else {
+                  xml += "<" + "IsActive" + ">" + 0 + "</" + "IsActive" + ">";
+              }
+
+              debugger;
+              if ($("#isReqiredTradDetail").val() == "true") {
+                  xml += "<" + "isReqiredTradDetail" + ">" + 1 + "</" + "isReqiredTradDetail" + ">";
+              }
+              else {
+                  xml += "<" + "isReqiredTradDetail" + ">" + 0 + "</" + "isReqiredTradDetail" + ">";
+              }
+              xml += "<" + "URL" + ">" + document.URL + "</" + "URL" + ">";
+              xml += "<" + "IP_Address" + ">" + $("#IP_Address").val() + "</" + "IP_Address" + ">";
+             
+              xml += '</DataRow>';
+          }
+            xml += '</DataTable>'
+            return xml;
+        }
+
+
+    function numberOnly(id) {
+    var element = document.getElementById(id);
+    element.value = element.value.replace(/[^0-9]/gi, "");
+}
+
+  function Removeestblish(id) {
+              debugger;
+
+        var i = E;
+        var G = 0;
+
+         for (v = 0; v < i; ++v) 
+         {
+             if ($("#DivEstablis_" + v + "").is(":visible")) {
+                 G++;
+             }
+         }
+
+             if (G > 1) {
+                 $("#DivEstablis_" + id).hide();
+                 $("#IsActive_" + id).val("false");
+             }
+             else {
+                  swal("At least 1 Establishment required")
+            return false;
+             }
+              } 
+
+ function CopyAddress(id) {
+              debugger;
+          @*var val = $('#PAddress_'+id).val();
+           $('#SAddress_'+id).val(val);*@
+
+            if ($("#SameasPaddress_"+id).is(':checked')) {
+
+          var val = $("#PAddress_"+id).val();
+          $("#SAddress_"+id).val(val);
+           $("#SAddress_"+id).attr("disabled", "disabled");
+        } 
+        else
+        {
+           // $("#SAddress_"+id).val("");
+            $("#SAddress_"+id).prop("disabled", false); // 
+        }
+
+        } 
+
+     </Script>
+
+     <script>
+          function Fn_AddNewEstablishdetails() {
+  
+                    debugger
+                    var i;
+                    var ApplicationID = $('#getApplicationID').val();
+                    var EstablisDetailID = 0;
+
+                 
+                  @*  var AddEducationdetails = "<div class='row'>";*@
+                    var AddEducationdetails = "";
+                      AddEducationdetails += "<div id='DivEstablis_" + E + "'><a class='ml-3' id='Delete' style='float: right;' onclick='Removeestblish("+E+")'><i class='fas fa-trash-alt'></i></a>";
+                   AddEducationdetails += "<fieldset class='border p-2'>";
+                 @*  AddEducationdetails += "<legend  class='w-auto'>Establis Detail:"+E+" </legend>";*@
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Establishment Number<span class='text-danger'>*</span></label>"
+                     AddEducationdetails += "<input type='hidden' name='ApplicationID_" + E + "' value='"+ApplicationID+"' id='ApplicationID_" + E + "' />";
+                    AddEducationdetails += "<input type='hidden' name='EstablisDetailID_" + E + "' value='"+EstablisDetailID+"' id='EstablisDetailID_" + E + "' />";
+                    AddEducationdetails += "<input type='hidden' name='EstablishmentCode_" + E + "'  id='EstablishmentCode_" + E + "' />";
+                    AddEducationdetails +=   "<input class='form-control'' style='width: 100%;' id='ddlEstablishmentCode_"+E+"' name='ddlEstablishmentCode_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanddlEstablishmentCode_" + E + "' style='display:none;'>Please Enter Establishment Code</span>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Establishment Name<span class='text-danger'>*</span></label>"
+                    AddEducationdetails +=   "<input class='form-control'' id='EstablishmentName_"+E+"' name='EstablishmentName_"+E+"'  type='text' value=''>";
+                   AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEstablishmentName_" + E + "' style='display:none;'>Please Enter Establishment Name </span>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+                 @*   AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";*@
+                        
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+                    AddEducationdetails += "<div class='col-md-5'>";
+                    AddEducationdetails += "<label for='P_Address'>Permanent Address <span class='text-danger'> *</span></label>"
+                    AddEducationdetails +=   "<textarea  class='form-control'' id='PAddress_"+E+"' name='PAddress_"+E+"'  type='text' value=''></textarea>";
+                     AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanPAddress_" + E + "' style='display:none;'>Please Enter Address</span>";
+                    AddEducationdetails += "</div>";
+                     AddEducationdetails += "<div class='col-md-2' style='margin-top: auto;'>";
+                         AddEducationdetails += "<label for='Pin_code'>Copy Permanent Address <span class='text-danger'> &nbsp </span></label></label>";
+                         AddEducationdetails +=   "<input  id='SameasPaddress_"+E+"' name='SameasPaddress_"+E+"'  type='checkbox' onclick='CopyAddress("+E+")'>";
+                        AddEducationdetails += "</div>";
+                    AddEducationdetails += "<div class='col-md-5'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Secondary Address</label>";
+                    AddEducationdetails +=   "<textarea class='form-control'' id='SAddress_"+E+"' name='SAddress"+E+"'  type='text' value=''></textarea>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+
+                     AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+
+                            AddEducationdetails += "<div class='col-md-2'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Email <span class='text-danger'> *</span></label>"
+                    AddEducationdetails +=   "<input class='form-control'' id='Email_"+E+"' name='Email_"+E+"'  type='text' value=''>";
+                       AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmail_" + E + "' style='display:none;'>Please Enter Valid Email </span>";
+                    AddEducationdetails += "</div>";
+
+                                AddEducationdetails += "<div class='col-md-2'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Mobile: / મોબાઈલ: <span class='text-danger'> *</span></label>"
+                        AddEducationdetails += "<input class='form-control' maxlength='10' oninput='numberOnly(this.id);' id='mobile_" + E + "' name='mobile_" + E + "'  type='text' value=''>";
+                                             AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spanmobile_" + E + "' style='display:none;'>Please Enter mobile number </span>";
+                        AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-2'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>District</label>";
+                    AddEducationdetails += "<select class='chosen-select form-control' name='DistrictID_" + E + "' id='DistrictID_" + E + "' onchange='callChangefunc("+E+")'>";
+                    AddEducationdetails += "<option value='0'>Select</option>";
+                   
+                    for (i = 0; i < Districtlist.length; ++i) {
+                        AddEducationdetails += "<option value=" + Districtlist[i].DataValue + ">" + Districtlist[i].DisplayValue +"</option>";
+                    }
+                    AddEducationdetails += "</select>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-2'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Taluka</label>";
+                    AddEducationdetails += "<select class='chosen-select form-control' name='TalukaID_" + E + "' id='TalukaID_" + E + "'>";
+                    AddEducationdetails += "<option value='0'>Select</option>";
+                    AddEducationdetails += "</select>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-2' id='DivArea_" + E + "' style='display:none;'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Area</label>";
+                    AddEducationdetails += "<input type='hidden' name='ZoneID_" + E + "' id='ZoneID_" + E + "' value='0'/>";
+                    AddEducationdetails += "<input type='hidden' name='AreaID_" + E + "' id='AreaID_" + E + "' value='0'/>";
+                    AddEducationdetails += "<input type='hidden' name='IsActive_" + E + "' id='IsActive_" + E + "' value='true'/>";
+                    AddEducationdetails +=   "<input style='width: 100%;' class='form-control'' id='ddlArea_"+E+"' name='ddlArea_"+E+"'  type='text' value='0'>";
+                    AddEducationdetails += "</div>";
+
+                     AddEducationdetails += "<div class='col-md-2'>";
+                    AddEducationdetails += "<label for='Pin_code'>Pin code</label>";
+                    AddEducationdetails +=   "<input class='form-control'' id='Pincode_"+E+"' name='Pincode_"+E+"' maxlength='6' type='text' oninput='numberOnly(this.id);'>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "</fieldset>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+                     AddEducationdetails += "</Br>"
+               
+
+                    $("#TextBoxContainer").append(AddEducationdetails);
+                     bindEstablishDropdown(E);
+                     bindAreaDropdown(E,"");
+                     $(".chosen-select").chosen();
+                    E++;
+
+    }
+         </script>
+ 
+     <script>
+        
+         function GetEstablishmentRecord() {
+       
+            $.ajax({
+                type: 'POST',
+                url: "/ReinstatementAppliaction/ReinstatementEstablishment",
+                headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                data: { ApplicationID: $('#getApplicationID').val(), ISNew: $('#getISNew').val() },
+                dataType: 'json',
+                success: function (data) {
+                    debugger;
+                    var i; 
+                    for (E = 0; E < data.data.length; E++) {
+                        
+
+                        @*  var AddEducationdetails = "<div class='row'>";*@
+                    var AddEducationdetails = "";
+                     AddEducationdetails += "<div id='DivEstablis_" + E + "'><a class='ml-3' id='Delete' style='float: right;' onclick='Removeestblish("+E+")'><i class='fas fa-trash-alt'></i></a>";
+                        AddEducationdetails += "<fieldset class='border p-2'>";
+                      @*  AddEducationdetails += "<legend  class='w-auto'>Establish Detail:" + E + " </legend>";*@
+                        AddEducationdetails += "<div class='form-group'>";
+                        AddEducationdetails += "<div class='row'>";
+                        AddEducationdetails += "<div class='col-md-6'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Establishment Number: / સ્થાપના નંબર:<span class='text-danger'>*</span></label>"
+                         AddEducationdetails += "<input type='hidden' name='ApplicationID_" + E + "' value='"+data.data[E].ApplicationID+"' id='ApplicationID_" + E + "' />";
+                         AddEducationdetails += "<input type='hidden' name='EstablisDetailID_" + E + "' value='"+data.data[E].EstablisDetailID+"' id='EstablisDetailID_" + E + "' />";
+                         AddEducationdetails += "<input type='hidden' name='EstablishmentCode_" + E + "' value='"+data.data[E].EstablishmentCode+"' id='EstablishmentCode_" + E + "' />";
+                        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ddlEstablishmentCode_" + E + "' name='ddlEstablishmentCode_" + E + "'  type='text' value='"+data.data[E].EstablishmentCode+"'>";
+                        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanddlEstablishmentCode_" + E + "' style='display:none;'>Please Enter Establishment Code Age</span>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "<div class='col-md-6'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Establishment Name: / સ્થાપના નામ:<span class='text-danger'>*</span></label>"
+                        AddEducationdetails += "<input class='form-control'' id='EstablishmentName_" + E + "' name='EstablishmentName_" + E + "'  type='text' value='"+data.data[E].EstablishmentName+"'>";
+                        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEstablishmentName_" + E + "' style='display:none;'>Please Enter Establishment Name </span>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        @*   AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";*@
+
+                            AddEducationdetails += "<div class='form-group'>";
+                        AddEducationdetails += "<div class='row'>";
+                        AddEducationdetails += "<div class='col-md-5'>";
+                        AddEducationdetails += "<label for='P_Address'>Permanent Address: / કાયમી સરનામુ:<span class='text-danger'>*</span></label>"
+                        AddEducationdetails += "<textarea class='form-control'' id='PAddress_" + E + "' name='PAddress" + E + "'  type='text'>"+data.data[E].PAddress+"</textarea>";
+                        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanPAddress_" + E + "' style='display:none;'>Please Enter Address </span>";
+                        AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-2' style='margin-top: auto;'>";
+                         AddEducationdetails += "<label for='Pin_code'>Copy Permanent Address <span class='text-danger'> &nbsp </span></label>";
+                         AddEducationdetails +=   "<input  id='SameasPaddress_"+E+"' name='SameasPaddress_"+E+"'  type='checkbox' onclick='CopyAddress("+E+")'>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "<div class='col-md-5'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Secondary Address: / ગૌણ સરનામું: </label>";
+                        AddEducationdetails += "<textarea class='form-control'' id='SAddress_" + E + "' name='SAddress" + E + "'  type='text' >"+data.data[E].PAddress+"</textarea>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+
+
+                        AddEducationdetails += "<div class='form-group'>";
+                        AddEducationdetails += "<div class='row'>";
+
+                         AddEducationdetails += "<div class='col-md-2'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Email: / ઇમેઇલ:  <span class='text-danger'> *</span></label>"
+                        AddEducationdetails += "<input class='form-control'' id='Email_" + E + "' name='Email_" + E + "'  type='text' value='"+data.data[E].Email+"'>";
+                                             AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmail_" + E + "' style='display:none;'>Please Enter Valid Email </span>";
+                        AddEducationdetails += "</div>";
+
+                          AddEducationdetails += "<div class='col-md-2'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Mobile: / મોબાઈલ:  <span class='text-danger'> *</span></label>"
+                        AddEducationdetails += "<input class='form-control' maxlength='10' oninput='numberOnly(this.id);' id='mobile_" + E + "' name='mobile_" + E + "'  type='text' value='"+data.data[E].mobile+"'>";
+                                             AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spanmobile_" + E + "' style='display:none;'>Please Enter mobile number </span>";
+                        AddEducationdetails += "</div>";
+
+
+                        AddEducationdetails += "<div class='col-md-2'>";
+                        AddEducationdetails += "<label for='District_Name'>District: / જિલ્લો:</label>";
+                        AddEducationdetails += "<select class='chosen-select form-control' name='DistrictID_" + E + "' value='"+data.data[E].DistrictID+"' id='DistrictID_" + E + "' onchange='callChangefunc(" + E + ")'>";
+                        AddEducationdetails += "<option value='0'>Select</option>";
+                        for (i = 0; i < data.data[E].Districtlist.length; ++i)
+                        {
+                             if (data.data[E].Districtlist[i].DataValue == data.data[E].DistrictID) 
+                            {
+                                AddEducationdetails +=  "<option value=" + data.data[E].Districtlist[i].DataValue + " selected='selected'>" + data.data[E].Districtlist[i].DisplayValue + "</option>";
+                            }
+                            else
+                            {
+
+                                AddEducationdetails += "<option value=" + data.data[E].Districtlist[i].DataValue + ">" + data.data[E].Districtlist[i].DisplayValue + "</option>";
+                            }
+                        }
+                        AddEducationdetails += "</select>";
+                        AddEducationdetails += "</div>";
+
+                        AddEducationdetails += "<div class='col-md-2'>";
+                        AddEducationdetails += "<label for='Taluka_Name'>Taluka: / તાલુકો:</label>";
+                        AddEducationdetails += "<select class='chosen-select form-control' name='TalukaID_" + E + "' value='"+data.data[E].TalukaID+"' id='TalukaID_" + E + "'>";
+                        AddEducationdetails += "<option value='0'>Select</option>";
+                        for (i = 0; i < data.data[E].Talukalist.length; ++i) 
+                        {
+                            if (data.data[E].Talukalist[i].DataValue == data.data[E].TalukaID) {
+                                AddEducationdetails += "<option value=" + data.data[E].Talukalist[i].DataValue + " selected='selected'>" + data.data[E].Talukalist[i].DisplayValue + "</option>";
+                            }
+                            else {
+                                AddEducationdetails += "<option value=" + data.data[E].Talukalist[i].DataValue + ">" + data.data[E].Talukalist[i].DisplayValue + "</option>";
+                            }
+                        }
+                        AddEducationdetails += "</select>";
+                        AddEducationdetails += "</div>";
+
+
+                         AddEducationdetails += "<div class='col-md-2' id='DivArea_" + E + "'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Area: / વિસ્તાર:</label>";
+                        AddEducationdetails += "<input type='hidden' name='ZoneID_" + E + "' value='"+data.data[E].ZoneID+"' id='ZoneID_" + E + "' />";
+                        AddEducationdetails += "<input type='hidden' name='AreaID_" + E + "' value='"+data.data[E].AreaID+"' id='AreaID_" + E + "' />";
+                        AddEducationdetails += "<input type='hidden' name='IsActive_" + E + "' value='"+data.data[E].IsActive+"' id='IsActive_" + E + "' />";
+                        AddEducationdetails += "<input style='width: 100%;' class='form-control'' id='ddlArea_" + E + "'  value='"+data.data[E].AreaID+"' name='ddlArea_" + E + "'  type='text'  placeholder='--Select--'>";
+                        AddEducationdetails += "</div>";
+
+                          AddEducationdetails += "<div class='col-md-2'>";
+                        AddEducationdetails += "<label for='Pin_code'>Pincode: / પીન કોડ:</label>";
+                        AddEducationdetails += "<input class='form-control'' oninput='numberOnly(this.id);' id='Pincode_" + E + "' maxlength='6' name='Pincode_" + E + "'  type='text' value='"+data.data[E].Pincode+"'>";
+                        AddEducationdetails += "</div>";
+
+                        AddEducationdetails += "</fieldset>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</Br>"
+
+                        $("#TextBoxContainer").append(AddEducationdetails);
+                        bindEstablishDropdown(E);
+                        bindAreaDropdown(E, data.data[E].AreaList);
+                        $(".chosen-select").chosen();
+                         if (data.data[E].EstablisDetailID > 0 && data.data[E].AreaID > 0) {
+                            $("#DivArea_" + E).show();
+                        }
+                        else {
+                            $("#DivArea_" + E).hide();
+                            $("#ZoneID_" + E).val(0);
+                            $("#AreaID_" + E).val(0);
+                        }
+                        if ($("#Pincode_" + E).val() == "0") {
+                            $("#Pincode_" + E).val(""); 
+                        }
+                        
+                        //E++;
+                         //if ('@Model.IsSubmit' == "True") 
+                         //{
+                         // $('#ddlEstablishmentCode_' + E).kendoMultiColumnComboBox({ enabled: false });
+                         // $('#ddlArea_' + E).kendoMultiColumnComboBox({ enabled: false });
+                         //}
+                    }
+
+                         //if ('@Model.IsSubmit' == "True") 
+                         //{
+                         //  $('.form-control').attr('readonly', 'readonly');
+                         //  $('.chosen-select').prop('disabled', true).trigger("chosen:updated");
+                         //}
+                      if ('@Model.IsSubmit'=="True") 
+                     {
+                      $('.k-widget.k-combobox.form-control.k-dropdowngrid.k-combobox-clearable').kendoMultiColumnComboBox({ enabled: false });
+                       $('.k-widget').css('display', 'unset');
+                       $('.form-control').attr('readonly', 'readonly');
+                       $('.chosen-select').prop('disabled', true).trigger("chosen:updated");
+                     }
+                 
+                }
+             ,error: function (request, message, error) 
+               {
+                debugger; 
+                swal(request.responseJSON);
+               }
+            });
+
+    }
+         </script>
+  
+ }

@@ -1,0 +1,1145 @@
+﻿@model GPHC.Model.ApplicationFormModel
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+    int rowNo = 0;
+}
+
+
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <script src="~/Content/Adminlayout/libs/jquery/jquery-3.6.0.min.js"></script>
+    <link href="~/Content/Frontlayout/css/Application.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+    <link href="~/Content/sweet-alert.css" rel="stylesheet" />
+    <script src="~/Scripts/sweet-alert.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    <div class="container">
+        <h2>Application Form</h2>
+        <div class="panel-group">
+            @using (Ajax.BeginForm("Index", "ApplicationForm", new AjaxOptions { OnBegin = "OnBeginApplication", OnComplete = "OnCompleteApplication", OnFailure = "OnFailureApplication" }, new { enctype = "multipart/form-data", @id = "AppForm" }))
+            {
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Basic Details</div>
+
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m=>m.CareerID)
+
+                    <div class="panel-body">
+                        <div class="row">
+
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Surname</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.SurName, new { @class = "form-control", maxlength = "200", title = "Enter SurName", placeholder = "Enter SurName" })
+                                    @Html.ValidationMessageFor(x => x.SurName, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">First Name</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", maxlength = "200", title = "Enter First Name", placeholder = "Enter First Name" })
+                                    @Html.ValidationMessageFor(x => x.FirstName, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Father/Husband's Name</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.FatherName, new { @class = "form-control", maxlength = "200", title = "Enter Father/Husband's Name", placeholder = "Enter Father/Husband's Name" })
+                                    @Html.ValidationMessageFor(x => x.FatherName, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Mother Name</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.MotherName, new { @class = "form-control", maxlength = "200", title = "Enter Mother Name", placeholder = "Enter Mother Name" })
+                                    @Html.ValidationMessageFor(x => x.MotherName, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">State</span><span class="text-danger">*</span>
+                                    @Html.DropDownListFor(m => m.StateId, new SelectList(Model.SelectState, "Value", "Text"), "Select State", new { @class = "form-control",@id="ddl_State" })
+                                    @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">District</span><span class="text-danger">*</span>
+                                    @Html.DropDownListFor(m => m.DistrictId, new SelectList(Model.SelectDistrict, "Value", "Text"), "Select District", new { @class = "form-control", @id = "ddl_District" })
+                                    @Html.ValidationMessageFor(x => x.DistrictId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Taluka</span><span class="text-danger">*</span>
+                                    @Html.DropDownListFor(m => m.TalukaId, new SelectList(Model.SelectTaluka, "Value", "Text"), "Select Taluka", new { @class = "form-control", @id = "ddl_Taluka" })
+                                    @Html.ValidationMessageFor(x => x.TalukaId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Pincode</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.Pincode, new { @class = "form-control", maxlength = "6", title = "Enter Pincode", placeholder = "Enter Pincode" })
+                                    @Html.ValidationMessageFor(x => x.Pincode, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Current Address</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.CurrentAddress, new { @class = "form-control", maxlength = "500", title = "Enter Current Address", placeholder = "Enter Current Address" })
+                                    @Html.ValidationMessageFor(x => x.CurrentAddress, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Permanent Address</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.PermanentAddress, new { @class = "form-control", maxlength = "500", title = "Enter Permanent Address", placeholder = "Enter Permanent Address" })
+                                    @Html.ValidationMessageFor(x => x.PermanentAddress, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Date of Birth</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.DateofBirth, new { @class = "form-control datepicker", title = "Enter Date of Birth", placeholder = "dd-mm-yyyy" })
+                                    @Html.ValidationMessageFor(x => x.DateofBirth, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Gender</span><span class="text-danger">*</span>
+                                    <br />
+                                    <div class="d-flex gender-select">
+                                        @Html.RadioButtonFor(model => model.Gender, "Male") Male
+                                        @Html.RadioButtonFor(model => model.Gender, "Female") Female
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.Gender, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Marital Status</span><span class="text-danger">*</span>
+                                    <div class="d-flex status-select">
+                                        @Html.RadioButtonFor(model => model.MaritalStatus, "Married") Married
+                                        @Html.RadioButtonFor(model => model.MaritalStatus, "Unmarried") Unmarried
+                                        @Html.RadioButtonFor(model => model.MaritalStatus, "Separated") Separated
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.MaritalStatus, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Age</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.Age, new { @class = "form-control onlyNumbers", title = "Enter Age", placeholder = "Enter Age" })
+                                    @Html.ValidationMessageFor(x => x.Age, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Photo</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.Photo, new { @class = "form-control", title = "Select Photo", type = "file", accept = "image/*" })
+                                    @*<span class="text-danger">Only for image upload</span>*@
+                                    @Html.ValidationMessageFor(x => x.Photo, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Email</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", maxlength = "200", title = "Enter Email", placeholder = "Enter Email" })
+                                    @Html.ValidationMessageFor(x => x.Email, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Mobile No</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.Mobile, new { @class = "form-control onlyNumbers", maxlength = "10", title = "Enter Mobile", placeholder = "Enter Mobile" })
+                                    @Html.ValidationMessageFor(x => x.Mobile, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Category</span><span class="text-danger">*</span>
+                                    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.SelectCategory, "CategoryId", "CategoryName"), "Select Category", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(x => x.CategoryId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Nationality</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.Nationality, new { @class = "form-control", maxlength = "50", title = "Enter Nationality", placeholder = "Enter Nationality" })
+                                    @Html.ValidationMessageFor(x => x.Nationality, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Blood Group</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.BloodGroup, new { maxlength = "20", @class = "form-control", title = "Enter Blood Group", placeholder = "Enter Blood Group" })
+                                    @Html.ValidationMessageFor(x => x.BloodGroup, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <span class="font-weight-bolder" for="Text">Home Town</span><span class="text-danger">*</span>
+                                    @Html.TextBoxFor(x => x.HomeTown, new { maxlength = "50", @class = "form-control", title = "Enter Home Town", placeholder = "Enter Home Town" })
+                                    @Html.ValidationMessageFor(x => x.HomeTown, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="wait" class="chat-loader-sec" style="display: none;">
+                        <div class="chat-loader">
+                            <img src="~/Images/loader-spin.gif" />
+                        </div>
+                    </div>
+                    <div class="panel panel-primary" style="border-color:none !important;border:0px !important">
+                        <div class="panel-heading">Employment details</div>
+                        <div class="panel-body">
+                            <button name="btn" value="AddEmployment" type="button" onclick="Fn_AddNewEmploymentdetails()" class="btn btn-primary" id="btnAddEmployment" title="Click to Add Employment">Add More</button>
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Employer name</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEmploymentdetails[0].Employername, new { maxlength = "200", @class = "form-control", title = "Enter Employer name", placeholder = "Enter Employer name" })
+                                        @Html.ValidationMessageFor(x => x.tblEmploymentdetails[0].Employername, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Designation</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEmploymentdetails[0].Designation, new { maxlength = "200", @class = "form-control", title = "Enter Designation", placeholder = "Enter Designation" })
+                                        @Html.ValidationMessageFor(x => x.tblEmploymentdetails[0].Designation, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">From Date</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEmploymentdetails[0].From, new { @class = "form-control datepicker datefromto", data_id = "0", title = "Enter From Date", placeholder = "dd-mm-yyyy" })
+                                        @Html.ValidationMessageFor(x => x.tblEmploymentdetails[0].From, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">To Date</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEmploymentdetails[0].To, new { @class = "form-control datepicker datefromto", data_id = "0", title = "Enter To Date", placeholder = "dd-mm-yyyy" })
+                                        @Html.ValidationMessageFor(x => x.tblEmploymentdetails[0].To, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 col-xs-6 col-sm-6 col-lg-2">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Experience</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEmploymentdetails[0].TotExp, new { @class = "form-control TotExperince", @readonly = "readonly", title = "Enter Experience", placeholder = "Enter Experience" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Experince CertificateUpload</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEmploymentdetails[0].ExpCertificateUpload, new { maxlength = "200", @class = "form-control", type = "file", title = "Enter Experince CertificateUpload", placeholder = "Enter Experince CertificateUpload" })
+                                        @Html.ValidationMessageFor(x => x.tblEmploymentdetails[0].ExpCertificateUpload, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Employeer</span><span class="text-danger">*</span>
+                                        <div class="status-select">
+                                            @Html.RadioButtonFor(x => x.CurrentEmployee, "0") Current Employeer
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="divEmploymentdetails"></div>
+
+                            <div class="row total-exp">
+                                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-2"></div>
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-5">
+                                    <div class="form-group" style="text-align:right; margin-top:15px;">
+                                        <span class="font-weight-bolder" for="Text">Total Experince</span><span class="text-danger">*</span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-5">
+                                    @Html.TextBoxFor(x => x.TotExperince, new { @class = "form-control", @readonly = "readonly", title = "Enter Experience", placeholder = "Enter Experience" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel panel-primary" style="border-color:none !important;border:0px !important">
+                        <div class="panel-heading">Education Details (From Highest Education to 10th/SSC)</div>
+                        <div class="panel-body">
+                            <button name="btn" value="AddEducation" type="button" onclick="Fn_AddNewEducationdetails()" class="btn btn-primary" id="btnAddEducation" title="Click to Add Employment">Add More</button>
+                            <div class="row">
+                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Exam Passed</span><span class="text-danger">*</span>
+                                        @Html.DropDownListFor(m => m.tblEducationDetails[0].QualificationId, new SelectList(Model.SelectQualification, "Value", "Text"), "Select Qualification", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.tblEducationDetails[0].QualificationId, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Specialization</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEducationDetails[0].Specialization, new { maxlength = "500", @class = "form-control", title = "Enter Specialization", placeholder = "Enter Specialization" })
+                                        @Html.ValidationMessageFor(x => x.tblEducationDetails[0].Specialization, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text"> School/Board/College/University/Institue Name</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEducationDetails[0].UniversityName, new { maxlength = "200", @class = "form-control", title = "Enter School/Board/College/University/Institue Name", placeholder = "Enter School/Board/College/University/Institue Name" })
+                                        @Html.ValidationMessageFor(x => x.tblEducationDetails[0].UniversityName, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">CPI/Percentage</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEducationDetails[0].Percentage, new { maxlength = "10", type = "number", @class = "form-control decimal", title = "Enter CPI/Percentage", placeholder = "Enter CPI/Percentage" })
+                                        @Html.ValidationMessageFor(x => x.tblEducationDetails[0].Percentage, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Passing Year</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEducationDetails[0].PassingYear, new { maxlength = "5", @class = "form-control  onlyNumbers", title = "Enter Passing Year", placeholder = "Enter Passing Year" })
+                                        @Html.ValidationMessageFor(x => x.tblEducationDetails[0].PassingYear, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Upload Certificate</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.tblEducationDetails[0].Certificate, new { @class = "form-control FileValidation", type = "file", title = "Enter Upload Certificate", placeholder = "Enter Upload Certificate", accept = ".pdf,.doc,.docx" })
+                                        @Html.ValidationMessageFor(x => x.tblEducationDetails[0].Certificate, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="divEducationdetails"></div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary" style="border-color:none !important;border:0px !important">
+                        <div class="panel-heading">Language Details</div>
+
+                        <div class="panel-body">
+                            
+                            <div class="language-selection">
+
+                                <div class="language-title-details">
+
+                                    <div class="row">
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+
+                                            <label for="language1">Language</label>
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <p>Read</p>
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <p>Write</p>
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            <p>Speak</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                @for (int i = 0; i < 4; i++)
+                                {
+                                    <div class="row">
+                                        @if (i == 3)
+                                        {
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                                @Html.TextBoxFor(x => x.tblLanguage[i].Lang, new { maxlength = "20", @class = "form-control lan-name", placeholder = "Enter Other Language" })
+                                                @Html.ValidationMessageFor(x => x.tblLanguage[i].Lang, null, new { @class = "text-danger" })
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                                                @Html.TextBoxFor(x => x.tblLanguage[i].Lang, new { @class = "form-control lan-name", @readonly = "readonly" })
+                                                @Html.ValidationMessageFor(x => x.tblLanguage[i].Lang, null, new { @class = "text-danger" })
+                                            </div>
+                                        }
+
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            @Html.CheckBoxFor(m => m.tblLanguage[i].ReadChk, new { @class = "chk-lang" })
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            @Html.CheckBoxFor(m => m.tblLanguage[i].WriteChk, new { @class = "chk-lang" })
+                                        </div>
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                                            @Html.CheckBoxFor(m => m.tblLanguage[i].SpeakChk, new { @class = "chk-lang" })
+                                        </div>
+
+                                    </div>
+
+                                }
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="panel panel-primary" style="border-color:none !important;border:0px !important">
+                        <div class="panel-heading">Declaration</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Are you Government employee?</span><span class="text-danger">*</span>
+                                        <br />
+                                        <div class="d-flex gender-select">
+                                            @Html.RadioButtonFor(model => model.Governmentemployee, "True", new { @class = "empGov" }) Yes
+                                            @Html.RadioButtonFor(model => model.Governmentemployee, "False", new { @class = "empGov" }) No
+                                        </div>
+                                        @Html.ValidationMessageFor(x => x.Governmentemployee, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div id="divStateGoverment" style="display:none">
+                                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                        <div class="form-group">
+                                            <span class="font-weight-bolder" for="Text">State Goverment</span><span class="text-danger">*</span>
+                                            @Html.DropDownList("StateGov", new List<SelectListItem>
+                                            {
+                                                 new SelectListItem{ Text="---Select Govermenrt---", Value = "" },
+                                                 new SelectListItem{ Text="State", Value = "State" },
+                                                 new SelectListItem{ Text="Central", Value = "Central" },
+                                                 new SelectListItem{ Text="PSU", Value = "PSU" },
+                                            }, new { @class = "form-control" })
+                                            <label style="display:none" class="lblvalidation text-danger">This field is required</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                        <div class="form-group">
+                                            <span class="font-weight-bolder" for="Text">Upload NOC</span><span class="text-danger">*</span>
+                                            @Html.TextBoxFor(x => x.NOCneeded, new { @class = "form-control FileValidation", type = "file", accept = ".pdf,.doc,.docx" })
+                                            <label style="display:none" class="lblvalidation text-danger">This field is required</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Are you physically challenged?</span><span class="text-danger">*</span>
+                                        <br />
+                                        <div class="d-flex gender-select">
+                                            @Html.RadioButtonFor(model => model.physicallychallenged, "True") Yes
+                                            @Html.RadioButtonFor(model => model.physicallychallenged, "False") No
+                                        </div>
+                                        @Html.ValidationMessageFor(x => x.physicallychallenged, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Ex-Military</span><span class="text-danger">*</span>
+                                        <br />
+                                        <div class="d-flex gender-select">
+                                            @Html.RadioButtonFor(model => model.ExMilitary, "True", new { @class = "ExMilitary" }) Yes
+                                            @Html.RadioButtonFor(model => model.ExMilitary, "False", new { @class = "ExMilitary" }) No
+                                        </div>
+                                        @Html.ValidationMessageFor(x => x.ExMilitary, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div id="divExMilitary" style="display:none">
+                                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                        <div class="form-group">
+                                            <span class="font-weight-bolder" for="Text">From Date</span><span class="text-danger">*</span>
+                                            @Html.TextBoxFor(x => x.FromDate, new { @class = "form-control datepicker", title = "Enter From Date", placeholder = "Enter From Date" })
+                                            <label style="display:none" class="lblvalidation text-danger">This field is required</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6 col-sm-6 col-lg-6">
+                                        <div class="form-group">
+                                            <span class="font-weight-bolder" for="Text">To Date</span><span class="text-danger">*</span>
+                                            @Html.TextBoxFor(x => x.ToDate, new { @class = "form-control datepicker", title = "Enter To Date", placeholder = "Enter To Date" })
+                                            <label style="display:none" class="lblvalidation text-danger">This field is required</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">ID Proof</span><span class="text-danger">*</span>
+                                        @Html.DropDownList("IDProof", new List<SelectListItem>
+                                                                                      {
+                                                                                           new SelectListItem{ Text="---Select Document---", Value = "" },
+                                                                                           new SelectListItem{ Text="Aadhar Card", Value = "Aadhar Card" },
+                                                                                           new SelectListItem{ Text="Voter ID", Value = "Voter ID" },
+                                                                                           new SelectListItem{ Text="Licence", Value = "Licence" },
+                                                                                      }, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.IDProof, null, new { @class = "text-danger" })
+
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">ID Proof Upload</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.IDProofUpload, new { @class = "form-control FileValidation", type = "file", title = "Enter Upload Proof", placeholder = "Enter Upload Proof", accept = ".pdf,.doc,.docx" })
+                                        @Html.ValidationMessageFor(x => x.IDProofUpload, null, new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Address Proof</span><span class="text-danger">*</span>
+                                        @Html.DropDownList("AddressProof", new List<SelectListItem>
+                                                                                      {
+                                                                                           new SelectListItem{ Text="---Select Document---", Value = "" },
+                                                                                           new SelectListItem{ Text="Electricity bill", Value = "Electricity bill" },
+                                                                                           new SelectListItem{ Text="Phone Bill/Gas Bill", Value = "Phone Bill/Gas Bill" },
+                                                                                           new SelectListItem{ Text="Licence", Value = "Licence" },
+                                                                                      }, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.AddressProof, null, new { @class = "text-danger" })
+
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Address Proof Upload</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.AddressProofUpload, new { @class = "form-control FileValidation", type = "file", title = "Enter Upload Proof", placeholder = "Enter Upload Proof", accept = ".pdf,.doc,.docx" })
+                                        @Html.ValidationMessageFor(x => x.AddressProofUpload, null, new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Date of Birth Proof</span><span class="text-danger">*</span>
+                                        @Html.DropDownList("DateofBirthProof", new List<SelectListItem>
+                                                                                      {
+                                                                                           new SelectListItem{ Text="---Select Document---", Value = "" },
+                                                                                           new SelectListItem{ Text="Birth certificate", Value = "Birth certificate" },
+                                                                                           new SelectListItem{ Text="School LC", Value = "School LC" },
+
+                                                                                      }, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(x => x.DateofBirthProof, null, new { @class = "text-danger" })
+
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 col-xs-6 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="font-weight-bolder" for="Text">Date of Birth Proof Upload</span><span class="text-danger">*</span>
+                                        @Html.TextBoxFor(x => x.DateofBirthProofUpload, new { @class = "form-control FileValidation", type = "file", title = "Enter Upload Proof", placeholder = "Enter Upload Proof", accept = ".pdf,.doc,.docx" })
+                                        @Html.ValidationMessageFor(x => x.DateofBirthProofUpload, null, new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <br />
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <button type="submit" id="btnSave" class="btn btn-primary" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing">Submit</button>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+            }
+
+
+        </div>
+    </div>
+
+
+</body>
+</html>
+<script src="~/Scripts/moment.min.js"></script>
+<script>
+    //Global Varible Declare
+
+    var C = 1;
+    var E = 1;
+    var TotalExperince = [];
+
+    $(function () {
+        $.validator.methods.date = function (value, element) {
+            return this.optional(element) || moment(value, "DD/MM/YYYY", true).isValid();
+        }
+    });
+    $("#ddl_State").change(function () {
+       
+        var StateId = $(this).val();
+        if (StateId == "") {
+            $("#ddl_District").empty();
+            $("#ddl_District").append($('<option></option>').val('').html('Select District'));
+
+            $("#ddl_Taluka").empty();
+            $("#ddl_Taluka").append($('<option></option>').val('').html('Select Taluka'));
+        }
+        else {
+
+            $.ajax({
+                url: '@Url.Action("LoadDistrict", "ApplicationForm")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    StateId: +StateId
+                }),
+                success: function (data) {
+                    
+                    $("#ddl_District").html("");
+                    $("#ddl_District").append($('<option></option>').val(null).html("Select State"));
+                    $.each(data, function (i, state) {
+                        $("#ddl_District").append($('<option></option>').val(state.Value).html(state.Text))
+                    });
+                },
+                error: function () {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+        }
+    });
+    $("#ddl_District").change(function () {
+        debugger
+        var DistrictId = $(this).val();
+        if (DistrictId == "") {
+            $("#ddl_Taluka").empty();
+            $("#ddl_Taluka").append($('<option></option>').val('').html('Select District'));
+        }
+        else {
+
+            $.ajax({
+                url: '@Url.Action("LoadTaluka", "ApplicationForm")',
+                type: 'POST',
+                datatype: 'application/json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    DistrictId: +DistrictId
+                }),
+                success: function (data) {
+                    
+                    $("#ddl_Taluka").html("");
+                    $("#ddl_Taluka").append($('<option></option>').val(null).html("Select Taluka"));
+                    if (data != "Failed") {
+                        $.each(data, function (i, state) {
+                            $("#ddl_Taluka").append($('<option></option>').val(state.Value).html(state.Text))
+                        });
+                    }
+                },
+                error: function () {
+                    alert("Whooaaa! Something went wrong..")
+                },
+            });
+        }
+    });
+    $("#Photo").on('change', function () {
+        var file = this.files[0];
+        var fileType = file["type"];
+        var validImageTypes = ["image/jpg", "image/jpeg", "image/png"];
+        if ($.inArray(fileType, validImageTypes) < 0) {
+            alert("Please upload only for JPEG & PNG & JPG Image");
+            $("#Photo").val("");
+        }
+    });
+
+    
+
+    $(document).on('change', '.FileValidation', function () {
+        var myfile = $(this).val();
+        var ext = myfile.split('.').pop().toLowerCase();
+        if ($.inArray(ext, ['pdf', 'doc', 'docx']) == -1) {
+            alert('Please upload only pdf,doc,docx format files.');
+            $(this).val("");
+            return false;
+        }
+        else {
+            debugger
+            const fileSize = this.files[0].size / 1024 / 1024; // in MiB
+            if (fileSize > 5) {
+                alert('File size exceeds 5 MB');
+                $(this).val("");
+                return false;
+            }
+        }
+    });
+
+
+    function OnBeginApplication() {
+        debugger;
+        var counter = 0;
+        $(".requiredvalid, .requiredvalid1").each(function () {
+            if ($(this).val() === "" || $(this).val().length === 0) {
+                $(this).parent().find("label").show();
+                counter += 1;
+            }
+            else {
+                $(this).parent().find("label").hide();
+            }
+        });
+
+        if (counter > 0) {
+            window.scrollTo(0, 0);
+            return false;
+        }
+        else {
+           
+                $('#AppForm').submit(function (e) {
+
+                    var form = e.target;
+                    if (form.getAttribute("enctype") === "multipart/form-data") {
+                        if (form.dataset.ajax) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            var xhr = new XMLHttpRequest();
+                            xhr.open(form.method, form.action);
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    if (form.dataset.ajaxUpdate) {
+                                        var updateTarget = document.querySelector(form.dataset.ajaxUpdate);
+                                        if (updateTarget) {
+                                            updateTarget.innerHTML = xhr.responseText;
+                                        }
+                                    }
+                                    var res = $.parseJSON(xhr.responseText);
+                                    OnCompleteApplication(res);
+                                }
+                                else {
+                                    var res = $.parseJSON(xhr.responseText);
+                                    OnFailureApplication(res);
+                                }
+                            };
+                            xhr.send(new FormData(form));
+
+                        }
+                    }
+                    //}
+                });
+            
+
+        }
+
+    }
+
+    function OnCompleteApplication(res) {
+        debugger
+        if (res.responseJSON == "Success") {
+            swal({
+                title: "Congratulation!",
+                text: "Aplication Submit Successfully!",
+                type: "success",
+                confirmButtonText: "OK"
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        window.location.href = "/Home/Index";
+                    }
+                });
+        }
+        else if (res.responseJSON == "Failure") {
+
+            swal({
+                title: "Error!",
+                text: "Application Submit Error Please Try Again!",
+                type: "error",
+                confirmButtonText: "OK"
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        location.reload();
+                    }
+                });
+
+        }
+        else if (res.responseJSON == "Model Error") {
+            swal({
+                title: "Error!",
+                text: "Model Data Error Please Try Again!",
+                type: "error",
+                confirmButtonText: "OK"
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        location.reload();
+                    }
+                });
+
+        }
+        else if (res.responseJSON == "CareerID Null") {
+            swal({
+                title: "Error!",
+                text: "Career ID Error Please Try Again!",
+                type: "error",
+                confirmButtonText: "OK"
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        location.reload();
+                    }
+                });
+
+        }
+        else if (res.responseJSON.ID == "Minimum") {
+            swal({
+                title: "Error!",
+                text: res.responseJSON.Result,
+                type: "error",
+                confirmButtonText: "OK"
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        location.reload();
+                    }
+                });
+
+        }
+        else if (res.responseJSON.ID == "Maximum") {
+            swal({
+                title: "Error!",
+                text: res.responseJSON.Result,
+                type: "error",
+                confirmButtonText: "OK"
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        location.reload();
+                    }
+                });
+
+        }
+    }
+
+    function OnFailureApplication() {
+        debugger
+    }
+    $(document).ready(function () {
+        
+        
+        
+        $('.datepicker').datepicker({
+            weekStart: 1,
+           
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy'
+        });
+        $("#tblLanguage_0__Lang").val("English");
+        $("#tblLanguage_1__Lang").val("Hindi");
+        $("#tblLanguage_2__Lang").val("Gujarati");
+
+        
+        $(document).ajaxStart(function () {
+            $("#wait").show();
+        });
+        $(document).ajaxStop(function () {
+            $("#wait").hide();
+        });
+        $(document).ajaxError(function () {
+            $("#wait").hide();
+        });
+    });
+
+    $(".empGov").change(function () {
+        debugger
+        if (this.value == 'True') {
+            $("#divStateGoverment").show();
+            $("#StateGov,#NOCneeded").addClass("requiredvalid");
+        }
+        else if (this.value == 'False') {
+            $("#divStateGoverment").hide();
+            $("#StateGov,#NOCneeded").removeClass("requiredvalid");
+            $("#StateGov,#NOCneeded").val("");
+            
+           
+        }
+    });
+
+    $(".ExMilitary").change(function () {
+
+        if (this.value == 'True') {
+            $("#divExMilitary").show();
+            $("#FromDate,#ToDate").addClass("requiredvalid");
+        }
+        else if (this.value == 'False') {
+            $("#divExMilitary").hide();
+            $("#FromDate,#ToDate").removeClass("requiredvalid");
+            $("#FromDate,#ToDate").val("");
+        }
+    });
+
+    $(document).on('change', '.datefromto', function () {
+        debugger
+        var D = $(this).attr('data-id');
+        var month = 0;
+       
+        var dateFrom = new Date(moment($("#tblEmploymentdetails_" + D + "__From").val(), 'DD-MM-YYYY').format('YYYY-MM-DD'));
+        var dateTo = new Date(moment($("#tblEmploymentdetails_" + D + "__To").val(), 'DD-MM-YYYY').format('YYYY-MM-DD'));
+        if (dateFrom != "Invalid Date" && dateTo != "Invalid Date") {
+            month = dateTo.getMonth() - dateFrom.getMonth() +
+                (12 * (dateTo.getFullYear() - dateFrom.getFullYear()));
+            $("#tblEmploymentdetails_" + D + "__TotExp").val(month + " Months");
+            TotalExperince = [];
+            $(".TotExperince").each(function () {
+                var exp = this.value.split(" ")[0];
+                TotalExperince.push(exp);
+
+            });
+            var total = 0;
+            for (var i = 0; i < TotalExperince.length; i++) {
+                total += TotalExperince[i] << 0;
+            }
+            $("#TotExperince").val(total + " Months");
+        }
+        else {
+            $("#tblEmploymentdetails_" + D + "__TotExp").val("");
+        }
+
+    });
+
+
+    function Fn_AddNewEmploymentdetails() {
+
+        var counter = 0;
+
+        $(".requiredvalid").each(function () {
+            if ($(this).val() === "") {
+                $(this).parent().find("label").show();
+                counter += 1;
+            }
+        });
+        if (counter > 0) {
+            return false;
+        }
+        else {
+
+            var AddEmploymentdetails = "<div class='row'>";
+            AddEmploymentdetails += "<div class='col-md-3 col-xs-6 col-sm-6 col-lg-3' >";
+            AddEmploymentdetails += "<div class='form-group'>";
+            AddEmploymentdetails += "<span class='font-weight-bolder'for='Text'>Employer name</span><span class='text-danger'>*</span>";
+            AddEmploymentdetails += "<input type='text' maxlength = '200' name='tblEmploymentdetails[" + C + "].Employername'class = 'form-control requiredvalid', title = 'Enter Employer name', placeholder = 'Enter Employer name'>";
+            AddEmploymentdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+            AddEmploymentdetails += "</div>";
+            AddEmploymentdetails += "</div>";
+
+            AddEmploymentdetails += "<div class='col-md-3 col-xs-6 col-sm-6 col-lg-3' >";
+            AddEmploymentdetails += "<div class='form-group'>";
+            AddEmploymentdetails += "<span class='font-weight-bolder'for='Text'>Designation</span><span class='text-danger'>*</span>";
+            AddEmploymentdetails += "<input type='text' maxlength = '200' name='tblEmploymentdetails[" + C + "].Designation'class = 'form-control requiredvalid', title = 'Enter Designation', placeholder = 'Enter Designation'>";
+            AddEmploymentdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+            AddEmploymentdetails += "</div>";
+            AddEmploymentdetails += "</div>";
+
+            AddEmploymentdetails += "<div class='col-md-2 col-xs-6 col-sm-6 col-lg-2' >";
+            AddEmploymentdetails += "<div class='form-group'>";
+            AddEmploymentdetails += "<span class='font-weight-bolder'for='Text'>From Date</span><span class='text-danger'>*</span>";
+            AddEmploymentdetails += "<input type='text' data-id=" + C + " id='tblEmploymentdetails_" + C + "__From' name='tblEmploymentdetails[" + C + "].From'class = 'form-control datepicker datefromto requiredvalid', title = 'Enter From Date', placeholder = 'Enter From Date'>";
+            AddEmploymentdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+            AddEmploymentdetails += "</div>";
+            AddEmploymentdetails += "</div>";
+
+
+            AddEmploymentdetails += "<div class='col-md-2 col-xs-6 col-sm-6 col-lg-2' >";
+            AddEmploymentdetails += "<div class='form-group'>";
+            AddEmploymentdetails += "<span class='font-weight-bolder'for='Text'>To Date</span><span class='text-danger'>*</span>";
+            AddEmploymentdetails += "<input type='text' data-id=" + C + " id='tblEmploymentdetails_" + C + "__To' name='tblEmploymentdetails[" + C + "].To'class = 'form-control datepicker datefromto requiredvalid', title = 'Enter To Date', placeholder = 'Enter To Date'>";
+            AddEmploymentdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+            AddEmploymentdetails += "</div>";
+            AddEmploymentdetails += "</div>";
+
+            AddEmploymentdetails += "<div class='col-md-2 col-xs-6 col-sm-6 col-lg-2' >";
+            AddEmploymentdetails += "<div class='form-group'>";
+            AddEmploymentdetails += "<span class='font-weight-bolder'for='Text'>Experience</span><span class='text-danger'>*</span>";
+            AddEmploymentdetails += "<input type='text' id='tblEmploymentdetails_" + C + "__TotExp' name='tblEmploymentdetails[" + C + "].TotExp'class = 'form-control TotExperince', title = 'Enter Experience', placeholder = 'Enter Experience'readonly>";
+            AddEmploymentdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+            AddEmploymentdetails += "</div>";
+            AddEmploymentdetails += "</div>";
+
+            AddEmploymentdetails += "<div class='col-md-3 col-xs-6 col-sm-6 col-lg-3' >";
+            AddEmploymentdetails += "<div class='form-group'>";
+            AddEmploymentdetails += "<span class='font-weight-bolder'for='Text'>Experince Certificate</span><span class='text-danger'>*</span>";
+            AddEmploymentdetails += "<input class='form-control FileValidation requiredvalid' accept = '.pdf,.doc,.docx' id='tblEmploymentdetails_" + C + "__ExpCertificateUpload' name='tblEmploymentdetails[" + E + "].ExpCertificateUpload' type='file' title = 'Enter Upload Experince Certificate' placeholder = 'Enter Experince Certificate'>";
+            AddEmploymentdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+            AddEmploymentdetails += "</div>";
+            AddEmploymentdetails += "</div>";
+
+            AddEmploymentdetails += "<div class='col-md-3 col-xs-6 col-sm-6 col-lg-3' >";
+            AddEmploymentdetails += "<div class='form-group'>";
+            AddEmploymentdetails += "<span class='font-weight-bolder'for='Text'>Employeer</span><span class='text-danger'>*</span>";
+            AddEmploymentdetails += "<div class='status-select'><input type='radio' name='CurrentEmployee' value=" + C +"> Current Employeer </div>";
+            AddEmploymentdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+            AddEmploymentdetails += "</div>";
+            AddEmploymentdetails += "</div>";
+
+
+            AddEmploymentdetails += "</div>";
+
+            $("#divEmploymentdetails").append(AddEmploymentdetails);
+
+            C++;
+
+            $('.datepicker').datepicker({
+                weekStart: 1,
+               
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd/mm/yyyy'
+            });
+            $(".requiredvalid").each(function () {
+                $(this).parent().find("label").hide();
+            });
+
+
+        }
+
+    }
+
+    function Fn_AddNewEducationdetails() {
+
+        var counter = 0;
+
+        $(".requiredvalid1").each(function () {
+            if ($(this).val() === "") {
+                $(this).parent().find("label").show();
+                counter += 1;
+            }
+        });
+        if (counter > 0) {
+            return false;
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: '/ApplicationForm/BindQualification',
+                cache: false,
+                data: { id: $(this).data('id'), active: $(this).prop("checked") },
+                success: function (data) {
+                    debugger
+                    var i;
+                   
+                    var AddEducationdetails = "<div class='row'>";
+                    AddEducationdetails += "<div class='col-md-6 col-xs-6 col-sm-6 col-lg-6' >";
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<span class='font-weight-bolder'for='Text'>Exam Passed</span><span class='text-danger'>*</span>";
+                    AddEducationdetails += "<select class='form-control requiredvalid1' name='tblEducationDetails[" + E + "].QualificationId'>";
+                    AddEducationdetails += "<option value='0'>Select Qualification</option>";
+                    for (i = 0; i < data.length; ++i) {
+                        AddEducationdetails += "<option value=" + data[i].Value + ">" + data[i].Text +"</option>";
+                    }
+                    AddEducationdetails += "</select>";
+                   
+
+                    AddEducationdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-6 col-xs-6 col-sm-6 col-lg-6' >";
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<span class='font-weight-bolder'for='Text'>Specialization</span><span class='text-danger'>*</span>";
+                    AddEducationdetails += "<input type='text'maxlength = '500' name='tblEducationDetails[" + E + "].Specialization'class = 'form-control requiredvalid1' title = 'Enter Specialization' placeholder = 'Enter Specialization'>";
+                    AddEducationdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-6 col-xs-6 col-sm-6 col-lg-6' >";
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<span class='font-weight-bolder'for='Text'>School/Board/College/University/Institue Name</span><span class='text-danger'>*</span>";
+                    AddEducationdetails += "<input type='text' maxlength = '200' name='tblEducationDetails[" + E + "].UniversityName'class = 'form-control requiredvalid1' title = 'Enter School/Board/College/University/Institue Name' placeholder = 'Enter School/Board/College/University/Institue Name'>";
+                    AddEducationdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+
+                    AddEducationdetails += "<div class='col-md-6 col-xs-6 col-sm-6 col-lg-6' >";
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<span class='font-weight-bolder'for='Text'>CPI/Percentage</span><span class='text-danger'>*</span>";
+                    AddEducationdetails += "<input type='number' maxlength = '10' name='tblEducationDetails[" + E + "].Percentage'class = 'form-control decimal requiredvalid1' title = 'Enter CPI/Percentage' placeholder = 'Enter CPI/Percentage'>";
+                    AddEducationdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-6 col-xs-6 col-sm-6 col-lg-6' >";
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<span class='font-weight-bolder'for='Text'>Passing Year</span><span class='text-danger'>*</span>";
+                    AddEducationdetails += "<input type='text'maxlength = '6' name='tblEducationDetails[" + E + "].PassingYear'class = 'form-control onlyNumbers  requiredvalid1' title = 'Enter Passing Year' placeholder = 'Enter Passing Year'>";
+                    AddEducationdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-6 col-xs-6 col-sm-6 col-lg-6' >";
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<span class='font-weight-bolder'for='Text'>Upload Certificate</span><span class='text-danger'>*</span>";
+                    AddEducationdetails += "<input class='form-control FileValidation requiredvalid1' accept = '.pdf,.doc,.docx' id='tblEducationDetails_" + E + "__Certificate' name='tblEducationDetails[" + E + "].Certificate' type='file' title = 'Enter Upload Certificate' placeholder = 'Enter Upload Certificate'>";
+                    AddEducationdetails += "<label style='display:none' class='lblvalidation text-danger'>This field is required</label>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "</div>";
+
+                    $("#divEducationdetails").append(AddEducationdetails);
+
+                    E++;
+
+                    $(".requiredvalid1").each(function () {
+                        $(this).parent().find("label").hide();
+                    });
+                }
+            });
+
+        }
+
+    }
+
+
+    //Distric Change Method
+         //Distric Change Method
+      
+       
+}}
+</script>

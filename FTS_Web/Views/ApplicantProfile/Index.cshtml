@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "Applicant Profile";
+    Layout = "~/Views/Shared/_ApplicantLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">Applicant Profile</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Personal Details</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("First Name:")
+                                    @Html.TextBox("FirstName", "", new { @class = "form-control", placeholder = "First Name" })
+                                </div>
+                                 <div class="col-md-4">
+                                    @Html.Label("Middle Name:")
+                                    @Html.TextBox("MiddleName", "", new { @class = "form-control", placeholder = "Middle Name" })
+                                 </div>
+                                <div class="col-md-4">
+                                    @Html.Label("Last Name:")
+                                    @Html.TextBox("LastName", "", new { @class = "form-control", placeholder = "LastName" })
+                                </div>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Email ID:")
+                                    @Html.TextBox("EmailID", "", new { @class = "form-control", placeholder = "Email ID" })
+                                </div>
+
+                                <div class="col-md-6">
+                                    @Html.Label("Mobile Number:")
+                                    @Html.TextBox("MobileNo", "", new { @class = "form-control", @type = "phone", onkeypress = "return isNumber(event)", maxlength = "10" })
+                                </div>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">                           
+                            <div class="row">
+                                 <div class="col-md-6">
+                                    @Html.Label("Permanent Address:")
+                                    @Html.TextArea("PAddress", "", new { @class = "form-control", rows = "3", placeholder = "Permanent Address" })
+                                </div>
+
+                                <div class="col-md-6">     
+                                     @Html.Label("Current Address:")
+                                    @Html.TextArea("SAddress", "", new { @class = "form-control", rows = "3", placeholder = "Current Address" })
+                                </div>
+                                                              
+                            </div>                            
+                        </div>  
+                        <div class="form-group">                           
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("DOB:")
+                                    @Html.TextBox("Date", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                               </div>
+                               <div class="col-md-6">
+                                    @Html.Label("Gender:")
+                                    @Html.TextBox("Gender", "", new { @class = "form-control", placeholder = "Gender" })
+                               </div>
+                            </div>                               
+                        </div>  
+                    </div>
+                </div>
+            </div>  
+             <div class="form-group">
+                  <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmituserProfile();" />
+                  @*@Html.ActionLink("Cancel", "index", "ApplicantProfile", new { area = "" }, new { @class = "btn btn-primary" })*@
+             </div>   
+           @* <div class="form-group">
+                @Html.ActionLink("Submit", "RegistrationDtl", "Registration", new { area = "" }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Cancel", "RegistrationDtl", "Registration", new { area = "" }, new { @class = "btn btn-primary" })
+            </div> *@          
+
+        </div>
+    </div>
+}
+ 
+  <script>
+
+        function SubmituserProfile() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#FirstName").val() == "0" || $("#FirstName").val() == "") {
+                ErrorCnt++;
+                $('#SpanFirstName').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    //ApplicantID: $('#ApplicantID').val(),
+                    FirstName: $('#FirstName').val(),
+                    MiddleName: $('#MiddleName').val(),
+                    LastName: $('#LastName').val(),
+                    EmailID: $('#EmailID').val(),
+                    MobileNo: $('#MobileNo').val(),
+                    PAddress: $('#PAddress').val(),
+                    SAddress:$('#SAddress').val(),
+                    Gender:$('#Gender').val(),
+                    DOB:$('#Date').val(),
+                    //IsActive: $('#IsActive').val()
+                };
+                $.ajax
+                    ({
+                        type: "GET",
+                        url: "/ApplicantProfile/SaveuserRecord",
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                window.location.href = "/ApplicantProfile/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+
+                        },
+
+                        error: function() {
+                            alert('Something went wrong!');
+                        }
+                    })
+            }
+    }
+
+   </script>

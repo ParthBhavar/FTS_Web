@@ -1,0 +1,881 @@
+﻿@model FTS.Model.Entities.NFormApplicationModel
+@{
+    ViewBag.Title = "Gratuity Appliaction Status History";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using Kendo.Mvc.UI
+@using (Html.BeginForm())
+{
+      @Html.AntiForgeryToken();
+       <br />
+    <section>
+        <h3 style="font-weight:bold;">@ViewBag.Title</h3>
+    </section>   
+
+      Html.RenderPartial("_NFormDetailView");
+
+ <div class="content-wrapper">
+       @Html.HiddenFor(e => e.IP_Address, new { @ID="IP_Address"})
+        @* Eshtablishment*@
+        @*<div class="row" id="DivEstablishACL">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                    <div class="card-body">
+                          <fieldset>
+                          <legend>Establishment Address</legend>
+                        <div class="form-group">
+                              <div class="col-md-12"> 
+                                      <div class="row">
+                                                <div class="col-md-3">
+                                                    @Html.HiddenFor(e => e.EstalishmentdetailACL[0].EstablisDetailID, new { @ID="EstablisDetailID"})
+                                                    @Html.Label("Establishment Name: / સ્થાપના નામ:")
+                                                    @Html.TextBoxFor(x => x.EstalishmentdetailACL[0].EstablishmentName, new { @class = "form-control", @ID="EstablisDetailID",@disabled = "disabled" })
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @Html.Label("District: / જિલ્લો:") <span class="text-danger">*</span>
+                                                    @Html.DropDownListFor(e => e.EstalishmentdetailACL[0].DistrictID, new SelectList(Model.EstalishmentdetailACL[0].Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EstablishmentDistrictID" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentDistrictID" style="display:none;">Please Select District</span>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    @Html.Label("Taluka: / તાલુકો:")
+                                             
+                                                    @Html.DropDownListFor(e => e.EstalishmentdetailACL[0].TalukaID, new SelectList(Model.EstalishmentdetailACL[0].Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EstablishmentTalukaID" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentTalukaID" style="display:none;">Please Select Taluka</span>
+                                                </div>
+                                                <div class="col-md-2" id="DivArea">
+                                                    @Html.Label("Area: / વિસ્તાર:") 
+                                                    @Html.HiddenFor(e => e.EstalishmentdetailACL[0].ZoneID , new { @ID="EstablishmentZoneID"})
+                                                    @Html.HiddenFor(e => e.EstalishmentdetailACL[0].AreaID , new { @ID="EstablishmentAreaID"})
+                                                    <input id="ddlEstablishmentArea" class="form-control" value="@Model.EstalishmentdetailACL[0].AreaID" style="width:100%;" />
+                                                    <span class="text-danger ValidationSpan" id="SpanddlEstablishmentArea" style="display:none;">Please Select Area</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    @Html.Label("Pincode: / પીન કોડ:")
+                                                    @Html.TextBoxFor(x => x.EstalishmentdetailACL[0].Pincode, new { @class = "form-control", @ID="EstablishmentPincode" , placeholder = "Enter Pincode", maxlength="6",oninput="numberOnly(this.id);" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentPincode" style="display:none;">Please Enter Pincode </span>
+                                                </div>
+                                            </div>
+                                  </div>
+                        </div>
+                          </fieldset>
+                          <div class="form-group">
+                          <input type="button" id="btnEshtablishment" class="btn btn-primary" value="Update" onclick="UpdateEshtablishment();" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>*@
+
+    @* Hearing*@
+        <div class="row" id="DivHearing">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                    <div class="card-body">
+                         <fieldset>
+                          <legend>Hearing Detail</legend>
+                        <div id="Hearing">
+
+
+                        </div>
+                         </fieldset>
+                      @*  <div class="form-group">*@
+                            @*  <div class="col-md-12"> 
+                                   <div class="row">
+                                              
+                                   <div class="col-md-3">
+                                      @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+                                      @Html.Label("Hearing Date") <span class='text-danger'>*</span><br>
+                                      @Html.TextBoxFor(e => e.HearingDate, "{0:dd-MM-yyyy}", new { @class = "form-control datepicker", @ID="HearingDate", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanJoinningDate" style="display:none;">Please Insert Date</span>
+                                   </div>
+
+                                                   
+                                  <div class="col-md-6">
+                                       @Html.Label("Hearing Reason") <span class='text-danger'>*</span><br>
+                                       @Html.DropDownListFor(e => e.HearingReasonID, new SelectList(Model.HearingReasonList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="HearingReasonID" ,@width ="15px"})
+                                       <span class="text-danger ValidationSpan" id="SpanHearingReason" style="display:none;">Please Select</span>
+                                  </div> 
+
+                               </div>
+                                  </div>*@
+                                                        
+                           @*    <div class="col-md-10 mt-3">
+                           
+                                    @Html.Label("Hearing remark") <span class='text-danger'>*</span> 
+                                   @Html.TextAreaFor(e => e.HearingNote, new { @class = "form-control", @ID="HearingNote", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanHearingNote" style="display:none;">Please Enter Hearing Note</span>
+                             </div>*@
+                         
+
+                       @* </div>*@
+                                                 
+                          <div class="form-group">
+                          <input type="button" id="btnHearing" class="btn btn-primary" value="Save" onclick="SubmitHearing();" />
+                            @Html.ActionLink("Cancel", "Index", "NFormApplication", new { area = "" }, new { @class = "btn btn-primary",@ID = "btnCancel" })
+                             @*<input type="button" id="btnAddHearing" class="btn btn-info" value="More Hearing" onclick="Fn_AddHearing();" />*@
+                         @*  <a id="btnAddHearing" class="btn btn-info" onclick="Fn_AddHearing()"><i class="fas fa-folder-plus"></i> More Hearing</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@*
+    Settlement*@
+     <div class="row" id="DivSettlement" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                          <div class="form-group ">
+                              <div class="col-md-12">
+                                <div class="row">
+                                               @*SettlementDate*@
+
+                                 <div class="col-md-6">
+                                      @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+                                      @Html.Label("Case Close Date: / કેસ બંધ તારીખ:") <span class='text-danger'>*</span><br>
+                                      @Html.TextBoxFor(e => e.SettlementDate,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="SettlementDate", required = "required" })
+                                      <span class="text-danger ValidationSpan" id="SpanJoinningDate" style="display:none;">Please Insert Joinning Date</span>
+
+                                </div>
+
+                                                  @*CaseFavourIn*@
+                                 <div class="col-md-6">
+                                     @Html.Label("Case Favour of: / કેસની તરફેણમાં:") <span class='text-danger'>*</span><br>
+                                     @Html.DropDownListFor(e => e.CaseFavourIn, new SelectList(Model.CaseFavourList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="CaseFavourIn"})
+                                     <span class="text-danger ValidationSpan" id="SpanCaseFavourIn" style="display:none;">Please Select</span>
+                                 </div>
+                               </div>
+                          </div>
+
+                              <div class="col-md-12 mt-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                                           @*SettlementNote*@
+                                        @Html.Label("Case Close Note: / કેસ બંધ નોંધ:") <span class='text-danger'>*</span>
+                                        @Html.TextAreaFor(e => e.SettlementNote, new { @class = "form-control", @ID="SettlementNote", required = "required" })
+                                        <span class="text-danger ValidationSpan" id="SpanSettlementNote" style="display:none;">Please Enter Hearing Note</span>
+                                     </div>
+                                                              @*SettlementfileUpload*@
+                                      <div class="col-md-6">
+                                          
+                                         @Html.Label("Order Document: / ઓર્ડર દસ્તાવેજ:") <span class='text-danger'>*</span>
+                                         <br/>
+                                         <input type="file" id="SettlementfileUpload" class="fileUpload" onchange="return fileValidation()" >
+                                         <span class="text-danger ValidationSpan" id="SpanSettlementfileUpload" style="display:none;">Please Select file </span>
+                                          @if (@Model.SettlementDocURL != "")
+                                             {
+                                                 <a href="/NFormApplication/DownloadSettlementFile/?FileName=@Model.SettlementDocURL" ><i class="fas fa-download"></i></a>
+                                             } 
+                                      </div>
+                                </div>
+                            </div>
+                                                @*Submit Btn *@
+                              <div class="form-group mt-3">
+
+                          <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitSettlement();" />
+                            @Html.ActionLink("Cancel", "NFormACLList", "NFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>  
+ 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+   
+     </div>
+     
+                          @if(@Model.ISView == 1)
+                          {
+                         <div class="form-group">
+                            @Html.ActionLink("Cancel", "Index", "NFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div> 
+                          }
+     </div>
+<script>
+        $("#SettlementDate").kendoDatePicker({
+          format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+         }
+        }); 
+
+     </script>
+ <script>
+
+       $(document).ready(function () {
+            debugger;
+
+            HearingDetail();
+             bindAreaDropdown(@Html.Raw(Json.Serialize(@Model.EstalishmentdetailACL[0].AreaList)));
+
+      @*    document.getElementById("HearingReasonID_chosen").style.width = "200px";
+          document.getElementById("CaseFavourIn_chosen").style.width = "100px";*@
+       @*    $("#DivHearing").hide();*@
+        @*   $("#DivSettlement").hide();
+           $("#DivSendtolabour").hide();*@
+
+           if ('@Model.ISNew' == 0 && '@Model.ISView' == 0) {
+               $("#DivHearing").show();
+           }
+           else if ('@Model.ISNew' == 1 && '@Model.ISView' == 0)
+           {
+               $("#DivSettlement").show();
+                $("#btnHearing").hide();
+                $("#btnCancel").hide();
+                $("#btnAddHearing").hide();
+
+           }
+            else if ('@Model.ISView' == 1)
+           {
+               $("#DivSettlement").hide();
+              @*  $("#DivHearing").hide();*@
+                $("#btnEshtablishment").hide();
+                 $("#btnHearing").hide();
+                 $("#btnCancel").hide();
+                $("#btnAddHearing").hide();
+                $("#DivEstablishACL").hide();
+                  if($("#HearingDate_0").val() == "")
+                {
+                     $("#DivHearing").hide();
+                }
+           }
+            
+            });
+
+
+@* function SubmitHearing() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+
+
+            if ($("#HearingReasonID").val() == "0" || $("#HearingReasonID").val() == "") {
+                ErrorCnt++;
+                $('#SpanHearingReason').show();
+            }
+
+             if ($("#HearingNote").val() == "0" || $("#HearingNote").val() == "") {
+                ErrorCnt++;
+                $('#SpanHearingNote').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    HearingDate: $('#HearingDate').val(),
+                    HearingNote: $('#HearingNote').val(),
+                    HearingReasonID: $('#HearingReasonID').val(),
+                    URL: document.URL,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/NFormApplication/SaveNFormHearingACLRecord",
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/NFormApplication/NFormACLList";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+\
+
+                        },
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }*@
+
+
+     function UpdateEshtablishment() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+         
+                    if ($("#EstablishmentDistrictID").val() == "0" || $("#EstablishmentDistrictID").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentDistrictID').show();
+        }
+
+        if ($("#EstablishmentTalukaID").val() == "0" || $("#EstablishmentTalukaID").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentTalukaID').show();
+        }
+
+        if ($("#DivArea").is(":visible")) {
+            if ($("#ddlEstablishmentArea").val() == "0" || $("#ddlEstablishmentArea").val() == "") {
+                ErrorCnt++;
+                $('#SpanddlEstablishmentArea').show();
+            }
+        }
+
+
+        if ($("#EstablishmentPincode").val() == "0" || $("#EstablishmentPincode").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentPincode').show();
+        }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    EstablisDetailID: $('#EstablisDetailID').val(),
+                    ApplicationID: $('#ApplicationID').val(),
+                    DistrictID: $('#EstablishmentDistrictID').val(),
+                    TalukaID: $('#EstablishmentTalukaID').val(),
+                    AreaID: $('#EstablishmentAreaID').val(),
+                    ZoneID: $('#EstablishmentZoneID').val(),
+                    Pincode: $('#EstablishmentPincode').val(),
+                    URL: document.URL,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/NFormApplication/UpdateEshtablishmentAddressdetailFromACL",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/NFormApplication/NFormACLList";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/NFormApplication/NFormACLList";
+                              alert(data.data.ErrorMassage);
+                            }
+                            else {
+                              alert(data.data.ErrorMassage);
+                            }*@
+
+                        },
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                        @*error: function() {
+                            alert('Something went wrong!');
+                        }*@
+                    })
+            }
+    }
+
+
+   
+       function SubmitSettlement() {
+
+        var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+      
+            if ($("#SettlementNote").val() == "0" || $("#SettlementNote").val() == "") {
+                ErrorCnt++;
+                $('#SpanSettlementNote').show();
+            }
+
+             if ($("#SettlementDocURL").val() == "") {
+            if ($("#SettlementfileUpload").val() == "0" || $("#SettlementfileUpload").val() == "") {
+                ErrorCnt++;
+                $('#SpanSettlementfileUpload').show();
+            }
+             }
+
+            if ($("#CaseFavourIn").val() == "0" || $("#CaseFavourIn").val() == "") {
+                ErrorCnt++;
+                $('#SpanCaseFavourIn').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+       if (ErrorCnt == 0) {
+           var files = $('#SettlementfileUpload').prop("files");
+           var ApplicationID = $('#ApplicationID').val();
+           var SettlementDate = $('#SettlementDate').val();
+           var SettlementNote = $('#SettlementNote').val();
+           var CaseFavourIn = $('#CaseFavourIn').val();
+           var URL = document.URL;
+           debugger;
+           var url = "/NFormApplication/SaveNFormACLSettlementRecord?handler=MyUploader" + "&ApplicationID=" + ApplicationID + "&SettlementDate=" + SettlementDate  + "&SettlementNote=" + SettlementNote + "&URL=" + URL + "&CaseFavourIn=" + CaseFavourIn;
+           formData = new FormData();
+           formData.append("MyUploader", files[0]);
+
+           jQuery.ajax({
+               type: 'POST',
+               url: url,
+               headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+               data: formData,
+               cache: false,
+               contentType: false,
+               processData: false,
+               success: function(repo) {
+                   debugger;
+
+                   if (repo.status.ErrorCode == 0) {
+
+                         swal(repo.status.ErrorMassage)
+                                .then((value) => {
+                                   window.location.href = "/NFormApplication/NFormACLList";
+                                });
+
+                      @* swal((repo.status.ErrorMassage)
+                      .then((value) => {
+                      location.reload();
+                      });*@
+
+
+                   }
+                  else {
+                     swal(repo.status.ErrorMassage);
+                   }
+
+                  
+               },
+                error: function (request, message, error) 
+                    {
+                         debugger; 
+                        swal(request.responseJSON);
+                   }
+              @* error: function() {
+                   alert("Error occurs");
+               }*@
+           });
+       }
+}
+
+
+     function fileValidation() {
+    debugger;
+    var fileInput = document.getElementById('SettlementfileUpload'); 
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+                swal('Invalid file type');
+                fileInput.value = '';
+                return false;
+            }
+            
+        }
+
+
+     
+    function bindAreaDropdown(obj) {
+
+        $("#ddlEstablishmentArea").kendoMultiColumnComboBox({
+            dataTextField: "DisplayValue",
+            dataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue"],
+            dataSource: {
+                data: obj
+            },
+            change: function(e) {
+                debugger;
+                if (this.dataSource.data().length > 0) {
+                    if (this.dataSource.data()[this.selectedIndex] != undefined) {
+
+                        $('#EstablishmentZoneID').val(this.dataSource.data()[this.selectedIndex].ZoneID);
+                        $('#EstablishmentAreaID').val(this.dataSource.data()[this.selectedIndex].DataValue);
+                    }
+                    else {
+                        $('#ddlEstablishmentArea').data("kendoMultiColumnComboBox").value('');
+                        swal("Please Select Valid Area");
+                    }
+                }
+            }
+
+        });
+    }
+
+         $(function() {
+        $("#EstablishmentDistrictID").change(function() {
+            debugger;
+            $.ajax({
+                type: "GET",
+                url: "/ReinstatementAppliaction/AllList",
+                headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                data: { mode: $("#RegistrationID").val(), DistrictID: $("#EstablishmentDistrictID").val() },
+                success: function(response) {
+                    debugger;
+                    $("#ddlEstablishmentArea").kendoMultiColumnComboBox().empty();
+                    $("#EstablishmentTalukaID").empty();
+                    var row = "";
+                    for (var i = 0; i < response.data.Talukalist.length; i++) {
+                        row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                    }
+                    $("#EstablishmentTalukaID").html(row).trigger('chosen:updated');
+
+                    if (response.data.AreaList != "") {
+                        $("#DivArea").show();
+                        bindAreaDropdown(response.data.AreaList);
+                    }
+                    else {
+                        $("#DivArea").hide();
+                             $("#EstablishmentZoneID").val(0);
+                    $("#EstablishmentAreaID").val(0);
+                    }
+                },
+                failure: function(response) {
+                    swal(response.responseText)
+                        .then((value) => {
+
+                        });
+                },
+                error: function(response) {
+                    //respone will be returned here
+                    $("#error").val(response.responseText);
+                }
+            });
+        });
+    });
+
+
+        function numberOnly(id) {
+        var element = document.getElementById(id);
+        element.value = element.value.replace(/[^0-9]/gi, "");
+    }
+
+     </Script>
+
+
+    <script>
+                var B = 0;
+
+        function HearingDetail() {
+        debugger;
+        var data = @Html.Raw(Json.Serialize(@Model.HearingdetailACL));
+        var i;
+        for (B = 0; B < data.length; B++) {
+
+    @*  var AddEducationdetails = "<div class='row'>";*@
+             var AddEducationdetails = "";
+            AddEducationdetails += "<div id='DivHearingdetail_" + B + "'>";
+            AddEducationdetails += "<fieldset class='border p-2'>";
+    @*  AddEducationdetails += "<legend  class='w-auto'>Establish Detail:" + E + " </legend>";*@
+
+            AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+                 AddEducationdetails += "<input type='hidden' name='ApplicationID_" + B + "' value='" + data[B].ApplicationID + "' id='ApplicationID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='HearingID_" + B + "'  value='" + data[B].HearingID + "' id='HearingID_" + B + "' />";
+                    AddEducationdetails += "<input type='hidden' name='IsActive_" + B + "' value='" + data[B].IsActive + "' id='IsActive_" + B + "' />";
+            AddEducationdetails += "<label for='Applicant_Name'>Hearing Date <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control datetimepicker' style='width: 100%;' id='HearingDate_" + B + "' name='HearingDate_" + B + "'  type='text' value='" + data[B].HearingDate + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingDate_" + B + "' style='display:none;'>Please Enter Hearing Date</span>";
+            AddEducationdetails += "</div>";
+
+             AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='District_Name'>Hearing Reason <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<select class='chosen-select form-control' name='HearingReasonID_" + B + "' id='HearingReasonID_" + B + "'>";
+            AddEducationdetails += "<option value='0'>Select</option>";
+            for (i = 0; i < data[B].HearingReasonList.length; ++i) {
+                if (data[B].HearingReasonList[i].DataValue == data[B].HearingReasonID) {
+                    AddEducationdetails += "<option value=" + data[B].HearingReasonList[i].DataValue + " selected='selected'>" + data[B].HearingReasonList[i].DisplayValue + "</option>";
+                }
+                else {
+
+                    AddEducationdetails += "<option value=" + data[B].HearingReasonList[i].DataValue + ">" + data[B].HearingReasonList[i].DisplayValue + "</option>";
+                }
+            }
+            AddEducationdetails += "</select>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingReasonID_" + B + "' style='display:none;'>Please Select Reason </span>";
+            AddEducationdetails += "</div>";
+
+                AddEducationdetails += "<div class='col-md-5'>";
+            AddEducationdetails += "<label for='P_Address'>Hearing Note <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<textarea class='form-control'' id='HearingNote_" + B + "' name='HearingNote_" + B + "'  type='text'>" + data[B].HearingNote + "</textarea>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingNote_" + B + "' style='display:none;'>Please Hearing Note</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>IsCancle <span> &nbsp</span></label>";
+                 AddEducationdetails += "<input type='checkbox' class='myCheckbox' name='IsCancle_" + B + "' value='" + data[B].IsCancle + "' id='IsCancle_" + B + "' />";
+            AddEducationdetails += "</div>";
+
+
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</fieldset>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</Br>"
+
+            $("#Hearing").append(AddEducationdetails);
+            $(".chosen-select").chosen();
+            $('.chosen-container').css('width', '100%');
+           $("#HearingDate_" + B).kendoDateTimePicker({ format: "dd-MM-yyyy HH:mm",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+         }});
+             if($("#HearingID_" + B).val() == 0)
+           {
+                $("#HearingDate_" + B).val("")
+           }
+              if( $("#IsCancle_" + B).val() == 'true')
+              {
+                   $("#IsCancle_" + B).attr('checked', 'checked');
+              }
+            if( $("#HearingNote_" + B).val().length > 1 || $("#IsCancle_" + B).val() == 'true')
+            {
+                $("#HearingDate_" + B).data('kendoDateTimePicker').enable(false);
+                $("#HearingNote_" + B).attr("disabled", "disabled");
+                $("#IsCancle_" + B).attr("disabled", "disabled");
+                $("#HearingReasonID_" + B).prop('disabled', true).trigger("chosen:updated");
+            }      
+            else{
+                 $("#btnAddHearing").attr("disabled", "disabled");
+            }
+            //B++;
+
+        }
+
+    }
+
+    //Contractor`s Details
+    function Fn_AddHearing() {
+
+        debugger
+        var i;
+        var ApplicationID = $('#ApplicationID').val();
+        var HearingID = 0;
+        var HearingReasonList = @Html.Raw(Json.Serialize(@Model.HearingReasonList));
+
+
+          var AddEducationdetails = "";
+            AddEducationdetails += "<div id='DivHearingdetail_" + B + "'>";
+            AddEducationdetails += "<fieldset class='border p-2'>";
+    @*  AddEducationdetails += "<legend  class='w-auto'>Establish Detail:" + E + " </legend>";*@
+
+            AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<input type='hidden' name='ApplicationID_" + B + "' value='" + ApplicationID + "' id='ApplicationID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='HearingID_" + B + "'  value='" + HearingID + "' id='HearingID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='IsActive_" + B + "' value='true' id='IsActive_" + B + "' />";
+            AddEducationdetails += "<label for='Applicant_Name'>commen cement <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control datepicker' style='width: 100%;' id='HearingDate_" + B + "' name='HearingDate_" + B + "'  type='text' value=''>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingDate_" + B + "' style='display:none;'>Please Enter Hearing Date</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='District_Name'>Hearing Reason <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<select class='chosen-select form-control' name='HearingReasonID_" + B + "' id='HearingReasonID_" + B + "'>";
+            AddEducationdetails += "<option value='0'>Select</option>";
+            for (i = 0; i < HearingReasonList.length; ++i) {
+            AddEducationdetails += "<option value=" + HearingReasonList[i].DataValue + ">" + HearingReasonList[i].DisplayValue + "</option>";
+            }
+            AddEducationdetails += "</select>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingReasonID_" + B + "' style='display:none;'>Please Select Reason </span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-5'>";
+            AddEducationdetails += "<label for='P_Address'>Hearing Note <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<textarea class='form-control'' id='HearingNote_" + B + "' name='HearingNote_" + B + "'  type='text'></textarea>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingNote_" + B + "' style='display:none;'>Please Hearing Note</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>IsCancle <span> &nbsp</span></label>";
+            AddEducationdetails += "<input type='checkbox' class='myCheckbox' onclick='canclecheckbox("+B+")' name='IsCancle_" + B + "' value='false' id='IsCancle_" + B + "' />";
+            AddEducationdetails += "</div>";
+
+
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</fieldset>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</Br>"
+
+            $("#Hearing").append(AddEducationdetails);
+            $(".chosen-select").chosen();
+            $('.chosen-container').css('width', '100%');
+            $("#HearingDate_" + B).kendoDateTimePicker({ format: "dd-MM-yyyy HH:mm",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+         }});
+            B++;
+
+    }
+
+       function GetHearingXML() {
+        var xml = '';
+        xml += '<DataTable>';
+        var i = B;
+        var v;
+        for (v = 0; v < i; ++v) {
+            xml += '<DataRow>';
+            xml += "<" + "ApplicationID" + ">" + $("#ApplicationID_" + v + "").val() + "</" + "ApplicationID" + ">";
+            xml += "<" + "HearingID" + ">" + $("#HearingID_" + v + "").val() + "</" + "HearingID" + ">";
+            xml += "<" + "HearingDate" + ">" + $("#HearingDate_" + v + "").val() + "</" + "HearingDate" + ">";
+            xml += "<" + "HearingReasonID" + ">" + $("#HearingReasonID_" + v + "").val() + "</" + "HearingReasonID" + ">";
+            xml += "<" + "HearingNote" + ">" + $("#HearingNote_" + v + "").val() + "</" + "HearingNote" + ">";
+            
+              if ($("#IsCancle_" + v + "").val() == "true") {
+                  xml += "<" + "IsCancle" + ">" + 1 + "</" + "IsCancle" + ">";
+              }
+              else {
+                  xml += "<" + "IsCancle" + ">" + 0 + "</" + "IsCancle" + ">";
+              }
+
+              
+              if ($("#IsActive_" + v + "").val() == "true") {
+                  xml += "<" + "IsActive" + ">" + 1 + "</" + "IsActive" + ">";
+              }
+              else {
+                  xml += "<" + "IsActive" + ">" + 0 + "</" + "IsActive" + ">";
+              }
+
+            xml += "<" + "URL" + ">" + document.URL + "</" + "URL" + ">";
+            xml += "<" + "IP_Address" + ">" + $("#IP_Address").val() + "</" + "IP_Address" + ">";
+            //xml += "<" + "UserID" + ">" + $("#UserID").val() + "</" + "UserID" + ">";
+            xml += '</DataRow>';
+        }
+        xml += '</DataTable>'
+        return xml;
+    }
+
+
+    function SubmitHearing() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+             var i = B;
+        var v;
+
+        for (v = 0; v < i; ++v) {
+
+            if ($("#HearingDate_" + v + "").val() == "0" || $("#HearingDate_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanHearingDate_" + v + "").show();
+            }
+
+            if ($("#HearingReasonID_" + v + "").val() == "0" || $("#HearingReasonID_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanHearingReasonID_" + v + "").show();
+            }
+@*
+            if ($("#HearingNote_" + v + "").val() == "0" || $("#HearingNote_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanHearingNote_" + v + "").show();
+            }*@
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+        }
+
+                     
+        if (ErrorCnt == 0) {
+            var myData = {
+                XMLString: GetHearingXML(),
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/NFormApplication/SaveNFormHearingACLRecord",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    dataType: "json",
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+                        if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage)
+                            .then((value) => {
+                                 window.location.href = "/NFormApplication/NFormACLList";
+                            });
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function(request, message, error) {
+                        debugger;
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+
+    }
+
+   function canclecheckbox(id) {
+              debugger;
+       
+            if ($("#IsCancle_"+id).is(':checked')) {
+          $("#IsCancle_"+id).val(true);
+         
+        } 
+
+       } 
+
+        </script>
+  
+ }
+
+ 

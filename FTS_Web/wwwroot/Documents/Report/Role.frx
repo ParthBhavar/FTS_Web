@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" TextQuality="Regular" ReportInfo.Name="Simple List" ReportInfo.Author="Fast Reports Inc" ReportInfo.Description="Demonstrates a simple list report. To create it:&#13;&#10;- go to &quot;Data&quot; menu and select &quot;Choose Report Data...&quot; item to select a datasource;&#13;&#10;- go to &quot;Report|Configure Bands...&quot; menu to create the band structure;&#13;&#10;- return to the report page, doubleclick the data band to show its editor;&#13;&#10;- choose the datasource;&#13;&#10;- drag data from the Data Dictionary window to the band." ReportInfo.Created="01/17/2008 03:05:57" ReportInfo.Modified="09/29/2022 15:19:32" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Role" ConnectionString="rijcmlq/K/ICGBqSJZHyPIlONiZf6urvRUubsXOXIPJ1G5wYbG2jECpz0fpzZnWIFcQol0G2SyHJny+in66Q4l8gO+vW/KLprG2g0eChUVEIpeyGttVN+FPp8Vy69UpWFs5Y3hm1urvB8iPSsvKpn//j2N4NWx1ESnzKdLK7+WNQTRb+rtgYYO9eXxJ2cdWkfaa858D">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" TableName="Table">
+        <Column Name="ErrorCode" DataType="System.Int64"/>
+        <Column Name="ErrorMassage" DataType="System.String"/>
+        <Column Name="ApplicationID" DataType="System.Int32"/>
+      </TableDataSource>
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="ApplicationID" DataType="System.Int32"/>
+        <Column Name="ApplicantName" DataType="System.String"/>
+        <Column Name="PAddress" DataType="System.String"/>
+        <Column Name="SAddress" DataType="System.String"/>
+        <Column Name="DistrictName" DataType="System.String"/>
+        <Column Name="TalukaName" DataType="System.String"/>
+        <Column Name="Pincode" DataType="System.Int32"/>
+        <Column Name="GanderName" DataType="System.String"/>
+        <Column Name="ZoneName" DataType="System.String"/>
+        <Column Name="AreaName" DataType="System.String"/>
+        <Column Name="DOC1" DataType="System.String"/>
+        <Column Name="DOC2" DataType="System.String"/>
+        <Column Name="DOC3" DataType="System.String"/>
+        <Column Name="Email" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Table2" DataType="System.Int32" Enabled="true" TableName="Table2">
+        <Column Name="EstablishmentCode" DataType="System.String"/>
+        <Column Name="EstablishmentName" DataType="System.String"/>
+        <Column Name="PAddress" DataType="System.String"/>
+        <Column Name="SAddress" DataType="System.String"/>
+        <Column Name="DistrictName" DataType="System.String"/>
+        <Column Name="TalukaName" DataType="System.String"/>
+        <Column Name="ZoneName" DataType="System.String"/>
+        <Column Name="AreaName" DataType="System.String"/>
+        <Column Name="Pincode" DataType="System.Int32"/>
+        <Column Name="Email" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Table3" DataType="System.Int32" Enabled="true" TableName="Table3">
+        <Column Name="RegistrationNo" DataType="System.String"/>
+        <Column Name="RegistrationName" DataType="System.String"/>
+        <Column Name="PAddress" DataType="System.String"/>
+        <Column Name="SAddress" DataType="System.String"/>
+        <Column Name="DistrictName" DataType="System.String"/>
+        <Column Name="TalukaName" DataType="System.String"/>
+        <Column Name="ZoneName" DataType="System.String"/>
+        <Column Name="AreaName" DataType="System.String"/>
+        <Column Name="Pincode" DataType="System.Int32"/>
+        <Column Name="DepartmentName" DataType="System.String"/>
+        <Column Name="WorkName" DataType="System.String"/>
+        <Column Name="WorkerAge" DataType="System.Int64"/>
+        <Column Name="TotalWorkers" DataType="System.Int64"/>
+        <Column Name="LastSalaryDrawn" DataType="System.Int64"/>
+        <Column Name="JoinningDate" DataType="System.String"/>
+        <Column Name="TerminationDate" DataType="System.String"/>
+        <Column Name="TotalYr" DataType="System.Int64"/>
+        <Column Name="Note" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Table4" DataType="System.Int32" Enabled="true" TableName="Table4">
+        <Column Name="SettlementDate" DataType="System.String"/>
+        <Column Name="SettlementNote" DataType="System.String"/>
+        <Column Name="SettlementDocURL" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Table5" DataType="System.Int32" Enabled="true" TableName="Table5">
+        <Column Name="SendLCDate" DataType="System.String"/>
+        <Column Name="SendLCNote" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page2" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle2" Width="718.2" Height="75.6">
+      <TextObject Name="Text11" Left="9.45" Top="28.35" Width="538.65" Height="18.9" Text="Testing report" HorzAlign="Right" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="79.6" Width="718.2" Height="28.35">
+      <TextObject Name="Text2" Left="9.45" Width="274.05" Height="18.9" Text="EstablishmentCode" Font="Arial, 10pt"/>
+      <TextObject Name="Text4" Left="340.2" Width="311.85" Height="18.9" Text="EstablishmentName" Font="Arial, 10pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="111.95" Width="718.2" Height="28.35" Guides="28.35" DataSource="Table2" KeepTogether="true">
+      <TextObject Name="Text18" Left="9.45" Top="9.45" Width="274.05" Height="18.9" Text="[Table2.EstablishmentCode]" Font="Arial, 10pt"/>
+      <TextObject Name="Text19" Left="340.2" Top="9.45" Width="311.85" Height="18.9" Text="[Table2.EstablishmentName]" Font="Arial, 10pt"/>
+    </DataBand>
+    <DataBand Name="Data2" Top="144.3" Width="718.2" Height="103.95" DataSource="Table1">
+      <TextObject Name="Text12" Left="28.35" Top="37.8" Width="94.5" Height="18.9" Text="[Table1.ApplicationID]" Font="Arial, 10pt"/>
+      <TextObject Name="Text13" Left="28.35" Top="9.45" Width="94.5" Height="18.9" Text="ApplicationID" Font="Arial, 10pt"/>
+      <TextObject Name="Text14" Left="151.2" Top="37.8" Width="160.65" Height="18.9" Text="[Table1.ApplicantName]" Font="Arial, 10pt"/>
+      <TextObject Name="Text15" Left="340.2" Top="37.8" Width="151.2" Height="18.9" Text="[Table1.PAddress]" Font="Arial, 10pt"/>
+      <TextObject Name="Text16" Left="151.2" Top="9.45" Width="160.65" Height="18.9" Text="ApplicantName" Font="Arial, 10pt"/>
+      <TextObject Name="Text17" Left="340.2" Top="9.45" Width="151.2" Height="18.9" Text="PAddress" Font="Arial, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter2" Top="252.25" Width="718.2" Height="37.8"/>
+  </ReportPage>
+</Report>

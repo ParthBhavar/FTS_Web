@@ -1,0 +1,162 @@
+﻿@model FTS.Model.Entities.MRoleMaster
+@{
+    ViewBag.Title = "Role Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                   <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="form-group"> 
+			 		                <select class  ="form-control" name="state" id="maxRows">
+						                    <option value="5000">Show ALL Rows</option>
+						                    <option value="5">5</option>
+						                    <option value="10">10</option>
+						                    <option value="15">15</option>
+						                    <option value="20">20</option>
+						                    <option value="50">50</option>
+						                    <option value="70">70</option>
+						                    <option value="100">100</option>
+						                </select>
+			                      </div>
+                                </div> 
+                                <div class="col-md-2">
+                                   @Html.ActionLink("Apply New", "AddRoleMaster", "RoleMaster", new { RoleID = 0 }, new { @class = "btn btn-primary" })
+                                </div>
+                                <div class="col-md-2" style="margin-left: auto;">
+                                    @Html.TextBoxFor(m => m.serchstring, new { @class = "form-control",@ID = "serchstring",value = "0" })  
+                                </div>
+                                <div class="col-md-1">
+                                   <input type="button"  value="Search" class="btn btn-primary" onclick="RoleList();" />
+                                </div>
+                            </div>
+                        </div>
+                                <div class="table-responsive">
+                                    <table id="RoleList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                 <th id="roleID">Role ID</th>
+                                                  <th id="roleName">Role Name</th>
+                                                  <th id="Edit">Edit</th>
+                                                  <th id="Delete">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                   <!--		Start Pagination -->
+			                    <div class='pagination-container' >
+				                    <nav>
+				                      <ul class="pagination">
+                                           <li data-page="prev" >
+                                               <span class="page-link"> Previous <span class="sr-only">(current)</span>
+                                               </span>
+                                            </li>
+                                           <li data-page="next" id="prev">
+                                               <span class="page-link"> Next<span class="sr-only">(current)</span>
+                                               </span>
+                                            </li>
+				                      </ul>
+				                    </nav>
+			                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+      $( document ).ready(function() {
+        RoleList();
+        $('#RoleList').DataTable();
+    });
+
+        function RoleList() {
+          
+            var myData = {
+                serchstring: $('#serchstring').val()
+            };
+            $.ajax
+             ({
+               type: "POST",
+               url: "/RoleMaster/Index",
+               dataType: "json",
+               data: myData,
+               success: function (data) {
+                   debugger;
+                   if (data.data.result != "") 
+                   {
+                       $("#RoleList tbody").html("");
+                       var RowHtml = "";
+                          for (var i = 0; i < data.data.result.length; i++) {
+                               RowHtml = RowHtml + "<tr>";
+                               RowHtml = RowHtml + '<td id="roleID">' + data.data.result[i].roleID + '</td>';
+                               RowHtml = RowHtml + '<td id="roleName">' + data.data.result[i].roleName + '</td>';
+                               RowHtml = RowHtml + '<td> <a id="Edit" href="/RoleMaster/AddRoleMaster/?RoleID=' + data.data.result[i].roleID + '" >'+'<i class="fas fa-edit"></i>'+ '</a>' + '</td>';
+                               RowHtml = RowHtml + '<td> <a id="Delete" onclick="return DeleteRoleRecord(' + data.data.result[i].roleID + ');">'+'<i class="fas fa-trash-alt"></i>'+ '</a>' + '</td>';
+                                // RowHtml = RowHtml + '<td> <button id="Edit" onclick="Test();" class="btn btn-primary" >Edit </button>' + '</td>';
+                               RowHtml = RowHtml + "</tr>";
+                             }
+                                   $("#RoleList tbody").html(RowHtml);
+                           }
+                           
+                    else {
+                       alert('Data not found!');
+                   }
+                  //  getPagination('#RoleList');
+               },
+               error: function () {
+                   alert('Something went wrong!');
+               }
+              })
+    }
+
+    function DeleteRoleRecord(roleID) {
+        debugger;
+                var myData = {
+                    RoleID: roleID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/RoleMaster/DeleteRoleRecord",
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.errorCode == 0) {
+                                window.location.href = "/RoleMaster/Index";
+                                alert(data.data.errorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+
+                        },
+
+                        error: function() {
+                            alert('Something went wrong!');
+                        }
+                    })
+           
+    }
+
+        </script>
+
+}

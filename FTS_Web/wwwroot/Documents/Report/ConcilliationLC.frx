@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/11/2022 15:53:22" ReportInfo.Modified="10/17/2022 19:03:26" ReportInfo.CreatorVersion="2022.3.9.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqlEl9AJGOxoee/xda4ADDCgqFlxmmrxbRh4upHoFBnxE2cQ/9ilPd7EY1elqs/5M4gShTEoF/TFnC4r+6tjN+Gv/93puHT+POXA8EIGVekhQnq57HT0u4yN+87tXSPOVa">
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="ACLName" DataType="System.String"/>
+        <Column Name="DictrictACLOffice" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="ApplicantName" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="AppID" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+    <TableDataSource Name="Categories" ReferenceName="NorthWind.Categories" DataType="System.Int32" Enabled="true">
+      <Column Name="CategoryID" DataType="System.Int32"/>
+      <Column Name="CategoryName" DataType="System.String"/>
+      <Column Name="Description" DataType="System.String"/>
+      <Column Name="Picture" DataType="System.Byte[]" BindableControl="Picture"/>
+    </TableDataSource>
+    <TableDataSource Name="Customers" ReferenceName="NorthWind.Customers" DataType="System.Int32" Enabled="true">
+      <Column Name="CustomerID" DataType="System.String"/>
+      <Column Name="CompanyName" DataType="System.String"/>
+      <Column Name="ContactName" DataType="System.String"/>
+      <Column Name="ContactTitle" DataType="System.String"/>
+      <Column Name="Address" DataType="System.String"/>
+      <Column Name="City" DataType="System.String"/>
+      <Column Name="Region" DataType="System.String"/>
+      <Column Name="PostalCode" DataType="System.String"/>
+      <Column Name="Country" DataType="System.String"/>
+      <Column Name="Phone" DataType="System.String"/>
+      <Column Name="Fax" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="Employees" ReferenceName="NorthWind.Employees" DataType="System.Int32" Enabled="true">
+      <Column Name="EmployeeID" DataType="System.Int32"/>
+      <Column Name="LastName" DataType="System.String"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="Title" DataType="System.String"/>
+      <Column Name="TitleOfCourtesy" DataType="System.String"/>
+      <Column Name="BirthDate" DataType="System.DateTime"/>
+      <Column Name="HireDate" DataType="System.DateTime"/>
+      <Column Name="Address" DataType="System.String"/>
+      <Column Name="City" DataType="System.String"/>
+      <Column Name="Region" DataType="System.String"/>
+      <Column Name="PostalCode" DataType="System.String"/>
+      <Column Name="Country" DataType="System.String"/>
+      <Column Name="HomePhone" DataType="System.String"/>
+      <Column Name="Extension" DataType="System.String"/>
+      <Column Name="Photo" DataType="System.Byte[]" BindableControl="Picture"/>
+      <Column Name="Notes" DataType="System.String"/>
+      <Column Name="ReportsTo" DataType="System.Int32"/>
+    </TableDataSource>
+    <TableDataSource Name="Order Details" ReferenceName="NorthWind.Order Details" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderID" DataType="System.Int32"/>
+      <Column Name="ProductID" DataType="System.Int32"/>
+      <Column Name="UnitPrice" DataType="System.Decimal"/>
+      <Column Name="Quantity" DataType="System.Int16"/>
+      <Column Name="Discount" DataType="System.Single"/>
+    </TableDataSource>
+    <TableDataSource Name="Orders" ReferenceName="NorthWind.Orders" DataType="System.Int32" Enabled="true">
+      <Column Name="OrderID" DataType="System.Int32"/>
+      <Column Name="CustomerID" DataType="System.String"/>
+      <Column Name="EmployeeID" DataType="System.Int32"/>
+      <Column Name="OrderDate" DataType="System.DateTime"/>
+      <Column Name="RequiredDate" DataType="System.DateTime"/>
+      <Column Name="ShippedDate" DataType="System.DateTime"/>
+      <Column Name="ShipVia" DataType="System.Int32"/>
+      <Column Name="Freight" DataType="System.Decimal"/>
+      <Column Name="ShipName" DataType="System.String"/>
+      <Column Name="ShipAddress" DataType="System.String"/>
+      <Column Name="ShipCity" DataType="System.String"/>
+      <Column Name="ShipRegion" DataType="System.String"/>
+      <Column Name="ShipPostalCode" DataType="System.String"/>
+      <Column Name="ShipCountry" DataType="System.String"/>
+      <Column Name="Latitude" DataType="System.Double"/>
+      <Column Name="Longitude" DataType="System.Double"/>
+    </TableDataSource>
+    <TableDataSource Name="Products" ReferenceName="NorthWind.Products" DataType="System.Int32" Enabled="true">
+      <Column Name="ProductID" DataType="System.Int32"/>
+      <Column Name="ProductName" DataType="System.String"/>
+      <Column Name="SupplierID" DataType="System.Int32"/>
+      <Column Name="CategoryID" DataType="System.Int32"/>
+      <Column Name="QuantityPerUnit" DataType="System.String"/>
+      <Column Name="UnitPrice" DataType="System.Decimal"/>
+      <Column Name="UnitsInStock" DataType="System.Int16"/>
+      <Column Name="UnitsOnOrder" DataType="System.Int16"/>
+      <Column Name="ReorderLevel" DataType="System.Int16"/>
+      <Column Name="Discontinued" DataType="System.Boolean" BindableControl="CheckBox"/>
+      <Column Name="EAN13" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="Shippers" ReferenceName="NorthWind.Shippers" DataType="System.Int32" Enabled="true">
+      <Column Name="ShipperID" DataType="System.Int32"/>
+      <Column Name="CompanyName" DataType="System.String"/>
+      <Column Name="Phone" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="Suppliers" ReferenceName="NorthWind.Suppliers" DataType="System.Int32" Enabled="true">
+      <Column Name="SupplierID" DataType="System.Int32"/>
+      <Column Name="CompanyName" DataType="System.String"/>
+      <Column Name="ContactName" DataType="System.String"/>
+      <Column Name="ContactTitle" DataType="System.String"/>
+      <Column Name="Address" DataType="System.String"/>
+      <Column Name="City" DataType="System.String"/>
+      <Column Name="Region" DataType="System.String"/>
+      <Column Name="PostalCode" DataType="System.String"/>
+      <Column Name="Country" DataType="System.String"/>
+      <Column Name="Phone" DataType="System.String"/>
+      <Column Name="Fax" DataType="System.String"/>
+      <Column Name="HomePage" DataType="System.String"/>
+    </TableDataSource>
+    <TableDataSource Name="MatrixDemo" ReferenceName="NorthWind.MatrixDemo" DataType="System.Int32" Enabled="true">
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="Year" DataType="System.Int32"/>
+      <Column Name="Month" DataType="System.Int32"/>
+      <Column Name="ItemsSold" DataType="System.Int32"/>
+      <Column Name="Revenue" DataType="System.Decimal"/>
+    </TableDataSource>
+    <TableDataSource Name="Unicode" ReferenceName="NorthWind.Unicode" DataType="System.Int32" Enabled="true">
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="UnicodeName" DataType="System.String"/>
+      <Column Name="Text" DataType="System.String"/>
+      <Column Name="Rtl" DataType="System.Boolean" BindableControl="CheckBox"/>
+      <Column Name="Active" DataType="System.Boolean" BindableControl="CheckBox"/>
+    </TableDataSource>
+    <BusinessObjectDataSource Name="Categories BusinessObject" ReferenceName="Categories BusinessObject" DataType="null" Enabled="true">
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="Description" DataType="System.String"/>
+      <BusinessObjectDataSource Name="Products1" Alias="Products" DataType="null" PropName="Products" Enabled="true">
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="UnitPrice" DataType="System.Decimal"/>
+      </BusinessObjectDataSource>
+    </BusinessObjectDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="718.2" Height="670.95">
+      <TextObject Name="Text1" Left="368.55" Top="66.15" Width="330.75" Height="94.5" CanGrow="true" GrowToBottom="true" Text="નાયબ શ્રમ આયુકતની કચેરી, [Table1.ACLName] વિભાગ      &#13;&#10;[Table1.DictrictACLOffice]				&#13;&#10;તારીખઃ-  [Table1.Date]&#13;&#10;" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text2" Left="28.35" Top="160.65" Width="170.1" Height="75.6" Text="&#13;&#10;પ્રતિ,&#13;&#10;રજીસ્ટ્રારશ્રી&#13;&#10;મજૂર અદાલત&#13;&#10;[Table1.ACLName]&#13;&#10;" Font="Arial Unicode MS, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="85.05" Top="236.25" Width="406.35" Height="47.25" CanGrow="true" Text="&#13;&#10;વિષયઃ- [Table1.ApplicantName]ની ડિમાન્ડ બાબત." Font="Arial Unicode MS, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="89.4" Top="275.55" Width="538.65" Height="47.25" Text="સંસ્થાઃ [Table1.Establishmentdetail]&#13;&#10;" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text5" Left="56.7" Top="378" Width="595.35" Height="132.3" CanGrow="true" Text="         ઉપરોકત વિષય પરત્વેના અનુસંધાને સવિનય જણાવવાનું કે, સમાધાન અધિકારી અને મદદનીશ શ્રમ આયુકતશ્રી, [Table1.ACLName]એ તેઓના તારીખઃ [Table1.Date] ના પત્ર ક્રમાંક: ના.શ્ર.આ-અવિ/એસીએલ-૧/આઈ.ડી.સી-૧૨૦/૨૦૨૧/૨૫૬૧ થી કન્સીલીએશન કેસ નંબર-[Table1.AppID] મંડળની માંગણી બાબતેનો અહેવાલ અત્રેની કચેરી મારફત રજુ કરેલ છે. જેની ચકાસણી કરતા બરાબર માલુમ પડેલ છે. આથી મદદનીશ શ્રમ આયુકતશ્રી, [Table1.ACLName]એ ખાનગી નોંધમાં કરેલ ભલામણ મુજબ મંડળની માંગણીઓ ન્યાય નિર્ણય અર્થે ઔધોગિક ન્યાયપંચ,[Table1.ACLName]ને સુપ્રત કરવા ભલામણ છે. &#13;&#10;         આ સાથે આઈડીસી કેસ નંબર-[Table1.AppID]ની ફાઇલ અસલમાં સામેલ રાખી મોકલી આપેલ છે. &#13;&#10;" HorzAlign="Justify" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text6" Left="56.7" Top="519.75" Width="122.85" Height="28.35" Text="બિડાણઃ- ઉપર મુજબ" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text7" Left="529.2" Top="519.75" Width="94.5" Height="28.35" Text="આપનો વિશ્વાસુ" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text8" Left="500.85" Top="576.45" Width="198.45" Height="47.25" Text="       નાયબ શ્રમ આયુકત&#13;&#10;[Table1.DictrictACLOffice]&#13;&#10;" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text9" Left="18.9" Top="349.65" Width="94.5" Height="18.9" Text="મહાશય," Font="Arial Unicode MS, 10pt"/>
+    </DataBand>
+  </ReportPage>
+  <ReportPage Name="Page2" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="926.1">
+      <TextObject Name="Text10" Left="292.95" Top="37.8" Width="122.85" Height="28.35" Text="ગુજરાત સરકાર" HorzAlign="Justify" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text11" Left="37.8" Top="113.4" Width="179.55" Height="37.8" Text="નાયબ શ્રમ આયુકત&#13;&#10;અમદાવાદ વિભાગ, અમદાવાદ " HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text12" Left="425.25" Top="113.4" Width="255.15" Height="56.7" Text="ગન હાઉસની બાજુમાં,શ્રમભવન,ખાનપુર&#13;&#10;ગન હાઉસની બાજુમાં,શ્રમભવન,ખાનપુર&#13;&#10;અમદાવાદ- ૩૮૦૦૦૧ &#13;&#10;" HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text13" Left="37.8" Top="160.65" Width="179.55" Height="18.9" Text="તારીખઃ" HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text14" Left="255.15" Top="236.25" Width="236.25" Height="28.35" Text="ઔધોગિક તકરાર અધિનીયમ,૧૯૪૭&#13;&#10;" HorzAlign="Justify" Font="Arial, 10pt, style=Underline"/>
+      <TextObject Name="Text15" Left="321.3" Top="207.9" Width="66.15" Height="18.9" Text="હુ  ક  મ" HorzAlign="Justify" Font="Arial, 10pt, style=Underline"/>
+      <TextObject Name="Text16" Left="56.7" Top="292.95" Width="623.7" Height="226.8" Text="ક્રમાંકઃકે.એચ.એચ.એસ.એમ.સી/આર/ક/૩૫૧૯૦/આઇડીઆર/એજે/૧૨૦/૨૦૨૨ નીચે સહી કરનારનો એવો અભિપ્રાય થાય છે કે આ સાથે જોડેલી અનુસુચિમાં નિર્દીષ્ઠ કરેલી બાબતો સાથે સંકળાયેલી ઔધોગિક તકરાર સંસ્થાઃ૧)મે. મેનેજરશ્રી/ડાયરેક્ટરશ્રી, એસ.વી.પી. હોસ્પિટલ, ઠે. વી.એસ. હોસ્પીટલ કમ્પાઉન્ડ, એલીસબ્રીજ, અમદાવાદ, ૨)મે. મેનેજરશ્રી/ડાયરેક્ટરશ્રી, ઈટીએ એન્જીનીયરીંગ, C\O, એસ.વી.પી. હોસ્પિટલ, ઠે. વી.એસ. હોસ્પીટલ કમ્પાઉન્ડ, એલીસબ્રીજ, અમદાવાદ, શ્રમયોગીશ્રી રધિબીરસીંગ ગીરવલસીંગ કુરમી પટેલની માંગણી બાબતનો ઔધોગિક વિવાદ. અને હવે ઔધોગિક તકરાર અધિનીયમ-૧૯૪૭ ની કલમ-૩૯ અન્વયે ગુજરાત સરકારના શ્રમ અને રોજગાર વિભાગના તા- ૨૧/૦૪/૮૨ ના જાહેરનામા ક્રમાંક- કેએચઆર- ૨૬ આઇડીએ/ ૧૦૭૮/ (બી) (૨) –ઝ થી સદર ધારાની કલમ – ૧૦ ની પેટા કલમ- (૧) અને કલમ- ૧૨ની પેટા કલમ- મ(૪) અને (૫) હેઠળની સતાઓ ( સદર ધારાની અનુસુચિ-૨ની આઇટમ નંબર-૩ અને અનુસુચિ-૩ ની આઇટમ નંબર- ૯, ૧૦ અને ૧૧ સિવાય) તમામ ઔધોગિક એકમોમાં વ્યકિતગત કામદારોની માંગણીઓ માટે ૧૦૦ થી ઓછા કામે રાખતા તમામ ઔધોગિક એકમો પુરતી સમગ્ર રાજય માટે નાયબ શ્રમ આયુકત, અમદાવાદને સુપ્રત કરેલ છે. &#13;&#10;         તેથી હવે ઉપર જણાવ્યા અનુસાર ઔધોગિક તકરાર અધિનીયમ–૧૯૪૭ (સને-૧૯૪૭ના ૧૪માં) ની કલમ- ૧૦ની પેટા કલમ – ૧ થી મળેલ સતાની રૂએ હું નાયબ શ્રમ આયુકત, અમદાવાદ મજુર અદાલત, અમદાવાદને સદરહુ તકરાર તેનો ન્યાય નિર્ણય કરવા માટે લખી મોકલુ છું&#13;&#10;" HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text17" Left="306.85" Top="535.55" Width="94.5" Height="18.9" Text="પરિશિષ્ટ-અ" HorzAlign="Justify" Font="Arial, 11pt, style=Bold, Underline"/>
+      <TextObject Name="Text18" Left="66.15" Top="585.9" Width="604.8" Height="132.3" Text="(૧) સંબંધીત કામદારને તા.૧૮/૧૧/૨૦૧૧ થી તા.૩૧/૦૩/૨૦૧૯ સુધીની હક્ક રજાની રકમ રૂ.૧,૦૨,૬૨૨/- ચુકવી આપવા કે કેમ? &#13;&#10;(૨) સંબંધીત કામદારને તા.૧૮/૧૧/૨૦૧૧ થી તા.૩૧/૦૩/૨૦૧૯ સુધીનીબોનસની રકમ રૂ.૧,૯૧,૧૬૦/- ચુકવી આપવા કે કેમ?&#13;&#10;(૩) આમ કુલ મળીને રૂ.૨,૯૩,૭૮૨/- થવા પામે છે જે ૧૦ ગણા કોમ્પનસેશન સાથે ચુકવી આપવા કે કેમ?.&#13;&#10;(૪) અમલ સંગે: ઉપરોક્ત માંગણીઓનો અમલ તાત્કાલિક કરવો કે કેમ?&#13;&#10;" HorzAlign="Justify" Font="Arial, 11pt"/>
+      <TextObject Name="Text19" Left="453.6" Top="793.8" Width="217.35" Height="47.25" Text="      નાયબ શ્રમ આયુકત&#13;&#10;અમદાવાદ વિભાગ, અમદાવાદ &#13;&#10;" HorzAlign="Justify" Font="Arial, 11pt, style=Bold"/>
+    </ReportTitleBand>
+  </ReportPage>
+</Report>

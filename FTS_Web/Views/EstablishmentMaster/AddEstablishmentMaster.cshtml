@@ -1,0 +1,238 @@
+﻿@model FTS.Model.Entities.EstablishmentMasterModel
+@{
+    ViewBag.Title = " ADD ESTABLISHMENT";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+ @using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">@ViewBag.Title</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        @*<h4 class="card-title">Establishment Details</h4>*@
+                    <div class="form-group-required">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+                    </div>
+
+                     @Html.AntiForgeryToken()
+                     @Html.ValidationSummary(true, "", new { @calss = "text-danger" })
+
+
+                      <div class="form-group">
+                         
+                            <div class="row">
+                                <div class="col-md-6">    
+                                     @Html.Label("EstablishmentCode")<span class="text-danger"> *</span>
+                                     @Html.TextBoxFor(x => x.EstablishmentCode, new { @class = "form-control BlockSpecialChar", @ID="EstablishmentCode" ,title = "Enter EstablishmentCode.", placeholder = "Enter EstablishmentCode", maxlength = 100, data_val = "true" })
+                                     @Html.ValidationMessageFor(x => x.EstablishmentCode)
+                                     @Html.HiddenFor(e => e.EstablishmentIDEdit , new { @ID="EstablishmentID"})
+                                     <span class="text-danger ValidationSpan" id="SpanEstablishmentCode" style="display:none;">Please Select EstablishmentCode </span>
+                                </div>
+                                <div class="col-md-6">
+                                     @Html.Label("EstablishmentName")<span class="text-danger"> *</span>
+                                     @Html.TextBoxFor(x => x.EstablishmentName, new { @class = "form-control BlockSpecialChar", @ID="EstablishmentName" ,title = "Enter EstablishmentName.", placeholder = "Enter EstablishmentName", maxlength = 100, data_val = "true" })
+                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentName" style="display:none;">Please Select EstablishmentName </span>
+                                </div>
+                            </div>                            
+                       </div>
+
+
+                       <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.Label("Pincode")<span class="text-danger"> *</span>
+                                     @Html.TextBoxFor(x => x.Pincode, new { @class = "form-control BlockSpecialChar", @ID="Pincode" ,title = "Enter Pincode.", placeholder = "Enter Pincode", maxlength="6",oninput="numberOnly(this.id);" })
+                                     @Html.ValidationMessageFor(x => x.Pincode)
+                                    <span class="text-danger ValidationSpan" id="SpanPincode" style="display:none;">Please Select Pincode </span>
+                                </div>
+                                <div class="col-md-6">
+                                      @Html.Label("Perment Address")<span class="text-danger"> *</span>
+                                      @Html.TextBoxFor(x => x.PAddress, new { @class = "form-control BlockSpecialChar", @ID="PAddress" ,title = "Enter Perment Address.", placeholder = "Enter PAddress", maxlength = 100, data_val = "true" })
+                                      @Html.ValidationMessageFor(x => x.PAddress)
+                                    <span class="text-danger ValidationSpan" id="SpanPAddress" style="display:none;">Please SelectPAddress </span>
+                                </div>
+                            </div>                            
+                        </div>
+
+
+                         <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.Label("Secondary Address")<span class="text-danger"> *</span>
+                                     @Html.TextBoxFor(x => x.SAddress, new { @class = "form-control BlockSpecialChar", @ID="SAddress" ,title = "Enter Secondary Address.", placeholder = "Enter SAddress", maxlength = 100, data_val = "true" })
+                                     @Html.ValidationMessageFor(x => x.SAddress)
+                                    <span class="text-danger ValidationSpan" id="SpanSAddress" style="display:none;">Please Select EstablishmentAddress_2 </span>
+                                </div>
+                                <div class="col-md-6">
+                                     @Html.Label("Taluka")<span class="text-danger"> *</span>
+                                     @Html.TextBoxFor(e => e.TalukaID, new { @class = "form-control", @ID="TalukaID",title = "Enter Taluka.", required = "required"})
+                                    <span class="text-danger ValidationSpan" id="SpanTalukaID" style="display:none;">Please Select TalukaID</span>
+                                </div>
+                            </div>                            
+                        </div>
+
+
+
+                         <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6"> 
+                                    @Html.Label("District")<span class="text-danger"> *</span>
+                                    @Html.TextBoxFor(e => e.DistrictID, new { @class = "form-control", @ID="DistrictID",title = "Enter District.", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanDistrictID" style="display:none;">Please Insert DistrictID</span>
+                                </div>
+                                <div class="col-md-6" style="margin-top: auto;">
+                                   @Html.Label("IsActive")<span class="text-danger" > *</span>
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    @Html.ValidationMessageFor(e => e.IsActive, null, new { @class = "text-danger" })
+                                     <span class="text-danger ValidationSpan" id="SpanIsActive" style="display:none;">Please Select IsActive </span>
+                                </div>
+                            </div>                            
+                        </div>
+
+
+                         <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitEstablishmentMaster();" />
+                               @Html.ActionLink("Cancel", "index", "EmployeeMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                         
+
+                </div> 
+            </div>
+
+        </div>
+     </div>     
+   </div>  
+   }
+  <script>
+
+      $("input[type='checkbox']").on('change', function(){
+       $(this).val(this.checked ? "true" : "false");
+       })
+     
+        function SubmitEstablishmentMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+
+            //if ($("#EmployeeID").val() == "0" || $("#EmployeeID").val() == "") {
+            //    ErrorCnt++;
+            //    $('#spanEmployeeID').show();
+            //}
+
+              if ($("#EstablishmentCode").val() == "0" || $("#EstablishmentCode").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentCode').show();
+            }
+
+              if ($("#EstablishmentName").val() == "0" || $("#EstablishmentName").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentName').show();
+            }
+
+              if ($("#Pincode").val() == "0" || $("#Pincode").val() == "") {
+                ErrorCnt++;
+                $('#SpanPincode').show();
+            }
+
+              if ($("#PAddress").val() == "0" || $("#PAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanPAddress').show();
+            }
+
+              if ($("#SAddress").val() == "0" || $("#SAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanSAddress').show();
+            }   
+
+              if ($("#TalukaID").val() == "0" || $("#TalukaID").val() == "") {
+                ErrorCnt++;
+                $('#SpanTalukaID').show();
+            }
+
+              if ($("#DistrictID").val() == "0" || $("#DistrictID").val() == "") {
+                ErrorCnt++;
+                $('#SpanDistrictID').show();
+            }
+            
+             if ($("#IsActive").val() == "0" || $("#IsActive").val() == "") {
+                ErrorCnt++;
+                $('#SpanIsActive').show();
+            }
+
+
+
+
+             
+
+           
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    EstablishmentID: $('#EstablishmentID').val(),
+                    EstablishmentCode: $('#EstablishmentCode').val(),
+                    EstablishmentName: $('#EstablishmentName').val(),
+                    Pincode: $('#Pincode').val(),
+                    PAddress: $('#PAddress').val(),
+                    SAddress: $('#SAddress').val(),
+                    TalukaID: $('#TalukaID').val(),
+                    DistrictID: $('#DistrictID').val(),
+                    IsActive: $('#IsActive').val(),
+                    IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/EstablishmentMaster/SaveEstablishmentRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/EstablishmentMaster/Index";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+                            //if (data.data.ErrorCode == 0) {
+                            //    window.location.href = "/EstablishmentMaster/Index";
+                            //    alert(data.data.ErrorMassage);
+                            //}
+                            //else {
+                            //    alert('Something went wrong!');
+                            //}
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(data.data.ErrorMassage);
+                          }
+                    })
+            }
+    }
+
+    function numberOnly(id) {
+    var element = document.getElementById(id);
+    element.value = element.value.replace(/[^0-9]/gi, "");
+}
+   </script>

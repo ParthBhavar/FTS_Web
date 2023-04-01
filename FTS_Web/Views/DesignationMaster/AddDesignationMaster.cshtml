@@ -1,0 +1,138 @@
+﻿@model FTS.Model.Entities.DesignationMasterModel
+@{
+    ViewBag.Title = "Designation Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            Designation Master
+        </h3>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken();
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-validate form-horizontal" id="feedback_form">
+                            <div class="form-group-required">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+                            </div>
+                            @Html.AntiForgeryToken()
+   
+                         <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.Label("DesignationName")
+                                    @Html.HiddenFor(e => e.DesignationIDEdit , new { @ID="DesignationID"})
+                                    @Html.TextBoxFor(e => e.DesignationName, new { @class = "form-control", @ID="DesignationName", required = "required",onkeypress = "return allowOnlyLetters(event,this);" })
+                                    <span class="text-danger ValidationSpan" id="SpanDesignationName" style="display:none;">Please Insert Designation Name</span>
+                                </div>
+                      
+                                
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span>
+                                 </div>
+                            </div>
+
+                        </div>
+                             <div class="row form-group">
+                                <div class="offset-md-2 col-md-10">
+                                       <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitDesignationMaster();" />
+                                        @Html.ActionLink("Cancel", "index", "DesignationMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+  <script>
+
+      $("input[type='checkbox']").on('change', function(){
+       $(this).val(this.checked ? "true" : "false");
+       })
+
+      function allowOnlyLetters(e, t)
+       {
+         var regex = new RegExp("^[a-zA-Z ]+$");
+         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key))
+         {
+            event.preventDefault();
+            return false;
+         }
+       }
+       
+   </script>
+
+    <script>
+
+         function SubmitDesignationMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#DesignationName").val() == "0" || $("#DesignationName").val() == "") {
+                ErrorCnt++;
+                $('#SpanDesignationName').show();
+            }         
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    DesignationID: $('#DesignationID').val(),
+                    DesignationName: $('#DesignationName').val(),
+                    IsActive: $('#IsActive').val(),
+                    IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/DesignationMaster/SaveDesignationRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/DesignationMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+                            //if (data.data.ErrorCode == 0) {
+                            //    window.location.href = "/DesignationMaster/Index";
+                            //    alert(data.data.ErrorMassage);
+                            //}
+                            //else {
+                            //    alert('Something went wrong!');
+                            //}
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+    </script>

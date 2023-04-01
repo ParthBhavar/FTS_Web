@@ -1,0 +1,136 @@
+﻿@model FTS.Model.Entities.ZoneMasterModel
+@{
+    ViewBag.Title = "Zone Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .chat-loader-sec {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 99999;
+    background: rgba(255,255,255,0.38);
+}
+
+
+
+   .chat-loader-sec .chat-loader {
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        right: 0;
+        margin: -25px auto 0;
+    }</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Application For Claims</h4>
+                        <div id="wait" class="chat-loader-sec" style="display:none">
+                    <div class="chat-loader" >
+
+                        <img src="~/Images/loader-spin.gif" />
+                    </div>
+                </div>
+                        <div class="form-group">
+                            <div class="row">
+                              @*  <div class="col-md-1">
+                                    @Html.Label("Zone ID")
+                                  @Html.TextBoxFor(e => e.ZoneID, new { @class = "form-control", @type = "number" ,@ID="ZoneID",@readonly="readonly"})
+                                
+                                </div>*@
+                                <div class="col-md-3">
+                                    @Html.Label("Zone Name")
+                                     @Html.HiddenFor(e => e.ZoneIDEdit , new { @ID="ZoneID"})
+                                    @Html.TextBoxFor(e => e.ZoneName, new { @class = "form-control", @ID="ZoneName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanZoneName" style="display:none;">Please Insert Zone Name</span>
+                                </div>
+                                  
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitZoneMaster();" />
+                            @Html.ActionLink("Cancel", "index", "ZoneMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+   
+  <script>
+
+      //$("input[type='checkbox']").on('change', function(){
+      // $(this).val(this.checked ? "true" : "false");
+      // })
+     
+        function SubmitZoneMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#ZoneName").val() == "0" || $("#ZoneName").val() == "") {
+                ErrorCnt++;
+                $('#SpanZoneName').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                $("#wait").show();
+                var myData = {
+                    ZoneID: $('#ZoneID').val(),
+                    ZoneName: $('#ZoneName').val(),                    
+                    IsActive: $('#IsActive').val(),
+                    IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ZoneMaster/SaveZoneRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            $("#wait").hide();
+                            if (data.data.ErrorCode == 0) {
+                               
+                                //alert(data.data.ErrorMassage);
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/ZoneMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+                        },
+
+                        
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            alert(request.responseJSON);
+                          }
+                    })
+            }
+    }
+   </script>

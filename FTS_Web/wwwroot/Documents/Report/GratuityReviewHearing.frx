@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/11/2022 11:13:15" ReportInfo.Modified="12/02/2022 17:29:39" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqND6OOCckUsGwIw5WsKwI52b0driKyTCbuw8gRGHrXYmsRDQO17O/MW/8oH4e6hc2omE3Z1XuSUVBs78EzXI8SBgKZDodBvu1vx0B1/1omNE=">
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="DictrictACLOffice" DataType="System.String"/>
+        <Column Name="AppID" DataType="System.String"/>
+        <Column Name="ApplicantDetail" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="HearingDate" DataType="System.String"/>
+        <Column Name="HearingTime" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="718.2" Height="982.8">
+      <TextObject Name="Text2" Left="415.8" Top="160.65" Width="207.9" Height="28.35" Text="તા.   [Table1.Date]" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text4" Left="28.35" Top="207.9" Width="56.7" Height="18.9" Text="પ્રતિ" HorzAlign="Center" VertAlign="Bottom" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <ShapeObject Name="Shape2" Left="37.8" Top="245.7" Width="633.15" Height="245.7"/>
+      <LineObject Name="Line1" Left="292.95" Top="368.55" Height="-122.85"/>
+      <TextObject Name="Text6" Left="47.25" Top="264.6" Width="198.45" Height="18.9" Text="અરજદારનું નામ અને સરનામું" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text7" Left="47.25" Top="396.9" Width="189" Height="28.35" Text="સામાવાળાનું નામ અને સરનામું " Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text8" Left="302.4" Top="264.6" Width="340.2" Height="94.5" CanGrow="true" Text="[Table1.ApplicantDetail]" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text9" Left="311.85" Top="387.45" Width="302.4" Height="85.05" Text="[Table1.Establishmentdetail]" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text11" Left="463.05" Top="850.5" Width="207.9" Height="75.6" Text="     &#13;&#10;            કંટ્રોલીગ ઓથોરીટી&#13;&#10;ધી પેમેન્ટ એફ ગ્રેજયુઇટી એકટ ૧૯૭૨&#13;&#10;&#13;&#10;   [Table1.DictrictACLOffice]" HorzAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text13" Left="37.8" Top="576.45" Width="633.15" Height="141.75" Text="  	ઉપરોકત વિષય પરત્વે જણાવવાનું કે, ઉકત ગ્રેજયુઇટી કેસ નં.  [Table1.AppID] ના કન્ટ્રોલીંગ ઓથોરીટી, અમદાવાદના તા.[Table1.Date] ના હુકમ સામે અરજદારે ધી પેમેન્ટ ઓફ ગ્રેજયુઈટી એકટ-૧૯૭૨ ગુજરાત રૂલ્સ ૧૧(૫) ની જોગવાઈઓ અન્વયે આ રીવ્યુ અરજી ૩૦ દિવસની સમય મર્યાદાની અંદર હાલના તબક્કે સદર રીવ્યુ અરજી દાખલ કરેલ છે. જેમાં કંટ્રોલિંગ ઓથોરિટીશ્રીના તા [Table1.Date] ના હુકમ મુજબ આપની રીવ્યુ અરજી મંજૂર કરવામાં આવેલ છે. આ રીવ્યુ અરજીની હવે પછીની કેસની સુનાવણી તારીખ- [Table1.HearingDate] , બુધવાર ના રોજ  [Table1.HearingTime] કલાકે બપોર પછી&#13;&#10;નીચે સહી કરનાર સમક્ષ ઉપર જણાવેલ સ્થળે હાથ ધરવામાં આવશે. આથી આપને સદરહુ સુનાવણીમાં જાતે અથવા આપના વતી રજુઆત કરી શકે તેવા સતાવાર પ્રતિનિધી મારફત સંબંધિત તમામ માહિતી તથા દસ્તાવેજો પુરાવા સહિત હાજર રહેવા જણાવવામાં આવે છે." HorzAlign="Justify" VertAlign="Bottom" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text15" Left="415.8" Top="9.45" Width="255.15" Height="122.85" Text="કમાકઃનાશ્રઆ/અવિ/ટે-૧૪/ઝો-૨/ગ્રે.૨૩૨-૨૦૨૨/૨૦૨૨&#13;&#10;નાયબ શ્રમ આયુકતની કચેરી, [Table1.DictrictACLOffice]  વિભાગ&#13;&#10;શ્રમ ભવન, પહેલો માળ, રૂસ્તમ કામા માર્ગ&#13;&#10;[Table1.DictrictACLOffice]" HorzAlign="Justify" VertAlign="Bottom" Font="Arial, 10pt"/>
+      <LineObject Name="Line2" Left="37.8" Top="368.55" Width="633.15" Diagonal="true"/>
+      <LineObject Name="Line3" Left="292.95" Top="491.4" Height="-122.85"/>
+      <TextObject Name="Text18" Left="-28.35" Top="500.85" Width="670.95" Height="37.8" Text=" ગ્રેજયુઇટી અરજી નં - [Table1.AppID] ૨૦૨૨ &#13;&#10;" HorzAlign="Center" VertAlign="Bottom" Font="Arial, 10pt, style=Underline"/>
+      <TextObject Name="Text19" Left="189" Top="538.65" Width="245.7" Height="28.35" Text="ધી પેમેન્ટ ઓફ ગ્રેજયુઇટી એકટ, ૧૯૭૨ ." HorzAlign="Center" VertAlign="Bottom" Font="Arial, 10pt"/>
+      <TextObject Name="Text20" Left="113.4" Top="737.1" Width="529.2" Height="28.35" Text="સદરહુ મુદતે હાજર નહી રહો તો એક તરફી નિર્ણય લેવામાં આવશે જેની નોંધ લેશો." HorzAlign="Justify" VertAlign="Bottom" Font="Arial, 10pt, style=Underline"/>
+      <TextObject Name="Text21" Left="122.85" Top="519.75" Width="56.7" Height="18.9" Text="વિષય :-" HorzAlign="Justify" VertAlign="Bottom" Font="Arial, 10pt"/>
+    </DataBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,259 @@
+﻿@model  IEnumerable<FTS.Model.Entities.LicenceApplicationModel>
+@{
+     ViewBag.Title = "ACOL List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        @*<a id="Add" href="/ReinstatementAppliaction/AddReinstatementAppliaction/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i>Add New</a>*@
+                                              <br>
+                                        <br>
+                                    </div>
+                                    <table id="LicenceACLList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                  <th style="width:10%;" id="roleName">Sr.No.</th>
+                                                 <th style="width:10%;" id="roleName">Referenece No.</th>
+                                                 <th style="width:10%;" id="roleName">Application Id</th>
+                                                  <th style="width:20%;" id="roleName">Applicant Name</th>
+                                                   @*<th style="width:10;" id="roleName">Application Mode</th>*@
+                                                   <th style="width:10%;" id="roleName">Application Date</th>
+                                                   <th style="width:20%;" id="roleName">Status</th>
+                                                   <th style="width:10%;" id="roleName">Type</th>
+                                                   @*<th style="width:20%;" id="roleName">Hearing Date</th>*@
+                                                  <th  style="width:30%;" id="Edit">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @foreach (var item in Model)
+                                          {
+                                            <tr> 
+                                                @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                 <td valign="top" class="text-left">@item.ID </td>
+                                                 <td valign="top" class="text-left">@item.AppID </td>
+                                                 <td valign="top" class="text-left">@item.ApplicationID </td>
+                                                 <td valign="top" class="text-left">@item.ApplicantName </td>
+                                                 <td valign="top" class="text-left">@item.AppDate </td>
+                                                 <th style="width:30;" id="roleName">@item.StatusName</th>
+                                                 <td valign="top" class="text-left">@item.Applicationtype</td>
+                                                   @*<th style="width:30;" id="roleName">@item.HearingDateString</th>*@
+                                                <td>
+                                                        @if (@item.ActionCode != 4 && @item.ActionCode != 2)
+                                                        {
+                                                            <a id="Edit" href="/LicenceApplication/AddLicenceApplication/?id=@item.EncryptedId&ISACL=1&ISDCL=0"><i class="fas fa-pen"></i></a>
+                                                        }
+                                                        else
+                                                        {
+                                                             <a id="View" href="/LicenceApplication/AddLicenceApplication/?id=@item.EncryptedId&ISACL=1&ISDCL=0&ISView=1"><i class="fas fa-eye"></i></a>
+                                                        }
+                                                        @*<a id="Edit" title="View" href="/LicenceApplication/AddConciliationHearingACL/?id=@item.EncryptedId&ISView=2"><i class="fas fa-eye"></i></a>*@
+                                                         @if(@item.ActionCode != 3 && @item.ActionCode != 2)
+                                                        {
+                                                          
+                                                             <a  data-toggle="modal" data-target="#exampleModal_@item.ID" id="DivAssign"><i class="fas fa-question-circle"></i></a>
+                                                        }
+
+                                        @*Query Model popup                *@
+                                                       <div class="modal fade" id="exampleModal_@item.ID">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            Please Enter your Query
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">
+                                                                                ×
+                                                                            </span>
+                                                                        </button>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                      <div class="col-md-6">
+                                          <textarea id="Comments_@item.ID" name="w3review" rows="4" cols="50">@item.QueryComments</textarea>
+                                           <span class="text-danger ValidationSpan" id="Spancomment_@item.ID" style="display:none;">Please Enter Query Comment</span>
+                                 </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                   @* Applicant Not showing *@
+                                                                
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                            Close
+                                                                        </button>
+
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                         onclick="CheckSave(@item.ID,'@item.EncryptedId')">
+                                                                            save
+                                                                        </button>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <script>
+
+      $( document ).ready(function() {
+        $('#LicenceACLList').dataTable( {} );
+    });
+
+     function VerifyofApprove(string) {
+
+            swal({
+                title: "Are you sure?",
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        debugger;
+                        var result = string.split('(');
+                        var data = result[1].split(',')[0];
+                        var data1 = result[1].split(',')[1].split(')')[0];
+                        window[result[0]](data, data1);
+                    }
+                    else {
+                        swal("Your Recored is safe!");
+                    }
+                });
+        }
+
+     function LicenceApprove(string, Status) {
+            debugger;
+            var myData = {
+                id: string,
+                Status: Status,
+                URL: document.URL,
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/LicenceApplication/ApproveOrRejectLicenceFromACL",
+                    headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                    dataType: "json",
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+
+
+                        if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/LicenceApplication/LicenceACLList";
+                                });
+                        }
+                        else {
+                            swal(data.data.ErrorMassage);
+                        }
+
+                    },
+                    error: function(request, message, error) {
+                        debugger;
+                        swal(request.responseJSON);
+                    }
+                })
+
+            }
+
+        </script>
+         <script>
+
+          function CheckSave(id,ApplicationID) {
+            debugger;
+
+              var Comments = $('#Comments_' + id).val();
+
+                var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+            if ($("#Comments_" + id).val() == "0" || $("#Comments_" + id).val() == "") {
+                ErrorCnt++;
+                $("#Spancomment_"+id).show();
+            }
+
+              if (ErrorCnt > 0) {
+                return false;
+            }
+
+              if (ErrorCnt == 0) {
+
+                  var myData = {
+                      Comments: Comments,
+                      id: ApplicationID,
+                      URL: document.URL
+                  };
+                  $.ajax
+                      ({
+                          type: "POST",
+                          url: "/LicenceApplication/LicenceQueryByACL",
+                          headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                          dataType: "json",
+                          data: myData,
+                          success: function(data) {
+                              debugger;
+
+
+                              if (data.data.ErrorCode == 0) {
+                                  swal(data.data.ErrorMassage)
+                                      .then((value) => {
+                                          window.location.href = "/LicenceApplication/LicenceACLList";
+                                      });
+                              }
+                              else {
+                                  swal(data.data.ErrorMassage);
+                              }
+
+                          },
+                          error: function(request, message, error) {
+                              debugger;
+                              swal(request.responseJSON);
+                          }
+                      })
+
+              }
+
+        }
+        </Script>
+  
+}

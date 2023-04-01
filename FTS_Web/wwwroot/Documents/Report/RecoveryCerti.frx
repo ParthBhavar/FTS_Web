@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="11/24/2022 16:08:25" ReportInfo.Modified="11/30/2022 12:25:23" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqND6OOCckUsGwIw5WsKwI5yMiwlH75yoBpKX1QTlow+gZGuRdSxvUBth3FIG/uIahJDTAMksuriBXfweGv4ddW3TNkn9tAPzaozDkwk0ntb0=">
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="AppID" DataType="System.String"/>
+        <Column Name="ApplicantDetail" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="ChallanAmount" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="103.95">
+      <TextObject Name="Text2" Left="481.95" Top="9.45" Width="85.05" Height="28.35" Text="       તારીખ :" VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text19" Left="160.65" Top="75.6" Width="387.45" Height="28.35" Text="ગ્રેજયુઇટી ચુકવણી અધિનિયમ-૧૯૭૨ની કલમ-૮ મુજબ" HorzAlign="Center" VertAlign="Bottom" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text20" Left="330.75" Top="56.7" Width="94.5" Height="18.9" Text="પ્રમાણપત્ર " HorzAlign="Justify" VertAlign="Bottom" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text25" Left="37.8" Top="9.45" Width="349.65" Height="18.9" Text="માંકઃનાશ્રઆ/અવિ/ટી-ફોર્મ/ટે.૧૩.૧/[Table1.AppID]/૨૦૨૨" HorzAlign="Justify" VertAlign="Bottom" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text27" Left="557.55" Width="103.95" Height="37.8" Text="[Table1.Date]" HorzAlign="Justify" VertAlign="Center" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="107.95" Width="718.2" Height="94.5">
+      <TextObject Name="Text3" Left="37.8" Width="94.5" Height="28.35" Text="પ્રતિ," VertAlign="Bottom" Font="Arial, 10pt"/>
+      <TextObject Name="Text4" Left="37.8" Top="37.8" Width="198.45" Height="18.9" Text="જીલ્લા કલેકટરશ્રી,  " VertAlign="Bottom" Font="Arial, 10pt"/>
+      <TextObject Name="Text5" Left="37.8" Top="56.7" Width="217.35" Height="28.35" Text="કલેકટર કચેરી,અમદાવાદ." VertAlign="Bottom" Font="Arial, 10pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="206.45" Width="718.2" Height="548.1">
+      <TextObject Name="Text7" Left="28.35" Top="9.45" Width="642.6" Height="141.75" Text="&#13;&#10;                      ધી પેમેન્ટ ઓફ ગ્રેજયુઇટી અધિનિયમ,૧૯૭૨ના ગુજરાત નિયમો-૧૯૭૩ હેઠળ ફોર્મ ‘‘આર‘‘ માં કંટ્રોલીંગ ઓથોરીટી, અમદાવાદે ગ્રેજ્યુઇટી કેસ નંબર [Table1.AppID] માં તા. [Table1.Date] ના રોજ સામાવાળા સંસ્થાને  અરજદારની ચુકવવાપાત્ર બાકી ગ્રેજ્યુઇટીની રકમ રૂ [Table1.ChallanAmount]. તા.[Table1.Date] થી તે ચુકવવામાં આવે ત્યાં સુધી ૧૦% સાદા વ્યાજ સાથે ચુકવવા હુકમ કરેલ. (હુકમ અત્રે બીડેલ છે.) જે હુકમ મુજબના સમયગાળામાં સામાવાળા સંસ્થાએ અરજદારને સદર રકમ ચુકવેલ ન હોઈ, અરજદારે ધી પેમેન્ટ ઓફ ગ્રેજયુઇટી અધિનિયમ ,૧૯૭૨ ની કલમ-૮ હેઠળ તા.૦૨/૦૭/૨૦૨૨ ના રોજ નીચે સહી કરનાર કંટ્રોલીંગ ઓથોરીટી સમક્ષ “ફોર્મ-ટી” માં ગ્રેજ્યુઇટીની રકમ મેળવવા અરજી કરેલ છે. " HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text8" Left="28.35" Top="132.3" Width="633.15" Height="56.7" Text="ગ્રેજ્યુઇટીની રકમ રૂ [Table1.ChallanAmount] ધી પેમેન્ટ ઓફ ગ્રેજયુઇટી અધિનિયમ,૧૯૭૨ ની કલમ-૮ મુજબ સામાવાળા સંસ્થા પાસેથી નીચે મુજબ વસુલ કરવા આ વસુલાત પ્રમાણપત્ર કાઢી આપવામાં આવે છે.  " VertAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text11" Left="28.35" Top="444.15" Width="642.6" Height="56.7" Text="&#13;&#10;નોંધ:ધી ગ્રેજ્યુઇટી ચુકવણી અધિનિયમ,૧૯૭૨ ની કલમ ૮ મુજબ ગ્રેજ્યુઇટીની રકમ ઉપર મળવાપાત્ર વ્યાજ ગ્રેજ્યુઇટીની મુળ રકમ કરતાં વધશે નહી તે ધ્યાને લેવા નમ્ર વિનંતી. " VertAlign="Bottom" Font="Arial, 10pt, style=Bold"/>
+      <TableObject Name="Table2" Left="28.35" Top="198.45" Width="633.22" Height="179.55" Border.Lines="All" Border.Style="DashDot" Border.Width="0.5">
+        <TableColumn Name="Column1" Width="174.86"/>
+        <TableColumn Name="Column2" Width="458.36"/>
+        <TableRow Name="Row1" Height="28.35">
+          <TableCell Name="Cell1" Border.Lines="All" Border.Width="0.25" Text="અરજદાર:-  " VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell2" Border.Lines="All" Border.Width="0.25" Text="[Table1.ApplicantDetail]" VertAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row2" Height="28.35">
+          <TableCell Name="Cell6" Border.Lines="All" Border.Width="0.25" Text="સામાવાળા સંસ્થા:-  " Font="Arial, 10pt"/>
+          <TableCell Name="Cell7" Border.Lines="All" Border.Width="0.25" Text="[Table1.Establishmentdetail]" VertAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row3" Height="28.35">
+          <TableCell Name="Cell11" Border.Lines="All" Border.Width="0.25" Text="ગ્રેજ્યુઇટીની રકમ રૂ.:-" VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell12" Border.Lines="All" Border.Width="0.25" Text="[Table1.ChallanAmount]" VertAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row4" Height="28.35">
+          <TableCell Name="Cell16" Border.Lines="All" Border.Width="0.25" Text="વ્યાજ ગણવાપાત્ર તારીખ:-  " VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell17" Border.Lines="All" Border.Width="0.25" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row5" Height="28.35">
+          <TableCell Name="Cell21" Border.Lines="All" Border.Width="0.25" Text="વ્યાજનો દર:- " VertAlign="Center" Font="Arial, 10pt"/>
+          <TableCell Name="Cell22" Border.Lines="All" Border.Width="0.25" Text="૧૫% ચક્રવૃદ્ધિ વ્યાજ (નોટીફીકેશન બીડેલ છે.) " VertAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row6" Height="37.8">
+          <TableCell Name="Cell26" Border.Lines="All" Border.Width="0.25" Text="વસુલાત કરી ચેક જે નામે બનાવવાનો છે તે.  " VertAlign="Bottom" Font="Arial, 10pt"/>
+          <TableCell Name="Cell27" Border.Lines="All" Border.Width="0.25" Text="Controlling Authority (PLA PD 57) under The Payment of Gratuity Act 1972  " VertAlign="Center" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text18" Left="28.35" Top="406.35" Width="633.15" Height="37.8" Text="આથી સામાવાળા સંસ્થા પાસેથી સદર ગ્રેજ્યુઇટીની રકમ કલમ-૮ હેઠળ તેમજ વસુલાત અંગેનો સરચાર્જ વસુલ કરવા અને તેની જાણ નીચે સહી કરનારને કરવા આપને વિનંતી કરવામાં આવે છે.   " VertAlign="Bottom" Font="Arial, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="758.55" Width="718.2" Height="18.9"/>
+  </ReportPage>
+  <ReportPage Name="Page2" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle2" Width="718.2" Height="56.7">
+      <TextObject Name="Text21" Left="37.8" Top="18.9" Width="491.4" Height="28.35" Text="ધી પેમેન્ટ ઓફ ગ્રેજયુઇટીઅધિનિયમ,૧૯૭૨ની કલમ -૮ : Recovery of Gratuity  " HorzAlign="Justify" VertAlign="Bottom" Font="Arial, 10pt, style=Bold"/>
+    </ReportTitleBand>
+    <DataBand Name="Data2" Top="60.7" Width="718.2" Height="576.45">
+      <TextObject Name="Text22" Left="37.8" Top="283.5" Width="151.2" Height="37.8" Text=" બિડાણ: ઉપર મુજબ  " HorzAlign="Justify" VertAlign="Bottom" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text23" Left="378" Top="321.3" Width="292.95" Height="85.05" Text="   ટ્રોલીંગ ઓથોરીટી (ઝોન-૧)  &#13;&#10;&#13;&#10;ધી પેમેન્ટ ઓફ ગ્રેજયુઇટીઅધિનિયમ,૧૯૭૨ &#13;&#10;&#13;&#10;                અમદાવાદ " HorzAlign="Right" VertAlign="Bottom" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text24" Left="37.8" Top="415.8" Width="94.5" Height="18.9" Text="નકલ રવાના:" HorzAlign="Justify" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text26" Left="37.8" Top="37.8" Width="633.15" Height="236.25" Text="If the amount of gratuity payable under this Act is not paid by the employer within the prescribed time, to the person entitled thereto, the controlling authority shall, on an application made to it in this behalf by the aggrieved person, issue a certificate for that amount to the Collector, who shall recover the same, together with compound interest thereon  at such rate as the Central Government may by notification, specify  from the date of expiry of the prescribed time, as arrears of land revenue and pay the same to the person entitled there to :&#13;&#10;&#13;&#10;Provided that the controlling authority shall, before issuing a certificate under this section, give the employer a reasonable opportunity of showing cause against the issue of such certificate: &#13;&#10;&#13;&#10;Provided further that the amount of interest payable under this section shall, in no case exceed the amount of gratuity payable under this Act. " HorzAlign="Justify" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text28" Left="37.8" Top="444.15" Width="311.85" Height="37.8" Text="[Table1.ApplicantDetail]" HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text29" Left="37.8" Top="500.85" Width="311.85" Height="47.25" Text="[Table1.Establishmentdetail]" HorzAlign="Justify" Font="Arial, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter2" Top="641.15" Width="718.2" Height="28.35"/>
+  </ReportPage>
+</Report>

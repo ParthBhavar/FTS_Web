@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/13/2022 17:41:38" ReportInfo.Modified="11/22/2022 12:27:55" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqGTfbe3qsTBcL/m6eJRNFRbEe7hm/NiWTbQxbiUqQOjJiVtc8g2gwPnF5KMnefa91UX7E8JQcG5OVSeE3Ue9QBDbeHnA4gYcZ9aKrmKeNwFF/9pZCkNgJNLfRzkZx3tnDkCo4HQa0E+kIJrlSI/xFHRzj38LDTj5trsm0+n+thjxIt6bpmR+qiLJyFwyogqDf">
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="DictrictACLOffice" DataType="System.String"/>
+        <Column Name="AppID" DataType="System.String"/>
+        <Column Name="ApplicantDetail" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="HearingDate" DataType="System.String"/>
+        <Column Name="HearingTime" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="113.4">
+      <TextObject Name="Text1" Left="122.85" Top="9.45" Width="387.45" Height="37.8" Text="નાયબ શ્રમ આયુક્તશ્રીની કચેરી" HorzAlign="Center" Font="Arial Unicode MS, 22pt, style=Bold"/>
+      <TextObject Name="Text2" Left="94.5" Top="56.7" Width="614.25" Height="28.35" Text="[Table1.DictrictACLOffice]" Font="Arial Unicode MS, 16pt"/>
+      <ShapeObject Name="Shape2" Left="9.45" Top="9.45" Width="708.75" Height="94.5"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="117.4" Width="718.2" Height="47.25">
+      <TextObject Name="Text3" Left="500.85" Top="9.45" Width="160.65" Height="18.9" Text="તારીખ: [Table1.Date]" Font="Arial Unicode MS, 12pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="168.65" Width="718.2" Height="689.85">
+      <TextObject Name="Text4" Left="18.9" Top="18.9" Width="94.5" Height="18.9" Text="પ્રતિ" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text5" Left="396.9" Top="18.9" Width="94.5" Height="18.9" Text="પ્રતિ" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text6" Left="18.9" Top="47.25" Width="217.35" Height="28.35" Text="અરજદારનું નામ અને સરનામું" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text7" Left="378" Top="47.25" Width="245.7" Height="28.35" Text="સામાવાળાનું નામ અને સરનામું" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text8" Left="18.9" Top="85.05" Width="255.15" Height="66.15" Text="[Table1.ApplicantDetail]" Font="Arial Unicode MS, 9pt"/>
+      <TextObject Name="Text9" Left="378" Top="85.05" Width="283.5" Height="66.15" Text="[Table1.Establishmentdetail]" Font="Arial Unicode MS, 9pt"/>
+      <TextObject Name="Text10" Left="94.5" Top="170.1" Width="481.95" Height="18.9" Text="વિષય:- ગ્રેજયુઇટી કેસની મુદતો માં સતત ગેરહાજર રહેવા બાબત." Font="Arial Unicode MS, 12pt, style=Bold"/>
+      <TextObject Name="Text11" Left="9.45" Top="198.45" Width="633.15" Height="103.95" Text="       ઉપરોકત વિષય પરત્વે જણાવવાનું કે, આપ ઉકત ગ્રેજયુઇટી કેસમાં સતત ગેર હાજર રહેલ છો.આથી ફરરી&#13;&#10;એકવાર આપને સદરહુ સુનાવણીમાં જાતે અથવા આપના વતી રજુઆત કરી શકે તેવા સતાવાર પ્રતિનિધી મારફત&#13;&#10;સંબંધિત કેસને લગતી વળગતી તમામ માહિતી તથા દસ્તાવેજો પુરાવા સહિત હાજર રહેવા જણાવવામાં આવે છે હવે&#13;&#10;પછીની ઉકત કેસની સુનાવણી નીચે જણાવ્યા મુજબ હાથ ધરવામાં આવેલ છે. જેની નોંધ લેવી.&#13;&#10;" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text12" Left="9.45" Top="302.4" Width="642.6" Height="56.7" Text="          સદરહુ મુદતે હાજર નહી રહો તો આપની સદર કેસ માં વધુ કોઈ રજૂઆત નથી એવું સમજી સદર કેસ ને એક પક્ષીય હુકમ પર લેવામાં આવશે જેની નોંધ લેશો." Font="Arial Unicode MS, 12pt, style=Bold"/>
+      <ShapeObject Name="Shape1" Left="56.7" Top="378" Width="595.35" Height="113.4"/>
+      <LineObject Name="Line1" Left="56.7" Top="415.8" Width="595.35"/>
+      <LineObject Name="Line2" Left="56.7" Top="453.6" Width="595.35"/>
+      <LineObject Name="Line3" Left="207.9" Top="378" Height="113.4"/>
+      <TextObject Name="Text14" Left="75.6" Top="387.45" Width="94.5" Height="18.9" Text="તારીખ" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text15" Left="75.6" Top="425.25" Width="94.5" Height="18.9" Text="સમય" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text16" Left="75.6" Top="463.05" Width="94.5" Height="18.9" Text="સ્થળ" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text17" Left="217.35" Top="387.45" Width="179.55" Height="18.9" Text="[Table1.HearingDate]" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text18" Left="217.35" Top="425.25" Width="189" Height="18.9" Text="[Table1.HearingTime]" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text19" Left="217.35" Top="463.05" Width="425.25" Height="28.35" Text="[Table1.DictrictACLOffice]" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text20" Left="28.35" Top="519.75" Width="623.7" Height="47.25" Text="સદર કેસની હવે પછીની મુદતની જાણ અત્રેથી કરવામાં આવશે નહિ જેથી આ કેસની વખતો વખતગી&#13;&#10;પ્રગતિથી પક્ષકારોએ પોતે જ માહિતગાર રહેવું" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text21" Left="500.85" Top="567" Width="94.5" Height="18.9" Text="નિયંત્રણ અધિકારી," Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text22" Left="500.85" Top="595.35" Width="94.5" Height="18.9" Text="ધી પેમેન્ટ ઓફ ગ્રેજયુઇટી એકટ, ૧૯૭૨" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text23" Left="500.85" Top="614.25" Width="94.5" Height="18.9" Text="અમદાવાદ" Font="Arial Unicode MS, 12pt"/>
+      <ShapeObject Name="Shape3" Left="9.45" Top="47.25" Width="274.05" Height="113.4"/>
+      <ShapeObject Name="Shape4" Left="368.55" Top="47.25" Width="311.85" Height="113.4"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="862.5" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

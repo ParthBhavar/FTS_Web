@@ -1,0 +1,358 @@
+﻿@model FTS.Model.Entities.DashBoardModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.css" />
+<link rel="stylesheet" href="~/Scripts/js/select.dataTables.min.css" />
+
+<script src="~/Scripts/vendors/chart.js/Chart.min.js"></script>
+<script src="~/Scripts/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="~/Scripts/js/dataTables.select.min.js"></script>
+<script src="~/Scripts/js/dashboard.js"></script>
+<script src="~/Scripts/js/Chart.roundedBarCharts.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">Dashboard</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Welcome e-File Tracking System</h3>
+                        <h6 class="font-weight-normal mb-0">                          
+                            Employment Department
+                        </h6>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="justify-content-end d-flex">
+                            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                                <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <i class="mdi mdi-calendar"></i> Today (@DateTime.Now.Date.ToString("dd-MMM-yyyy"))
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                                    <a class="dropdown-item" href="#">January - March</a>
+                                    <a class="dropdown-item" href="#">March - June</a>
+                                    <a class="dropdown-item" href="#">June - August</a>
+                                    <a class="dropdown-item" href="#">August - November</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-md-12 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <h3 class="font-weight-bold">Total Application  @Model.TotalCountingList[0].TotalCounting</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+             
+            <div class="col-md-6 grid-margin transparent">
+                <div class="row">
+
+
+                    @*Cess Collection*@
+
+                   @if (Model.UserMode == 1)
+                        {
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                            <div class="card card-light-blue">
+                                <div class="card-body">
+                                    <p class="mb-4">@Model.TotalApplicationList[0].ApplicationName</p>
+                                      @if (Model.TotalApplicationList[0].Count == 0)
+                                     {
+                                         <p class="fs-30 mb-2">No Record Found</p>
+                                     }
+                                     else{ 
+                                         <p class="fs-30 mb-2">@Model.TotalApplicationList[0].Count</p> 
+                                     }
+                                    @*<!-- Button trigger modal -->*@
+                                  @*  <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModalCenter_@Model.TotalApplicationList[0].Count">
+                                        MoreInfo <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                    </button>*@
+                                </div>
+                            </div>
+                        
+                        <div class="modal fade card1" id="exampleModalCenter_@Model.TotalApplicationList[0].Count" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle_@Model.TotalApplicationList[0].Count" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Sub module</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                   <div class="table-responsive">
+                                   <table class="table table-bordered table-striped">
+                                       <thead class="table__head">
+                                            <tr class="winner__table">
+                                              <th>S/N</th>
+                                              <th><i class="fa fa-user" aria-hidden="true"></i> Application Name</th>
+                                              <th><i class="fa fa-users" aria-hidden="true"></i> Application Count</th>
+                                            </tr>
+                                          </thead>
+                               
+                                    </table>
+                                    </div>
+                              </div>
+                              <div class="modal-footer">
+                               
+                              </div>
+                            </div>
+                          </div>
+                      
+                        </div>
+
+                        </div>
+                   }
+
+                    @*Cash Claim*@
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                       
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4">@Model.TotalApplicationList[1].ApplicationName</p>
+                                <p class="fs-30 mb-2">@Model.TotalApplicationList[1].Count</p>
+
+                           @*<!-- Button trigger modal -->*@
+                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModalCenter_@Model.TotalApplicationList[1].Count">
+                                  MoreInfo <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                                              @*  <!-- Modal -->*@
+                        <div class="modal fade" id="exampleModalCenter_@Model.TotalApplicationList[1].Count" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle_@Model.TotalApplicationList[1].Count" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Case Claim</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="table-responsive">
+                                   <table class="table table-bordered table-striped">
+                                       <thead class="table__head">
+                                            <tr class="winner__table">
+                                              <th>S/N</th>
+                                              <th><i class="fa fa-user" aria-hidden="true"></i> Application Name</th>
+                                              <th><i class="fa fa-users" aria-hidden="true"></i> Application Count</th>
+                                            </tr>
+                                          </thead>
+                                @foreach (var detail in Model.CashClaimdetailList)
+                                   {
+                                          <tbody>
+                                            <tr class="winner__table">
+                                              <td>@detail.ID</td>
+                                               <td> <a class="nav-link" id="step3-tab" data-bs-toggle="tab"  href="/Dashboard/CaseClimeDetail?ID=@detail.ID">@detail.ApplicationName</a></td>
+                                              @*<td>@detail.ApplicationName</td>*@
+                                              <td>@detail.Count</td>
+                                            </tr>
+                                          </tbody>
+                                     
+                                      @* <a class="nav-link" id="step2-tab" data-bs-toggle="tab" href="/ReinstatementAppliaction/AddReinstatementEstablishment?ApplicationID=15">@detile.ApplicationName = @detile.Count</a>*@
+                                   }
+                                    </table>
+                                </div> 
+                              </div>
+                              <div class="modal-footer">
+                               
+                              </div>
+                            </div>
+                          </div>
+                      
+                        </div>
+                        @*<div class="collapse" id="collapseExample">
+                          <div class="card1 bg-purple">
+                            <div class="card-header">
+                              Sub Module
+                             </div>
+                              <div class="card-body">
+                                @foreach (var detile in Model.CashClaimdetailList)
+                                {
+                                    <a class="nav-link" id="step2-tab" data-bs-toggle="tab" href="/ReinstatementAppliaction/AddReinstatementEstablishment?ApplicationID=15">@detile.ApplicationName = @detile.Count</a>
+                                    <p class="mb-4">@detile.ApplicationName = @detile.Count</p>
+                                }
+                              </div>
+                           </div>
+                         </div>
+                    </div>*@
+                  
+
+                  @*  <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <p class="mb-4"> Under Process Application </p>
+                                <p class="fs-30 mb-2">75</p>
+                                <p>2.25% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+           
+
+
+
+
+            @*<div class="col-md-6 grid-margin transparent">
+
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4"> Rejected Application </p>
+                                <p class="fs-30 mb-2">35</p>
+                                <p>1.00% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <p class="mb-4"> Approved Application </p>
+                                <p class="fs-30 mb-2">150</p>
+                                <p>1.75% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    
+
+        </div>
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Registrations Report</p>
+                        <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with this portal.</p>
+                        <div class="d-flex flex-wrap mb-5">
+                            
+                        </div>
+                        <canvas id="order-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Administrative Report</p>
+                            <a href="#" class="text-info">View all</a>
+                        </div>
+                        <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with this portal.</p>
+                        <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                        <canvas id="sales-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Under Process Application</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table id="example123" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th>Application No.</th>
+                                                <th>Application type</th>
+                                                <th>Created Date</th>
+                                                <th>Status</th>
+                                                <th>Updated Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Application 1</td>
+                                                <td>Claim Application</td>
+                                                <td>15-Nov-2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-success">
+                                                        Completed
+                                                    </div>
+                                                </td>
+                                                <td>01-Jan-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Application 2</td>
+                                                <td>Certificates</td>
+                                                <td>10-Dec-2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-warning">
+                                                        Pending
+                                                    </div>
+                                                </td>
+                                                <td>04-Jan-2022</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div> 
+}
+<style>
+    .table-bordered td, .table-bordered th{
+border: 0px solid #FFF;
+}
+.table{
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+  border-radius:20px;
+   box-shadow: 0 0 12px 0 rgba(0,0,0,0.2);
+}
+    
+ .table__head{
+color: #FFF;
+font-weight: 700;
+background: #9b4085;
+background: -moz-linear-gradient(-45deg, #9b4085 0%, #608590 100%);
+background: -webkit-linear-gradient(-45deg, #9b4085 0%,#608590 100%);
+background: linear-gradient(135deg, #9b4085 0%,#608590 100%);
+white-space: nowrap;
+}
+.winner__table{
+    white-space: nowrap;
+}
+.table-bordered td, .table-bordered th{
+border: 0px solid #FFF;
+}
+
+</style>
+
+

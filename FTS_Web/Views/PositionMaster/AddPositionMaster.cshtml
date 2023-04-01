@@ -1,0 +1,238 @@
+﻿@model FTS.Model.Entities.PositionMasterModel
+@{
+    ViewBag.Title = "ADD POSITION";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+        <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                         
+                        <div class="form-group">
+                            <div class="row">
+                                 <div class="col-md-3">
+                                    @Html.Label("Parent Position")
+                                    @Html.DropDownListFor(e => e.ParentPositionID, new SelectList(Model.ParentPositionlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control span4",@ID="ParentPositionID" })
+                                    <span class="text-danger ValidationSpan" id="SpanParentRoleID" style="display:none;">Please Select Parent Role </span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("Position Name")
+                                    @Html.HiddenFor(e => e.PositionIDEdit , new { @ID="PositionID"})
+                                    @Html.TextBoxFor(e => e.PositionName, new { @class = "form-control", @ID="PositionName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanPositionName" style="display:none;">Please Insert Position Name</span>
+                                </div>
+                                 <div class="col-md-3">
+                                    @Html.Label("District")
+                                    @Html.DropDownListFor(e => e.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID" })
+                                </div>
+                                 <div class="col-md-2">
+                                    @Html.Label("Taluka")
+                                    @Html.DropDownListFor(e => e.TalukaID, new SelectList(Model.Talukalist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TalukaID" })
+                                </div>
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                </div>
+                            </div>
+                        </div>
+                        
+                           <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.Label("Zone")
+                                    @Html.DropDownListFor(e => e.ZoneID, new SelectList(Model.Zonelist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="ZoneID" })
+                                </div>
+                                 <div class="col-md-3">
+                                    @Html.Label("Branch")
+                                    @Html.DropDownListFor(e => e.BranchID, new SelectList(Model.Branchlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="BranchID" })
+                                </div>
+                                 <div class="col-md-3"  style="display:none;">
+                                    @Html.Label("Region")
+                                    @Html.DropDownListFor(e => e.RegionID, new SelectList(Model.Regionlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="RegionID" })
+                                </div>
+                                  <div class="col-md-3">
+                                    @Html.Label("Role")
+                                    @Html.DropDownListFor(e => e.RoleID, new SelectList(Model.Rolelist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="RoleID" })
+                                </div>
+                        </div>
+                         </div>   
+
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitPositionMaster();" />
+                            @Html.ActionLink("Cancel", "index", "PositionMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+ }
+
+   <script>
+     
+        function SubmitPositionMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#PositionName").val() == "0" || $("#PositionName").val() == "") {
+                ErrorCnt++;
+                $('#SpanPositionName').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    PositionID: $('#PositionID').val(),
+                    PositionName: $('#PositionName').val(),
+                    ParentPositionID: $('#ParentPositionID').val(),
+                    ZoneID: $('#ZoneID').val(),
+                    BranchID: $('#BranchID').val(),
+                    RegionID: $('#RegionID').val(),
+                    RoleID: $('#RoleID').val(),
+                    IsActive: $('#IsActive').val(),
+                    DistrictID: $('#DistrictID').val(),
+                    TalukaID: $('#TalukaID').val(),
+                };
+                 $.ajax({
+                    type: "POST",
+                    url: "/PositionMaster/SavePositionRecord",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: myData,
+                     success: function(data) {
+                            debugger;
+
+                             if (data.data.ErrorCode == 0) {
+                                  swal({
+                                        text: data.data.ErrorMassage ,
+                                 })
+                                 .then((value) => {
+                                        window.location.href = "/PositionMaster/Index";
+                                  });
+                             }
+                            else {
+                                 swal({
+                                 
+                                        text: data.data.ErrorMassage,
+                                  })
+                                
+                             }
+
+                            //if (data.data.ErrorCode == 0) {
+                            //    window.location.href = "/PositionMaster/Index";
+                            //    alert(data.data.ErrorMassage);
+                            //}
+                            //else {
+                            //     alert(data.data.ErrorMassage);
+                            //}
+
+                        },
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                        //error: function() {
+                        //    alert('Something went wrong!');
+                        //}
+                });
+
+            }
+    }
+
+      //$(function () {
+      //  $("#DistrictID").change(function () {
+      //          debugger;
+      //          $.ajax({
+      //              type: "GET",
+      //              url: "/TradeUnionRegistrationMaster/TalukaList",
+      //              headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+      //              data: { mode: $("#TradunionID").val(), DistrictID: $("#DistrictID").val() },
+      //              success: function (response) {
+      //                  var row = "";
+      //                  $("#TalukaID").empty();
+                       
+      //                   for (var i = 0; i < response.data.length; i++) {
+      //                      row += "<option value=" + response.data[i].DataValue + ">" + response.data[i].DisplayValue + "</option>";
+      //                  };
+
+      //                $("#TalukaID").html(row).trigger('chosen:updated');
+                      
+      //              },
+      //              failure: function (response) {
+      //                  swal(response.responseText);
+      //              },
+      //              error: function (response) {
+      //                  //respone will be returned here
+      //                  $("#error").val(response.responseText);
+      //              }
+      //          });
+      //      });
+      //  });
+
+
+
+        
+      //Distric Change Method
+         //Distric Change Method
+      $(function () {
+        $("#DistrictID").change(function () {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: "/PositionMaster/AllList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#PositionID").val(), DistrictID: $("#DistrictID").val() },
+                    success: function (response) {
+                        debugger;
+                        $("#BranchID").empty();
+                        $("#TalukaID").empty();
+                        var row = "";
+                        row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                         
+
+                           var row1 = "";
+                         for (var i = 0; i < response.data.BranchList.length; i++) {
+                            row1 += "<option value=" + response.data.BranchList[i].DataValue + ">" + response.data.BranchList[i].DisplayValue + "</option>";
+                        }
+                         $("#TalukaID").html(row).trigger('chosen:updated');
+                          $("#BranchID").html(row1).trigger('chosen:updated');
+                     
+                    },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                   @* error: function (response) {
+                        respone will be returned here
+                        $("#error").val(response.responseText);
+                    }*@
+                     error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                });
+            });
+        });
+
+
+      
+   </script>
+ 
+            

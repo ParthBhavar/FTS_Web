@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="11/24/2022 16:08:25" ReportInfo.Modified="12/02/2022 18:05:04" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqjvMLRQNNmscOhVp5BRTKpT0FsqOAKVmMsjqip03Uz2MKHoNl0clqaOeZoNunk4w07vpYRhdXkssX/ad2W/A3+eOV5QewCRrRP4uVKf9ihKPn/0suge2JYLBsZemTe7KrF804dROB/WJkEqJQlFPTt3XVlHXdsM/E9Gvpfrtp07Y=">
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="DictrictACLOffice" DataType="System.String"/>
+        <Column Name="ApplicantDetail" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="ACLName" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="EstablishmentName" DataType="System.String"/>
+        <Column Name="ACLDistrict" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="113.4">
+      <TextObject Name="Text1" Left="378" Top="9.45" Width="302.4" Height="75.6" Text="નાયબ શ્રમ આયુક્તની કચેરી, [Table1.ACLDistrict] વિભાગ,&#13;&#10;  [Table1.DictrictACLOffice] , [Table1.ACLDistrict]&#13;&#10;" Font="Arial, 10pt"/>
+      <TextObject Name="Text2" Left="378" Top="94.5" Width="302.4" Height="18.9" Text="       તારીખ : [Table1.Date]" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="117.4" Width="718.2" Height="132.3">
+      <TextObject Name="Text3" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="પ્રતિ," Font="Arial, 10pt"/>
+      <TextObject Name="Text4" Left="9.45" Top="37.8" Width="198.45" Height="18.9" Text="[Table1.Establishmentdetail]" Font="Arial, 10pt"/>
+      <TextObject Name="Text5" Left="37.8" Top="66.15" Width="122.85" Height="18.9" Text="વિષયઃ , [Table1.EstablishmentName] [Table1.ACLDistrict]  અને તેમાં કામ કરતા કામદારો વચ્‍ચે અખિલ ગુજરાત જનરલ &#13;&#10;        મઝદુર સંઘ, [Table1.ACLDistrict] તરફથી ઉપસ્થિત થયેલ ઔધોગિક વિવાદ બાબત&#13;&#10;" Font="Arial, 10pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="253.7" Width="718.2" Height="472.5">
+      <TextObject Name="Text6" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="મહાશય," Font="Arial, 10pt"/>
+      <TextObject Name="Text7" Left="18.9" Top="56.7" Width="661.5" Height="141.75" Text="આથી જણાવવાનું કે, ઉપરોકત મંડળની તા.૧૦-૦૧-૨૦૨૨નાં પત્ર મુજબ [Table1.EstablishmentName]કોન્ટ્રાક્ટર ભુપેન્દ્ર એન્ટરપ્રાઈઝમાં &#13;&#10;કામ કરતા કામદારશ્રી બાબુભાઈ બળદેવભાઈ ઠાકોર તા.૧૨/૦૪/૨૦૧૯ થી તા.૩૦/૦૯/૨૦૨૧ સુધૂના રોજથી દરરોજ લેવામાં આવેલ ૪ કલાક&#13;&#10; ઓવરટાઈમ કામગીરીનું કોઈ વેતન મહેનતાણુ યા વળતર ચુકવવામાં આવેલ નથી જેથી દરરોજ લેવામાં આવેલ ૪ કલાક ઓવરટાઈમ&#13;&#10; કામગીરીનું ડબલ પ્રમાણે વેતન ચુકવી આપવાની સંસ્થાની કાયદેસરની ફરજ અને જવાબદારી હતી. જે ઓવરટાઈમ ની &#13;&#10;રકમ ૧૦ ગણા કોમ્પેનસેશન સાથે રૂ.૩,૯૯,૮૮૦/- ચુકવી આપવાની માંગણીઓ ઔધોગિક વિવાદ અધિનિયમ-૧૯૪૭ હેઠળ&#13;&#10; કન્‍સીલીએશન કાર્યવાહીમાં દાખલ કરી છે." HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text8" Left="18.9" Top="179.55" Width="652.05" Height="85.05" Text="સદર માંગણીઓ બાબતમાં સમાધાનની કાર્યવાહી તા.૧૭/૦૫/૨૦૨૨ના રોજ ૦૩-૦૦ વાગે કે પછી નીચે સહી કરનારને અનુકુળ સમયે &#13;&#10;આ કચેરીમાં હાથ ધરવામાં આવશે. જેની નોંધ લેવા વિનંતી છે અને તે વખતે આપશ્રીને જાતે અથવા આપના વતી સત્‍તાવાર રીતે &#13;&#10;રજુઆત કરી શકે તેવા અધિકૃત પ્રતિનિધિ મારફત લાગતા વળગતા કાગળો જરૂરી માહિતી વિગેરે સાથે અચૂક હાજર રહેવા વિનંતી છે." HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text9" Left="18.9" Top="274.05" Width="652.05" Height="66.15" Text="વધારામાં આપને વિનંતી કરવાની કે, આ સાથે મોકલાવેલ નોટિસની નકલ આપની સંસ્‍થામાં જયાં લાગતા વળગતા કામદારોને&#13;&#10; સહેલાઇથી નજરે પડે તેવી મોખરાની જગ્‍યા ઉપર મુકવા વિનંતી છે. &#13;&#10;        ઉપરોકત બાબતનો અમલ કર્યાની જાણ આ કચેરીને વેળાસર કરવા વિનંતી છે.      &#13;&#10;" HorzAlign="Justify" Font="Arial, 10pt"/>
+      <TextObject Name="Text10" Left="368.55" Top="349.65" Width="311.85" Height="47.25" Text="સમાધાન અધિકારી અને મદદનીશ શ્રમ આયુકત,&#13;&#10;[Table1.ACLDistrict] વિભાગ,[Table1.ACLDistrict]&#13;&#10;" Font="Arial, 10pt"/>
+      <TextObject Name="Text11" Left="18.9" Top="425.25" Width="94.5" Height="18.9" Text="નકલ રવાનાઃ- મંત્રીશ્રી, અખિલ ગુજરાત જનરલ મઝદુર સંઘ,૨જો માળ, આરબ ચેમ્બર્સ, પથ્થર કુવા પેટ્રોલ પંપ, રિલિફ રોડ, અમદાવાદ-&#13;&#10;૩૮૦૦૦૧ ઉપરોકત માહિતી ઉપરોકત જણાવેલ તારીખે, સમયે અને સ્‍ળથે મંડળના અધિકૃત પ્રતિનિધિએ સમાધાનની કાર્યવાહીમાં&#13;&#10; હાજર રહેવા વિનંતી છે. " Font="Arial, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="730.2" Width="718.2" Height="18.9"/>
+  </ReportPage>
+  <ReportPage Name="Page2" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle2" Width="718.2" Height="198.45">
+      <TextObject Name="Text12" Left="67.7" Top="44.35" Width="94.5" Height="18.9" Text="નોટીસઃ-" Font="Arial, 22pt"/>
+      <TextObject Name="Text13" Left="292.95" Top="103.95" Width="94.5" Height="18.9" Text="ક્માંકઃ નાશ્રઆ-અવિ-૪-આઇડીસી-૨૯/૨૦૨૨&#13;&#10;						નાયબ શ્રમ આયુકતની કચેરી,[Table1.ACLDistrict], વિભાગ,&#13;&#10;[Table1.DictrictACLOffice]					   &#13;&#10;તારીખઃ- [Table1.Date]&#13;&#10;" Font="Arial, 12pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader2" Top="202.45" Width="718.2" Height="94.5">
+      <TextObject Name="Text14" Left="18.9" Top="28.35" Width="94.5" Height="18.9" Text="શ્રી .[Table1.ACLName], સમાધાન અધિકારી, [Table1.ACLDistrict] વિભાગ, [Table1.ACLDistrict]" Font="Arial, 12pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data2" Top="300.95" Width="718.2" Height="378">
+      <TextObject Name="Text15" Left="18.9" Top="18.9" Width="94.5" Height="18.9" Text="[Table1.EstablishmentName], [Table1.ACLDistrict] અને તેમાં કામ કરતાં કામદારો અખિલ ગુજરાત જનરલ&#13;&#10; મઝદુર સંઘ, અમદાવાદ તરફથી ઉપસ્‍થિત થયેલ ઔધોગિક વિવાદ અધિનિયમ-૧૯૪૭ હેઠળ એડીયન્ટ &#13;&#10;ઈન્ડીયા પ્રા.લી  સંસ્થામાં કોન્ટ્રાક્ટર ભુપેન્દ્ર એન્ટરપ્રાઈઝમાં કામ કરતા કામદારશ્રી બાબુભાઈ બળદેવભાઈ ઠાકોર &#13;&#10;તા.૧૨/૦૪/૨૦૧૯ થી તા.૩૦/૦૯/૨૦૨૧ સુધૂના રોજથી દરરોજ લેવામાં આવેલ ૪ કલાક ઓવરટાઈમ કામગીરીનું &#13;&#10;કોઈ વેતન મહેનતાણુ યા વળતર ચુકવવામાં આવેલ નથી જેથી દરરોજ લેવામાં આવેલ ૪ કલાક ઓવરટાઈમ &#13;&#10;કામગીરીનું ડબલ પ્રમાણે વેતન ચુકવી આપવાની સંસ્થાની કાયદેસરની ફરજ અને જવાબદારી હતી&#13;&#10;. જે ઓવરટાઈમ ની રકમ ૧૦ ગણા કોમ્પેનસેશન સાથે રૂ.૩,૯૯,૮૮૦/- ચુકવી આપવાની માંગણીઓ &#13;&#10;ઔધોગિક વિવાદ અધિનિયમ-૧૯૪૭ હેઠળ કન્‍સીલીએશન કાર્યવાહીમાં દાખલ કરી છે." Font="Arial, 12pt"/>
+      <TextObject Name="Text16" Left="28.35" Top="207.9" Width="94.5" Height="18.9" Text="સદર માંગણી બાબતમાં સમાધાનની કાર્યવાહી અંગેની યુનિયનની માંગણી અંગે આથી સર્વે લાગતા વળગતા &#13;&#10;કામદારોને જણાવવામાં આવે છે કે, ઉપરોકત બાબત અંગેની ઉપરોકત મંડળની તા.૧૦/૦૧/૨૦૨૨ના પત્ર મુજબની &#13;&#10;માંગણીઓ તા.૨૫-૦૪-૨૦૨૨ના રોજ કન્‍સીલીએશનમાં દાખલ કરવામાં આવેલ છે અને સદરહુ બાબતમાં &#13;&#10;સમાધાનની કાર્યવાહી તા.૧૭-૦૫-૨૦૨૨ના રોજ ૦૩-૦૦ વાગે કે પછી નીચે સહી કરનારને અનુકુળ સમયે &#13;&#10;આ કચેરીમાં હાથ ધરવામાં આવશે" Font="Arial, 12pt"/>
+      <TextObject Name="Text17" Left="396.9" Top="330.75" Width="94.5" Height="18.9" Text="સમાધાન અધિકારી,&#13;&#10;    							        વિભાગ, [Table1.ACLDistrict]&#13;&#10;" Font="Arial, 12pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter2" Top="682.95" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

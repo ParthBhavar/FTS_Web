@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/11/2022 11:13:15" ReportInfo.Modified="11/25/2022 17:34:22" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqlEl9AJGOxoee/xda4ADDCgqFlxmmrxbRh4upHoFBnxGNdh+IjjHfI5oVOeDd0/hBCAEwiTJqzYcodIulTXg+2X+JSUASRid4V0LOavXD9ZanTvm4KArsJF/p+6yDrplydg1z/bXhWAhrHjXEkirNZw==">
+      <TableDataSource Name="Table11" Alias="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="DictrictACLOffice" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="ApplicantDetail" DataType="System.String"/>
+        <Column Name="AppID" DataType="System.String"/>
+        <Column Name="HearingDate" DataType="System.String"/>
+        <Column Name="HearingTime" DataType="System.String"/>
+        <Column Name="ACLDistrict" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="718.2" Height="982.8">
+      <ShapeObject Name="Shape1" Left="9.45" Top="9.45" Width="699.3" Height="122.85"/>
+      <TextObject Name="Text1" Left="-47.25" Top="9.45" Width="614.25" Height="47.25" Text="                નાયબ શ્રમ આયુક્તશ્રીની કચેરી&#13;&#10;    " HorzAlign="Center" Font="Microsoft Sans Serif, 26pt, style=Bold"/>
+      <TextObject Name="Text2" Left="434.7" Top="141.75" Width="292.95" Height="28.35" Text="તા.   [Table1.Date]" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text3" Left="113.4" Top="160.65" Width="463.05" Height="28.35" Text="રવાના :- નિયંત્રણ અધિકારી, કોઉન્સીલશન યૂકવણી અધિનિયમ ૧૯૭૨, અમદાવાદ" HorzAlign="Center" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="18.9" Top="236.25" Width="56.7" Height="18.9" Text="પ્રતિ" HorzAlign="Center" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <TextObject Name="Text5" Left="378" Top="236.25" Width="56.7" Height="18.9" Text="પ્રતિ" HorzAlign="Center" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <ShapeObject Name="Shape2" Left="18.9" Top="264.6" Width="330.75" Height="132.3"/>
+      <ShapeObject Name="Shape3" Left="378" Top="264.6" Width="330.75" Height="132.3"/>
+      <LineObject Name="Line1" Left="18.9" Top="292.95" Width="330.75"/>
+      <LineObject Name="Line2" Left="378" Top="292.95" Width="330.75"/>
+      <TextObject Name="Text6" Left="28.35" Top="274.05" Width="198.45" Height="18.9" Text="અરજદારનું નામ અને સરનામું" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text7" Left="387.45" Top="274.05" Width="189" Height="18.9" Text="સામાવાળાનું નામ અને સરનામું " Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text8" Left="28.35" Top="302.4" Width="311.85" Height="85.05" CanGrow="true" Text="[Table1.ApplicantDetail]" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text9" Left="387.45" Top="302.4" Width="302.4" Height="85.05" Text="[Table1.Establishmentdetail]" Font="Microsoft Sans Serif, 10pt"/>
+      <TableObject Name="Table1" Left="75.6" Top="585.9" Width="482.01" Height="113.4" Border.Lines="All" AdjustSpannedCellsWidth="true">
+        <TableColumn Name="Column1" Width="85.08"/>
+        <TableColumn Name="Column2" Width="396.93"/>
+        <TableRow Name="Row1" Height="31.5">
+          <TableCell Name="Cell1" Border.Lines="All" Text="તારીખ:- " Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+          <TableCell Name="Cell2" Border.Lines="All" Text="[Table1.HearingDate]" Font="Microsoft Sans Serif, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row2" Height="31.5">
+          <TableCell Name="Cell6" Border.Lines="All" Text="સમય:- " Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+          <TableCell Name="Cell7" Border.Lines="All" Text="[Table1.HearingTime]" Font="Microsoft Sans Serif, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row3" Height="50.4">
+          <TableCell Name="Cell11" Border.Lines="All" Text="સ્થળ:- " Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+          <TableCell Name="Cell12" Border.Lines="All" Text="[Table1.DictrictACLOffice]" Font="Microsoft Sans Serif, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text10" Left="18.9" Top="878.85" Width="179.55" Height="18.9" Text="બિડાણ: નમુના-એન ની નકલ " Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text11" Left="472.5" Top="859.95" Width="217.35" Height="75.6" Text="     &#13;&#10;            નિયંત્રણ અધિકારી, &#13;&#10;ધી પેમેન્ટ ઓફ ગ્રેજયુઇટી એકટ. ૧૯૭૨&#13;&#10;&#13;&#10;   [Table1.ACLDistrict]" HorzAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text12" Left="217.35" Top="207.9" Width="245.7" Height="18.9" Text="અરજી નંબર [Table1.AppID]" HorzAlign="Center" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <TextObject Name="Text13" Left="18.9" Top="415.8" Width="670.95" Height="151.2" Text="                અરજદાર એ તમારા કામદાર છે. તેમ જણાવેલ છે. ઉપર્યુકત સામાવાળા સંસ્થા / માલિક સામે તેમણે ગ્રેજયુઇટી ચૂકવણી નિયમો, ૧૯૭૨ ના નિયમ-૧૦ ના પેટા નિયમ-૧ હેઠળ ગ્રેજયુઇટીની માંગણી મુકતી અરજી નમુના -એન માં અત્રે રજુ કરેલ છે.&#13;&#10;&#13;&#10;           આથી હવે તેમને ફરમાવવામાં આવે છે કે, તેઓને જાતે અથવા આ અર્થે અધિકૃત કરેલ વ્યકતિ મારફત અરજીમાં જણાવેલ તમામ મહત્વ ના પ્રશ્નોના જવાબ આપવાના હેતુ માટે આક્ષેપોના સમર્થનમાં/ જવાબ આપવાના હેતુ માટે મારી સમક્ષ નીચે જણાવ્યા મુજબ અને તે પછી ઓથોરીટીના અનુકૂળ સમયે હાજર રહેવું. તેમજ અરજીના આખરી નિકાલ માટે ઉપરોકત નિયત કરેલા સમયે તમારી સામેના આક્ષેપો/બચાવના સમર્થન માટે તમે જે સાક્ષીઓના પુરાવા ઉપર અને જે દસ્તાવેજો ઉપર આધાર રાખવા માગતા હોય તો તે તમામ બધા સાક્ષીઓ અને દસ્તાવેજો રજુ કરવા તૈયાર રહેવું. &#13;&#10;&#13;&#10;&#13;&#10;&#13;&#10;" HorzAlign="Justify" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text14" Left="28.35" Top="727.65" Width="642.6" Height="113.4" Text="              આથી નોટીસ આપવામાં આવે છે કે, ઉપર જણાવેલ સમયે અને સ્થળે હાજર રહેવામાં કસુર થયે આ અરજીની તમારી ગેરહાજરીમાં સુનાવણી કરી નિર્ણય લેવામાં આવશે.&#13;&#10;&#13;&#10;               સદર કેસની હવે પછીની મુદતની જાણ અત્રેથી કરવામાં આવશે નહિ. જેથી આ કેસની વખતો વખતની પ્રગતિથી પક્ષકારોએ પોતે જ માહિતગાર રહેવું &#13;&#10;&#13;&#10;" HorzAlign="Justify" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text15" Left="132.3" Top="56.7" Width="396.9" Height="66.15" Text="[Table1.DictrictACLOffice]" HorzAlign="Center" Font="Microsoft Sans Serif, 18pt, style=Bold"/>
+    </DataBand>
+  </ReportPage>
+</Report>

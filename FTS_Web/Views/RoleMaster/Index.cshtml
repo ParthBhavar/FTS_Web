@@ -1,0 +1,164 @@
+﻿@model  IEnumerable<FTS.Model.Entities.MRoleMaster>
+@{
+    ViewBag.Title = "Role Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+   @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/RoleMaster/AddRoleMaster/?roleid=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+                                            </div>
+                                    <table id="RoleList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                @* <th style="width:2%;" id="roleID">Role ID</th>*@
+                                                  <th style="width:20%;" id="roleName">Role Name</th>
+                                                  <th  style="width:2%;" id="Edit">Action</th>
+                                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                    <td valign="top" class="text-left">@item.RoleName </td>
+                                                <td>
+                                                     <a id="Edit" href="/RoleMaster/AddRoleMaster/?roleid=@item.EncryptedId" ><i class="fas fa-pen"></i></a>
+                                                        @*<a id="Edit" href="/RoleMaster/Pdf/?id=2">PDF</a>
+                                                        <a id="Edit" href="/RoleMaster/test/?id=2">test</a>
+                                                        <a id="Edit" href="/RoleMaster/SendToLabourEmailPDF1/">Email</a>*@
+                                                   @* <a id="Delete" onclick="return DeleteRoleRecord(@item.RoleID);"><i class="fas fa-trash-alt"></i></a>*@
+                                                    <a id="Delete" onclick="DeleteConformation('DeleteRoleRecord(@item.EncryptedId)')"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ @*   <script>
+        $('#RoleList').DataTable( {
+    serverSide: true,
+    ajax: {
+        url: '/RoleMaster/AddRoleMaster',
+        dataFilter: function(data){
+            var json = jQuery.parseJSON( data );
+            json.recordsTotal = json.total;
+            json.recordsFiltered = json.total;
+            json.data = json.list;
+ 
+            return JSON.stringify( json ); // return JSON string
+        }
+    }
+} );
+    </script>*@
+    <script>
+
+      $( document ).ready(function() {
+       // RoleList();
+        //$('#RoleList').DataTable();
+        $('#RoleList').dataTable( {} );
+    });
+
+    @*   function RoleList() {
+          
+            var myData = {
+                serchstring: $('#serchstring').val()
+            };
+            $.ajax
+             ({
+               type: "POST",
+               url: "/RoleMaster/Index",
+               dataType: "json",
+               data: myData,
+               success: function (data) {
+                   debugger;
+                   if (data.data != "") 
+                   {
+                       $("#RoleList tbody").html("");
+                       var RowHtml = "";
+                          for (var i = 0; i < data.data.length; i++) {
+                               RowHtml = RowHtml + "<tr>";
+                               RowHtml = RowHtml + '<td id="roleID">' + data.data[i].roleID + '</td>';
+                               RowHtml = RowHtml + '<td id="roleName">' + data.data[i].roleName + '</td>';
+                               RowHtml = RowHtml + '<td> <a id="Edit" href="/RoleMaster/AddRoleMaster/?RoleID=' + data.data[i].roleID + '" >'+'<i class="fas fa-edit"></i>'+ '</a>' + '</td>';
+                               RowHtml = RowHtml + '<td> <a id="Delete" onclick="return DeleteRoleRecord(' + data.data[i].roleID + ');">'+'<i class="fas fa-trash-alt"></i>'+ '</a>' + '</td>';
+                                // RowHtml = RowHtml + '<td> <button id="Edit" onclick="Test();" class="btn btn-primary" >Edit </button>' + '</td>';
+                               RowHtml = RowHtml + "</tr>";
+                             }
+                                   $("#RoleList tbody").html(RowHtml);
+                           }
+                           
+                    else {
+                       alert('Data not found!');
+                   }
+                  //  getPagination('#RoleList');
+               },
+               error: function () {
+                   alert('Something went wrong!');
+               }
+              })
+    }
+*@
+    function DeleteRoleRecord(roleID) {
+        debugger;
+                var myData = {
+                    roleid: roleID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/RoleMaster/DeleteRoleRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/RoleMaster/Index";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+                        },
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+           
+    }
+
+        </script>
+
+}

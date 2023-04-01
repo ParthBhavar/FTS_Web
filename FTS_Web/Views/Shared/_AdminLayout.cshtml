@@ -1,0 +1,651 @@
+﻿@*@model IEnumerable<FTS.Model.Entities.MenuListModel>*@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Antiforgery
+@inject IAntiforgery AntiForgery;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - COL</title>
+
+    <link rel="stylesheet" href="~/Scripts/vendors/feather/feather.css" />
+    <link rel="stylesheet" href="~/Scripts/vendors/ti-icons/css/themify-icons.css" />
+    <link rel="stylesheet" href="~/Scripts/vendors/css/vendor.bundle.base.css" />
+     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Scripts/css/vertical-layout-light/style.css" />
+    <link rel="stylesheet" href="~/content/formvalidation/styles/formhelper.min.css" />
+
+    <link href="~/Scripts/css/all.css" rel="stylesheet">
+      <link href="~/css/font-awesome.min.css" rel="stylesheet">
+     <link href="~/Scripts/css/fontawesome.css" rel="stylesheet">
+    <link href="~/Scripts/css/brands.css" rel="stylesheet">
+    <link href="~/Scripts/css/solid.css" rel="stylesheet">
+    <link href="~/Scripts/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/chosen.min.css" rel="stylesheet">
+    <link href="~/css/bs-stepper.css" rel="stylesheet">
+@*    <link href="~/css/aa.css" rel="stylesheet" />
+    <link href="~/css/developer.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="~/css/SweetAlert/sweetalert2.css">
+   
+
+    <link href="~/Scripts/css/kendo.common.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/kendo.d_efault.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/kendo.default.mobile.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/customscrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">
+    <script src="~/Scripts/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/Scripts/js/off-canvas.js"></script>
+    <script src="~/Scripts/js/hoverable-collapse.js"></script>
+    <script src="~/Scripts/js/template.js"></script>
+    <script src="~/Scripts/js/settings.js"></script>
+    <script src="~/Scripts/js/todolist.js"></script>
+    <script src="~/Scripts/vendors/chart.js/Chart.min.js"></script>
+    <script src="~/Scripts/js/sweetalert.min.js"></script>
+    <script src="~/Scripts/js/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/js/Chart.roundedBarCharts.js"></script>
+    <script src="~/Scripts/vendors\Pagination\script.js"></script>
+    <script src="~/Scripts/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/js/jszip.min.js"></script>
+    <script src="~/Scripts/js/kendo.all.min.js"></script>
+    <script src="~/Scripts/js/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/js/customscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/js/bs-stepper.min.js"></script>
+    <script src="~/Scripts/js/javascript_treeview.js"></script>
+@*    <script src="~/Dashboard/vendors/moment/moment.js"></script>
+*@    <script src="~/Scripts/js/moment.min.js"></script>
+    <script src="~/content/formvalidation/scripts/formhelper.bundle.min.js"></script>
+    @*<script src="~/css/SweetAlert/sweetalert2.js"></script>*@
+    <script src="~/scripts/signature/sketch.min.js"></script>
+    <script src="~/Scripts/js/sweetalert.min.js"></script>
+   @* <script src="https://cdn.rawgit.com/mobomo/sketch.js/master/lib/sketch.min.js"></script>*@
+<style>
+    .disablecolor
+    {
+        background-color:#cdd7e1;
+    }
+</style>
+
+</head>
+
+<body>
+    @*Title*@
+      <div class="container-scroller">
+     
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <h3>FTS</h3>
+        @*<a class="navbar-brand brand-logo mr-5" href="/Home/Index"><img src="~/Dashboard/images/logo.png" class="mr-2 ml-4" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="/Home/Index"><img src="~/Dashboard/images/logo-mini.png" alt="logo"/></a>*@
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>
+       @* <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-search d-none d-lg-block">
+            <div class="input-group">
+              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                <span class="input-group-text" id="search">
+                  <i class="icon-search"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+            </div>
+          </li>
+        </ul>*@
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item">
+               <select class="form-control dropdowncss" id="PositionDropdown" name="PositionDropdown" style="display:none"></select>  
+             </li>
+            @* <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+              <i class="icon-bell mx-0"></i>
+              <span class="count"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-success">
+                    <i class="ti-info-alt mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Just now
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-warning">
+                    <i class="ti-settings mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Private message
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info">
+                    <i class="ti-user mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    2 days ago
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>*@
+
+          
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+              <img src="~/images/avatar/profile.jpg" alt="profile"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item">
+                <i class="ti-settings text-primary"></i>
+                  <input type="text" , readonly="readonly", class="form-control dropdownstyle" id="test"> 
+              </a>
+               @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_UserMode") == 1)
+               {
+               <a class="dropdown-item" href="/EmployeeLogin/ChangeEmployeePassword" >
+                <i class="ti-key text-primary"></i>
+                  Change Password
+              </a>
+               }
+               else
+               {
+                <a class="dropdown-item" href="/Home/ChangeApplicantPassword" >
+                <i class="ti-key text-primary"></i>
+                  Change Password
+              </a>
+               }
+              <a class="dropdown-item" href="/Home/Logout"> 
+                <i class="ti-power-off text-primary"></i>
+                Logout
+              @* @Html.ActionLink("Logout", "Logout", "Home", new { area = "" }, new { @class = ""})*@
+              </a>
+            </div>
+          </li>
+         
+          <li class="nav-item nav-settings d-none d-lg-flex">
+            <a class="nav-link" href="#">
+             @* <i class="icon-ellipsis"></i>*@
+            </a>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+     @* <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close ti-close"></i>
+        <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="setting-content">
+          <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+            <div class="add-items d-flex px-3 mb-0">
+              <form class="form w-100">
+                <div class="form-group d-flex">
+                  <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="list-wrapper px-3">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Team review meeting at 3.00 PM
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Prepare for presentation
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Resolve all the low priority tickets due today
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Schedule meeting for next week
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Project review
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+              </ul>
+            </div>
+            <h4 class="px-3 text-muted mt-5 font-weight-light mb-0">Events</h4>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary mr-2"></i>
+                <span>Feb 11 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Creating component page build a js</p>
+              <p class="text-gray mb-0">The total number of sessions</p>
+            </div>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary mr-2"></i>
+                <span>Feb 7 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+              <p class="text-gray mb-0 ">Call Sarah Graves</p>
+            </div>
+          </div>
+          <!-- To do section tab ends -->
+          <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+            <div class="d-flex align-items-center justify-content-between border-bottom">
+              <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+              <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+            </div>
+            <ul class="chat-list">
+              <li class="list active">
+                <div class="profile"><img src="~/Dashboard/images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Thomas Douglas</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">19 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="~/Dashboard/images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <div class="wrapper d-flex">
+                    <p>Catherine</p>
+                  </div>
+                  <p>Away</p>
+                </div>
+                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                <small class="text-muted my-auto">23 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="~/Dashboard/images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Daniel Russell</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">14 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="~/Dashboard/images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <p>James Richardson</p>
+                  <p>Away</p>
+                </div>
+                <small class="text-muted my-auto">2 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="~/Dashboard/images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Madeline Kennedy</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">5 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="~/Dashboard/images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Sarah Graves</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">47 min</small>
+              </li>
+            </ul>
+          </div>
+          <!-- chat tab ends -->
+        </div>
+      </div>*@
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+    @* <div class="container-fluid page-body-wrapper">*@
+      <span id="dynamicContentContainer"></span>
+    @*  @Html.AntiForgeryToken();*@
+      <div class="main-panel">
+        @Html.AntiForgeryToken()
+        @RenderBody()
+      
+        <div id="wait" class="chat-loader-sec" style="display: none;">
+                    <div class="chat-loader">
+                        <img src="~/Dashboard/images/loader_spin.gif" />
+                    </div>
+        </div>
+
+         <footer class="footer">
+         @* <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Commissionerate of Labour All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+          </div>*@
+        </footer>
+        </div>
+     
+    </div>
+    @*</div>*@
+    <!-- page-body-wrapper ends -->
+       
+  </div>
+
+        
+
+   
+    <style>
+        .dropdowncss{
+            margin:1rem;
+        }
+        .chat-loader-sec {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0; 
+            bottom: 0;
+            z-index: 99999;
+            background: rgba(255,255,255,0.38);
+        }
+        .chat-loader-sec .chat-loader {
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            right: 0;
+            margin: -25px auto 0;
+        }
+    </style>
+
+    <script>
+        $(document).ajaxStart(function () {
+
+           $("#wait").show();
+
+        });
+
+        $(document).ajaxStop(function () {
+
+           $("#wait").hide();
+
+        });
+
+        $(document).ajaxError(function () {
+
+           $("#wait").hide();
+
+        });
+    </script>
+    
+    <script>   
+    $.get('@Url.Action("_MenuListing", "EmployeeLogin")', function(content){
+        
+            $("#dynamicContentContainer").html(content);
+        });
+</script>
+<script>
+$(".chosen-select").chosen({
+    search_contains: true
+});
+</script>
+<script>
+
+         var _UserMode = '@HttpContextAccessor.HttpContext.Session.GetInt32("_UserMode")';
+
+if (_UserMode == 1) {
+    $(document).ready(function() {
+        $("#PositionDropdown").css("display", "block");
+        PositionDropdownRecord();
+    });
+
+    var _PositionID = '@HttpContextAccessor.HttpContext.Session.GetInt32("_PositionID")';
+   var antiForgeryToken = document.getElementsByName("__RequestVerificationToken")[0].value;
+
+    function PositionDropdownRecord() {
+        debugger;
+        var myData = {
+
+        };
+        $.ajax
+            ({
+                type: "POST",
+                url: "/EmployeeLogin/_UserPositionListListing",
+                headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                dataType: "json",
+                data: myData,
+                success: function(data) {
+                    
+                    var s = '<option value="-1">Please Select a Position</option>';
+                    for (var i = 0; i < data.data.length; i++) {
+                        if (data.data[i].PositionID == _PositionID) {
+                            s += '<option value="' + data.data[i].PositionID + '" selected="selected" ">' + data.data[i].PositionName + '</option>';
+                        }
+                        else {
+
+                            s += '<option value="' + data.data[i].PositionID + '">' + data.data[i].PositionName + '</option>';
+                        }
+                    }
+                    $("#PositionDropdown").html(s);
+                },
+                error: function() {
+
+                    swal("test");
+                }
+            })
+
+    }
+
+}
+    </script>
+
+    <script>
+   var _UserName = '@HttpContextAccessor.HttpContext.Session.GetString("_UserName")';
+$('#test').val(_UserName);
+</script>
+
+    <script>
+        
+        function DownloadReportFile(fileName) {
+        debugger
+       var url = "/Documents/Report/EmailPDF/" + fileName;
+        var a = document.createElement('a');
+        var url = url;
+        a.href = url;
+        a.download = fileName;
+        document.body.append(a);
+        a.click();
+        a.remove();
+    };
+
+       $(".chosen-select").chosen({ placeholder: "Select a state"}); 
+       $('.chosen-select').css('width', '100%');
+       $('.chosen-container-single .chosen-single').css('height', '1.875rem');
+      
+         $('.chosen-container').css('width', '100%');
+
+              $("input[type='checkbox']").on('change', function(){
+       $(this).val(this.checked ? "true" : "false");
+       })
+
+       $("input[type='checkbox']").trigger("change");     
+
+
+       //$(".datepicker").kendoDatePicker({
+       //     format: 'dd-mm-yyyy'
+       //}); 
+       $(".datepicker").kendoDatePicker(); 
+   
+
+       $(".datetimepicker").kendoDateTimePicker({
+                dateInput: true
+            });
+             
+            $('.k-widget').css('width', '100%');
+    </script>
+
+    <script>
+
+           var EmailID = '@HttpContextAccessor.HttpContext.Session.GetString("_EmailID")';
+         
+              //Distric Change Method
+         //Distric Change Method
+      $(function () {
+        $("#PositionDropdown").change(function () {
+               
+                 var myData = {
+                    EmailID:EmailID,
+                    IsOnchange: 1,
+                    PositionID:  $("#PositionDropdown").val(),
+                };
+
+
+                $.ajax({
+                    type: "GET",
+                    url: "/EmployeeLogin/PostionOnChange",
+                    data: myData,
+                    success: function (response) {
+                        if (response.data.ErrorCode == 0) {
+                            window.location.href = "/Dashboard/Index";
+                        }
+                        else {
+                         swal(response.data.ErrorMassage);
+                        }
+                  },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                    error: function (response) {
+                        //respone will be returned here
+                        $("#error").val(response.responseText);
+                    }
+                });
+            });
+        });
+
+          </script>
+    
+
+    <script>
+            function ReplaceSpecialChar(strXml) {
+        if (strXml != undefined) {
+            strXml = strXml.replace(/&/g, '@@and;')
+            strXml = strXml.replace(/</g, '@@LT;')
+            strXml = strXml.replace(/>/g, '@@GT;')
+            strXml = strXml.replace(/"/g, '@@DQ;')
+            strXml = strXml.replace(/'/g, '@@SQ;')
+            strXml = strXml.replace(/\//g, '@@PL;')
+        }
+        return strXml;  
+    }
+
+        </script>
+
+    <script>
+    function DeleteConformation(string) {
+       
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover your Recored!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+    .then((willDelete) => {
+        if (willDelete) {
+            debugger;
+            var result = string.split('(');
+            var data = result[1].split(')');
+            window[result[0]](data[0]);
+         
+           
+            
+        }
+        else {
+            swal("Your Recored is safe!");
+        }
+    });
+    }
+
+    function getTodaydate()
+    {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1; // Months start at 0!
+            let dd = today.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            const formattedToday = dd + '-' + mm + '-' + yyyy;
+            return formattedToday;
+    }
+</script>
+</body>
+</html>
+
+
+
+              

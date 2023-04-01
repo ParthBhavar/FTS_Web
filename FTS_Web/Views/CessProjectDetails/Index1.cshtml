@@ -1,0 +1,72 @@
+﻿@model IEnumerable<FTS.Model.Entities.CessProjectDetailsModel>
+@{
+	ViewBag.Title = "Cess Collection Details";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+	<br />
+	<section>
+		<h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+	</section>
+
+	<div class="content-wrapper">
+		<div class="row">
+			<div class="col-12 grid-margin stretch-card">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12">
+								<div class="table-responsive">
+									<div id="Filter" class="dataTables_filter float-right mx-3 mb-3">
+										<a id="Add" href="/CessProjectDetails/CessCollectionDetails/?establishmentid=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+									</div>
+									<table id="CessCollectionList" class="display expandable-table" style="width:100%">
+										<thead>
+											<tr>
+												@* <th style="width:2%;" id="RegionID">region ID</th>*@
+												<th style="width:20%;" id="establishmentName">Establishment Name</th>
+												<th style="width:20%;" id="projectName">Project Name</th>
+												<th style="width:20%;" id="amount">Amount</th>
+												<th style="width:20%;" id="date">Date</th>
+												<th style="width:2%;" id="Edit">Action</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var item in Model)
+											{
+												<tr>
+													@*<td valign="top" class="text-left">@item.RegionID </td>*@
+													<td valign="top" class="text-left">@item.EstablishmentName </td>
+													<td valign="top" class="text-left">@item.ProjectName </td>
+													<td valign="top" class="text-left">@item.Amount </td>
+													<td valign="top" class="text-left">@item.Datee </td>
+													<td>
+														<a id="Edit" href="/CessProjectDetails/CessCollectionDetails/?establishmentid=@item.EncryptedId"><i class="fas fa-pen"></i></a>
+														@*<a id="Delete" onclick="return DeleteRecord(@item.ProjectID);"><i class="fas fa-trash-alt"></i></a>*@
+													</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+      $( document ).ready(function() {
+       // CessCollectionList();
+        //$('#CessCollectionList').DataTable();
+        $('#CessCollectionList').dataTable( {} );
+    });
+	</script>
+
+}

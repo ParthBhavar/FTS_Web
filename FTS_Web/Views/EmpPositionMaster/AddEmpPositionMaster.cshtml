@@ -1,0 +1,581 @@
+﻿@model FTS.Model.Entities.EmpPositionMasterModel
+@{
+    ViewBag.Title = "ADD EMPLOYEE POSITION";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>    
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                       
+                     <div class="form-group">
+                        <div class="col-md-12"> 
+                            <div class="row">
+
+                                                  @*Position Name *@
+                                    <div class="col-md-3">
+                                    @Html.Label("Position Name")
+                                    @Html.HiddenFor(e => e.EmpPosIDEdit , new { @ID="EmpPosID"})
+                                  @*   @Html.HiddenFor(e => e.EmpPosID , new { @ID="EmpPosID"})*@
+                                    @Html.HiddenFor(e => e.IP_Address , new { @ID="IP_Address"})
+                                   @* @Html.HiddenFor(e => e.EmployeeID , new { @ID="EmployeeID"})*@
+                                    @Html.DropDownListFor(M => M.PositionID, new SelectList(Model.PositionList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="PositionID", })
+                                    <span class="text-danger ValidationSpan" id="SpanPositionID" style="display:none;">Please Select Position Name </span>
+                                </div>
+
+                                                  @*Employee Name *@
+                                    <div class="col-md-3">
+                                    @Html.Label("Employee Name")
+                                    @Html.DropDownListFor(M => M.EmployeeID, new SelectList(Model.EmployeeList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EmployeeID", })
+                                    <span class="text-danger ValidationSpan" id="SpanEmployeeID" style="display:none;">Please Select Employee Name </span>
+                                </div>
+
+                                                    @*Email *@
+                                    <div class="col-md-3">
+                                          @Html.Label("Email")<span class="text-danger"> *</span>
+                                           @Html.TextBoxFor(x => x.Email, new { @class = "form-control BlockSpecialChar", @ID="Email" ,title = "Enter EmailID.", placeholder = "Enter EmailID", maxlength = 100, data_val = "true" })
+                                           @Html.ValidationMessageFor(x => x.Email)
+                                          <span class="text-danger ValidationSpan" id="SpanEmail" style="display:none;">Please Enter Email Address.</span>  
+                                 </div>
+
+                                                        @*Mobile No*@
+                                    <div class="col-md-3">
+                                          @Html.Label("MobileNo")<span class="text-danger"> *</span>
+                                           @Html.TextBoxFor(x => x.MobileNo, new { @class = "form-control BlockSpecialChar", @ID="MobileNo" ,title = "Enter MobileNo.", placeholder = "Enter MobileNo", maxlength="12",oninput="numberOnly(this.id);" })
+                                           @Html.ValidationMessageFor(x => x.MobileNo)
+                                           <span class="text-danger ValidationSpan" id="SpanMobile" style="display:none;">Please Enter Valid Mobile No.</span>
+                                           <span class="text-danger ValidationSpan" id="SpanvalidregxMobileNo" style="display:none;">Enter the 10 digit</span>
+                                           <span class="text-danger ValidationSpan" id="SpanvalidMobileNo" style="display:none;">Please Enter Valid Mobile No</span>
+                                  </div>
+
+                            </div>
+                        
+                        </div>
+                                                    
+                               <div class="col-md-12 mt-5">
+                                   <div class="row">
+                                          @*Start Date *@
+                                <div class="col-md-2">
+                                    @Html.Label("Start Date")
+                                    @Html.TextBoxFor(e => e.StartDate, "{0:dd-MM-yyyy}" ,new { @class = "form-control", @ID="StartDate", required = "required"})
+                                </div>
+
+                                  @*End Date*@
+                                <div class="col-md-2">
+                                    @Html.Label("End Date")
+                                    @Html.TextBoxFor(e => e.EndDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @ID="EndDate", required = "required"})
+                                </div>
+
+                                
+                                                     @*ISActive*@
+                                <div class="col-md-2" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Active</span>
+                                </div>
+                           
+                                                     @*SetAsDefault*@
+                                <div class="col-md-2" style="margin-top: auto;">
+                                    @Html.Label("SetAsDefault")
+                                    @Html.CheckBoxFor(e => e.SetAsDefault, new { @ID="SetAsDefault"})
+                                    <span class="text-danger ValidationSpan" id="SpanSetAsDefault" style="display:none;">Please Select Active</span>
+                                </div>
+
+                                        @*DashBoard Radio List*@
+                                    <div class="col-md-4"  style="margin-top: auto;">
+
+                                    @if (@Model.IsDashoardList == 1)
+                                    {
+                                        <input type="radio" value="1" checked="checked" id="IsDashoardList" name="item.Value" onclick="handleClick(this);" /> <span> Super Admin</span>
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" value="1" id="IsDashoardList" name="item.Value"  onclick="handleClick(this);"/>  <span> Super Admin</span>
+                                    }
+
+                                    @if (@Model.IsDashoardList == 2)
+                                    {
+                                        <input type="radio" value="2" checked="checked" id="IsDashoardList" onclick="handleClick(this);" name="item.Value" /> <span> Clerk</span>
+                                    }
+                                    else
+                                    {
+                                       <input type="radio" value="2" id="IsDashoardList" name="item.Value" onclick="handleClick(this);" /> <span> Clerk</span>
+                                    }
+
+                                                    
+                                    @if (@Model.IsDashoardList == 3)
+                                    {
+                                        <input type="radio" value="3" checked="checked" id="IsDashoardList" onclick="handleClick(this);" name="item.Value" /> <span> ACL</span>
+                                    }
+                                    else
+                                    {
+                                       <input type="radio" value="3" id="IsDashoardList" name="item.Value" onclick="handleClick(this);" /> <span> ACL</span>
+                                    }
+
+
+                                    @if (@Model.IsDashoardList == 4)
+                                    {
+                                        <input type="radio" value="4" checked="checked" id="IsDashoardList" onclick="handleClick(this);" name="item.Value" /> <span> DCL</span>
+                                    }
+                                    else
+                                    {
+                                       <input type="radio" value="4" id="IsDashoardList" name="item.Value" onclick="handleClick(this);" /> <span> DCL</span>
+                                    }
+                                </div>
+
+                                  <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary mt-5"
+                              data-toggle="modal" data-target="#exampleModal" id="DivAssign" >
+                                    Select Assign Position
+                                </button>
+
+                                <div class="modal fade" id="exampleModal">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    Select Assign Menu
+                                                </h5>
+                                                <button type="button" class="close"
+                                                    data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true" >
+                                                        ×
+                                                    </span>
+                                                </button>
+
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+
+                                                   
+                                                <table class="table table-striped table-bordered table-responsive" id="Menulst">
+                                                 
+                                                    <thead>
+                                                         <tr>
+                                                      @*    <th id="Name" class="text-primary" width="1%" height="3">No</th>*@
+                                                          <th id="Name" class="text-primary" >Parent Menu</th>
+                                                          <th id="Name" class="text-primary" >Sub Menu</th>
+                                                       
+                                                          </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                         @{var RowNo1 = 0;}
+                                          
+                                           
+                                                        @foreach (var item2 in Model.MenuList.Where(x => x.ParentId == 0))
+                                                        {
+                    
+                                                         <tr>
+                                                                @*<a class="nav-link" data-toggle="collapse" href="#Div_@item2.ParentId" aria-expanded="false" aria-controls="Div_@item2.ParentId">
+                                                                    <i class="icon-ribbon menu-icon"></i>
+                                                                    <span class="menu-title">@item2.DisplayValue</span>
+                                                                    <i class="menu-arrow"></i>
+                                                                </a>*@
+@*                                                                <td class="text-center">@RowNo1</td>*@
+                                                                 <td class="text-left"><label class="col-sm-2 col-form-label" for="basic-default-name">@item2.DisplayValue</label></td>
+
+                                                               <td width="100%">
+                                                                 <div class="row">
+                                                                @foreach (var item1 in Model.MenuList.Where(x => x.ParentId == @item2.DataValue))
+                                                                {
+                                                                    <div class="col-md-3">
+                                                                   @if(@item1.IsCheck == 1)
+                                                                   {
+                                                                            <input style="margin-top: auto;" type="checkbox" checked="checked" id="IsCheked_@RowNo1" name="IsCheked"  value="true" />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                             <input style="margin-top: auto;" type="checkbox" id="IsCheked_@RowNo1" name="IsCheked" value="" />
+                                                                        }
+                                                                        <input type="hidden" id="MenuID_@RowNo1" name="DataValue" value="@item1.DataValue" />
+                                                                       <label style="margin: auto;">@item1.DisplayValue</label>
+                                                                
+                                                                </div>
+                                                                      RowNo1++;
+                                                                }
+                                                                </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                   
+
+                                                    <tr><td><input type="hidden" value="@RowNo1" id="CountID" /></td></tr>
+                                                    
+                                                </tbody>
+                                                </table>
+                                                 </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal" onclick="CheckSave()">
+                                                    save
+                                                </button>
+                                                @*<button type="button" class="btn btn-primary">
+                                            Save changes
+                                            </button>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                   </div>
+                               </div>
+                              
+                        </div>
+
+                        <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitEmpPositonMaster()" />
+                            @*<input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitEmpPositonMaster();" />*@
+                            @Html.ActionLink("Cancel", "index", "EmpPositionMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+
+  @*  $("#EndDate").change(function () {
+            var startDate = document.getElementById("StartDate").value;
+            var endDate = document.getElementById("EndDate").value;
+           
+            if ((Date.parse(endDate) <= Date.parse(startDate))) {
+                swal("End date should be greater than Start date");
+                document.getElementById("EndDate").value = "";
+            }
+        });*@
+@* var myModalEl = document.getElementById('myModal')
+    var modal = bootstrap.Modal.getInstance(myModalEl);*@
+    $(document).ready(function() {
+        if ('@Model.EmpPosID' > '0') {
+            $("#DivAssign").show();
+        }
+        else {
+            $("#DivAssign").hide();
+        }
+    });
+
+   function handleClick(myRadio) {
+       $('#IsDashoardList').val(myRadio.value);
+}
+
+  $(document).ready(function () {
+            debugger;
+
+             if ('@Model.EmpPosIDEdit' > 0) 
+            {
+                 $('#PositionID').prop('disabled', true).trigger("chosen:updated");
+                 $('#EmployeeID').prop('disabled', true).trigger("chosen:updated");
+                 $('#Email').prop('disabled', true);
+                 $('#MobileNo').prop('disabled', true);
+            }
+            else 
+            {
+                 $('#PositionID').prop('disabled', false).trigger("chosen:updated");
+                 $('#EmployeeID').prop('disabled', false).trigger("chosen:updated");
+                 $('#Email').prop('disabled', false);
+                 $('#MobileNo').prop('disabled', false);
+            }
+            
+            });
+
+
+
+
+
+
+function GetXMLString() {
+          debugger;
+            var xml = '';
+            xml += '<DataTable>';
+          var i = $('#CountID').val();
+          var v;
+          for (v = 0; v < i; ++v) {
+              if ($("#IsCheked_" + v + "").is(':checked')) {
+               xml += '<DataRow>';
+                  xml += "<" + "IsCheked" + ">" + $("#IsCheked_" + v + "").val() + "</" + "IsCheked" + ">";
+                  xml += "<" + "MenuID" + ">" + $("#MenuID_" + v + "").val() + "</" + "MenuID" + ">";
+                  xml += "<" + "EmpPosID" + ">" + $('#EmpPosID').val() + "</" + "EmpPosID" + ">";
+                  xml += "<" + "PositionID" + ">" + $('#PositionID').val() + "</" + "PositionID" + ">";
+                  xml += "<" + "EmployeeID" + ">" + $('#EmployeeID').val() + "</" + "EmployeeID" + ">";
+                  xml += "<" + "IP_Address" + ">" + $('#IP_Address').val() + "</" + "IP_Address" + ">";
+                  xml += "<" + "URL" + ">" + document.URL + "</" + "URL" + ">";
+               
+              xml += '</DataRow>';
+               }
+          }
+            xml += '</DataTable>'
+            return xml;
+        }
+
+
+</script>
+
+<script>
+
+    $("#StartDate").kendoDatePicker({
+       format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }); 
+    $("#EndDate").kendoDatePicker({
+       format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }); 
+
+    
+    var EndDatepicker = $("#EndDate").data("kendoDatePicker");
+
+    $("#StartDate").change(function () {
+        debugger;
+        var startDate = document.getElementById("StartDate").value;
+        EndDatepicker.min(startDate);
+         EndDatepicker.max(new Date(2100, 0, 1));
+         $("#EndDate").val("");
+    });
+
+   function SubmitEmpPositonMaster() {
+       @*var startdate = $("#StartDate").data("kendoDatePicker").value();
+       var endDate = $("#EndDate").data("kendoDatePicker").value();*@
+        debugger;
+        var ErrorCnt = 0;
+        var startDate = $("#StartDate").val();  
+        var endDate = $("#EndDate").val();  
+        var email = $("#Email").val();
+        var mobileno = $("#MobileNo").val();
+       @* var eDate = new Date(endDate);
+        var sDate = new Date(startDate);*@
+
+        $('.ValidationSpan').hide();
+        if ($("#PositionID").val() == "0" || $("#PositionID").val() == "") {
+            ErrorCnt++;
+            $('#SpanPositionID').show();
+        }
+
+        if ($("#EmployeeID").val() == "0" || $("#EmployeeID").val() == "") {
+            ErrorCnt++;
+            $('#SpanEmployeeID').show();
+        }
+         if ($("#email").val() == "0" || $("#email").val() == "") {
+            ErrorCnt++;
+            $('#SpanEmail').show();
+        }
+         if ($("#mobileno").val() == "0" || $("#mobileno").val() == "") {
+            ErrorCnt++;
+            $('#SpanMobile').show();
+        }
+        
+       if(startDate!= '' && startDate!= '' && endDate <= startDate)
+            {
+            swal("Please ensure that the End Date is greater than or equal to the Start Date.");
+            return false;
+            }
+
+
+            @*if(Date.parse(startDate) <= Date.parse(endDate))
+            {
+              alert("Invalid Date Range");
+            }
+           else
+           {
+              alert("Valid date Range");
+            }*@
+
+        if (ErrorCnt > 0) {
+            return false;
+        }
+
+        if (ErrorCnt == 0) { 
+            var myData = {
+                EmpPosID: $('#EmpPosID').val(),
+                PositionID: $('#PositionID').val(),
+                UPStartDate: $('#StartDate').val(),
+                EmployeeID: $('#EmployeeID').val(),
+                UPEndDate:  $('#EndDate').val(),
+                IsActive: $('#IsActive').val(),
+                SetAsDefault: $('#SetAsDefault').val(),
+                IsDashoardList: $('#IsDashoardList').val(),
+                Email: $('#Email').val(),
+                MobileNo: $('#MobileNo').val()
+
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    traditional: true,
+                    async: false,
+                    cache: false,
+                    url: "/EmpPositionMaster/SaveEmpPositionMasterRecord",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    context: document.body,
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+
+
+                         if (data.data.ErrorCode == 0) {
+                            var EmpPosID = data.data.EmpPosID;
+                            var TEMPID = data.data.TEMPID;
+                            //$('#RegistrationID').val(RegistrationID);
+                            //update all record ID
+                            //$('.RegistrationID').val(RegistrationID);
+
+                            //var ISNew = data.data.ISNew;
+                            var Querystring = "emppositionid=" + TEMPID;
+                            window.location.href = "/EmpPositionMaster/AddEmpPositionMaster?" + Querystring;
+                            ////window.location.href = "/ApplicationRegistration/index" ;
+                            //alert(data.data.ErrorMassage);
+                            swal(data.data.ErrorMassage)
+                        }
+
+
+
+                        @*if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                     var EmpPosID = data.data.EmpPosID;
+                                     var TEMPID = data.data.TEMPID;
+                                     var Querystring = "id=" + TEMPID;
+                                     window.location.href = "/EmpPositionMaster/AddEmpPositionMaster?" + Querystring;
+                               location.reload();
+                                  window.location.href = "/EmpPositionMaster/Index";
+                                   
+                             });
+                         }*@
+                       else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+
+                       @* if (data.data.ErrorCode == 0) {
+                           
+                            window.location.href = "/EmpPositionMaster/Index";
+                            alert(data.data.ErrorMassage);
+                              
+                        }
+                        else {
+                           alert(data.data.ErrorMassage);
+                        }*@
+
+                    },
+
+                   error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                })
+        }
+
+
+};    
+
+
+
+function CheckSave() {
+    debugger;
+    var ErrorCnt = 0;
+    $('.ValidationSpan').hide();
+    
+
+    if (ErrorCnt > 0) {
+        return false;
+    }
+
+    if (ErrorCnt == 0) {
+        var myData = {
+            XMLString: GetXMLString(),
+            EmployeeID: $('#EmployeeID').val(),
+            EmpPosID: $('#EmpPosID').val(),
+            URL: document.URL,
+        };
+        $.ajax
+            ({
+                type: "POST",
+                url: "/EmpPositionMaster/SaveAssignPositionRecord",
+                headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                dataType: "json",
+                data: myData,
+                success: function(data) {
+                    debugger;
+                    if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage);
+                        $('#exampleModal').hide();
+                             
+                        }
+                        else {
+                           swal(data.data.ErrorMassage);
+                        }
+                   
+                       },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+
+            })
+    }
+};
+</script>
+
+
+<script>
+      $(function () {
+            debugger;
+        $("#EmployeeID").change(function () {
+                debugger;
+                $.ajax({
+                    type: "POST",
+                    url: "/EmpPositionMaster/EmployeeData",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#EmpPosID").val(), EmployeeID: $("#EmployeeID").val() },
+                    success: function (response) {
+                        debugger;
+                        $('#Email').val(response.data[0].Email);
+                        $('#MobileNo').val(response.data[0].MobileNo);
+                    },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                    error: function (response) {
+                        //respone will be returned here
+                        $("#error").val(response.responseText);
+                    }
+                });
+            });
+        });
+</script>

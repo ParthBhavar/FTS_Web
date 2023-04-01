@@ -1,0 +1,2934 @@
+﻿@model FTS.Model.Entities.inspectionModel
+
+@{
+    ViewBag.Title = "inspection";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var formConfig = new FormConfig(ViewContext)
+            {
+                FormId = "ProductForm"
+            };
+}
+
+<form asp-formhelper="true" asp-controller="inspection" asp-action="Index" asp-dataType="FormData"
+      enctype="multipart/form-data">
+
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(e => e.IP_Address, new {@ID = "IP_Address"})
+
+
+    <div class="container mt-5" style="max-width:100%;">
+        @*<div class="row">*@
+        @*<div class="col-md-12 mt-5">*@
+        <div id="stepper1" class="bs-stepper">
+            <div class="bs-stepper-header">
+                <div class="step" data-target="#step1">
+                    <button id="stpstep1" type="button" class="btn step-trigger">
+                        <span class="bs-stepper-circle step-number">1</span>
+                        <span class="bs-stepper-label">Report Information</span>
+                    </button>
+                </div>
+                <div class="line hidestepper"></div>
+                <div class="step hidestepper" data-target="#step2">
+                    <button id="stpstep2" type="button" class="btn step-trigger">
+                        <span class="bs-stepper-circle step-number">2</span>
+                        <span class="bs-stepper-label">Establishments</span>
+                    </button>
+                </div>
+                <div class="line hidestepper"></div>
+                <div class="step hidestepper" data-target="#step3">
+                    <button id="stpstep3" type="button" class="btn step-trigger">
+                        <span class="bs-stepper-circle step-number">3</span>
+                        <span class="bs-stepper-label">Establishments Details</span>
+                    </button>
+                </div>
+                <div class="line hidestepper"></div>
+                <div class="step hidestepper" data-target="#step4">
+                    <button id="stpstep4" type="button" class="btn step-trigger">
+                        <span class="bs-stepper-circle step-number">4</span>
+                        <span class="bs-stepper-label">Employer Details</span>
+                    </button>
+                </div>
+                <div class="line hidestepper"></div>
+                <div class="step hidestepper" data-target="#step5">
+                    <button id="stpstep5" type="button" class="btn step-trigger">
+                        <span class="bs-stepper-circle step-number">5</span>
+                        <span class="bs-stepper-label">Contractors Details</span>
+                    </button>
+                </div>
+                <div class="line hidestepper"></div>
+                <div class="step hidestepper" data-target="#step6">
+                    <button id="stpstep6" type="button" class="btn step-trigger">
+                        <span class="bs-stepper-circle step-number">6</span>
+                        <span class="bs-stepper-label">Company Details</span>
+                    </button>
+                </div>
+                <div class="line hidestepper"></div>
+                <div class="step hidestepper" data-target="#step7">
+                    <button id="stpstep7" type="button" class="btn step-trigger">
+                        <span class="bs-stepper-circle step-number">7</span>
+                        <span class="bs-stepper-label">Acts</span>
+                    </button>
+                </div>
+                <div class="line hidestepper"></div>
+                <div class="step hidestepper" data-target="#step8">
+                    <button id="stpstep8" type="button" class="btn step-trigger">
+                        <span class="bs-stepper-circle step-number">8</span>
+                        <span class="bs-stepper-label">Other Info</span>
+                    </button>
+                </div>
+            </div>
+            <div class="bs-stepper-content">
+                <div id="step1" class="content main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="card-header text-center border-1 p-3">
+                                <strong>Report Information</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    @Html.HiddenFor(e => e.InspectionIDEdit, new {@ID = "InspectionID"})
+                                                    @Html.Label("ReportNo")
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].ReportNo, new { @class = "form-control", @ID = "InspectionReportNo",@readonly="readonly"})
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @*SettlementNote*@
+                                                    @Html.Label("Inspection Date:") <span class='text-danger'>*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].InspectionDate,"{0:dd-MM-yyyy HH:mm}", new { @class = "form-control ", @ID="InspectionDate"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionDate" style="display:none;">Please Enter Inspection Date</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+
+                                                <div class="col-md-2">
+                                                    @Html.Label("District") <span class="text-danger">*</span>
+                                                    @Html.DropDownListFor(e => e._inspectionList[0].DistrictID, new SelectList(Model._inspectionList[0].Districtlist, "DataValue","DisplayValue"),"Select",
+                                                    new { @class = "chosen-select form-control",@ID="InspectionDistrictID",onchange="DistrictOnChange(this.id,InspectionDivArea.id,InspectionTalukaID.id,ddlInspectionArea.id,InspectionZoneID.id,InspectionAreaID.id,InspectionID.id)" })
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionDistrictID" style="display:none;">Please Select District</span>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    @Html.Label("Taluka") <span class="text-danger">*</span>
+                                                    @Html.DropDownListFor(e => e._inspectionList[0].TalukaID, new SelectList(Model._inspectionList[0].Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="InspectionTalukaID" })
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionTalukaID" style="display:none;">Please Select Taluka</span>
+                                                </div>
+                                                <div class="col-md-2" id="InspectionDivArea">
+                                                    @Html.Label("Area") <span class="text-danger">*</span>
+                                                    @Html.HiddenFor(e => e._inspectionList[0].ZoneID , new { @ID="InspectionZoneID"})
+                                                    @Html.HiddenFor(e => e._inspectionList[0].AreaID , new { @ID="InspectionAreaID"})
+                                                    <input id="ddlInspectionArea" class="form-control" value="@Model._inspectionList[0].AreaID" style="width:100%;" />
+                                                    <span class="text-danger ValidationSpan" id="SpanddlInspectionArea" style="display:none;">Please Select Area</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    @Html.Label("Pincode")<span class="text-danger"> *</span>
+                                                    @Html.TextBoxFor(x => x._inspectionList[0].Pincode, new { @class = "form-control", @ID="InspectionPincode" , placeholder = "Enter Pincode", maxlength="6",oninput="numberOnly(this.id);" })
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionPincode" style="display:none;">Please Enter Pincode </span>
+                                                    <span class="text-danger ValidationSpan" id="validInspectionPincode" style="display:none;">Please Enter Valid Pincode </span>
+                                                    <span class="text-danger ValidationSpan" id="valid2InspectionPincode" style="display:none;">Please Enter 6 digit Pincode </span>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @if (@Model._inspectionList[0].IsSubmit == true)
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(1,0)" id="btnstep1" value="Next" />
+                                            }
+                                            else
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(1,1)" id="btnstep1" value="Save & Next" />
+                                            }
+                                            @* <input type="submit" id="btnEshSubmit" class="btn btn-primary submit" value="Save" onclick="return SaveEstablishmentRegistrationRecord();" />*@
+                                            @Html.ActionLink("Cancel", "index", "inspection", new { area = "" }, new { @class = "btn btn-primary",ID="Cancleinspection" })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step2" class="content main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="card-header text-center border-1 p-3">
+                                <strong>Establishments</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    @Html.Label("Inspection Type") <span class="text-danger">*</span>
+                                                    @Html.DropDownListFor(e => e._inspectionList[0].InspectionType, new SelectList(Model._inspectionList[0].EstablishmenttypeList,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="InspectionType",onchange="ChangeInspectionType(this.value)" })
+
+                                                </div>
+                                                @* <div class="col-md-3" id="rgrbl">
+                                                @if (@Model._inspectionList[0].InspectionType == 1)
+                                                {
+                                                <input type="radio" value="true" checked="checked" id="rblOnline" name="InspectionType" /> <span> Online</span>
+                                                }
+                                                else
+                                                {
+                                                <input type="radio" value="false" id="rblOnline" name="InspectionType" /> <span> Online</span>
+                                                }
+
+                                                @if (@Model._inspectionList[0].InspectionType == 2)
+                                                {
+                                                <input type="radio" value="true" checked="checked" id="rblComplainBased" name="InspectionType" /> <span> Complain Based</span>
+                                                }
+                                                else
+                                                {
+                                                <input type="radio" value="false" id="rblComplainBased" name="InspectionType" /> <span> Complain Based</span>
+                                                }
+
+                                                @if (@Model._inspectionList[0].InspectionType == 3)
+                                                {
+                                                <input type="radio" value="true" checked="checked" id="rblUnscheduled" name="InspectionType" /> <span> Unscheduled</span>
+                                                }
+                                                else
+                                                {
+                                                <input type="radio" value="false" id="rblUnscheduled" name="InspectionType" />  <span> Unscheduled</span>
+                                                }
+
+                                                </div>*@
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    @Html.Label("IFP Application No") <span class="text-danger">*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].IFPApplicationNo, new { @class = "form-control", @ID = "InspectionIFPApplicationNo"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionIFPApplicationNo" style="display:none;">Please Enter IFP Application No</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="divInspectiontype" style="display:none;">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    @Html.Label("Name Of Complain") <span class="text-danger">*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].ComplainName, new { @class = "form-control", @ID = "InspectionComplainName"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionComplainName" style="display:none;">Please Enter Name Of Complain</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @Html.Label("Subject Of Complain") <span class="text-danger">*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].ComplainSubject, new { @class = "form-control", @ID = "InspectionComplainSubject"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionComplainSubject" style="display:none;">Please Enter Subject Of Complain</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @Html.Label("Date Of Complain") <span class="text-danger">*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].ComplainDate,"{0:dd-MM-yyyy HH:mm}", new { @class = "form-control ", @ID="InspectionComplainDate"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionComplainDate" style="display:none;">Please Enter Date Of Complain</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @if (@Model._inspectionList[0].IsSubmit == true)
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(2,0)" id="btnstep1" value="Next" />
+                                                <input type="button" class="btn btn-primary" value="previous" onclick="STPPrev(1,0)" />
+                                            }
+                                            else
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(2,1)" id="btnstep1" value="Save & Next" />
+                                                <input type="button" class="btn btn-primary" value="Save & previous" onclick="STPPrev(1,1)" />
+                                            }
+                                            @* <input type="submit" id="btnEshSubmit" class="btn btn-primary submit" value="Save" onclick="return SaveEstablishmentRegistrationRecord();" />*@
+                                            @Html.ActionLink("Cancel", "index", "inspection", new { area = "" }, new { @class = "btn btn-primary",ID="Cancleinspection" })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*stepper1.next()*@
+                </div>
+                <div id="step3" class="content main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="card-header text-center border-1 p-3">
+                                <strong>Establishments Details</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    @Html.Label("Establishment type") <span class="text-danger">*</span>
+                                                    @Html.HiddenFor(e => e._inspectionEstablishmentsDetailsList[0].EID, new {@ID = "EstablishmentsEID"})
+                                                    @Html.DropDownListFor(e => e._inspectionEstablishmentsDetailsList[0].EstablishmenttypeID, new SelectList(Model._inspectionEstablishmentsDetailsList[0].EstablishmentDetailstypeList,"DataValue","DisplayValue"), new { @class = "chosen-select form-control",@ID="EstablishmentdetailtypeID",onchange="ChangeEstablishmenttype(this.value)" })
+
+                                                </div>
+                                                @* <div class="col-md-3" id="rgrbl">
+
+                                                <fieldset class="border p-2">
+                                                @if (@Model._inspectionEstablishmentsDetailsList[0].EstablishmenttypeID == 1)
+                                                {
+                                                <input type="radio" value="true" checked="checked" id="rblSearch" name="Establishmenttype" />
+                                                <span> Search</span>
+                                                }
+                                                else
+                                                {
+                                                <input type="radio" value="false" id="rblSearch" name="Establishmenttype" />
+                                                <span> Search</span>
+                                                }
+                                                <br>
+                                                @if (@Model._inspectionEstablishmentsDetailsList[0].EstablishmenttypeID == 2)
+                                                {
+                                                <input type="radio" value="true" checked="checked" id="rblManualEntry" name="Establishmenttype" />
+                                                <span> Manual Entry</span>
+                                                }
+                                                else
+                                                {
+                                                <input type="radio" value="false" id="rblManualEntry" name="Establishmenttype" />
+                                                <span> Manual Entry</span>
+                                                }
+                                                <br>
+                                                @if (@Model._inspectionEstablishmentsDetailsList[0].EstablishmenttypeID == 3)
+                                                {
+                                                <input type="radio" value="true" checked="checked" id="rblNotRegistered" name="Establishmenttype" />
+                                                <span> Not Registered</span>
+                                                }
+                                                else
+                                                {
+                                                <input type="radio" value="false" id="rblNotRegistered" name="Establishmenttype" />
+                                                <span> Not Registered</span>
+                                                }
+                                                <br>
+                                                </fieldset>
+                                                </div>*@
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    @Html.Label("Establishment Name") <span class="text-danger">*</span>
+                                                    <input id="ddlEstablishmentsName" class="form-control" value="@Model._inspectionEstablishmentsDetailsList[0].EstablishmentName" style="width:100%;" />
+                                                    @*@Html.TextBoxFor(e => e._inspectionEstablishmentsDetailsList[0].EstablishmentName, new { @class = "form-control", @ID = "EstablishmentsName"})*@
+                                                    <span class="text-danger ValidationSpan" id="SpanddlEstablishmentsName" style="display:none;">Please Enter IFP Establishment Name</span>
+                                                </div>
+                                                <div class="col-md-2 hideRblEstablishments">
+                                                    @Html.Label("Permanent Address") <span class="text-danger">*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionEstablishmentsDetailsList[0].PAddress, new { @class = "form-control", @ID="EstablishmentPAddress", required = "required" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentPAddress" style="display:none;">Please Enter Address</span>
+                                                </div>
+                                                <div class="col-md-2 hideRblEstablishments">
+                                                    @Html.Label("District") <span class="text-danger">*</span>
+                                                    @Html.DropDownListFor(e => e._inspectionEstablishmentsDetailsList[0].DistrictID, new SelectList(Model._inspectionEstablishmentsDetailsList[0].Districtlist, "DataValue","DisplayValue"),"Select",
+                                                    new { @class = "chosen-select form-control",@ID="EstablishmentsDistrictID",onchange="DistrictOnChange(this.id,EstablishmentsDivArea.id,EstablishmentsTalukaID.id,ddlEstablishmentsArea.id,EstablishmentsZoneID.id,EstablishmentsAreaID.id,InspectionID.id)" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsDistrictID" style="display:none;">Please Select District</span>
+                                                </div>
+
+                                                <div class="col-md-2 hideRblEstablishments">
+                                                    @Html.Label("Taluka") <span class="text-danger">*</span>
+                                                    @Html.DropDownListFor(e => e._inspectionEstablishmentsDetailsList[0].TalukaID, new SelectList(Model._inspectionEstablishmentsDetailsList[0].Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EstablishmentsTalukaID" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsTalukaID" style="display:none;">Please Select Taluka</span>
+                                                </div>
+                                                <div class="col-md-2 hideRblEstablishments" id="EstablishmentsDivArea" style="display:none;">
+                                                    @Html.Label("Area") <span class="text-danger">*</span>
+                                                    @Html.HiddenFor(e => e._inspectionEstablishmentsDetailsList[0].ZoneID , new { @ID="EstablishmentsZoneID"})
+                                                    @Html.HiddenFor(e => e._inspectionEstablishmentsDetailsList[0].AreaID , new { @ID="EstablishmentsAreaID"})
+                                                    <input id="ddlEstablishmentsArea" class="form-control" value="@Model._inspectionEstablishmentsDetailsList[0].AreaID" style="width:100%;" />
+                                                    <span class="text-danger ValidationSpan" id="SpanddlEstablishmentsArea" style="display:none;">Please Select Area</span>
+                                                </div>
+                                                <div class="col-md-1 hideRblEstablishments">
+                                                    @Html.Label("Pincode")<span class="text-danger"> *</span>
+                                                    @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsList[0].Pincode, new { @class = "form-control", @ID="EstablishmentsPincode" , placeholder = "Enter Pincode", maxlength="6",oninput="numberOnly(this.id);" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsPincode" style="display:none;">Please Enter Pincode </span>
+                                                    <span class="text-danger ValidationSpan" id="validEstablishmentsPincode" style="display:none;">Please Enter Valid Pincode </span>
+                                                    <span class="text-danger ValidationSpan" id="valid2EstablishmentsPincode" style="display:none;">Please Enter 6 digit Pincode </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group hideRblEstablishments">
+                                            <div class="row">
+                                                <div class="col-md-3" id="rgchk">
+                                                    <fieldset class="border p-2">
+                                                        <legend>Registered Under</legend>
+                                                        @Html.CheckBoxFor(e => e._inspectionEstablishmentsDetailsList[0].IsFactoriesAct, new { @ID="chkIsEstablishmentsFactoriesAct"})
+                                                        @Html.Label("The Factories Act-1947")
+                                                        <br>
+                                                        @Html.CheckBoxFor(e => e._inspectionEstablishmentsDetailsList[0].IsEstablishmentAct, new { @ID="chkIsEstablishmentsIsEstablishmentAct"})
+                                                        @Html.Label("The Gujarat shops & Establishment Act-1948")
+                                                        <br>
+                                                        @Html.CheckBoxFor(e => e._inspectionEstablishmentsDetailsList[0].IsLabourAct, new { @ID="chkIsEstablishmentsIsLabourAct"})
+                                                        @Html.Label("The Contract Labour Act-1970")
+                                                        <br>
+                                                        @Html.CheckBoxFor(e => e._inspectionEstablishmentsDetailsList[0].IsSocietyAct, new { @ID="chkIsEstablishmentsIsSocietyAct"})
+                                                        @Html.Label("Co-Operative Society Act")
+                                                        <br>
+                                                        @Html.CheckBoxFor(e => e._inspectionEstablishmentsDetailsList[0].IsTrustAct, new { @ID="chkIsEstablishmentsIsTrustAct"})
+                                                        @Html.Label("Trust Act")
+                                                        <br>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3 hideRblEstablishments">
+                                                    @Html.Label("Registered Under, (None of Above)") <span class="text-danger">*</span>
+                                                    <br>
+                                                    @if (@Model._inspectionEstablishmentsDetailsList[0].IsRegisteredUnder == 1)
+                                                    {
+                                                        <input type="radio" value="1" checked="checked" id="rblEstablishmentsRGYes" name="IsRegisteredUnder" /> <span> Yes</span>
+                                                        <input type="radio" value="0" id="rblEstablishmentsRGNo" name="IsRegisteredUnder" /> <span> No</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" value="0" id="rblEstablishmentsRGYes" name="IsRegisteredUnder" />  <span> Yes</span>
+                                                        <input type="radio" value="1" checked="checked" id="rblEstablishmentsRGNo" name="IsRegisteredUnder" />  <span> No</span>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+
+                                                <div class="col-md-2" id="DivEstablishmentsRegisteredUnder" style="display:none;">
+                                                    @Html.Label("Registered Under,(None of Above)")
+                                                    @Html.TextBoxFor(e => e._inspectionEstablishmentsDetailsList[0].RegisteredUnder, new { @class = "form-control", @ID = "EstablishmentsRegisteredUnder"})
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsRegisteredUnder" style="display:none;">Please Enter Registered Under</span>
+
+                                                </div>
+                                                <div class="col-md-2 hideRblEstablishments">
+                                                    @Html.Label("Registration Number") <span class="text-danger">*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionEstablishmentsDetailsList[0].RegistrationNumber, new { @class = "form-control", @ID="EstablishmentsRegistrationNo", required = "required" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsRegistrationNo" style="display:none;">Please Enter Registration Number</span>
+
+                                                </div>
+                                                <div class="col-md-2 hideRblEstablishments">
+                                                    @Html.Label("Registration Date") <span class="text-danger">*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionEstablishmentsDetailsList[0].RegistrationDate,"{0:dd-MM-yyyy HH:mm}", new { @class = "form-control", @ID="EstablishmentsRegistrationDate", required = "required" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsRegistrationDate" style="display:none;">Please Enter Registration Date</span>
+
+                                                </div>
+
+                                                <div class="col-md-2 hideRblEstablishments">
+                                                    @Html.Label("Type of Industry") <span class="text-danger">*</span>
+                                                    @Html.DropDownListFor(e => e._inspectionEstablishmentsDetailsList[0].IndustrytypeID, new SelectList(Model._inspectionEstablishmentsDetailsList[0].TypeOfBusinessTradeList,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EstablishmentsIndustrytypeID" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsIndustrytypeID" style="display:none;">Please Select Type of Industry</span>
+
+                                                </div>
+
+                                                <div class="col-md-1">
+                                                    @Html.Label("Male Count")
+                                                    @Html.TextBoxFor(e => e._inspectionEstablishmentsDetailsList[0].MaleCount, new { @class = "form-control", @ID = "EstablishmentsMaleCount",@onblur="getTotalEmp()",maxlength="4",oninput="numberOnly(this.id);"})
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsMaleCount" style="display:none;">Please Enter Male Count</span>
+
+                                                </div>
+                                                <div class="col-md-1">
+                                                    @Html.Label("Female Count")
+                                                    @Html.TextBoxFor(e => e._inspectionEstablishmentsDetailsList[0].FemaleCount, new { @class = "form-control", @ID="EstablishmentsFemaleCount", required = "required" ,@onblur="getTotalEmp()",maxlength="4",oninput="numberOnly(this.id);"})
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentsFemaleCount" style="display:none;">Please Enter Female Count</span>
+
+                                                </div>
+                                                <div class="col-md-1">
+                                                    @Html.Label("Total Worker") <span class="text-danger">*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionEstablishmentsDetailsList[0].TotalEmployees, new { @class = "form-control", @ID="EstablishmentsTotalWorker", required = "required",@readonly="readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @if (@Model._inspectionList[0].IsSubmit == true)
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(3,0)" id="btnstep1" value="Next" />
+                                                <input type="button" class="btn btn-primary" value="previous" onclick="STPPrev(2,0)" />
+                                            }
+                                            else
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(3,1)" id="btnstep1" value="Save & Next" />
+                                                <input type="button" class="btn btn-primary" value="Save & previous" onclick="STPPrev(2,1)" />
+                                            }
+                                            @* <input type="submit" id="btnEshSubmit" class="btn btn-primary submit" value="Save" onclick="return SaveEstablishmentRegistrationRecord();" />*@
+                                            @Html.ActionLink("Cancel", "index", "inspection", new { area = "" }, new { @class = "btn btn-primary",ID="Cancleinspection" })
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="step4" class="content main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="card-header text-center border-1 p-3">
+                                <strong>Employer Details</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div>
+                                            <a id="Edit" class="btn btn-info" onclick="Fn_AddEmployeeDetails()"><i class="fas fa-folder-plus"></i> More Employer</a>
+                                        </div>
+                                        <br>
+                                        <div id="MainDivEmployeeDetails">
+                                        </div>
+                                        <div>
+                                            @if (@Model._inspectionList[0].IsSubmit == true)
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(4,0)" id="btnstep1" value="Next" />
+                                                <input type="button" class="btn btn-primary" value="previous" onclick="STPPrev(3,0)" />
+                                            }
+                                            else
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(4,1)" id="btnstep1" value="Save & Next" />
+                                                <input type="button" class="btn btn-primary" value="Save & previous" onclick="STPPrev(3,1)" />
+                                            }
+                                            @* <input type="submit" id="btnEshSubmit" class="btn btn-primary submit" value="Save" onclick="return SaveEstablishmentRegistrationRecord();" />*@
+                                            @Html.ActionLink("Cancel", "index", "inspection", new { area = "" }, new { @class = "btn btn-primary",ID="Cancleinspection" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step5" class="content main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="card-header text-center border-1 p-3">
+                                <strong>Contractors Details</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div>
+                                            <a id="Edit" class="btn btn-info" onclick="Fn_AddContractorDetails()"><i class="fas fa-folder-plus"></i> More Employer</a>
+                                        </div>
+                                        <br>
+                                        <div id="MainDivContractorDetails">
+                                        </div>
+                                        <div>
+                                            @if (@Model._inspectionList[0].IsSubmit == true)
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(5,0)" id="btnstep1" value="Next" />
+                                                <input type="button" class="btn btn-primary" value="previous" onclick="STPPrev(4,0)" />
+                                            }
+                                            else
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(5,1)" id="btnstep1" value="Save & Next" />
+                                                <input type="button" class="btn btn-primary" value="Save & previous" onclick="STPPrev(4,1)" />
+                                            }
+
+                                            @* <input type="submit" id="btnEshSubmit" class="btn btn-primary submit" value="Save" onclick="return SaveEstablishmentRegistrationRecord();" />*@
+                                            @Html.ActionLink("Cancel", "index", "inspection", new { area = "" }, new { @class = "btn btn-primary",ID="Cancleinspection" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step6" class="content main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="card-header text-center border-1 p-3">
+                                <strong>Company Details</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    @Html.Label("Person Name/ Manager's (Present During Inspection)") <span class='text-danger'>*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].AuthorizedPersonName, new { @class = "form-control", @ID = "InspectionAuthorizedPersonName"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionAuthorizedPersonName" style="display:none;">Please Enter IFP Establishment Name</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @*SettlementNote*@
+                                                    @Html.Label("Authorized Person / Manager's Email:") <span class='text-danger'>*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].AuthorizedPersonEmail, new { @class = "form-control ", @ID="InspectionAuthorizedPersonEmail"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionAuthorizedPersonEmail" style="display:none;">Please Enter IFP Establishment Name</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @*SettlementNote*@
+                                                    @Html.Label("Authorized Person / Manager's Contact No:") <span class='text-danger'>*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].AuthorizedPersonContactNo, new { @class = "form-control ", @ID="InspectionAuthorizedPersonContactNo", maxlength="10",oninput="numberOnly(this.id);"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionAuthorizedPersonContactNo" style="display:none;">Please Enter IFP Establishment Name</span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    @*SettlementNote*@
+                                                    @Html.Label("Authorized Person / Manager's Designation:") <span class='text-danger'>*</span>
+                                                    @Html.TextBoxFor(e => e._inspectionList[0].AuthorizedPersonDesignation, new { @class = "form-control ", @ID="InspectionAuthorizedPersonDesignation"})
+                                                    <span class="text-danger ValidationSpan" id="SpanInspectionAuthorizedPersonDesignation" style="display:none;">Please Enter IFP Establishment Name</span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @if (@Model._inspectionList[0].IsSubmit == true)
+                                                    {
+                                                        <input type="button" class="btn btn-primary" onclick="STPNext(6,0)" id="btnstep1" value="Next" />
+                                                        <input type="button" class="btn btn-primary" value="previous" onclick="STPPrev(5,0)" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="button" class="btn btn-primary" onclick="STPNext(6,1)" id="btnstep1" value="Save & Next" />
+                                                        <input type="button" class="btn btn-primary" value="Save & previous" onclick="STPPrev(5,1)" />
+                                                    }
+                                                    @* <input type="submit" id="btnEshSubmit" class="btn btn-primary submit" value="Save" onclick="return SaveEstablishmentRegistrationRecord();" />*@
+                                                    @Html.ActionLink("Cancel", "index", "inspection", new { area = "" }, new { @class = "btn btn-primary",ID="Cancleinspection" })
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step7" class="content main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="card-header text-center border-1 p-3">
+                                <strong>Acts</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="step8" class="content main">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="card-header text-center border-1 p-3">
+                                <strong>Other Info</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="row">
+                            <div class="col-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <fieldset class="border p-2">
+                                            <div class="form-group">
+                                                <div class="row">
+
+                                                    <div class="col-md-3">
+                                                        @Html.Label("Authorized Person / Manager's Designation:") <span class='text-danger'>*</span>
+                                                        <input type="file" id="fUpload" name="files" multiple class="form-control" />
+                                                        <input type="button" id="btnUpload" onclick="SaveInspectionOnsitePicture();" class="btn btn-primary" value="Upload" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="table-responsive">
+                                                            @*   <table  class="table table-bordered  table-striped">*@
+                                                            <table class="table table-bordered  table-striped">
+                                                                <thead class="table__head">
+                                                                    <tr class="winner__table">
+                                                                        <th scope="col">Document</th>
+                                                                        <th scope="col">Action</th>
+                                                                    </tr>
+
+                                                                </thead>
+                                                                <tbody style="height: 10px !important; overflow: scroll; ">
+                                                                    @foreach (var item in Model.DocumentList)
+                                                                    {
+                                                                        <tr class="winner__table">
+                                                                            <td valign="top" class="txtCal">@item.DocumentPath</td>
+                                                                            <td valign="top" class="txtCal">
+                                                                                <a href="/documents/inspection/OnsitePicture/@item.DocumentPath" download><i class="fas fa-download"></i></a>
+                                                                                <a id="Delete" onclick="DeleteConformation('DeleteRoleRecord(@item.EncryptedId)')"><i class="fas fa-trash-alt"></i></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br />
+                                        <fieldset class="border p-2">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        @Html.Label("Authorized Person / Manager's Signature ?") <span class="text-danger">*</span>
+                                                        @Html.DropDownListFor(e => e._inspectionList[0].IsAuthorizedPersonSignature, new SelectList(Model._inspectionList[0].YesNoList, "DataValue","DisplayValue"),"Select",
+                                                        new { @class = "chosen-select form-control",@ID="InspectionIsAuthorizedPersonSignature",onchange="ChangeAuthorizedSign(this.value)" })
+                                                        <span class="text-danger ValidationSpan" id="SpanIsAuthorizedPersonSignature" style="display:none;">Please Select Yes/No</span>
+                                                    </div>
+                                                    <div class="col-md-3 hideAuthorizedSignotherinfo">
+                                                        <div class="tools">
+                                                            <input type="button" onclick="OnCanvasclear(CnAuthorizedPersonSignature.id);" id="btnClearAuthorizedSign" value="Clear" />
+                                                            <input type="button" onclick="checkvanvs();" value="check" />
+                                                        </div>
+                                                        <br />
+                                                        <canvas id="CnAuthorizedPersonSignature" width="500" height="200" style="border: 1px solid #ccc">
+                                                        </canvas>
+                                                        <span class="text-danger ValidationSpan" id="SpanCnAuthorizedPersonSignature" style="display:none;">Please Drow Signature</span>
+                                                    </div>
+                                                    @if (@Model._inspectionList[0].AuthorizedSignPath != null)
+                                                    {
+                                                        <div class="col-md-3 hideAuthorizedSignotherinfo">
+                                                            @Html.HiddenFor(e => e._inspectionList[0].AuthorizedSignPath,new { @ID = "hdnInspectionAuthorizedSignPath"})
+                                                            <img src="~/documents/inspection/Signature/@Model._inspectionList[0].AuthorizedSignPath" height=100 width=200 />
+                                                        </div>
+                                                    }
+                                                    <div class="col-md-3 hideAuthorizedNoteotherinfo">
+                                                        @Html.Label("Remarks") <span class="text-danger">*</span>
+                                                        @Html.TextAreaFor(e => e._inspectionList[0].AuthorizedPersonSignatureNote, new { @class = "form-control", @ID="InspectionAuthorizedPersonSignatureNote", required = "required" })
+                                                        <span class="text-danger ValidationSpan" id="SpanInspectionAuthorizedPersonSignatureNote" style="display:none;">Please Enter Note</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br />
+                                        <fieldset class="border p-2">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        @Html.Label("Non-compliance observed") <span class="text-danger">*</span>
+                                                        @Html.DropDownListFor(e => e._inspectionList[0].IsNonComplianceObserved, new SelectList(Model.YesNoList, "DataValue","DisplayValue"),"Select",
+                                                        new { @class = "chosen-select form-control",@ID="InspectionIsNonComplianceObserved" })
+                                                        <span class="text-danger ValidationSpan" id="SpanInspectionIsNonComplianceObserved" style="display:none;">Please Select Yes/No</span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        @Html.Label("Status") <span class="text-danger">*</span>
+                                                        @Html.DropDownListFor(e => e._inspectionList[0].ApplicationStatus, new SelectList(Model.YesNoList, "DataValue","DisplayValue"),"Select",
+                                                        new { @class = "chosen-select form-control",@ID="InspectionApplicationStatus" })
+                                                        <span class="text-danger ValidationSpan" id="SpanInspectionApplicationStatus" style="display:none;">Please Select Status</span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        @Html.Label("Inspector's Name") <span class="text-danger">*</span>
+                                                        @Html.TextBoxFor(e => e._inspectionList[0].InspectorName, new { @class = "form-control", @ID="InspectionInspectorName", required = "required" })
+                                                        <span class="text-danger ValidationSpan" id="SpanInspectionInspectorName" style="display:none;">Please Enter Inspector Name</span>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        @Html.Label("Inspector's Email") <span class="text-danger">*</span>
+                                                        @Html.TextBoxFor(e => e._inspectionList[0].InspectorEmail, new { @class = "form-control", @ID="InspectionInspectorEmail", required = "required"})
+                                                        <span class="text-danger ValidationSpan" id="SpanInspectionInspectorEmail" style="display:none;">Please Enter Inspector Email</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="tools">
+                                                            <input type="button" onclick="OnCanvasclear(CnInspectorSignature.id);" id="btnClearInspectorSignature" value="Clear" />
+                                                        </div>
+                                                        <br />
+                                                        <canvas id="CnInspectorSignature" width="500" height="200" style="border: 1px solid #ccc">
+                                                        </canvas>
+                                                        <span class="text-danger ValidationSpan" id="SpanCnInspectorSignature" style="display:none;">Please Drow Signature</span>
+                                                    </div>
+
+                                                    @if (@Model._inspectionList[0].InspectorSignPath != null)
+                                                    {
+                                                        <div class="col-md-3">
+                                                            @Html.HiddenFor(e => e._inspectionList[0].InspectorSignPath,new { @ID = "hdnInspectionInspectorSignPath"})
+                                                            <img src="~/documents/inspection/Signature/@Model._inspectionList[0].InspectorSignPath" height=100 width=200 />
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <br />
+                                        <fieldset class="border p-2">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        @Html.Label("I have received the documents for non-compliance") <span class="text-danger">*</span>
+                                                        @Html.DropDownListFor(e => e._inspectionList[0].IsComplianceDocument, new SelectList(Model.YesNoList, "DataValue","DisplayValue"),"Select",
+                                                        new { @class = "chosen-select form-control",@ID="InspectionIsComplianceDocument", onchange="ChangeComplianceSign(this.value)"})
+                                                        <span class="text-danger ValidationSpan" id="SpanInspectionIsComplianceDocument" style="display:none;">Please Select Yes/No</span>
+                                                    </div>
+                                                    <div class="col-md-3 hideComplianceother">
+                                                        @Html.Label("Compliance Documents Received By") <span class="text-danger">*</span>
+                                                        @Html.TextBoxFor(e => e._inspectionList[0].ComplianceDocumentReceivedby, new { @class = "form-control", @ID="InspectionComplianceDocumentReceivedby", required = "required" })
+                                                        <span class="text-danger ValidationSpan" id="SpanInspectionComplianceDocumentReceivedby" style="display:none;">Please Enter Receiver Name</span>
+                                                    </div>
+                                                    <div class="col-md-3 hideComplianceother">
+                                                        @Html.Label("Documents Received Date") <span class="text-danger">*</span>
+                                                        @Html.TextBoxFor(e => e._inspectionList[0].ComplianceDocumentReceivedDate,"{0:dd-MM-yyyy HH:mm}", new { @class = "form-control", @ID="InspectionComplianceDocumentReceivedDate", required = "required"})
+                                                        <span class="text-danger ValidationSpan" id="SpanInspectionComplianceDocumentReceivedDate" style="display:none;">Please Enter Received Date</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group hideComplianceother">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="tools">
+                                                            <input type="button" onclick="OnCanvasclear(CnComplianceSignature.id);" id="btnClearComplianceSignature" value="Clear" />
+                                                        </div>
+                                                        <br />
+                                                        <canvas id="CnComplianceSignature" width="500" height="200" style="border: 1px solid #ccc">
+                                                        </canvas>
+                                                        <span class="text-danger ValidationSpan" id="SpanCnComplianceSignature" style="display:none;">Please Drow Signature</span>
+                                                    </div>
+
+                                                    @if (@Model._inspectionList[0].ComplianceSignPath != null)
+                                                    {
+                                                        <div class="col-md-3">
+                                                            @Html.HiddenFor(e => e._inspectionList[0].ComplianceSignPath,new { @ID = "hdnInspectionComplianceSignPath"})
+                                                            <img src="~/documents/inspection/Signature/@Model._inspectionList[0].ComplianceSignPath" height=100 width=200 />
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+
+
+
+                                        </fieldset>
+                                        <br />
+                                        <div class="form-group">
+                                            @if (@Model._inspectionList[0].IsSubmit == true)
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(8,0)" id="btnstep1" value="Next" />
+                                                <input type="button" class="btn btn-primary" value="previous" onclick="STPPrev(7,0)" />
+                                            }
+                                            else
+                                            {
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(8,1,false)" id="btnstep2" value="Save" />
+                                                <input type="button" class="btn btn-primary" onclick="STPNext(8,1,true)" id="btnstep2" value="Submit" />
+                                                <input type="button" class="btn btn-primary" value="Save & previous" onclick="STPPrev(7,0)" />
+                                            }
+                                            @*{
+                                            <input type="button" class="btn btn-primary" onclick="STPNext(8,0)" id="btnstep2" value="Next" />
+                                            }
+                                            else
+                                            {
+                                            <input type="button" class="btn btn-primary" onclick="STPNext(8,1,false)" id="btnstep2" value="Save" />
+                                            <input type="button" class="btn btn-primary" onclick="STPNext(8,1,true)" id="btnstep2" value="Submit" />
+                                            }*@
+
+
+                                            @* <input type="submit" id="btnEshSubmit" class="btn btn-primary submit" value="Save" onclick="return SaveEstablishmentRegistrationRecord();" />*@
+                                            @Html.ActionLink("Cancel", "index", "inspection", new { area = "" }, new { @class = "btn btn-primary",ID="Cancleinspection" })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+<script>
+    $(document).ready(function () {
+
+        bindAreaDropdown(@Html.Raw(Json.Serialize(@Model._inspectionList[0].AreaList)), "ddlInspectionArea", "InspectionZoneID", "InspectionAreaID");
+        bindAreaDropdown(@Html.Raw(Json.Serialize(@Model._inspectionEstablishmentsDetailsList[0].AreaList)), "ddlEstablishmentsArea", "EstablishmentsZoneID", "EstablishmentsAreaID");
+
+
+        var stepper1Node = document.querySelector('#stepper1')
+        //   var stepper1 = new Stepper(document.querySelector('#stepper1'))
+        var stepper1 = new Stepper(document.querySelector('#stepper1'), {
+            linear: false,
+            animation: true
+
+        });
+
+        $("#InspectionDate,#InspectionComplainDate,#EstablishmentsRegistrationDate,#InspectionComplianceDocumentReceivedDate").kendoDateTimePicker({
+            format: "dd-MM-yyyy HH:mm", disableDates: function (date) {
+                if (date <= new Date()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        PageLoadOnHideandShow();
+        bindEstablishDropdown();
+        EmployeeDetails();
+        ContractorDetails();
+        StpView('@Model.stpid');
+    });
+</script>
+
+<script>
+
+    function bindEstablishDropdown() {
+        $("#ddlEstablishmentsName").kendoMultiColumnComboBox({
+            dataTextField: "DisplayValue",
+            dataValueField: "DisplayValue",
+            height: 520,
+            columns: [
+                { field: "EstablishmentCode", title: "Regis. No", width: 100 },
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue", "EstablishmentCode"],
+            dataSource: {
+                data: @Html.Raw(Json.Serialize(Model._inspectionEstablishmentsDetailsList[0].EstablishmentList)),
+            },
+            change: function (e) {
+
+                if (this.dataSource.data().length > 0) {
+
+                    if (this.dataSource.data()[this.selectedIndex] != undefined) {
+                        $('#ddlEstablishmentsName').val(this.dataSource.data()[this.selectedIndex].DisplayValue);
+                    }
+                }
+            }
+
+        });
+    }
+
+    function numberOnly(id) {
+        var element = document.getElementById(id);
+        element.value = element.value.replace(/[^0-9]/gi, "");
+    }
+
+    function getTotalEmp() {
+        $("#EstablishmentsTotalWorker").val((parseInt($("#EstablishmentsMaleCount").val()) + parseInt($("#EstablishmentsFemaleCount").val())))
+    }
+
+    function ChangeAuthorizedSign(value) {
+        if (value == 1) {
+            $(".hideAuthorizedSignotherinfo").show();
+            $(".hideAuthorizedNoteotherinfo").hide();
+        }
+        else {
+            $(".hideAuthorizedSignotherinfo").hide();
+            $(".hideAuthorizedNoteotherinfo").show();
+        }
+    }
+
+    function ChangeComplianceSign(value) {
+        if (value == 1) {
+            $(".hideComplianceother").show();
+        }
+        else {
+            $(".hideComplianceother").hide();
+        }
+    }
+
+    function PageLoadOnHideandShow() {
+        debugger;
+
+        $('#chkIsEstablishmentsFactoriesAct').val(this.checked ? "true" : "false");
+        $('#chkIsEstablishmentsIsEstablishmentAct').val(this.checked ? "true" : "false");
+        $('#chkIsEstablishmentsIsLabourAct').val(this.checked ? "true" : "false");
+        $('#chkIsEstablishmentsIsSocietyAct').val(this.checked ? "true" : "false");
+        $('#chkIsEstablishmentsIsTrustAct').val(this.checked ? "true" : "false");
+
+        if ('@Model._inspectionEstablishmentsDetailsList[0].IsFactoriesAct' == "True") { $('#chkIsEstablishmentsFactoriesAct').val("true") }
+        if ('@Model._inspectionEstablishmentsDetailsList[0].IsEstablishmentAct' == "True") { $('#chkIsEstablishmentsIsEstablishmentAct').val("true") }
+        if ('@Model._inspectionEstablishmentsDetailsList[0].IsLabourAct' == "True") { $('#chkIsEstablishmentsIsLabourAct').val("true") }
+        if ('@Model._inspectionEstablishmentsDetailsList[0].IsSocietyAct' == "True") { $('#chkIsEstablishmentsIsSocietyAct').val("true") }
+        if ('@Model._inspectionEstablishmentsDetailsList[0].IsTrustAct' == "True") { $('#chkIsEstablishmentsIsTrustAct').val("true") }
+
+        if ('@Model.InspectionIDEdit' > '0' && '@Model._inspectionList[0].AreaID' > '0') {
+            $("#InspectionDivArea").show();
+        }
+        else {
+            $("#InspectionDivArea").hide();
+        }
+
+        if ('@Model._inspectionList[0].IsAuthorizedPersonSignature' == 1) {
+            $(".hideAuthorizedSignotherinfo").show();
+            $(".hideAuthorizedNoteotherinfo").hide();
+        }
+        else {
+            $(".hideAuthorizedSignotherinfo").hide();
+            $(".hideAuthorizedNoteotherinfo").show();
+        }
+
+        if ('@Model._inspectionList[0].IsComplianceDocument' == 1) {
+            $(".hideComplianceother").show();
+        }
+        else {
+            $(".hideComplianceother").hide();
+        }
+
+        if ('@Model.InspectionIDEdit' > '0' && '@Model._inspectionEstablishmentsDetailsList[0].AreaID' > '0') {
+            $("#EstablishmentsDivArea").show();
+        }
+        else {
+            $("#EstablishmentsDivArea").hide();
+        }
+
+        if ('@Model._inspectionEstablishmentsDetailsList[0].EstablishmenttypeID' == '1') {
+            $(".hideRblEstablishments").hide();
+        }
+
+        if ('@Model._inspectionList[0].InspectionType' == '2') {
+            $("#divInspectiontype").show();
+        }
+
+        if ('@Model._inspectionEstablishmentsDetailsList[0].IsRegisteredUnder' == '1') {
+            $("#DivEstablishmentsRegisteredUnder").show();
+        }
+    }
+
+    function DistrictOnChange(drpDistrictID, DivArea, DrpTalukaID, DrpAreaID, ZonID, AreaID, InspectionID) {
+
+        var DistrictID = $("#" + drpDistrictID).val();
+        var InspectionID = $("#" + InspectionID).val();
+
+        $.ajax({
+            type: "GET",
+            url: "/ReinstatementAppliaction/AllList",
+            headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+            data: { mode: InspectionID, DistrictID: DistrictID },
+            success: function (response) {
+                $('#' + DrpAreaID).data("kendoMultiColumnComboBox").value('')
+                $("#" + DrpTalukaID).empty();
+                var row = "";
+                row += "<option value='0' selected>Select</option>";
+                for (var i = 0; i < response.data.Talukalist.length; i++) {
+                    row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                }
+                $("#" + DrpTalukaID).html(row).trigger('chosen:updated');
+
+                if (response.data.AreaList != "") {
+                    $("#" + DivArea).show();
+                    bindAreaDropdown(response.data.AreaList, DrpAreaID, ZonID, AreaID);
+                }
+                else {
+                    $("#" + DivArea).hide();
+                    $("#" + ZonID).val(0);
+                    $("#" + AreaID).val(0);
+                }
+            },
+            failure: function (response) {
+                swal(response.responseText)
+                    .then((value) => {
+
+                    });
+            },
+            error: function (response) {
+                //respone will be returned here
+                $("#error").val(response.responseText);
+            }
+        });
+    };
+
+    function bindAreaDropdown(obj, DrpAreaID, ZonID, AreaID) {
+
+        $("#" + DrpAreaID).kendoMultiColumnComboBox({
+            dataTextField: "DisplayValue",
+            dataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue"],
+            dataSource: {
+                data: obj
+            },
+            autoClose: false,
+            close: function (e) {
+                if (this.dataSource.data().length > 0) {
+
+                    if (this.dataSource.data()[this.selectedIndex] != undefined) {
+
+                        var data = this.dataSource._pristineData.find(x => x.DataValue == this.value());
+                        if (data != undefined) {
+                            $('#' + ZonID).val(data.ZoneID);
+                            $('#' + AreaID).val(data.DataValue);
+                        }
+                        else {
+                            $('#' + DrpAreaID).data("kendoMultiColumnComboBox").value('');
+                            swal("Please Select Valid Area");
+                            $('#' + ZonID).val(0);
+                            $('#' + AreaID).val(0);
+                        }
+                    }
+                    else {
+                        $('#' + DrpAreaID).data("kendoMultiColumnComboBox").value('');
+                        swal("Please Select Valid Area");
+                        $('#' + ZonID).val(0);
+                        $('#' + AreaID).val(0);
+                    }
+                }
+
+            },
+
+        });
+    }
+
+    function EmployeeDetailsDesignationChange(id, value) {
+        if (value == 4) {
+            $("#DivOtherDesignationNote_" + id).show();
+        }
+        else {
+            $("#DivOtherDesignationNote_" + id).hide();
+        }
+    }
+</script>
+
+<script>
+
+    function ChangeInspectionType(value) {
+
+        if (value == 2) {
+            $("#divInspectiontype").show();
+        }
+        else { $("#divInspectiontype").hide(); }
+    }
+
+    function ChangeEstablishmenttype(value) {
+
+        if (value == 2) {
+            $(".hideRblEstablishments").show();
+        }
+        else { $(".hideRblEstablishments").hide(); }
+    }
+    //$('input[type=radio][name=InspectionType]').change(function () {
+    //    if (this.id == 'rblUnscheduled') {
+    //        $("#rblUnscheduled").val("true");
+    //        $("#rblComplainBased").val("false");
+    //        $("#rblOnline").val("false");
+    //        $("#divInspectiontype").hide();
+    //    }
+    //    else if (this.id == 'rblComplainBased') {
+    //        $("#rblUnscheduled").val("false");
+    //        $("#rblComplainBased").val("true");
+    //        $("#rblOnline").val("false");
+    //        $("#divInspectiontype").show();
+    //    }
+    //    else {
+    //        $("#rblUnscheduled").val("false");
+    //        $("#rblComplainBased").val("false");
+    //        $("#rblOnline").val("true");
+    //        $("#divInspectiontype").hide();
+    //    }
+    //});
+
+    //$('input[type=radio][name=Establishmenttype]').change(function () {
+    //    if (this.id == 'rblSearch') {
+    //        $("#rblSearch").val("true");
+    //        $("#rblManualEntry").val("false");
+    //        $("#rblNotRegistered").val("false");
+    //        $(".hideRblEstablishments").hide();
+    //    }
+    //    else if (this.id == 'rblManualEntry') {
+    //        $("#rblSearch").val("false");
+    //        $("#rblManualEntry").val("true");
+    //        $("#rblNotRegistered").val("false");
+    //        $(".hideRblEstablishments").show();
+    //    }
+    //    else {
+    //        $("#rblSearch").val("false");
+    //        $("#rblManualEntry").val("false");
+    //        $("#rblNotRegistered").val("true");
+    //        $(".hideRblEstablishments").show();
+    //    }
+    //});
+
+    $('input[type=radio][name=IsRegisteredUnder]').change(function () {
+        if (this.id == 'rblEstablishmentsRGYes') {
+            $("#rblEstablishmentsRGYes").val("1");
+            $("#rblEstablishmentsRGNo").val("0");
+            $("#DivEstablishmentsRegisteredUnder").show();
+        }
+        else {
+            $("#rblEstablishmentsRGYes").val("0");
+            $("#rblEstablishmentsRGNo").val("1");
+            $("#DivEstablishmentsRegisteredUnder").hide();
+        }
+    });
+
+</script>
+
+
+
+@*EmployeeDetails*@
+<script>
+    var B = 0;
+
+    function EmployeeDetails() {
+        var data = @Html.Raw(Json.Serialize(@Model._inspectionEstablishmentEmployeeDetailsList));
+        var i;
+
+        for (B = 0; B < data.length; B++) {
+
+
+
+    @*  var AddEducationdetails = "<div class='row'>";*@
+                                                                                                                                         var AddEducationdetails = "";
+            AddEducationdetails += "<div id='DivEmployeeDetails_" + B + "'><a class='ml-3' id='Delete' style='float: right;' onclick='RemoveEmployeeDetails(" + B + ")'><i class='fas fa-trash-alt'></i></a>";
+            AddEducationdetails += "<fieldset class='border p-2'>";
+    @*  AddEducationdetails += "<legend  class='w-auto'>Establish Detail:" + E + " </legend>";*@
+
+                AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+            AddEducationdetails += "<div class='col-md-6'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Employee Name <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input type='hidden' class='RegistrationID' name='EmployeeDetailsInspectionID_" + B + "' value='" + data[B].InspectionID + "' id='EmployeeDetailsInspectionID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='EmployeeDetailsEmployeeID_" + B + "'  value='" + data[B].EmployeeID + "' id='EmployeeDetailsEmployeeID_" + B + "' />";
+            AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='EmployeeDetailsEmployeeName_" + B + "' name='EmployeeDetailsEmployeeName_" + B + "'  type='text' value='" + data[B].EmployeeName + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsEmployeeName_" + B + "' style='display:none;'>Please Enter Employee Name</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='District_Name'>Designation <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<select class='chosen-select form-control' name='EmployeeDetailsDesignationID_" + B + "' id='EmployeeDetailsDesignationID_" + B + "' onchange='EmployeeDetailsDesignationChange(" + B + ",this.value)'>";
+            AddEducationdetails += "<option value='0'>Select</option>";
+            for (i = 0; i < data[B].DesignationList.length; ++i) {
+                if (data[B].DesignationList[i].DataValue == data[B].DesignationID) {
+                    AddEducationdetails += "<option value=" + data[B].DesignationList[i].DataValue + " selected='selected'>" + data[B].DesignationList[i].DisplayValue + "</option>";
+                }
+                else {
+
+                    AddEducationdetails += "<option value=" + data[B].DesignationList[i].DataValue + ">" + data[B].DesignationList[i].DisplayValue + "</option>";
+                }
+            }
+            AddEducationdetails += "</select>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsDesignationID_" + B + "' style='display:none;'>Please Select Designation</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-3' id='DivOtherDesignationNote_" + B + "' style='display:none;'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Other Designation Note <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='EmployeeDetailsOtherDesignationNote_" + B + "' name='EmployeeDetailsOtherDesignationNote_" + B + "'  type='text' value='" + data[B].OtherDesignationNote + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsOtherDesignationNote_" + B + "' style='display:none;'>Please Other Designation Note</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-1'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Age<span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='EmployeeDetailsAge_" + B + "' name='EmployeeDetailsAge_" + B + "' oninput='numberOnly(this.id);' maxlength='3' type='text' value='" + data[B].Age + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsAge_" + B + "' style='display:none;'>Please Age</span>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-5'>";
+            AddEducationdetails += "<label for='P_Address'>Permanent Address <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<textarea class='form-control'' id='EmployeeDetailsPAddress_" + B + "' name='EmployeeDetailsPAddress_" + B + "'  type='text'>" + data[B].PAddress + "</textarea>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsPAddress_" + B + "' style='display:none;'>Please Enter Address</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='District_Name'>District <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<select class='chosen-select form-control' name='EmployeeDetailsDistrictID_" + B + "' id='EmployeeDetailsDistrictID_" + B + "'   onchange = 'DistrictOnChange(this.id,EmployeeDetailsDivArea_" + B + ".id,EmployeeDetailsTalukaID_" + B + ".id,ddlEmployeeDetailsArea_" + B + ".id,EmployeeDetailsZoneID_" + B + ".id,EmployeeDetailsAreaID_" + B + ".id,EmployeeDetailsInspectionID_" + B + ".id)' > ";
+            AddEducationdetails += "<option value='0'>Select</option>";
+            for (i = 0; i < data[B].Districtlist.length; ++i) {
+                if (data[B].Districtlist[i].DataValue == data[B].DistrictID) {
+                    AddEducationdetails += "<option value=" + data[B].Districtlist[i].DataValue + " selected='selected'>" + data[B].Districtlist[i].DisplayValue + "</option>";
+                }
+                else {
+
+                    AddEducationdetails += "<option value=" + data[B].Districtlist[i].DataValue + ">" + data[B].Districtlist[i].DisplayValue + "</option>";
+                }
+            }
+            AddEducationdetails += "</select>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsDistrictID_" + B + "' style='display:none;'>Please Select District</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2' style='width: 366px;'>";
+            AddEducationdetails += "<label for='Taluka_Name'>Taluka <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<select class='chosen-select form-control' name='EmployeeDetailsTalukaID_" + B + "' id='EmployeeDetailsTalukaID_" + B + "'>";
+            AddEducationdetails += "<option value='0'>Select</option>";
+            for (i = 0; i < data[B].Talukalist.length; ++i) {
+                if (data[B].Talukalist[i].DataValue == data[B].TalukaID) {
+                    AddEducationdetails += "<option value=" + data[B].Talukalist[i].DataValue + " selected='selected'>" + data[B].Talukalist[i].DisplayValue + "</option>";
+                }
+                else {
+                    AddEducationdetails += "<option value=" + data[B].Talukalist[i].DataValue + ">" + data[B].Talukalist[i].DisplayValue + "</option>";
+                }
+            }
+            AddEducationdetails += "</select>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsTalukaID_" + B + "' style='display:none;'>Please Select Taluka</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2' id='EmployeeDetailsDivArea_" + B + "'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Area <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input type='hidden' name='EmployeeDetailsZoneID_" + B + "' id='EmployeeDetailsZoneID_" + B + "' value='" + data[B].ZoneID + "'/>";
+            AddEducationdetails += "<input type='hidden' name='EmployeeDetailsAreaID_" + B + "' id='EmployeeDetailsAreaID_" + B + "' value='" + data[B].AreaID + "'/>";
+            AddEducationdetails += "<input type='hidden' name='EmployeeDetailsIsActive_" + B + "' value='" + data[B].IsActive + "' id='EmployeeDetailsIsActive_" + B + "' />";
+            AddEducationdetails += "<input style='width: 100%;' class='form-control'' id='ddlEmployeeDetailsArea_" + B + "' name='ddlEmployeeDetailsArea_" + B + "'  type='text' value='" + data[B].AreaID + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanddlEmployeeDetailsArea_" + B + "' style='display:none;'>Please Select Area</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-1'>";
+            AddEducationdetails += "<label for='Pin_code'>Pin code<span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control'' oninput='numberOnly(this.id);' id='EmployeeDetailsPincode_" + B + "' maxlength='6' name='EmployeeDetailsPincode_" + B + "'  type='text' value='" + data[B].Pincode + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsPincode_" + B + "' style='display:none;'>Please Select Pincode</span>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='ValidEmployeeDetailsPincode_" + B + "' style='display:none;'>Please Enter Valid PinCode </span>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Valid2EmployeeDetailsPincode_" + B + "' style='display:none;'>Please Enter 6 Digit PinCode </span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "</fieldset>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</Br>"
+
+            $("#MainDivEmployeeDetails").append(AddEducationdetails);
+            bindAreaDropdown(data[B].AreaList, "ddlEmployeeDetailsArea_" + B + "", "EmployeeDetailsZoneID_" + B + "", "EmployeeDetailsAreaID_" + B + "");
+            $(".chosen-select").chosen();
+            $('.chosen-container').css('width', '100%');
+            if (data[B].DesignationID == 4) {
+                $("#DivOtherDesignationNote_" + B).show();
+            }
+            if (data[B].EmployeeID > 0 && data[B].AreaID > 0) {
+                $("#EmployeeDetailsDivArea_" + B).show();
+            }
+            else {
+                $("#EmployeeDetailsDivArea_" + B).hide();
+                $("#EmployeeDetailsZoneID_" + B).val();
+                $("#EmployeeDetailsAreaID_" + B).val();
+            }
+            //B++;
+
+        }
+
+    }
+
+    function Fn_AddEmployeeDetails() {
+
+        debugger
+        var i;
+        var InspectionID = $('#InspectionID').val();
+        var EmployeeID = 0;
+        var Districtlist = @Html.Raw(Json.Serialize(@Model._inspectionEstablishmentEmployeeDetailsList[0].Districtlist));
+        var DesignationList = @Html.Raw(Json.Serialize(@Model._inspectionEstablishmentEmployeeDetailsList[0].DesignationList));
+
+    @*  var AddEducationdetails = "<div class='row'>";*@
+                                                                                                               var AddEducationdetails = "";
+        AddEducationdetails += "<div id='DivEmployeeDetails_" + B + "'><a class='ml-3' id='Delete' style='float: right;' onclick='RemoveEmployeeDetails(" + B + ")'><i class='fas fa-trash-alt'></i></a>";
+        AddEducationdetails += "<fieldset class='border p-2'>";
+    @*  AddEducationdetails += "<legend  class='w-auto'>Establis Detail:"+E+" </legend>";*@
+            AddEducationdetails += "<div class='form-group'>";
+        AddEducationdetails += "<div class='row'>";
+        AddEducationdetails += "<div class='col-md-6'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Employee Name <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input type='hidden' name='EmployeeDetailsInspectionID_" + B + "' value='" + InspectionID + "' id='EmployeeDetailsInspectionID_" + B + "' />";
+        AddEducationdetails += "<input type='hidden' name='EmployeeDetailsEmployeeID_" + B + "' value='" + EmployeeID + "' id='EmployeeDetailsEmployeeID_" + B + "' />";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='EmployeeDetailsEmployeeName_" + B + "' name='EmployeeDetailsEmployeeName_" + B + "'  type='text' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsEmployeeName_" + B + "' style='display:none;'>Please Enter Employee Name</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='District_Name'>Designation <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<select class='chosen-select form-control' name='EmployeeDetailsDesignationID_" + B + "' id='EmployeeDetailsDesignationID_" + B + "' onchange='EmployeeDetailsDesignationChange(" + B + ",this.value)'>";
+        AddEducationdetails += "<option value='0'>Select</option>";
+        for (i = 0; i < DesignationList.length; ++i) {
+            AddEducationdetails += "<option value=" + DesignationList[i].DataValue + ">" + DesignationList[i].DisplayValue + "</option>";
+        }
+        AddEducationdetails += "</select>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsDesignationID_" + B + "' style='display:none;'>Please Select Designation</span>";
+
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-3' id='DivOtherDesignationNote_" + B + "' style='display:none;'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Other Designation Note <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='EmployeeDetailsOtherDesignationNote_" + B + "' name='EmployeeDetailsOtherDesignationNote_" + B + "'  type='text' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsOtherDesignationNote_" + B + "' style='display:none;'>Please Other Designation Note</span>";
+
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-1'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Age<span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='EmployeeDetailsAge_" + B + "' name='EmployeeDetailsAge_" + B + "' oninput='numberOnly(this.id);' maxlength='3' type='text' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsAge_" + B + "' style='display:none;'>Please Age</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "</div>";
+        AddEducationdetails += "</div>";
+
+        //New
+        AddEducationdetails += "<div class='form-group'>";
+        AddEducationdetails += "<div class='row'>";
+
+        AddEducationdetails += "<div class='col-md-5'>";
+        AddEducationdetails += "<label for='P_Address'>Permanent Address<span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<textarea  class='form-control'' id='EmployeeDetailsPAddress_" + B + "' name='EmployeeDetailsPAddress_" + B + "'  type='text' value=''></textarea>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsPAddress_" + B + "' style='display:none;'>Please Enter Address</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Applicant_Name'>District<span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<select class='chosen-select form-control' name='EmployeeDetailsDistrictID_" + B + "' id='EmployeeDetailsDistrictID_" + B + "'   onchange = 'DistrictOnChange(this.id,EmployeeDetailsDivArea_" + B + ".id,EmployeeDetailsTalukaID_" + B + ".id,ddlEmployeeDetailsArea_" + B + ".id,EmployeeDetailsZoneID_" + B + ".id,EmployeeDetailsAreaID_" + B + ".id,EmployeeDetailsInspectionID_" + B + ".id)' > ";
+        AddEducationdetails += "<option value='0'>Select</option>";
+        for (i = 0; i < Districtlist.length; ++i) {
+            AddEducationdetails += "<option value=" + Districtlist[i].DataValue + ">" + Districtlist[i].DisplayValue + "</option>";
+        }
+        AddEducationdetails += "</select>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsDistrictID_" + B + "' style='display:none;'>Please Select District</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Taluka<span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<select class='chosen-select form-control' name='EmployeeDetailsTalukaID_" + B + "' id='EmployeeDetailsTalukaID_" + B + "'>";
+        AddEducationdetails += "<option value='0'>Select</option>";
+        AddEducationdetails += "</select>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsTalukaID_" + B + "' style='display:none;'>Please Select Taluka</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2' id='EmployeeDetailsDivArea_" + B + "'  style='display:none;'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Area<span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input type='hidden' name='EmployeeDetailsZoneID_" + B + "' id='EmployeeDetailsZoneID_" + B + "' value='0'/>";
+        AddEducationdetails += "<input type='hidden' name='EmployeeDetailsAreaID_" + B + "' id='EmployeeDetailsAreaID_" + B + "' value='0'/>";
+        AddEducationdetails += "<input type='hidden' name='EmployeeDetailsIsActive_" + B + "' value='true' id='EmployeeDetailsIsActive_" + B + "' />";
+        AddEducationdetails += "<input style='width: 100%;' class='form-control'' id='ddlEmployeeDetailsArea_" + B + "' name='ddlEmployeeDetailsArea_" + B + "'  type='text' value='0'>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanddlEmployeeDetailsArea_" + B + "' style='display:none;'>Please Select Area</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-1'>";
+        AddEducationdetails += "<label for='Pin_code'>Pin code<span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control'' id='EmployeeDetailsPincode_" + B + "' name='EmployeeDetailsPincode_" + B + "' maxlength='6' type='text' oninput='numberOnly(this.id);' value='0'>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEmployeeDetailsPincode_" + B + "' style='display:none;'>Please Select Pincode</span>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='ValidEmployeeDetailsPincode_" + B + "' style='display:none;'>Please Enter Valid PinCode </span>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Valid2EmployeeDetailsPincode_" + B + "' style='display:none;'>Please Enter 6 Digit PinCode </span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "</fieldset>";
+        AddEducationdetails += "</div>";
+        AddEducationdetails += "</div>";
+        AddEducationdetails += "</div>";
+        AddEducationdetails += "</Br>"
+
+        $("#MainDivEmployeeDetails").append(AddEducationdetails);
+        //bindEstablishDropdown(E);
+        bindAreaDropdown("", "ddlEmployeeDetailsArea_" + B + "", "EmployeeDetailsZoneID_" + B + "", "EmployeeDetailsAreaID_" + B + "");
+        $(".chosen-select").chosen();
+        B++;
+
+    }
+
+    function RemoveEmployeeDetails(id) {
+        var i = B;
+        var G = 0;
+
+        for (v = 0; v < i; ++v) {
+
+            if ($("#DivEmployeeDetails_" + v + "").is(":visible")) {
+                G++;
+            }
+        }
+
+        if (G > 1) {
+            $("#DivEmployeeDetails_" + id).hide();
+            $("#EmployeeDetailsIsActive_" + id).val("false");
+        }
+        else {
+            swal("At least 1 Employer Details required")
+            return false;
+        }
+
+
+        //if (G == 1) {
+        //   $("#PrincipalDelete_" + id).hide();
+        //}
+        //else{
+        //      $("#DivPrincipal_" + id).hide();
+        //    $("#PrincipalIsActive_" + id).val("false");
+        //}
+
+
+    }
+</script>
+
+@*ContractorDetails*@
+<script>
+    var E = 0;
+
+    function ContractorDetails() {
+        var data = @Html.Raw(Json.Serialize(@Model._inspectionEstablishmentContractorDetailsList));
+        var DrpYesNO = @Html.Raw(Json.Serialize(@Model._inspectionEstablishmentContractorDetailsList[0].YesNoList));
+        var i;
+
+        for (E = 0; E < data.length; E++) {
+
+            var AddEducationdetails = "";
+            AddEducationdetails += "<div id='DivContractorDetails_" + E + "'><a class='ml-3' id='Delete' style='float: right;' onclick='RemoveContractor(" + E + ")'><i class='fas fa-trash-alt'></i></a>";
+            AddEducationdetails += "<fieldset class='border p-2'>";
+    @*  AddEducationdetails += "<legend  class='w-auto'>Establish Detail:" + E + " </legend>";*@
+
+                AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Taluka_Name'>Contractors ? <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<select class='chosen-select form-control' name='ContractorDIsContractors_" + E + "' id='ContractorDIsContractors_" + E + "' onchange='FnIsContractors(" + E + ")'>";
+            //AddEducationdetails += "<option value='0'>Select</option>";
+            for (i = 0; i < data[E].YesNoList.length; ++i) {
+                if (data[E].YesNoList[i].DataValue == data[E].IsContractors) {
+                    AddEducationdetails += "<option value=" + data[E].YesNoList[i].DataValue + " selected='selected'>" + data[E].YesNoList[i].DisplayValue + "</option>";
+                }
+                else {
+                    AddEducationdetails += "<option value=" + data[E].YesNoList[i].DataValue + ">" + data[E].YesNoList[i].DisplayValue + "</option>";
+                }
+            }
+            AddEducationdetails += "</select>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-4 hideContractorDetails_" + E + "'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Contractor Name <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input type='hidden'  name='ContractorDInspectionID_" + E + "' value='" + data[E].InspectionID + "' id='ContractorDInspectionID_" + E + "' />";
+            AddEducationdetails += "<input type='hidden' name='ContractorDContractorID_" + E + "'  value='" + data[E].ContractorID + "' id='ContractorDContractorID_" + E + "' />";
+            AddEducationdetails += "<input class='form-control hide' style='width: 100%;' id='ContractorDContractorName_" + E + "' name='ContractorDContractorName_" + E + "'  type='text' value='" + data[E].ContractorName + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDContractorName_" + E + "' style='display:none;'>Please Enter Contractor Name</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-3 hideContractorDetails_" + E + "'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Company Name <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control' style='width: 100%;' id='ContractorDCompanyName_" + E + "' name='ContractorDCompanyName_" + E + "'  type='text' value='" + data[E].CompanyName + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDCompanyName_" + E + "' style='display:none;'>Please Enter Company Name</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2 hideContractorDetails_" + E + "'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Job Type <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control' style='width: 100%;' id='ContractorDJobType_" + E + "' name='ContractorDJobType_" + E + "'  type='text' value='" + data[E].JobType + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDJobType_" + E + "' style='display:none;'>Please Select Job</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='form-group hideContractorDetails_" + E + "'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Taluka_Name'>IsLicense ? <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<select class='chosen-select form-control' name='ContractorDIsLicense_" + E + "' id='ContractorDIsLicense_" + E + "'>";
+            //AddEducationdetails += "<option value='0'>Select</option>";
+            for (i = 0; i < data[E].YesNoList.length; ++i) {
+                if (data[E].YesNoList[i].DataValue == data[E].IsLicense) {
+                    AddEducationdetails += "<option value=" + data[E].YesNoList[i].DataValue + " selected='selected'>" + data[E].YesNoList[i].DisplayValue + "</option>";
+                }
+                else {
+                    AddEducationdetails += "<option value=" + data[E].YesNoList[i].DataValue + ">" + data[E].YesNoList[i].DisplayValue + "</option>";
+                }
+            }
+            AddEducationdetails += "</select>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDIsLicense_" + E + "' style='display:none;'>Please Select Job</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Commencement Date <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control datepicker' style='width: 100%;' id='ContractorDCommencementDate_" + E + "' name='ContractorDCommencementDate_" + E + "'  type='text' value='" + data[E].CommencementDate + "' onchange='ChangeCommencement(" + E + ")'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDCommencementDate_" + E + "' style='display:none;'>Please Commencement Date</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Completion Date <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control datepicker' style='width: 100%;' id='ContractorDCompletionDate_" + E + "' name='ContractorDCompletionDate_" + E + "'  type='text' value='" + data[E].CompletionDate + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDCompletionDate_" + E + "' style='display:none;'>Please Completion Date</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Male Count<span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDMaleCount_" + E + "' name='ContractorDMaleCount_" + E + "' onblur='getContractorTotalCount(" + E + ")'  maxlength='6' type='text' oninput='numberOnly(this.id);' value='" + data[E].MaleCount + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDMaleCount_" + E + "' style='display:none;'>Please Enter Male Employee</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Female Count<span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDFemaleCount_" + E + "' name='ContractorDFemaleCount_" + E + "' onblur='getContractorTotalCount(" + E + ")'  maxlength='6' type='text' oninput='numberOnly(this.id);' value='" + data[E].FemaleCount + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDFemaleCount_" + E + "' style='display:none;'>Please Enter Female Employee</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>Total Worker Count</label>";
+            AddEducationdetails += "<input type='hidden' name='ContractorDIsActive_" + E + "' value='" + data[E].IsActive + "' id='ContractorDIsActive_" + E + "' />";
+            AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDTotalWorkerCount_" + E + "' name='ContractorDTotalWorkerCount_" + E + "'  maxlength='6' type='text' oninput='numberOnly(this.id);' value='" + data[E].TotalWorkerCount + "'>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "</fieldset>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</Br>"
+
+            $("#MainDivContractorDetails").append(AddEducationdetails);
+            $(".chosen-select").chosen();
+            $('.chosen-container').css('width', '100%');
+            $("#ContractorDCommencementDate_" + E).kendoDatePicker({ format: "dd-MM-yyyy" });
+            $("#ContractorDCompletionDate_" + E).kendoDatePicker({ format: "dd-MM-yyyy" });
+            if ($("#ContractorDIsContractors_" + E).val() == 0) {
+                $('.hideContractorDetails_' + E).hide();
+            } else { $('.hideContractorDetails_' + E).show(); }
+            //ChangeCommencement(E);
+            //B++;
+
+        }
+
+    }
+
+    function Fn_AddContractorDetails() {
+        debugger;
+        var DrpYesNO = @Html.Raw(Json.Serialize(@Model._inspectionEstablishmentContractorDetailsList[0].YesNoList));
+        var i;
+        var InspectionID = $('#InspectionID').val();
+        var ContractorID = 0;
+        var Todaydate = getTodaydate();
+
+        var AddEducationdetails = "";
+        AddEducationdetails += "<div id='DivContractorDetails_" + E + "'><a class='ml-3' id='Delete' style='float: right;' onclick='RemoveContractor(" + E + ")'><i class='fas fa-trash-alt'></i></a>";
+        AddEducationdetails += "<fieldset class='border p-2'>";
+    @*  AddEducationdetails += "<legend  class='w-auto'>Establish Detail:" + E + " </legend>";*@
+
+            AddEducationdetails += "<div class='form-group'>";
+        AddEducationdetails += "<div class='row'>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Taluka_Name'>Contractors ? <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<select class='chosen-select form-control' name='ContractorDIsContractors_" + E + "' id='ContractorDIsContractors_" + E + "' onchange='FnIsContractors(" + E + ")'>";
+        //AddEducationdetails += "<option value='0'>Select</option>";
+        for (i = 0; i < DrpYesNO.length; ++i) {
+            if (DrpYesNO[i].DataValue == 0) {
+                AddEducationdetails += "<option value=" + DrpYesNO[i].DataValue + " selected='selected'>" + DrpYesNO[i].DisplayValue + "</option>";
+            }
+            else {
+                AddEducationdetails += "<option value=" + DrpYesNO[i].DataValue + ">" + DrpYesNO[i].DisplayValue + "</option>";
+            }
+        }
+        AddEducationdetails += "</select>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-4 hideContractorDetails_" + E + "'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Contractor Name <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input type='hidden'  name='ContractorDInspectionID_" + E + "' value='" + InspectionID + "' id='ContractorDInspectionID_" + E + "' />";
+        AddEducationdetails += "<input type='hidden' name='ContractorDContractorID_" + E + "'  value='" + ContractorID + "' id='ContractorDContractorID_" + E + "' />";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDContractorName_" + E + "' name='ContractorDContractorName_" + E + "'  type='text' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDContractorName_" + E + "' style='display:none;'>Please Enter Contractor Name</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-3 hideContractorDetails_" + E + "'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Company Name <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDCompanyName_" + E + "' name='ContractorDCompanyName_" + E + "'  type='text' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDCompanyName_" + E + "' style='display:none;'>Please Enter Company Name</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2 hideContractorDetails_" + E + "'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Job Type <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDJobType_" + E + "' name='ContractorDJobType_" + E + "'  type='text' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDJobType_" + E + "' style='display:none;'>Please Enter Job</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "</div>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='form-group hideContractorDetails_" + E + "'>";
+        AddEducationdetails += "<div class='row'>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Taluka_Name'>IsLicense ? <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<select class='chosen-select form-control' name='ContractorDIsLicense_" + E + "' id='ContractorDIsLicense_" + E + "'>";
+        //AddEducationdetails += "<option value='0'>Select</option>";
+        for (i = 0; i < DrpYesNO.length; ++i) {
+            if (DrpYesNO[i].DataValue == 0) {
+                AddEducationdetails += "<option value=" + DrpYesNO[i].DataValue + " selected='selected'>" + DrpYesNO[i].DisplayValue + "</option>";
+            }
+            else {
+                AddEducationdetails += "<option value=" + DrpYesNO[i].DataValue + ">" + DrpYesNO[i].DisplayValue + "</option>";
+            }
+        }
+        AddEducationdetails += "</select>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDIsLicense_" + E + "' style='display:none;'>Please Select Job</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Commencement Date <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control datepicker' style='width: 100%;' id='ContractorDCommencementDate_" + E + "' name='ContractorDCommencementDate_" + E + "'  type='text' value='' onchange='ChangeCommencement(" + E + ")'>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDCommencementDate_" + E + "' style='display:none;'>Please Commencement Date</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Completion Date <span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control datepicker' style='width: 100%;' id='ContractorDCompletionDate_" + E + "' name='ContractorDCompletionDate_" + E + "'  type='text' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDCompletionDate_" + E + "' style='display:none;'>Please Completion Date</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Male Count<span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDMaleCount_" + E + "' onblur='getContractorTotalCount(" + E + ")' name='ContractorDMaleCount_" + E + "'  maxlength='6' type='text' oninput='numberOnly(this.id);' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDMaleCount_" + E + "' style='display:none;'>Please Enter Male Employee</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Female Count<span class='text-danger'>*</span></label>";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDFemaleCount_" + E + "' onblur='getContractorTotalCount(" + E + ")' name='ContractorDFemaleCount_" + E + "'  maxlength='6' type='text' oninput='numberOnly(this.id);' value=''>";
+        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanContractorDFemaleCount_" + E + "' style='display:none;'>Please Enter Female Employee</span>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "<div class='col-md-2'>";
+        AddEducationdetails += "<label for='Applicant_Name'>Total Worker Count</label>";
+        AddEducationdetails += "<input type='hidden' name='ContractorDIsActive_" + E + "' value='true' id='ContractorDIsActive_" + E + "' />";
+        AddEducationdetails += "<input class='form-control'' style='width: 100%;' id='ContractorDTotalWorkerCount_" + E + "' name='ContractorDTotalWorkerCount_" + E + "'  maxlength='6' type='text' oninput='numberOnly(this.id);' value=''>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "</div>";
+        AddEducationdetails += "</div>";
+
+        AddEducationdetails += "</fieldset>";
+        AddEducationdetails += "</div>";
+        AddEducationdetails += "</Br>"
+
+        $("#MainDivContractorDetails").append(AddEducationdetails);
+        $(".chosen-select").chosen();
+        $('.chosen-container').css('width', '100%');
+        $("#ContractorDCommencementDate_" + E).kendoDatePicker({ format: "dd-MM-yyyy" });
+        $("#ContractorDCompletionDate_" + E).kendoDatePicker({ format: "dd-MM-yyyy" });
+        $("#ContractorDCompletionDate_" + E).val(Todaydate);
+        $("#ContractorDCommencementDate_" + E).val(Todaydate);
+        if ($("#ContractorDIsContractors_" + E).val() == 0) { $('.hideContractorDetails_' + E).hide(); } else { $('.hideContractorDetails_' + E).show(); }
+        // ChangeCommencement(E);
+        E++;
+
+    }
+
+    function RemoveContractor(id) {
+        var i = E;
+        var G = 0;
+
+        for (v = 0; v < i; ++v) {
+
+            if ($("#DivContractorDetails_" + v + "").is(":visible")) {
+                G++;
+            }
+        }
+
+        if (G > 1) {
+            $("#DivContractorDetails_" + id).hide();
+            $("#ContractorDIsActive_" + id).val("false");
+        }
+        else {
+            swal("At least 1 Contractor required")
+            return false;
+        }
+
+
+        //if (G == 1) {
+        //   $("#PrincipalDelete_" + id).hide();
+        //}
+        //else{
+        //      $("#DivPrincipal_" + id).hide();
+        //    $("#PrincipalIsActive_" + id).val("false");
+        //}
+
+
+    }
+
+    function FnIsContractors(id) {
+        if ($("#ContractorDIsContractors_" + id).val() == 0) { $('.hideContractorDetails_' + id).hide(); }
+        else { $('.hideContractorDetails_' + id).show(); }
+    }
+
+    function ChangeCommencement(id) {
+        var EndDatepicker = $("#ContractorDCompletionDate_" + id).data("kendoDatePicker");
+        var startDate = document.getElementById("ContractorDCommencementDate_" + id).value;
+        EndDatepicker.min(startDate);
+        EndDatepicker.max(new Date(2100, 0, 1));
+        $("#ContractorDCompletionDate_" + id).val("");
+    };
+
+    function getContractorTotalCount(id) {
+        $("#ContractorDTotalWorkerCount_" + id).val((parseInt($("#ContractorDMaleCount_" + id).val()) + parseInt($("#ContractorDFemaleCount_" + id).val())))
+    }
+</script>
+
+
+@*SaveReportInformationRecord Stp=1*@
+<script>
+    function SaveReportInformation(stpid) {
+        var ErrorCnt = 0;
+        var pincoderegx = "[1-9][1-9][0-9]{4}$";
+        var regEx = /^[5-9][0-9]{9}$/;
+        var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        $('.ValidationSpan').hide();
+
+        if ($("#InspectionDate").val() == "0" || $("#InspectionDate").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionDate').show();
+        }
+
+        if ($("#InspectionDistrictID").val() == "0" || $("#InspectionDistrictID").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionDistrictID').show();
+        }
+
+        if ($("#InspectionTalukaID").val() == "0" || $("#InspectionTalukaID").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionTalukaID').show();
+        }
+
+        if ($("#InspectionDivArea").is(":visible")) {
+            if ($("#ddlInspectionArea").val() == "0" || $("#ddlInspectionArea").val() == "") {
+                ErrorCnt++;
+                $('#SpanddlInspectionArea').show();
+            }
+        }
+
+        if ($("#InspectionPincode").val() == "0" || $("#InspectionPincode").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionPincode').show();
+        }
+        else if ($("#InspectionPincode").val().length < 6) {
+            ErrorCnt++;
+            $('#valid2InspectionPincode').show();
+        }
+
+        var pincode = $("#InspectionPincode").val();
+        if (pincode.length > 5) {
+            if (!pincode.match(pincoderegx)) {
+                ErrorCnt++;
+                $("#validInspectionPincode").show();
+            }
+        }
+
+        if (ErrorCnt > 0) {
+            return false;
+        }
+
+        if (ErrorCnt == 0) {
+            var myData = {
+                InspectionID: $('#InspectionID').val(),
+                InspectionDatee: $('#InspectionDate').val(),
+                ReportNo: $('#InspectionReportNo').val(),
+                DistrictID: $('#InspectionDistrictID').val(),
+                TalukaID: $('#InspectionTalukaID').val(),
+                Pincode: $('#InspectionPincode').val(),
+                ZoneID: $('#InspectionZoneID').val(),
+                AreaID: $('#InspectionAreaID').val(),
+                URL: document.URL,
+
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/inspection/SaveReportInformationRecord",
+                    headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                    dataType: "json",
+                    data: myData,
+                    success: function (data) {
+                        if (data.data.ErrorCode == 0) {
+                            var InspectionID = data.data.InspectionID;
+                            var TEMPID = data.data.TEMPID;
+
+                            var Querystring = "EncryptedId=" + TEMPID + "&stpid=" + stpid;
+                            window.location.href = "/inspection/_InspectionView?" + Querystring;
+
+                            swal(data.data.ErrorMassage)
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function (request, message, error) {
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+    }
+
+</script>
+
+@*SaveEstablishmentsRecord Stp=2*@
+<script>
+    function SaveEstablishmentsRecord(stpid) {
+        debugger;
+        var ErrorCnt = 0;
+        var pincoderegx = "[1-9][1-9][0-9]{4}$";
+        var regEx = /^[5-9][0-9]{9}$/;
+        var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        $('.ValidationSpan').hide();
+
+        if ($("#InspectionID").val() == "0" || $("#InspectionID").val() == "") {
+            ErrorCnt++;
+            //alert("please save your Establishment Detail after than try this");
+            swal("please save your Establishment Detail after than try this");
+            return false;
+        }
+
+        if ($("#InspectionIFPApplicationNo").val() == "0" || $("#InspectionIFPApplicationNo").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionIFPApplicationNo').show();
+        }
+
+        if ($("#divInspectiontype").is(":visible")) {
+            if ($("#InspectionComplainName").val() == "0" || $("#InspectionComplainName").val() == "") {
+                ErrorCnt++;
+                $('#SpanInspectionComplainName').show();
+            }
+
+            if ($("#InspectionComplainSubject").val() == "0" || $("#InspectionComplainSubject").val() == "") {
+                ErrorCnt++;
+                $('#SpanInspectionComplainSubject').show();
+            }
+
+            if ($("#InspectionComplainDate").val() == "0" || $("#InspectionComplainDate").val() == "") {
+                ErrorCnt++;
+                $('#SpanInspectionComplainDate').show();
+            }
+        }
+        if (ErrorCnt > 0) {
+            return false;
+        }
+
+        if (ErrorCnt == 0) {
+            var myData = {
+                InspectionID: $('#InspectionID').val(),
+                IFPApplicationNo: $('#InspectionIFPApplicationNo').val(),
+                ComplainName: $('#InspectionComplainName').val(),
+                ComplainSubject: $('#InspectionComplainSubject').val(),
+                Date: $('#InspectionComplainDate').val(),
+                InspectionType: $('#InspectionType').val(),
+                URL: document.URL,
+
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/inspection/SaveEstablishmentsRecord",
+                    headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                    dataType: "json",
+                    data: myData,
+                    success: function (data) {
+                        if (data.data.ErrorCode == 0) {
+                            var InspectionID = data.data.InspectionID;
+                            var TEMPID = data.data.TEMPID;
+
+                            var Querystring = "EncryptedId=" + TEMPID + "&stpid=" + stpid;
+                            window.location.href = "/inspection/_InspectionView?" + Querystring;
+
+                            swal(data.data.ErrorMassage)
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function (request, message, error) {
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+    }
+
+</script>
+
+
+@*SaveEstablishmentsDetailRecord Stp=3*@
+<script>
+    function SaveEstablishmentsDetailRecord(stpid) {
+        var ErrorCnt = 0;
+        var pincoderegx = "[1-9][1-9][0-9]{4}$";
+        var regEx = /^[5-9][0-9]{9}$/;
+        var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        $('.ValidationSpan').hide();
+
+        if ($("#InspectionID").val() == "0" || $("#InspectionID").val() == "") {
+            ErrorCnt++;
+            //alert("please save your Establishment Detail after than try this");
+            swal("please save your Establishment Detail after than try this");
+            return false;
+        }
+
+        if ($("#ddlEstablishmentsName").val() == "0" || $("#ddlEstablishmentsName").val() == "") {
+            ErrorCnt++;
+            $('#SpanddlEstablishmentsName').show();
+        }
+
+        if ($(".hideRblEstablishments").is(":visible")) {
+            if ($("#EstablishmentPAddress").val() == "0" || $("#EstablishmentPAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentPAddress').show();
+            }
+
+            if ($("#EstablishmentsDistrictID").val() == "0" || $("#EstablishmentsDistrictID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentsDistrictID').show();
+            }
+
+            if ($("#EstablishmentsTalukaID").val() == "0" || $("#EstablishmentsTalukaID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentsTalukaID').show();
+            }
+
+            if ($('#rblEstablishmentsRGYes').val() == "1") {
+                if ($("#EstablishmentsRegisteredUnder").val() == "0" || $("#EstablishmentsRegisteredUnder").val() == "") {
+                    ErrorCnt++;
+                    $('#SpanEstablishmentsRegisteredUnder').show();
+                }
+            }
+
+            if ($("#EstablishmentsRegistrationNo").val() == "0" || $("#EstablishmentsRegistrationNo").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentsRegistrationNo').show();
+            }
+
+            if ($("#EstablishmentsRegistrationDate").val() == "0" || $("#EstablishmentsRegistrationDate").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentsRegistrationDate').show();
+            }
+
+            if ($("#EstablishmentsIndustrytypeID").val() == "0" || $("#EstablishmentsIndustrytypeID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentsIndustrytypeID').show();
+            }
+
+            if ($("#EstablishmentsDivArea").is(":visible")) {
+                if ($("#ddlEstablishmentsArea").val() == "0" || $("#ddlEstablishmentsArea").val() == "") {
+                    ErrorCnt++;
+                    $('#SpanddlEstablishmentsArea').show();
+                }
+            }
+
+            if ($("#EstablishmentsPincode").val() == "0" || $("#EstablishmentsPincode").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentsPincode').show();
+            }
+            else if ($("#EstablishmentsPincode").val().length < 6) {
+                ErrorCnt++;
+                $('#valid2EstablishmentsPincode').show();
+            }
+
+            var pincode = $("#EstablishmentsPincode").val();
+            if (pincode.length > 5) {
+                if (!pincode.match(pincoderegx)) {
+                    ErrorCnt++;
+                    $("#validEstablishmentsPincode").show();
+                }
+            }
+        }
+
+        if ($("#EstablishmentsMaleCount").val() == "0" || $("#EstablishmentsMaleCount").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentsMaleCount').show();
+        }
+
+        if ($("#EstablishmentsFemaleCount").val() == "0" || $("#EstablishmentsFemaleCount").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentsFemaleCount').show();
+        }
+
+        if (ErrorCnt > 0) {
+            return false;
+        }
+
+        if (ErrorCnt == 0) {
+            var myData = {
+                InspectionID: $('#InspectionID').val(),
+                EstablishmentName: $('#ddlEstablishmentsName').val(),
+                PAddress: $('#EstablishmentPAddress').val(),
+                DistrictID: $('#EstablishmentsDistrictID').val(),
+                TalukaID: $('#EstablishmentsTalukaID').val(),
+                Pincode: $('#EstablishmentsPincode').val(),
+                ZoneID: $('#EstablishmentsZoneID').val(),
+                AreaID: $('#EstablishmentsAreaID').val(),
+                RegisteredUnder: $('#EstablishmentsRegisteredUnder').val(),
+                RegistrationNumber: $('#EstablishmentsRegistrationNo').val(),
+                Date: $('#EstablishmentsRegistrationDate').val(),
+                IndustrytypeID: $('#EstablishmentsIndustrytypeID').val(),
+                MaleCount: $('#EstablishmentsMaleCount').val(),
+                FemaleCount: $('#EstablishmentsFemaleCount').val(),
+                TotalEmployees: $('#EstablishmentsTotalWorker').val(),
+                IsFactoriesAct: $('#chkIsEstablishmentsFactoriesAct').val(),
+                IsEstablishmentAct: $('#chkIsEstablishmentsIsEstablishmentAct').val(),
+                IsLabourAct: $('#chkIsEstablishmentsIsLabourAct').val(),
+                IsSocietyAct: $('#chkIsEstablishmentsIsSocietyAct').val(),
+                IsTrustAct: $('#chkIsEstablishmentsIsTrustAct').val(),
+                IsRegisteredUnder: $('#rblEstablishmentsRGYes').val(),
+                EstablishmenttypeID: $('#EstablishmentdetailtypeID').val(),
+                EID: $('#EstablishmentsEID').val(),
+                URL: document.URL,
+
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/inspection/SaveEstablishmentsDetailRecord",
+                    headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                    dataType: "json",
+                    data: myData,
+                    success: function (data) {
+                        if (data.data.ErrorCode == 0) {
+                            var InspectionID = data.data.InspectionID;
+                            var TEMPID = data.data.TEMPID;
+
+                            var Querystring = "EncryptedId=" + TEMPID + "&stpid=" + stpid;
+                            window.location.href = "/inspection/_InspectionView?" + Querystring;
+
+                            swal(data.data.ErrorMassage)
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function (request, message, error) {
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+    }
+
+</script>
+
+@*SaveCompanyDetailsRecord Stp=6*@
+<script>
+    function SaveCompanyDetailsRecord(stpid) {
+        debugger;
+        var ErrorCnt = 0;
+        var pincoderegx = "[1-9][1-9][0-9]{4}$";
+        var regEx = /^[5-9][0-9]{9}$/;
+        var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+        $('.ValidationSpan').hide();
+
+        if ($("#InspectionAuthorizedPersonName").val() == "0" || $("#InspectionAuthorizedPersonName").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionAuthorizedPersonName').show();
+        }
+
+        if ($("#InspectionAuthorizedPersonEmail").val() == "0" || $("#InspectionAuthorizedPersonEmail").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionAuthorizedPersonEmail').show();
+        }
+
+        if ($("#InspectionAuthorizedPersonContactNo").val() == "0" || $("#InspectionAuthorizedPersonContactNo").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionAuthorizedPersonContactNo').show();
+        }
+
+        if ($("#InspectionAuthorizedPersonDesignation").val() == "0" || $("#InspectionAuthorizedPersonDesignation").val() == "") {
+            ErrorCnt++;
+            $('#SpanInspectionAuthorizedPersonDesignation').show();
+        }
+
+        if (ErrorCnt > 0) {
+            return false;
+        }
+
+        if (ErrorCnt == 0) {
+            var myData = {
+                InspectionID: $('#InspectionID').val(),
+                AuthorizedPersonName: $('#InspectionAuthorizedPersonName').val(),
+                AuthorizedPersonEmail: $('#InspectionAuthorizedPersonEmail').val(),
+                AuthorizedPersonContactNo: $('#InspectionAuthorizedPersonContactNo').val(),
+                AuthorizedPersonDesignation: $('#InspectionAuthorizedPersonDesignation').val(),
+                URL: document.URL,
+
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/inspection/SaveCompanyDetailsRecord",
+                    headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                    dataType: "json",
+                    data: myData,
+                    success: function (data) {
+                        if (data.data.ErrorCode == 0) {
+                            var InspectionID = data.data.InspectionID;
+                            var TEMPID = data.data.TEMPID;
+
+                            var Querystring = "EncryptedId=" + TEMPID + "&stpid=" + stpid;
+                            window.location.href = "/inspection/_InspectionView?" + Querystring;
+
+                            swal(data.data.ErrorMassage)
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function (request, message, error) {
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+    }
+
+</script>
+
+@*EmployeeDetails Stp=4*@
+<script>
+
+    function SaveEmployeeDetailsRecord(stpid) {
+        debugger;
+
+        var pincoderegx = "[1-9][1-9][0-9]{4}$";
+        var ErrorCnt = 0;
+        $('.ValidationSpan').hide();
+        var i = B;
+        var v;
+
+        if ($("#InspectionID").val() == "0" || $("#InspectionID").val() == "") {
+            ErrorCnt++;
+            //alert("please save your Establishment Detail after than try this");
+            swal("please save your Establishment Detail after than try this");
+            return false;
+        }
+
+        for (v = 0; v < i; ++v) {
+
+            if ($("#DivEmployeeDetails_" + v + "").is(":visible")) {
+                if ($("#EmployeeDetailsEmployeeName_" + v + "").val() == "0" || $("#EmployeeDetailsEmployeeName_" + v + "").val() == "") {
+                    ErrorCnt++;
+                    $("#SpanEmployeeDetailsEmployeeName_" + v + "").show();
+                }
+
+                if ($("#EmployeeDetailsDesignationID_" + v + "").val() == "0" || $("#EmployeeDetailsDesignationID_" + v + "").val() == "") {
+                    ErrorCnt++;
+                    $("#SpanEmployeeDetailsDesignationID_" + v + "").show();
+                }
+
+                if ($("#DivOtherDesignationNote_" + v + "").is(":visible")) {
+                    if ($("#EmployeeDetailsOtherDesignationNote_" + v + "").val() == "0" || $("#EmployeeDetailsOtherDesignationNote_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanEmployeeDetailsOtherDesignationNote_" + v + "").show();
+                    }
+                }
+
+                if ($("#EmployeeDetailsAge_" + v + "").val() == "0" || $("#EmployeeDetailsAge_" + v + "").val() == "") {
+                    ErrorCnt++;
+                    $("#SpanEmployeeDetailsAge_" + v + "").show();
+                }
+
+                if ($("#EmployeeDetailsPAddress_" + v + "").val() == "0" || $("#EmployeeDetailsPAddress_" + v + "").val() == "") {
+                    ErrorCnt++;
+                    $("#SpanEmployeeDetailsPAddress_" + v + "").show();
+                }
+
+                if ($("#EmployeeDetailsDistrictID_" + v + "").val() == "0" || $("#EmployeeDetailsDistrictID_" + v + "").val() == "") {
+                    ErrorCnt++;
+                    $("#SpanEmployeeDetailsDistrictID_" + v + "").show();
+                }
+
+                if ($("#EmployeeDetailsTalukaID_" + v + "").val() == "0" || $("#EmployeeDetailsTalukaID_" + v + "").val() == "") {
+                    ErrorCnt++;
+                    $("#SpanEmployeeDetailsTalukaID_" + v + "").show();
+                }
+
+                if ($("#EmployeeDetailsDivArea_" + v + "").is(":visible")) {
+                    if ($("#ddlEmployeeDetailsArea_" + v + "").val() == "0" || $("#ddlEmployeeDetailsArea_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanddlEmployeeDetailsArea_" + v + "").show();
+                    }
+                }
+
+                if ($("#EmployeeDetailsPincode_" + v + "").val() == "0" || $("#EmployeeDetailsPincode_" + v + "").val() == "") {
+                    ErrorCnt++;
+                    $("#SpanEmployeeDetailsPincode_" + v + "").show();
+                }
+                else if ($("#EmployeeDetailsPincode_" + v + "").val().length < 6) {
+                    ErrorCnt++;
+                    $("#Valid2EmployeeDetailsPincode_" + v + "").show();
+                }
+                var pincode = $("#EmployeeDetailsPincode_" + v + "").val();
+
+                if (pincode.length > 5) {
+                    if (!pincode.match(pincoderegx)) {
+                        ErrorCnt++;
+                        $("#ValidEmployeeDetailsPincode_" + v + "").show();
+                    }
+                }
+            }
+        }
+
+
+        if (ErrorCnt > 0) {
+            return false;
+        }
+
+        if (ErrorCnt == 0) {
+            var myData = {
+                XMLString: GetEmployeeDetailsXML(),
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/inspection/SaveEmployeeDetailsRecord",
+                    headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                    dataType: "json",
+                    data: myData,
+                    success: function (data) {
+
+                        var TEMPID = data.data.TEMPID;
+                        if (data.data.ErrorCode == 0) {
+                            var Querystring = "EncryptedId=" + TEMPID + "&stpid=" + stpid;
+                            window.location.href = "/inspection/_InspectionView?" + Querystring;
+                            swal(data.data.ErrorMassage)
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function (request, message, error) {
+                        debugger;
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+    }
+
+    function GetEmployeeDetailsXML() {
+        var xml = '';
+        xml += '<DataTable>';
+        var i = B;
+        var v;
+        for (v = 0; v < i; ++v) {
+            xml += '<DataRow>';
+            xml += "<" + "InspectionID" + ">" + $("#EmployeeDetailsInspectionID_" + v + "").val() + "</" + "InspectionID" + ">";
+            xml += "<" + "EmployeeID" + ">" + $("#EmployeeDetailsEmployeeID_" + v + "").val() + "</" + "EmployeeID" + ">";
+            xml += "<" + "EmployeeName" + ">" + $("#EmployeeDetailsEmployeeName_" + v + "").val() + "</" + "EmployeeName" + ">";
+            xml += "<" + "DesignationID" + ">" + $("#EmployeeDetailsDesignationID_" + v + "").val() + "</" + "DesignationID" + ">";
+            xml += "<" + "OtherDesignationNote" + ">" + $("#EmployeeDetailsOtherDesignationNote_" + v + "").val() + "</" + "OtherDesignationNote" + ">";
+            xml += "<" + "Age" + ">" + $("#EmployeeDetailsAge_" + v + "").val() + "</" + "Age" + ">";
+            xml += "<" + "PAddress" + ">" + $("#EmployeeDetailsPAddress_" + v + "").val() + "</" + "PAddress" + ">";
+            xml += "<" + "DistrictID" + ">" + $("#EmployeeDetailsDistrictID_" + v + "").val() + "</" + "DistrictID" + ">";
+            xml += "<" + "TalukaID" + ">" + $("#EmployeeDetailsTalukaID_" + v + "").val() + "</" + "TalukaID" + ">";
+            xml += "<" + "ZoneID" + ">" + $("#EmployeeDetailsZoneID_" + v + "").val() + "</" + "ZoneID" + ">";
+            xml += "<" + "AreaID" + ">" + $("#EmployeeDetailsAreaID_" + v + "").val() + "</" + "AreaID" + ">";
+            xml += "<" + "Pincode" + ">" + $("#EmployeeDetailsPincode_" + v + "").val() + "</" + "Pincode" + ">";
+            xml += "<" + "URL" + ">" + document.URL + "</" + "URL" + ">";
+            xml += "<" + "IP_Address" + ">" + $("#IP_Address").val() + "</" + "IP_Address" + ">";
+            //xml += "<" + "UserID" + ">" + $("#UserID").val() + "</" + "UserID" + ">";
+            if ($("#EmployeeDetailsIsActive_" + v + "").val() == "true") {
+                xml += "<" + "IsActive" + ">" + 1 + "</" + "IsActive" + ">";
+            }
+            else {
+                xml += "<" + "IsActive" + ">" + 0 + "</" + "IsActive" + ">";
+            }
+            xml += '</DataRow>';
+        }
+        xml += '</DataTable>'
+        return xml;
+    }
+
+</script>
+
+@*ContractorDetails Stp=5*@
+<script>
+
+    function SaveContractorDetailsRecord(stpid) {
+        debugger;
+
+        var pincoderegx = "[1-9][1-9][0-9]{4}$";
+        var ErrorCnt = 0;
+        $('.ValidationSpan').hide();
+        var i = E;
+        var v;
+
+        if ($("#InspectionID").val() == "0" || $("#InspectionID").val() == "") {
+            ErrorCnt++;
+            //alert("please save your Establishment Detail after than try this");
+            swal("please save your Establishment Detail after than try this");
+            return false;
+        }
+
+        for (v = 0; v < i; ++v) {
+
+            if ($("#DivContractorDetails_" + v + "").is(":visible")) {
+                if ($(".hideContractorDetails_" + v + "").is(":visible")) {
+                    if ($("#ContractorDContractorName_" + v + "").val() == "0" || $("#ContractorDContractorName_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanContractorDContractorName_" + v + "").show();
+                    }
+
+                    if ($("#ContractorDCompanyName_" + v + "").val() == "0" || $("#ContractorDCompanyName_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanContractorDCompanyName_" + v + "").show();
+                    }
+
+
+                    if ($("#ContractorDJobType_" + v + "").val() == "0" || $("#ContractorDJobType_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanContractorDJobType_" + v + "").show();
+                    }
+
+                    //if ($("#ContractorDIsLicense_" + v + "").val() == "0" || $("#ContractorDIsLicense_" + v + "").val() == "") {
+                    //    ErrorCnt++;
+                    //    $("#SpanContractorDIsLicense_" + v + "").show();
+                    //}
+
+                    if ($("#ContractorDCompletionDate_" + v + "").val() == "0" || $("#ContractorDCompletionDate_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanContractorDCompletionDate_" + v + "").show();
+                    }
+
+                    if ($("#ContractorDCommencementDate_" + v + "").val() == "0" || $("#ContractorDCommencementDate_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanContractorDCommencementDate_" + v + "").show();
+                    }
+
+                    if ($("#ContractorDMaleCount_" + v + "").val() == "0" || $("#ContractorDMaleCount_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanContractorDMaleCount_" + v + "").show();
+                    }
+
+                    if ($("#ContractorDFemaleCount_" + v + "").val() == "0" || $("#ContractorDFemaleCount_" + v + "").val() == "") {
+                        ErrorCnt++;
+                        $("#SpanContractorDFemaleCount_" + v + "").show();
+                    }
+                }
+            }
+        }
+
+
+        if (ErrorCnt > 0) {
+            return false;
+        }
+
+        if (ErrorCnt == 0) {
+            var myData = {
+                XMLString: GetContractorDetailsXML(),
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/inspection/SaveContractorDetailsRecord",
+                    headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                    dataType: "json",
+                    data: myData,
+                    success: function (data) {
+                        var TEMPID = data.data.TEMPID;
+                        if (data.data.ErrorCode == 0) {
+                            var Querystring = "EncryptedId=" + TEMPID + "&stpid=" + stpid;
+                            window.location.href = "/inspection/_InspectionView?" + Querystring;
+                            swal(data.data.ErrorMassage)
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function (request, message, error) {
+                        debugger;
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+    }
+
+    function GetContractorDetailsXML() {
+        var xml = '';
+        xml += '<DataTable>';
+        var i = E;
+        var v;
+        for (v = 0; v < i; ++v) {
+            xml += '<DataRow>';
+            xml += "<" + "InspectionID" + ">" + $("#ContractorDInspectionID_" + v + "").val() + "</" + "InspectionID" + ">";
+            xml += "<" + "ContractorID" + ">" + $("#ContractorDContractorID_" + v + "").val() + "</" + "ContractorID" + ">";
+            xml += "<" + "ContractorName" + ">" + $("#ContractorDContractorName_" + v + "").val() + "</" + "ContractorName" + ">";
+            xml += "<" + "CompanyName" + ">" + $("#ContractorDCompanyName_" + v + "").val() + "</" + "CompanyName" + ">";
+            xml += "<" + "JobType" + ">" + $("#ContractorDJobType_" + v + "").val() + "</" + "JobType" + ">";
+            xml += "<" + "IsLicense" + ">" + $("#ContractorDIsLicense_" + v + "").val() + "</" + "IsLicense" + ">";
+            xml += "<" + "CompletionDate" + ">" + $("#ContractorDCompletionDate_" + v + "").val() + "</" + "CompletionDate" + ">";
+            xml += "<" + "CommencementDate" + ">" + $("#ContractorDCommencementDate_" + v + "").val() + "</" + "CommencementDate" + ">";
+            xml += "<" + "MaleCount" + ">" + $("#ContractorDMaleCount_" + v + "").val() + "</" + "MaleCount" + ">";
+            xml += "<" + "FemaleCount" + ">" + $("#ContractorDFemaleCount_" + v + "").val() + "</" + "FemaleCount" + ">";
+            xml += "<" + "IsContractors" + ">" + $("#ContractorDIsContractors_" + v + "").val() + "</" + "IsContractors" + ">";
+            xml += "<" + "TotalWorkerCount" + ">" + $("#ContractorDTotalWorkerCount_" + v + "").val() + "</" + "TotalWorkerCount" + ">";
+            xml += "<" + "URL" + ">" + document.URL + "</" + "URL" + ">";
+            xml += "<" + "IP_Address" + ">" + $("#IP_Address").val() + "</" + "IP_Address" + ">";
+            //xml += "<" + "UserID" + ">" + $("#UserID").val() + "</" + "UserID" + ">";
+            if ($("#ContractorDIsActive_" + v + "").val() == "true") {
+                xml += "<" + "IsActive" + ">" + 1 + "</" + "IsActive" + ">";
+            }
+            else {
+                xml += "<" + "IsActive" + ">" + 0 + "</" + "IsActive" + ">";
+            }
+            xml += '</DataRow>';
+        }
+        xml += '</DataTable>'
+        return xml;
+    }
+
+</script>
+
+@*OtherDetails Stp=8
+*@<script>
+      function SaveInspectionOnsitePicture() {
+          debugger;
+
+          var files = $('#fUpload').prop("files");
+          var InspectionID = $("#InspectionID").val();
+          var URL = document.URL;
+          var formData = new FormData();
+          for (var i = 0; i < files.length; i++) {
+              formData.append("MyUploader", files[i]);
+          }
+
+          if ($("#InspectionID").val() == "0" || $("#InspectionID").val() == "") {
+              swal("please save your Establishment Detail after than try this");
+              return false;
+          }
+
+          if (files.length > 0) {
+
+              // var url = "/ReinstatementAppliaction/OnPostMyUploader?handler=MyUploader" + "&ApplicationID=" + ApplicationID + "&IsSubmit=" + IsSubmit + "&URL=" + URL + "&AppID=" + AppID;
+              var url = "/inspection/SaveInspectionOnsitePicture?handler=MyUploader" + "&InspectionID=" + InspectionID + "&URL=" + URL;
+              jQuery.ajax({
+                  type: 'POST',
+                  url: url,
+                  headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                  data: formData,
+                  cache: false,
+                  contentType: false,
+                  processData: false,
+                  success: function (repo) {
+                      debugger;
+
+                      if (repo.status.ErrorCode == 0) {
+                          swal(repo.status.ErrorMassage)
+                              .then((value) => {
+                                  location.reload();
+                              });
+                      }
+                      else {
+                          swal(repo.status.ErrorMassage);
+                      }
+
+                  },
+                  error: function (request, message, error) {
+                      debugger;
+                      swal(request.responseJSON);
+                  }
+              });
+          }
+          else {
+
+              swal('Please select a file.')
+
+          }
+      }
+
+      function SaveInspectionOtherDetailsRecord(stpid, IsSubmit) {
+          debugger;
+          var ErrorCnt = 0;
+          var pincoderegx = "[1-9][1-9][0-9]{4}$";
+          var regEx = /^[5-9][0-9]{9}$/;
+          var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+          $('.ValidationSpan').hide();
+          var CnAuthorizedPersonSignature = $('#CnAuthorizedPersonSignature')[0].toDataURL();
+          var CnInspectorSignature = $('#CnInspectorSignature')[0].toDataURL();
+          var CnComplianceSignature = $('#CnComplianceSignature')[0].toDataURL();
+          var AuthorizedSignPath = $("#hdnInspectionAuthorizedSignPath").val();
+          var InspectorSignPath = $("#hdnInspectionInspectorSignPath").val();
+          var ComplianceSignPath = $("#hdnInspectionComplianceSignPath").val();
+          //if ($("#InspectionApplicationStatus").val() == "0" || $("#InspectionApplicationStatus").val() == "") {
+          //    ErrorCnt++;
+          //    $('#SpanInspectionApplicationStatus').show();
+          //}
+          if (CnAuthorizedPersonSignature == checkvanvs()) {
+              if (AuthorizedSignPath == "") {
+                  ErrorCnt++;
+                  $('#SpanCnAuthorizedPersonSignature').show();
+              }
+              else { CnAuthorizedPersonSignature = "" }
+          }
+
+          if (CnInspectorSignature == checkvanvs()) {
+              if (InspectorSignPath == "") {
+                  ErrorCnt++;
+                  $('#SpanCnInspectorSignature').show();
+              }
+              else { CnInspectorSignature = "" }
+          }
+
+          if (CnComplianceSignature == checkvanvs()) {
+              if (ComplianceSignPath == "") {
+                  ErrorCnt++;
+                  $('#SpanCnComplianceSignature').show();
+              }
+              else { CnComplianceSignature = "" }
+          }
+
+
+          if ($("#InspectionInspectorName").val() == "0" || $("#InspectionInspectorName").val() == "") {
+              ErrorCnt++;
+              $('#SpanInspectionInspectorName').show();
+          }
+
+          if ($("#InspectionInspectorEmail").val() == "0" || $("#InspectionInspectorEmail").val() == "") {
+              ErrorCnt++;
+              $('#SpanInspectionInspectorEmail').show();
+          }
+
+          if ($(".hideAuthorizedNoteotherinfo").is(":visible")) {
+              if ($("#InspectionAuthorizedPersonSignatureNote").val() == "0" || $("#InspectionAuthorizedPersonSignatureNote").val() == "") {
+                  ErrorCnt++;
+                  $('#SpanInspectionAuthorizedPersonSignatureNote').show();
+              }
+          }
+
+          if ($(".hideComplianceother").is(":visible")) {
+              if ($("#InspectionComplianceDocumentReceivedby").val() == "0" || $("#InspectionComplianceDocumentReceivedby").val() == "") {
+                  ErrorCnt++;
+                  $('#SpanInspectionComplianceDocumentReceivedby').show();
+              }
+
+              if ($("#InspectionComplianceDocumentReceivedDate").val() == "0" || $("#InspectionComplianceDocumentReceivedDate").val() == "") {
+                  ErrorCnt++;
+                  $('#SpanInspectionComplianceDocumentReceivedDate').show();
+              }
+          }
+          if (ErrorCnt > 0) {
+              return false;
+          }
+
+          if (ErrorCnt == 0) {
+
+              var myData = {
+                  InspectionID: $('#InspectionID').val(),
+                  IsNonComplianceObserved: $('#InspectionIsNonComplianceObserved').val(),
+                  ApplicationStatus: $('#InspectionApplicationStatus').val(),
+                  InspectorName: $('#InspectionInspectorName').val(),
+                  InspectorEmail: $('#InspectionInspectorEmail').val(),
+                  AuthorizedPersonSignatureNote: $('#InspectionAuthorizedPersonSignatureNote').val(),
+                  IsAuthorizedPersonSignature: $('#InspectionIsAuthorizedPersonSignature').val(),
+                  IsComplianceDocument: $('#InspectionIsComplianceDocument').val(),
+                  ComplianceDocumentReceivedby: $('#InspectionComplianceDocumentReceivedby').val(),
+                  Date: $('#InspectionComplianceDocumentReceivedDate').val(),
+                  String64AuthorizedPersonSignature: CnAuthorizedPersonSignature.replace('data:image/png;base64,', ''),
+                  String64InspectorSignature: CnInspectorSignature.replace('data:image/png;base64,', ''),
+                  String64ComplianceSignature: CnComplianceSignature.replace('data:image/png;base64,', ''),
+                  AuthorizedSignPath: AuthorizedSignPath,
+                  InspectorSignPath: InspectorSignPath,
+                  ComplianceSignPath: ComplianceSignPath,
+                  IsSubmit: IsSubmit,
+                  URL: document.URL,
+
+              };
+              $.ajax
+                  ({
+                      type: "POST",
+                      url: "/inspection/SaveOtherDetailsRecord",
+                      headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                      dataType: "json",
+                      data: myData,
+                      success: function (data) {
+                          if (data.data.ErrorCode == 0) {
+                              var InspectionID = data.data.InspectionID;
+                              var TEMPID = data.data.TEMPID;
+
+                              var Querystring = "EncryptedId=" + TEMPID + "&stpid=" + stpid;
+                              window.location.href = "/inspection/_InspectionView?" + Querystring;
+
+                              swal(data.data.ErrorMassage)
+                          }
+                          else {
+                              swal(data.data.ErrorMassage)
+                          }
+
+                      },
+
+                      error: function (request, message, error) {
+                          //alert(request.responseJSON);
+                          swal(request.responseJSON);
+                      }
+                  })
+          }
+      }
+
+</script>
+
+@*Stepper Hide and Show*@
+<script>
+    stpstep1 = document.getElementById("stpstep1");
+    stpstep2 = document.getElementById("stpstep2");
+    stpstep3 = document.getElementById("stpstep3");
+    stpstep4 = document.getElementById("stpstep4");
+    stpstep5 = document.getElementById("stpstep5");
+    stpstep6 = document.getElementById("stpstep6");
+    stpstep7 = document.getElementById("stpstep7");
+    stpstep8 = document.getElementById("stpstep8");
+
+    function prev(id, Submit,IsSubmit) {
+
+        if (id == 2) {
+
+            if (Submit == 1) {
+                SavePrincipalRegistrationRecord(1);
+                stpstep1.click();
+            }
+            else {
+                stpstep1.click();
+            }
+        }
+        else if (id == 3) {
+            if (Submit == 1) {
+                SaveContractorRegistrationRecord(2);
+            }
+            else {
+                stpstep2.click();
+            }
+
+        }
+         else if (id == 4) {
+            if (Submit == 1) {
+                SaveContractorRegistrationRecord(2);
+            }
+            else {
+                stpstep2.click();
+            }
+
+        }
+         else if (id == 5) {
+            if (Submit == 1) {
+                SaveContractorRegistrationRecord(2);
+            }
+            else {
+                stpstep2.click();
+            }
+
+        }
+         else if (id == 6) {
+            if (Submit == 1) {
+                SaveContractorRegistrationRecord(2);
+            }
+            else {
+                stpstep2.click();
+            }
+
+        }
+         else if (id == 7) {
+            if (Submit == 1) {
+                SaveContractorRegistrationRecord(2);
+            }
+            else {
+                stpstep2.click();
+            }
+
+        }
+        else {
+            stpstep3.click();
+        }
+    }
+
+    function STPNext(id, Submit, IsSubmit) {
+        debugger;
+        if (id == 1) {
+            if (Submit == 1) {
+                SaveReportInformation(2);
+                //stpstep2.click();
+            }
+            else {
+                stpstep2.click();
+            }
+        }
+        else if (id == 2) {
+
+            if (Submit == 1) {
+                SaveEstablishmentsRecord(3);
+                //stpstep2.click();
+            }
+            else {
+                stpstep3.click();
+            }
+        }
+        else if (id == 3) {
+
+            if (Submit == 1) {
+                SaveEstablishmentsDetailRecord(4);
+                //stpstep2.click();
+            }
+            else {
+                stpstep4.click();
+            }
+        }
+        else if (id == 4) {
+
+            if (Submit == 1) {
+                SaveEmployeeDetailsRecord(5);
+                //stpstep2.click();
+            }
+            else {
+                stpstep5.click();
+            }
+        }
+        else if (id == 5) {
+
+            if (Submit == 1) {
+                SaveContractorDetailsRecord(6);
+                //stpstep2.click();
+            }
+            else {
+                stpstep6.click();
+            }
+        }
+        else if (id == 6) {
+
+            if (Submit == 1) {
+                SaveCompanyDetailsRecord(7);
+                //stpstep2.click();
+            }
+            else {
+                stpstep7.click();
+            }
+        }
+        else if (id == 7) {
+
+            if (Submit == 1) {
+                SaveCompanyDetailsRecord(8);
+                //stpstep2.click();
+            }
+            else {
+                stpstep8.click();
+            }
+        }
+        else {
+
+            if (Submit == 1) {
+                SaveInspectionOtherDetailsRecord(8, IsSubmit);
+                //stpstep2.click();
+            }
+            else {
+                stpstep8.click();
+            }
+        }
+
+    }
+
+    //Page Load that time call this function
+    function StpView(id) {
+
+        //$("#step1").hide();
+        //$("#step2").show();
+        if (id == 1 || id == 0) {
+            stpstep1.click();
+        }
+        else if (id == 2) {
+            stpstep2.click();
+        }
+        else if (id == 3) {
+            stpstep3.click();
+        }
+        else if (id == 4) {
+            stpstep4.click();
+        }
+        else if (id == 5) {
+            stpstep5.click();
+        }
+        else if (id == 6) {
+            stpstep6.click();
+        }
+        else if (id == 7) {
+            stpstep7.click();
+        }
+        else {
+            stpstep8.click();
+        }
+
+    }
+</script>
+
+
+
+<script>
+    $("body").on("click", "#btnSubmit", function () {
+        debugger;
+        var base64 = $('#colors_sketch')[0].toDataURL();
+        $("input[name=base64String]").val(base64);
+    });
+    $(function () {
+        $('#CnAuthorizedPersonSignature').sketch();
+        $('#CnInspectorSignature').sketch();
+        $('#CnComplianceSignature').sketch();
+        $(".tools a").eq(0).attr("style", "color:#000");
+        $(".tools a").click(function () {
+            $(".tools a").removeAttr("style");
+            $(this).attr("style", "color:#000");
+        });
+    });
+
+    function OnCanvasclear(id) {
+        debugger;
+        const $canvas = $('#' + id);
+        $canvas.sketch("actions", []);
+        $canvas.sketch("redraw");
+
+    };
+
+
+    function checkvanvs() {
+        var emptyvalue = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAADICAYAAAAeGRPoAAAAAXNSR0IArs4c6QAACHNJREFUeF7t1QENAAAIwzDwbxodLMXBe5LvOAIECBAgQOC9wL5PIAABAgQIECAwBt0TECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBAy6HyBAgAABAgEBgx4oUQQCBAgQIGDQ/QABAgQIEAgIGPRAiSIQIECAAAGD7gcIECBAgEBAwKAHShSBAAECBAgYdD9AgAABAgQCAgY9UKIIBAgQIEDAoPsBAgQIECAQEDDogRJFIECAAAECBt0PECBAgACBgIBBD5QoAgECBAgQMOh+gAABAgQIBAQMeqBEEQgQIECAgEH3AwQIECBAICBg0AMlikCAAAECBA71UQDJ6RV1xQAAAABJRU5ErkJggg=="
+        return emptyvalue;
+    };
+
+
+</script>

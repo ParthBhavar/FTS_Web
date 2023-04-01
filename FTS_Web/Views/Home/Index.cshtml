@@ -1,0 +1,344 @@
+﻿@model FTS.Model.Entities.ApplicantMasterModel
+@addTagHelper *, DNTCaptcha.Core
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Commissionerate of Labour</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+    <!--=================================
+    header -->
+    <header class="header header-transparent">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav class="navbar navbar-static-top navbar-expand-lg">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse"><i class="fas fa-align-left"></i></button>
+                        <a class="navbar-brand" href="/Home/Index">
+                            <img class="img-fluid" src="~/images/logo.png" alt="logo">
+                        </a>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav w-100 justify-content-end">
+                                <li class="nav-item">
+                                    <a href="/Home/Index" class="nav-link">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/EmployeeLogin/Index" class="nav-link">Office Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/UserRegistration/Index" class="nav-link">Register</a>
+                                </li>
+                                <!-- <li class="dropdown nav-item">
+                                    <a href="Javascript:;" class="nav-link" data-toggle="dropdown">Login</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="Javascript:;">Login<i class="fas fa-arrow-right"></i></a></li>
+                                        <li><a class="dropdown-item" href="Javascript:;">Registration<i class="fas fa-arrow-right"></i></a></li>
+                                    </ul>
+                                </li> -->
+                            </ul>
+                        </div>
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--=================================
+    header -->
+    <!--=================================
+    banner -->
+    <section class="banner-04 align-items-center d-flex space-ptb bg-holder h-900 h-sm-900 bg-overlay-black-80" data-jarallax='{"speed": 0.4}' style="background-image: url(../images/slider/05.jpg);">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <div class="col-md-6">
+                    <h1 class="text-white font-weight-normal"> e-File Tracking System</h1>
+                    <a href="" class="btn btn-primary-round btn-round text-white">Read More<i class="fas fa-arrow-right pl-3" href="/Home/Index"></i></a>
+                </div>
+                <div class="col-md-5 offset-md-1">
+                    <div class="mt-4 mt-md-5 bg-white border-radius p-4">
+                        <h4>Complete the Login Form</h4>
+                        <form class="mt-4 form-row" asp-controller="Home" asp-action="User" asp-antiforgery="true" method="post" id="frmlogin">
+                            <div class="form-group mb-3 col-12">
+                                @Html.TextBoxFor(e =>e.MobileNo, new { @class = "form-control",@ID="MobileNo", placeholder = "Enter Mobile No." ,maxlength="12",oninput="numberOnly(this.id);" })
+                                <span class="text-danger ValidationSpan" id="SpanValidMobileNo" style="display:none;">Please Enter Correct Mobile No.</span>
+                                @*<span class="text-danger ValidationSpan" id="SpanvalidregxMobileNo" style="display:none;">Enter the 10 digit</span>*@
+
+                            </div>
+                            <div class="form-group mb-3 col-12">
+                                @Html.TextBoxFor(e =>e.Password, new { @class = "form-control", type = "password",@ID="Password", placeholder = "Enter New Password" })
+                                <i id="togglePassword" class="fa fa-eye"></i>
+                                <span class="text-danger ValidationSpan" id="SpanPassword" style="display:none;">Please Enter Password.</span>
+                                @*<span class="text-danger ValidationSpan" id="SpanPassword" style="display:none;">Must contain at least one number and one uppercase and lowercase letter,one special letter, and at least 8 or more characters </span>
+                                <span class="text-danger ValidationSpan" id="SpanvalidlowercasePassword" style="display:none;">Password must contain the following: A <b>lowercase</b> letter</span>
+                                <span class="text-danger ValidationSpan" id="SpanvalidUppercasePassword" style="display:none;">Password must contain the following: A <b>capital (uppercase)</b> letter</span>
+                                <span class="text-danger ValidationSpan" id="SpanvalidnumbersPassword" style="display:none;"   >Password must contain the following:A <b>number</b> </span>*@
+                                <span class="text-danger ValidationSpan" id="SpanvalidPassword" style="display:none;">Plese Enter Correct Password</span>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <dnt-captcha asp-captcha-generator-max="999999"
+                                             asp-captcha-generator-min="111111"
+                                             asp-captcha-generator-language="English"
+                                             asp-captcha-generator-display-mode="ShowDigits"
+                                             asp-use-relative-urls="true"
+                                             asp-placeholder="Enter Security code"
+                                             asp-validation-error-message="Please enter the security code."
+                                             asp-font-size="20"
+                                             asp-fore-color="#333333"
+                                             asp-back-color="#ccc"
+                                             asp-text-box-class="text-box form-control"
+                                             asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span></span>{0}"
+                                             asp-validation-message-class="text-danger"
+                                             asp-refresh-button-class="fas fa-redo btn-sm"
+                                             asp-use-noise="false" />
+                            </div>
+                            <div class="form-group mb-0 col-12">
+                                <button type="submit" class="btn btn-primary btn-block" onclick="SubmitApplicantMaster()">Login<i class="fas fa-arrow-right pl-3"></i></button>
+
+
+                            </div>
+
+                        </form>
+
+                        <div>
+                            <p><a asp-action="ForgotPassword" asp-controller="Home">Forgot password?</a></p>
+                             <p><a asp-action="ResendEmailVerification" asp-controller="Home">Resend Email Verification?</a></p>
+                            <p>Click <a asp-action="Index" asp-controller="UserRegistration">here</a> to signup</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!--=================================
+    banner -->
+    <!--=================================
+   
+    <!--=================================
+    BLog -->
+    <!--=================================
+    footer-->
+    <footer class="footer">
+        <div class="bg-primary py-4">
+            <div class="container">
+                <div class="col-12 ">
+                    <div class="owl-carousel testimonial-center owl-nav-bottom-center" data-nav-arrow="false" data-items="5" data-md-items="5" data-sm-items="4" data-xs-items="3" data-xx-items="2" data-space="40" data-autoheight="true">
+                      @*  <div class="item">
+                            <img class="img-fluid mx-auto" src="~/images/client-logo/light/logo-1.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-fluid mx-auto" src="~/images/client-logo/light/logo-2.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-fluid mx-auto" src="~/images/client-logo/light/logo-3.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-fluid mx-auto" src="~/images/client-logo/light/logo-4.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-fluid mx-auto" src="~/images/client-logo/light/logo-1.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-fluid mx-auto" src="~/images/client-logo/light/logo-2.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-fluid mx-auto" src="~/images/client-logo/light/logo-3.jpg" alt="">
+                        </div>
+                        <div class="item">
+                            <img class="img-fluid mx-auto" src="~/images/client-logo/light/logo-4.jpg" alt="">
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="bg-white py-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="mb-0">©Copyright 2022 Dev It. All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--=================================
+    footer-->
+    <!--=================================
+    Back To Top-->
+    <div id="back-to-top" class="back-to-top"></div>
+    <!--=================================
+    Back To Top-->
+
+</body>
+
+</html>
+<style>
+    #togglePassword {
+        float: right;
+        top: -25px;
+        right: 10px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+</style>
+@*<script src="~/js/Crypto-sha1.js"></script>*@
+@*<script src="~/js/GetSHACode.js"></script>*@
+
+<script src="~/Scripts/js/Crypto-sha1.js"></script>
+<script src="~/Scripts/js/GetSHACode.js"></script>
+<script>
+
+    $(document).ready(function() {
+        debugger;
+        if ('@ViewBag.errormessage' != "") {
+            swal('@ViewBag.errormessage');
+        }
+        if ('@ViewBag.wrongcaptcha' == 1) {
+            $("#Password").val("");
+        }
+
+    });
+
+    function PWD(password) {
+        
+    var h = Crypto.SHA1(password);
+    return h;
+}
+
+    function SubmitApplicantMaster() {
+
+        debugger;
+        var ErrorCnt = 0;
+        var passwordregEx = /^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[^\w\s])\S{8,}$/;
+        var regEx = /^\d{10}$/;
+        var lowerCaseLettersregEx = /[a-z]/g;
+        var upperCaseLetters = /[A-Z]/g;
+        var numbers = /[0-9]/g;
+        var mobileno = $("#MobileNo").val();
+        var password = $("#Password").val();
+        $('.ValidationSpan').hide();
+
+        //if ($("#MobileNo").val() == "0" || $("#MobileNo").val() == "") {
+        //    ErrorCnt++;
+        //    $('#SpanValidMobileNo').show();
+        //}
+        // else if (!MobileNo.match(regEx)) {
+        //  ErrorCnt++;
+        // $('#SpanValidregxMobileNo').show();
+        //   }
+
+
+        if ($("#MobileNo").val() == "0" || $("#MobileNo").val() == "") {
+            ErrorCnt++;
+            $('#SpanValidMobileNo').show();
+        }
+
+        else if (!mobileno.match(regEx)) {
+            ErrorCnt++;
+            $('#SpanvalidregxMobileNo').show();
+        }
+
+
+        if ($("#Password").val() == "0" || $("#Password").val() == "") {
+            ErrorCnt++;
+            $('#SpanPassword').show();
+        }
+
+        else if (!password.match(lowerCaseLettersregEx)) {
+            ErrorCnt++;
+            $('#SpanvalidlowercasePassword').show();
+        }
+        else if (!password.match(upperCaseLetters)) {
+            ErrorCnt++;
+            $('#SpanvalidUppercasePassword').show();
+        }
+        else if (!password.match(numbers)) {
+            ErrorCnt++;
+            $('#SpanvalidnumbersPassword').show();
+        }
+        else if (!password.match(passwordregEx)) {
+            ErrorCnt++;
+            $('#SpanvalidPassword').show();
+        }
+
+        if (ErrorCnt > 0) {
+            return false;
+        }
+        else {
+
+            if ($("#Password").val() != "") {
+                debugger;
+                $("#Password").val(PWD($("#Password").val()));
+
+            }
+
+            else {
+
+                return false;
+            }
+        }
+        if (ErrorCnt == 0) {
+            var myData = {
+                MobileNo: $('#MobileNo').val(),
+                Password: $('#Password').val(),
+            };
+        }
+
+
+    };
+    function numberOnly(id) {
+        var element = document.getElementById(id);
+        element.value = element.value.replace(/[^0-9]/gi, "");
+    }
+
+</script>
+
+<script type="text/javascript">
+    var togglePassword = document.querySelector('#togglePassword');
+    var password = document.querySelector('#Password');
+    togglePassword.addEventListener('click', function(e) {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+</script>
+
+
+

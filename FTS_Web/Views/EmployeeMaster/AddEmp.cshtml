@@ -1,0 +1,356 @@
+﻿@model FTS.Model.Entities.EmployeeMasterModel
+@{
+    ViewBag.Title = "Employee Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            Employee Master
+        </h3>
+    </div>
+
+
+ <div class="card-body">
+      @using (Html.BeginForm())
+{
+     <div class="box-body"> 
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-validate form-horizontal" id="feedback_form">
+                    
+                    <div class="form-group-required">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+                    </div>
+
+                     @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @calss = "text-danger" })
+
+
+                             @*EmployeeID*@
+                        @*<div class="row form-group">
+                                <label class="col-md-3 ">EmployeeID<span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.EmployeeID, new { @class = "form-control BlockSpecialChar",@ID="EmployeeID", title = "Enter EmployeeID.", placeholder = "Enter EmployeeID", maxlength = 500, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.EmployeeID)
+                                   </div> 
+                                    <span class="text-danger ValidationSpan" id="SpanEmployeeID" style="display:none;">Please Select EmployeeID</span>
+                                </div>
+                        </div>*@
+
+
+                                   @*EmpCode*@
+
+                         <div class="row form-group">
+                                <label class="col-md-3 ">EmpCode<span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.EmpCode, new { @class = "form-control BlockSpecialChar", @ID="EmployeeID" ,title = "Enter EmpCode.", placeholder = "Enter EmpCode", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.EmpCode)
+                                    @Html.HiddenFor(e => e.EmployeeIDEdit , new { @ID="EmployeeID"})
+                                    <span class="text-danger ValidationSpan" id="SpanEmpCode" style="display:none;">Please Select EmpCode </span>
+                                </div>
+                          </div>
+                                      
+                                                   @*DesignationID*@
+
+                          <div class="row form-group">
+                                <label class="col-md-3 ">DesignationID <span class="text-danger"> *</span> </label>
+                                <div class="col-md-8">
+                                    @*@Html.TextBoxFor(x => x.DesignationID, new { @class = "form-control BlockSpecialChar", @ID="DesignationID" ,title = "Enter DesignationID.", placeholder = "Enter DesignationID", maxlength = 100, data_val = "true" })*@
+                                     @Html.DropDownListFor(model => model.DesignationID, new SelectList(Model.DesignationList, "DataValue", "DisplayValue"), "--Select--", new { @class = "form-control span4",@ID="DesignationID" })
+                                      @*@Html.DropDownListFor(M => M.DesignationID, new SelectList(Model.DesignationList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DesignationID", })*@
+                                    @Html.ValidationMessageFor(x => x.EmpCode)
+                                    <span class="text-danger ValidationSpan" id="SpanDesignationID" style="display:none;">Please Select DesignationID </span>
+                                </div>
+                          </div>
+
+
+                                                             @*RegionID*@
+                          <div class="row form-group">
+                                <label class="col-md-3 ">RegionID <span class="text-danger"> *</span> </label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.RegionID, new { @class = "form-control BlockSpecialChar", @ID="RegionID" ,title = "Enter RegionID.", placeholder = "Enter RegionID", maxlength = 100, data_val = "true" }
+                                      @* @Html.DropDownListFor(model => model.RegionID, new SelectList(Model.RegionList, "DataValue", "DisplayValue"), "--Select--", new { @class = "form-control span4",@ID="RegionID" }*@)
+                                    @Html.ValidationMessageFor(x => x.RegionID)
+                                    <span class="text-danger ValidationSpan" id="SpanRegionID" style="display:none;">Please Select RegionID </span>
+                                </div>
+                          </div>
+
+
+                                                      @*FirstName*@
+
+                          <div class="row form-group">
+                                <label class="col-md-3 ">FirstName <span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control BlockSpecialChar", @ID="FirstName" ,title = "Enter FirstName.", placeholder = "Enter FirstName", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.FirstName)
+                                    <span class="text-danger ValidationSpan" id="SpanFirstName" style="display:none;">Please Select FirstName </span>
+                                </div>
+                          </div>
+
+
+
+                          <div class="row form-group">
+                                <label class="col-md-3 ">MiddleName <span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.MiddleName, new { @class = "form-control BlockSpecialChar", @ID="MiddleName" ,title = "Enter MiddleName.", placeholder = "Enter MiddleName", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.MiddleName)
+                                    <span class="text-danger ValidationSpan" id="SpanMiddleName" style="display:none;">Please Select MiddleName </span>
+                                </div>
+                          </div>
+
+
+
+                          <div class="row form-group">
+                                <label class="col-md-3 ">LastName <span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control BlockSpecialChar", @ID="LastName" ,title = "Enter LastName.", placeholder = "Enter LastName", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.LastName)
+                                    <span class="text-danger ValidationSpan" id="SpanLastName" style="display:none;">Please Select LastName </span>
+                                </div>
+                          </div>
+
+
+                           <div class="row form-group">
+                                <label class="col-md-3 ">EmailID<span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control BlockSpecialChar", @ID="EmailID" ,title = "Enter EmailID.", placeholder = "Enter EmailID", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.EmailID)
+                                    <span class="text-danger ValidationSpan" id="SpanEmailID" style="display:none;">Please Select EmailID </span>
+                                </div>
+                          </div>
+
+
+                            <div class="row form-group">
+                                <label class="col-md-3 ">MobileNo<span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.MobileNo, new { @class = "form-control BlockSpecialChar", @ID="MobileNo" ,title = "Enter MobileNo.", placeholder = "Enter MobileNo", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.MobileNo)
+                                    <span class="text-danger ValidationSpan" id="SpanMobileNo" style="display:none;">Please Select MobileNo </span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row form-group">
+                                <label class="col-md-3 ">PAddress<span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.PAddress, new { @class = "form-control BlockSpecialChar", @ID="PAddress" ,title = "Enter PAddress.", placeholder = "Enter PAddress", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.PAddress)
+                                    <span class="text-danger ValidationSpan" id="SpanPAddress" style="display:none;">Please Select PAddress </span>
+                                </div>
+                            </div>
+
+
+                             <div class="row form-group">
+                                <label class="col-md-3 ">SAddress<span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.SAddress, new { @class = "form-control BlockSpecialChar", @ID="SAddress" ,title = "Enter SAddress.", placeholder = "Enter SAddress", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.SAddress)
+                                    <span class="text-danger ValidationSpan" id="SpanSAddress" style="display:none;">Please Select SAddress </span>
+                                </div>
+                            </div>
+
+
+
+
+                             <div class="row form-group">
+                                <label class="col-md-3 ">Gender</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(x => x.Gender, new { @class = "form-control BlockSpecialChar", @ID="Gender" ,title = "Enter Gender.", placeholder = "Enter Gender", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.Gender)
+                                    <span class="text-danger ValidationSpan" id="SpanGender" style="display:none;">Please Select Gender </span>
+                                </div>
+                            </div>
+
+
+                             <div class="row form-group">
+                                <label class="col-md-3 ">Date of Birth<span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(e => e.DOB, new { @class = "form-control", type = "date", required = "required" })
+                                    @Html.ValidationMessageFor(e => e.DOB, null, new { @class = "text-danger" })
+                                     <span class="text-danger ValidationSpan" id="SpanDOB" style="display:none;">Please Select DOB </span>
+                                </div>
+                            </div>
+
+
+                             <div class="row form-group">
+                                <label class="col-md-3 ">Password<span class="text-danger"> *</span></label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(e => e.Password, new { @class = "form-control", @ID="Password", required = "required" })
+                                    @Html.ValidationMessageFor(e => e.Password, null, new { @class = "text-danger" })
+                                     <span class="text-danger ValidationSpan" id="SpanPassword" style="display:none;">Please Select Password </span>
+                                </div>
+                            </div>
+
+
+                            <div class="row form-group">
+                                <label class="col-md-3 ">IsActive</label>
+                                <div class="col-md-8">
+                                   @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    @Html.ValidationMessageFor(e => e.IsActive, null, new { @class = "text-danger" })
+                                     <span class="text-danger ValidationSpan" id="SpanIsActive" style="display:none;">Please Select IsActive </span>
+                                </div>
+                            </div>
+
+                    
+                        </div>
+
+
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitEmployeeMaster();" />
+                            @Html.ActionLink("Cancel", "index", "EmployeeMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+
+            }
+      </div>  
+   </div>
+  <script>
+
+      $("input[type='checkbox']").on('change', function(){
+       $(this).val(this.checked ? "true" : "false");
+       })
+     
+        function SubmitEmployeeMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+
+            if ($("#EmployeeID").val() == "0" || $("#EmployeeID").val() == "") {
+                ErrorCnt++;
+                $('#spanEmployeeID').show();
+            }
+
+              if ($("#EmpCode").val() == "0" || $("#EmpCode").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmpCode').show();
+            }
+
+              if ($("#DesignationID").val() == "0" || $("#DesignationID").val() == "") {
+                ErrorCnt++;
+                $('#SpanDesignationID').show();
+            }
+
+              if ($("#RegionID").val() == "0" || $("#RegionID").val() == "") {
+                ErrorCnt++;
+                $('#SpanRegionID').show();
+            }
+
+              if ($("#FirstName").val() == "0" || $("#FirstName").val() == "") {
+                ErrorCnt++;
+                $('#SpanFirstName').show();
+            }
+
+              if ($("#MiddleName").val() == "0" || $("#MiddleName").val() == "") {
+                ErrorCnt++;
+                $('#SpanMiddleName').show();
+            }
+
+              if ($("#LastName").val() == "0" || $("#LastName").val() == "") {
+                ErrorCnt++;
+                $('#SpanLastName').show();
+            }
+
+              if ($("#EmailID").val() == "0" || $("#EmailID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmailID').show();
+            }
+
+            if ($("#MobileNo").val() == "0" || $("#MobileNo").val() == "") {
+                ErrorCnt++;
+                $('#SpanMobileNo').show();
+            }
+
+
+            if ($("#PAddress").val() == "0" || $("#PAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanPAddress').show();
+            }
+
+
+            if ($("#SAddress").val() == "0" || $("#SAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanSAddress').show();
+            }
+
+             if ($("#Gender").val() == "0" || $("#Gender").val() == "") {
+                ErrorCnt++;
+                $('#SpanGender').show();
+            }
+
+             if ($("#DOB").val() == "0" || $("#DOB").val() == "") {
+                ErrorCnt++;
+                $('#SpanDOB').show();
+            }
+
+             if ($("#Password").val() == "0" || $("#Password").val() == "") {
+                ErrorCnt++;
+                $('#SpanPassword').show();
+            }
+            
+             if ($("#IsActive").val() == "0" || $("#IsActive").val() == "") {
+                ErrorCnt++;
+                $('#SpanIsActive').show();
+            }
+
+
+
+
+             
+
+           
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    EmployeeID: $('#EmployeeID').val(),
+                    EmpCode: $('#EmpCode').val(),
+                    DesignationID: $('#DesignationID').val(),
+                    RegionID: $('#RegionID').val(),
+                    FirstName: $('#FirstName').val(),
+                    MiddleName: $('#MiddleName').val(),
+                    LastName: $('#LastName').val(),
+                    EmailID: $('#EmailID').val(),
+                    MobileNo: $('#MobileNo').val(),
+                    PAddress: $('#PAddress').val(),
+                    SAddress: $('#SAddress').val(),
+                    Gender: $('#Gender').val(),
+                    DOB: $('#DOB').val(),
+                    Password: $('#Password').val(),
+                    IsActive: $('#IsActive').val(),
+                    IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/EmployeeMaster/SaveEmployeeRecord",
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.errorCode == 0) {
+                                window.location.href = "/EmployeeMaster/Index";
+                                alert(data.data.errorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+
+                        },
+
+                        error: function() {
+                            alert('Something went wrong!');
+                        }
+                    })
+            }
+    }
+   </script>

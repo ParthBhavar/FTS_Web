@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/13/2022 12:11:54" ReportInfo.Modified="11/28/2022 13:29:35" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqGTfbe3qsTBcL/m6eJRNFRbEe7hm/NiWTbQxbiUqQOjJiVtc8g2gwPnF5KMnefa91hAUR6Wva4txOmmRnaDTd2iRWUKttNSJM/iHlL70tSOoItsTRoYSpCgy+SC1/DpWY3heJqSmMztRYrmdtCy975m3FeycSIE92sIpxsher84E=">
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="DictrictACLOffice" DataType="System.String"/>
+        <Column Name="AppID" DataType="System.String"/>
+        <Column Name="ApplicantDetail" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="ACLName" DataType="System.String"/>
+        <Column Name="DictrictACL" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="HearingDate" DataType="System.String"/>
+        <Column Name="HearingTime" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Guides="708.75" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="113.4" CanBreak="true">
+      <TextObject Name="Text2" Left="160.65" Top="18.9" Width="557.55" Height="66.15" Text="નાયબ શ્રમ આયુક્તશ્રીની કચેરી" Font="Arial Unicode MS, 22pt, style=Bold"/>
+      <TextObject Name="Text3" Left="66.15" Top="66.15" Width="642.6" Height="28.35" Text="[Table1.DictrictACLOffice]" Font="Arial Unicode MS, 16pt"/>
+      <ShapeObject Name="Shape2" Left="9.45" Top="9.45" Width="699.3" Height="94.5"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="117.4" Width="718.2" Height="132.3" CanShrink="true">
+      <TextObject Name="Text4" Left="18.9" Top="28.35" Width="245.7" Height="18.9" Text="આઇ.ડી.આર. નં. - [Table1.AppID]" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text5" Left="18.9" Top="56.7" Width="245.7" Height="18.9" Text="પ્રેષક:- [Table1.ACLName]" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text6" Left="18.9" Top="85.05" Width="311.85" Height="18.9" Text="મદદનીશ શ્રમ આયુક્ત, [Table1.DictrictACL]" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text7" Left="500.85" Top="18.9" Width="207.9" Height="18.9" Text=" તારીખ:- [Table1.Date]" Font="Arial Unicode MS, 12pt"/>
+      <ShapeObject Name="Shape3" Left="9.45" Top="9.45" Width="368.55" Height="122.85"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="253.7" Width="718.2" Height="689.85" CanBreak="true">
+      <TextObject Name="Text8" Left="18.9" Top="9.45" Width="94.5" Height="18.9" Text="પ્રતિ." Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text9" Left="18.9" Top="37.8" Width="661.5" Height="47.25" Text="[Table1.ApplicantDetail]" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text10" Left="18.9" Top="85.05" Width="689.85" Height="66.15" Text="[Table1.Establishmentdetail]" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text11" Left="47.25" Top="160.65" Width="633.15" Height="56.7" Text="વિષય: ઔધોગિક વિવાદ ધારા, ૧૯૪૭ ની ક્લમ-૧૦(૧)(સી) હેઠળ નોકરી માં પુન: સ્થાપિત કરવા બાબત.&#13;&#10;([Table1.ApplicantDetail])" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text12" Left="18.9" Top="236.25" Width="689.85" Height="66.15" Text="ઉપરોકત વિષય પરત્વે જણાવવાનુ કે ઉકત ફરિયાદીઓને આપની સંસ્થા એ નોકરીમાથી છુટા કરેલ છે. અને તેમણે&#13;&#10;કામદારોએ મંડળ મારફતે આ શ્રમયોગીઓને નોકરીમા પુન; સ્થાપિત કરવા માટેની માંગણી કરેલ છે. નિયત &#13;&#10;નમુનાની સંસ્થાની નકલ આ સાથે સંસ્થાને મોકલાવેલ છે." Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text13" Left="28.35" Top="321.3" Width="680.4" Height="103.95" Text="ઔધોગિક વિવાદ ધારો -૧૯૪૭ ની કલમ-૧૦ (૧) હેઠળ આ પ્રકારની માંગણી નામદાર મજુર અદાલતને સોંપવા &#13;&#10;માટે નીચેસહી કરનાર સત્તાધીશ તરીકે છે. તેથી ઉપરોકત માંગણી નામ, મજુર અદાલતને સોંપવી કે કેમ?&#13;&#10;તેનો નિર્ણય કરતા પહેલા સમાધાન સમજુતિના પ્રયત્નો હાથ ઘરવા પક્ષકારોની સંયુકત બેઠકમાં આ અંગેના&#13;&#10;તમામ  કાગળો રેકર્ડ સહિત નીચે જણાવ્યા મુજબ અથવા ત્યાર પછી નીચે સહી કરનારના અનુકુળ સમયે યર્ચા&#13;&#10; માટે હાજર રહેવા વિનંતી છે." Font="Arial Unicode MS, 12pt"/>
+      <ShapeObject Name="Shape1" Left="18.9" Top="444.15" Width="680.4" Height="56.7"/>
+      <LineObject Name="Line2" Left="481.95" Top="378" Width="9.45"/>
+      <TextObject Name="Text14" Left="28.35" Top="463.05" Width="160.65" Height="18.9" Text="તારીખ:-[Table1.HearingDate]" Font="Arial Unicode MS, 12pt"/>
+      <LineObject Name="Line4" Left="189" Top="444.15" Height="56.7"/>
+      <TextObject Name="Text15" Left="198.45" Top="463.05" Width="94.5" Height="28.35" Text="સમય:-[Table1.HearingTime]" Font="Arial Unicode MS, 12pt"/>
+      <LineObject Name="Line5" Left="302.4" Top="444.15" Height="56.7"/>
+      <TextObject Name="Text16" Left="302.4" Top="463.05" Width="387.45" Height="28.35" Text=" સ્થળઃ[Table1.DictrictACLOffice]" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text17" Left="18.9" Top="510.3" Width="689.85" Height="56.7" Text="જો ઉપરોકત તારીખે અને સમયે આપ અથવા આપના તરફથી કોઇપણ અધીકૃત વ્યકિત રેકોર્ડ તથા કાગળો સહિત હાજર રહેશે નહિ તો આ બાબતે એક પક્ષિય નિર્ણય લઇ ફરિયાદ અંગે યોગ્ય તે નિર્ણય કરવામાં આવશે. જેની નોંધ લેવા વિનંતી છે." Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text18" Left="18.9" Top="567" Width="689.85" Height="113.4" Text="વધુમાં જણાવવાનું કે આપ તમામ ને આ બાબતે આ પ્રથમ નોટીસ પત્રથી મોકલાવી મુદત અંગેની જાણ કરેલ છે અને આ પછીની સદરહુ કેસ બાબતે રાખવામાં આવનાર મુદતની જાણ આપને અલગ પત્રથી કરવામા નહિ આવે. આથી જો કોઇ મુદતમાં આપશ્રી ગેરહાજર રહો તો આ કમાં અવારનવાર થયેલ મુદતો અંગે કે આગામી રાખવામાં આવેલ મુદત અંગે અત્રેની કચેરીમાં રૂબરૂ તપાસ હાથ ઘરી મુદત અંગેની જાણકારી મેળવી લેવા જણાવવામાં આવે છે. આથી આપને ઉપર જણાવેલ સ્થળે અને સમયે હાજર થવાનુ અને ઉકત બાબતનો આખરી નિકાલ થતા સુધી હાજર રહેવાનુ ચાલુ રાખવાનું જણાવવામાં આવે છે." Font="Arial Unicode MS, 12pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="947.55" Width="718.2" Height="94.5">
+      <TextObject Name="Text19" Left="510.3" Top="9.45" Width="141.75" Height="18.9" Text="આપનો વિશ્વાસુ," Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text20" Left="510.3" Top="37.8" Width="94.5" Height="18.9" Text="મદદનીશ શ્રમ આયુક્ત" Font="Arial Unicode MS, 12pt"/>
+      <TextObject Name="Text21" Left="510.3" Top="66.15" Width="236.25" Height="18.9" Text="[Table1.DictrictACL] વિભાગ" Font="Arial Unicode MS, 12pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

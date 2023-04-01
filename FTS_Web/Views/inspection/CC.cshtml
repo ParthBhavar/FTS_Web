@@ -1,0 +1,1602 @@
+﻿@model FTS.Model.Entities.inspectionModel
+
+@{
+    ViewBag.Title = "inspection";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var formConfig = new FormConfig(ViewContext)
+            {
+                FormId = "ProductForm"
+            };
+}
+<link href="~/css/aa.css" rel="stylesheet" />
+<link href="~/css/developer.css" rel="stylesheet" />
+@*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="~/js/jsignature/flashcanvas.js"></script>
+<script src="~/js/jsignature/jsignature.min.js"></script>*@
+
+<div class="container">
+    <div class="card">
+        <div class="form">
+            <div class="left-side">
+                <div class="left-heading">
+                    <h3>Inspection Report Details</h3>
+                </div>
+                <div class="steps-content">
+                    <h3>Step <span class="step-number">1</span></h3>
+                    @* <p class="step-number-content active">Enter information about companies.</p>
+                    <p class="step-number-content d-none">Get to know better by adding your diploma,certificate and education life.</p>
+                    <p class="step-number-content d-none">Help companies get to know you better by telling then about your past experiences.</p>
+                    <p class="step-number-content d-none">Add your profile piccture and let companies find youy fast.</p>*@
+                </div>
+                <ul class="progress-bar">
+                    <li class="active">Report Information</li>
+                    <li>Establishments</li>
+                    <li>Establishments Details</li>
+                    <li>Employer Details</li>
+                    <li>Contractors Details</li>
+                    <li>Company Details</li>
+                    <li>Acts</li>
+                    <li>Other Info</li>
+                </ul>
+            </div>
+            <div class="right-side">
+                <!-- Start: Inspection Report Details -->
+                <div class="main active">
+                    <h2>Report Information</h2>
+
+                    @*  <div class="input-text">
+                    <div class="input-div">
+                    <span>Select District</span>
+                    @Html.DropDownListFor(model => model.DistrictID, new SelectList(Model.Districtlist, "DataValue", "DisplayValue"), "--Select--", new { @class="chosen-select form-control",@ID="DistrictId" })
+                    <span asp-validation-for="DistrictID" class="text-danger"></span>
+                    </div>
+                    </div>*@
+                    <div class="input-text">
+                        @*  <div class="input-div">
+                        <span>Select Taluka</span>
+                        @Html.DropDownListFor(model => model.TalukaID, new SelectList(Model.Talukalist, "DataValue", "DisplayValue"), "--Select--", new { @class="chosen-select form-control",@ID="TalukaId" })
+                        <span asp-validation-for="TalukaID" class="text-danger"></span>
+                        </div>*@
+                        <div class="input-div">
+                            <span>Taluka Code</span>
+                            @Html.TextBoxFor(x => x.AuthorizedPersonName)
+                            <span asp-validation-for="AuthorizedPersonName" class="text-danger"></span>
+
+                        </div>
+
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Inspection Report No.</span>
+                            @Html.TextBoxFor(x => x.ReportNo, new {@readonly="readonly"})
+                            <span asp-validation-for="ReportNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Inspection Date</span>
+                            @Html.TextBoxFor(x => x.InspectionDate, new {@readonly="readonly"})
+                            <span asp-validation-for="InspectionDate" class="text-danger"></span>
+                        </div>
+                        <div class="input-div">
+                            <span>Inspection Time</span>
+                            @Html.TextBoxFor(x => x.InspectionTime, new {@placeholder="HH:MM", @id="myID", @class = "form-control flatpickr-time text-start flatpickr-input active",@readonly="readonly"})
+                            <span asp-validation-for="InspectionTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button class="next_button">Next Step</button>
+                    </div>
+                </div>
+                <!-- END: Inspection Report Details-->
+                <!-- Start: Establishments Details -->
+                <div class="main">
+                    <h2>Establishments Details</h2>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Inspection Type</span>
+                            <div class="col-sm-4 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="InspectionType" id="Online" value="Online" checked="">
+                                        Online
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="InspectionType" id="ComplainBased" value="ComplainBased">
+                                        Complain Based
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="InspectionType" id="Unscheduled" value="Unscheduled">
+                                        Unscheduled
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>IFP Application Number</span>
+                            @Html.TextBoxFor(x => x.IFPApplicationNo)
+                            <span asp-validation-for="IFPApplicationNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divInspectiontype" style="display:none;">
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Date of Complain</span>
+                                @Html.TextBoxFor(x => x.dateOfComplain)
+                                <span asp-validation-for="dateOfComplain" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Name of Complainant</span>
+                                @Html.TextBoxFor(x => x.nameOfComplainant)
+                                <span asp-validation-for="nameOfComplainant" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Subject of Complain</span>
+                                @Html.TextBoxFor(x => x.subjectOfComplain)
+                                <span asp-validation-for="subjectOfComplain" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                        <button class="back_button">Back</button>
+                        <button class="next_button">Next Step</button>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Establishments Details</span>
+                            <div class="col-sm-4 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="eDetails" id="ESearch" value="ESearch" checked>
+                                        Search
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="eDetails" id="EManual" value="EManual">
+                                        Manual Entry
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="eDetails" id="ENotRegistered" value="ENotRegistered">
+                                        Not Registered
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Establishment Name</span>
+                            @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.EstablishmentName,"", new { @class = "form-control", @id="EstablishmentName" })
+                            <span asp-validation-for="_inspectionEstablishmentsDetailsModel.EstablishmentName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divEstablishmentsDetails" style="display:none">
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Address</span>
+                                @Html.TextAreaFor(x => x._inspectionEstablishmentsDetailsModel.PAddress, new { @class = "form-control"})
+                                <span asp-validation-for="_inspectionEstablishmentsDetailsModel.PAddress" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            @*<div class="input-div">
+                            <span>Select District</span>
+                            @Html.DropDownListFor(model => model._inspectionEstablishmentsDetailsModel.DistrictID, new SelectList(Model.Districtlist, "DataValue", "DisplayValue"), "--Select--", new { @class="chosen-select form-control",@ID="EDistrictId" })
+                            <span asp-validation-for="_inspectionEstablishmentsDetailsModel.DistrictID" class="text-danger"></span>
+                            </div>
+                            <div class="input-div">
+                            <span>Select Taluka</span>
+                            @Html.DropDownListFor(model => model._inspectionEstablishmentsDetailsModel.TalukaID, new SelectList(Model.Talukalist, "DataValue", "DisplayValue"), "--Select--", new { @class="chosen-select form-control",@ID="ETalukaId" })
+                            <span asp-validation-for="_inspectionEstablishmentsDetailsModel.TalukaID" class="text-danger"></span>
+                            </div>*@
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Pincode</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.Pincode)
+                                <span asp-validation-for="_inspectionEstablishmentsDetailsModel.Pincode" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Registered Under</span>
+                                <div class="form-check form-check-flat form-check-primary">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input">
+                                        The Factories Act-1947
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-flat form-check-primary">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input">
+                                        The Gujarat shops & Establishment Act-1948
+                                        <i class="input-helper"></i>
+                                    </label>
+
+                                </div>
+                                <div class="form-check form-check-flat form-check-primary">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input">
+                                        The Contract Labour Act-1970
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-flat form-check-primary">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input">
+                                        Co-Operative Society Act
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-flat form-check-primary">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input">
+                                        Trust Act
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>If None of Above,(Registered Under)?</span>
+                                <div class="col-sm-4 col-md-5">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="RegisteredUnder" id="1" value="Yes" checked="">
+                                            Yes
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-md-5">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="RegisteredUnder" id="" value="No" checked="checked">
+                                            No
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-text" id="divRegisteredUnder" style="display:none;">
+                            <div class="input-div">
+                                <span>Registered Under, (None of Above)</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.RegisteredUnder)
+                                <span asp-validation-for="_inspectionEstablishmentsDetailsModel.RegisteredUnder" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Registration Number</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.RegistrationNo)
+                                <span asp-validation-for="_inspectionEstablishmentsDetailsModel.RegistrationNo" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Registration Date</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.RegistrationDate,new {placeholder="dd/mm/yyyy"})
+                                <span asp-validation-for="_inspectionEstablishmentsDetailsModel.RegistrationDate" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Type of Industry</span>
+                                <select class="js-example-basic-single w-100">
+                                    <option value="AL">Alabama</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="AM">America</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="RU">Russia</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Male Employees as Direct</span>
+                            @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.MaleCount,new {@id="MaleCount", @onblur="getTotalEmp()" } )
+                            <span asp-validation-for="_inspectionEstablishmentsDetailsModel.MaleCount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Female Employees as Direct</span>
+                            @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.FemaleCount,new {@id="FeMaleCount", @onblur="getTotalEmp()" })
+                            <span asp-validation-for="_inspectionEstablishmentsDetailsModel.FemaleCount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Total Direct Employees :</span>
+                            <strong id="lbltotalEmp" class="text-success"></strong>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="buttons button_space">
+                        <button class="back_button">Back</button>
+                        <button class="next_button">Next Step</button>
+                    </div>
+                </div>
+                <!-- END: Establishments Details -->
+                <!-- Start: Employer Details -->
+                <div class="main">
+                    <h2>Employer Details</h2>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Name</span>
+                            @Html.TextBoxFor(x => x._inspectionEstablishmentEmployeeDetailsModel.EmployeeName)
+                            <span asp-validation-for="_inspectionEstablishmentEmployeeDetailsModel.EmployeeName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Designation</span>
+                            <div class="col-sm-4 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="EmpDesignation" id="" value="Proprietor" checked="">
+                                        Proprietor
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="EmpDesignation" id="" value="Partner">
+                                        Partner
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="EmpDesignation" id="" value="Director">
+                                        Director
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="EmpDesignation" id="" value="EmpDesOther">
+                                        Other
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-text" id="divEmpOtherDesignation" style="display:none;">
+                        <div class="input-div">
+                            <span>Other (Designation)</span>
+                            @Html.TextBoxFor(x => x._inspectionEstablishmentEmployeeDetailsModel.OtherDesignation,new{@id="OtherDesignation"})
+                            <span asp-validation-for="_inspectionEstablishmentEmployeeDetailsModel.OtherDesignation" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Age</span>
+                            @Html.TextBoxFor(x => x._inspectionEstablishmentEmployeeDetailsModel.Age,new {@number="number"})
+                            <span asp-validation-for="_inspectionEstablishmentEmployeeDetailsModel.Age" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Address</span>
+                            @Html.TextAreaFor(x => x._inspectionEstablishmentEmployeeDetailsModel.Address,new {@class="form-control"})
+                            <span asp-validation-for="_inspectionEstablishmentEmployeeDetailsModel.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="button_space">
+                        <button class="btn btn-success">Add</button>
+                    </div>
+                    <hr />
+                    <div class="buttons button_space">
+                        <button class="back_button">Back</button>
+                        <button class="next_button">Next Step</button>
+                    </div>
+                </div>
+                <!-- END: Employer Details-->
+                <!-- Start: Contractors Details -->
+                <div class="main">
+                    <h2>Contractors Details</h2>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Contractors?</span>
+                            <div class="col-sm-4 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="ContractorDetails" id="" value="Yes">
+                                        Yes
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="ContractorDetails" id="" value="No" checked>
+                                        No
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divContractor" style="display:none;">
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Company Name</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentContractorDetailsModel.CompanyName)
+                                <span asp-validation-for="_inspectionEstablishmentContractorDetailsModel.CompanyName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Contractor Name</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentContractorDetailsModel.ContractorName)
+                                <span asp-validation-for="_inspectionEstablishmentContractorDetailsModel.ContractorName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Type of Job</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentContractorDetailsModel.JobType)
+                                <span asp-validation-for="_inspectionEstablishmentContractorDetailsModel.JobType" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Contractor has License?</span>
+                                <div class="col-sm-4 col-md-5">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="CLicense" id="" value="Yes" checked="">
+                                            Yes
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-md-5">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="CLicense" id="" value="No" checked>
+                                            No
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Commencement Date</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentContractorDetailsModel.CommencementDate,new{placeholder="dd/mm/yyyy" } )
+                                <span asp-validation-for="_inspectionEstablishmentContractorDetailsModel.CommencementDate" class="text-danger"></span>
+                            </div>
+                            <div class="input-div">
+                                <span>Completion Date</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentContractorDetailsModel.CompletionDate,new{placeholder="dd/mm/yyyy" })
+                                <span asp-validation-for="_inspectionEstablishmentContractorDetailsModel.CompletionDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Male Employees Contract</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentContractorDetailsModel.MaleEmployeesContractCount,new{@id="MaleEmployeesContractCount", @onblur="getContractorTotalCount()"})
+                                <span asp-validation-for="_inspectionEstablishmentContractorDetailsModel.MaleEmployeesContractCount" class="text-danger"></span>
+                            </div>
+                            <div class="input-div">
+                                <span>Female Employees Contract</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentContractorDetailsModel.FemaleEmployeesContractCount,new{@id="FemaleEmployeesContractCount", @onblur="getContractorTotalCount()"})
+                                <span asp-validation-for="_inspectionEstablishmentContractorDetailsModel.FemaleEmployeesContractCount" class="text-danger"></span>
+                            </div>
+                            <div class="input-div">
+                                <span>Total Through Contract Employees :</span>
+                                <strong id="lbltotalContractEmp" class="text-success"></strong>
+                            </div>
+                        </div>
+                        <div class="button_space">
+                            <button class="btn btn-success">Add</button>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="buttons button_space">
+                        <button class="back_button">Back</button>
+                        <button class="next_button">Next Step</button>
+                    </div>
+                </div>
+                <!-- END: Contractors Details -->
+                <!-- Start: Contractors Details -->
+                <div class="main">
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Authorized Person / Manager's Name (Present During Inspection)</span>
+                            @Html.TextBoxFor(x => x.AuthorizedPersonName)
+                            <span asp-validation-for="AuthorizedPersonName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Authorized Person / Manager's Email</span>
+                            @Html.TextBoxFor(x => x.AuthorizedPersonEmail)
+                            <span asp-validation-for="AuthorizedPersonEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Authorized Person / Manager's Contact No.</span>
+                            @Html.TextBoxFor(x => x.AuthorizedPersonContactNo)
+                            <span asp-validation-for="AuthorizedPersonContactNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Authorized Person / Manager's Designation</span>
+                            @Html.TextBoxFor(x => x.AuthorizedPersonDesignation)
+                            <span asp-validation-for="AuthorizedPersonDesignation" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                        <button class="back_button">Back</button>
+                        <button class="next_button">Next Step</button>
+                    </div>
+                </div>
+                <div class="main">
+                    <h2>Acts</h2>
+                    <div class="input-div">
+                        <div class="form-group">
+                            <label> The Minimum Wages Act, 1948 Is Applicable?</label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act0" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act0" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="Act1" style="display:none;">
+                                <div class="col-md-11">
+                                    <p>On demand the Employer has not produced Muster roll, register of wages; register of overtime register.Breach of Rule 26-D</p>
+                                    <input type="checkbox" id="switchAct11" class="switch"><label for="switchAct11" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>Wage slips are not issued to the workers. Breach of Rule 26(2)</p>
+                                    <input type="checkbox" id="switchAct12" class="switch"><label for="switchAct12" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>Attendance cards are not provided to employee. Breach of Rule 26-B(1)</p>
+                                    <input type="checkbox" id="switchAct13" class="switch"><label for="switchAct13" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>The abstract of the Act and Rules made there under and notice containing minimum rates of Wages & Name and address of Inspector in English and in Gujarati have not displayed. Breach of Rule 22</p>
+                                    <input type="checkbox" id="switchAct14" class="switch"><label for="switchAct14" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>Register of fine in Form C is not maintained and Annual return in Form III for the year has not been submitted to the Assistant Labour Commissioner / Dy. Labour Commissioner. Breach of Rule 21(4).</p>
+                                    <input type="checkbox" id="switchAct15" class="switch"><label for="switchAct15" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>Following workers are being not paid wages after the expiry of the statutory time limit. Breach of Rules 21(1)(i)</p>
+                                    <input type="checkbox" id="switchAct16" class="switch"><label for="switchAct16" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>The extra wages for overtime work at the double of normal rate of wages are not being paid to the workers. Breach of Rule 25(1)</p>
+                                    <input type="checkbox" id="switchAct17" class="switch"><label for="switchAct17" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>A register showing overtime payments has not been kept in Form B specified in the Schedule to the Ease of Compliance to Maintain Registers under various Labour Law (Gujarat) Rules, 2017. Breach of Rule 25(2)</p>
+                                    <input type="checkbox" id="switchAct18" class="switch"><label for="switchAct18" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>Following workers (mentioned in the attached annexure) were paid their wages at a rate less than the minimum rate of wages fixed for their respective categories. Breach of Section 12(1)</p>
+                                    <input type="checkbox" id="switchAct19" class="switch"><label for="switchAct19" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>Entries in the wage register / wage slip have not been authenticated by the employer or any person authorized by him. Breach of Rule 26 (4)</p>
+                                    <input type="checkbox" id="switchAct110" class="switch"><label for="switchAct110" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>A register of wages has not been kept in Form B specified in the Schedule to the Ease of Compliance to Maintain Registers under various Labour Law (Gujarat) Rules, 2017. Breach of Rule 26(1)</p>
+                                    <input type="checkbox" id="switchAct111" class="switch"><label for="switchAct111" class="switch-label">Toggle</label>
+                                </div>
+                                <div class="col-md-11">
+                                    <p>Muster roll has not been maintained in Form D specified in the Schedule to the Ease of Compliance to Maintain Registers under various Labour Law (Gujarat) Rules, 2017. Breach of Rule 26(5)</p>
+                                    <input type="checkbox" id="switchAct11221" class="switch"><label for="switchAct11221" class="switch-label">Toggle</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Payment of Bonus Act, 1965 Is Applicable?</label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="rbnAct2" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="rbnAct2" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divAct2" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>On demand the employer has not produced the form “A”,”B”, “C” & “D”, account books, balance sheet for the accounting year. Breach of Section - 27(4).</p>
+                                        <input type="checkbox" id="switchAct121" class="switch"><label for="switchAct121" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Following workers are not paid Bonus for the accounting year.Breach of Section 19(b).</p>
+                                        <input type="checkbox" id="switchAct122" class="switch"><label for="switchAct122" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                The Payment of Gratuity Act, 1972
+                                Is Applicable?
+                            </label>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act3" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act3" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divAct3" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Notice for opening of the establishment in form 'A' is not submitted within 30 days to the controlling authority. Breach of Rule 3(1)</p>
+                                        <input type="checkbox" id="switchAct311" class="switch"><label for="switchAct311" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>(*Deleted by Guj. Govt. Vide Notification dated 26.03.2021) Breach of Rule 4(1).</p>
+                                        <input type="checkbox" id="switchAct312" class="switch"><label for="switchAct312" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Record containing the Nomination details of the employees in form "F", have not maintained by the employer. Breach of Rule-6(2) read with Section-6(7).</p>
+                                        <input type="checkbox" id="switchAct313" class="switch"><label for="switchAct313" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>(*Deleted by Guj. Govt Vide Notification dated 26.03.2021) Breach of Rule-19</p>
+                                        <input type="checkbox" id="switchAct314" class="switch"><label for="switchAct314" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>The Equal Remuneration Act, 1976 Is Applicable?</label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act4" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act4" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="divAct4" style="display:none;">
+                                <div class="col-md-11">
+                                    <p>Register in form 'D' is not maintained by the employer. Breach of Rule-6 read with section-8.</p>
+                                    <input type="checkbox" id="switchAct112" class="switch"><label for="switchAct112" class="switch-label">Toggle</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>The Contract Labour (R&A) Act, 1970 & Gujarat Rules, 1972 Is Applicable?</label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act5" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act5" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divAct5" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The principal employer has not applied for Registration Certificate. Breach of Rule 17(1)</p>
+                                        <input type="checkbox" id="switchAct511" class="switch"><label for="switchAct511" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Register of Contractor has not been maintained in Form no. XII. Breach of Rule 74.</p>
+                                        <input type="checkbox" id="switchAct512" class="switch"><label for="switchAct512" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The Principal Employer failed to provide all the prescribed welfare amenities, which the Contractor failed to provide under Section 16, Section 17, Section 18 and Section 19. Breach of Section 20(1)</p>
+                                        <input type="checkbox" id="switchAct513" class="switch"><label for="switchAct513" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The Principle Employer also failed to make the payment of wages to the following contract labour, which was not paid / less paid by the contractor. Breach of Section 21(4).</p>
+                                        <input type="checkbox" id="switchAct514" class="switch"><label for="switchAct514" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Contract labours were found employed without obtaining valid license by the Contractor. Breach of Rule 21(1) read with Section 13(1)</p>
+                                        <input type="checkbox" id="switchAct515" class="switch"><label for="switchAct515" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Contract labours were found employed without applied for renewal of valid license by the Contractor. Breach of Rule 21(1) read with Section 13(3)</p>
+                                        <input type="checkbox" id="switchAct516" class="switch"><label for="switchAct516" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Contract labours were found employed without applied for renewal of valid license by the Contractor. Breach of Rule 21(1) read with Section 13(3)</p>
+                                        <input type="checkbox" id="switchAct517" class="switch"><label for="switchAct517" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The contractor failed to provide canteen facility though 100 or more contract labours are employed in the establishment in which the work is likely to continue for six months or more within 60 days of the commencement of the employment. Breach of Rule 42(1).</p>
+                                        <input type="checkbox" id="switchAct518" class="switch"><label for="switchAct518" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The contractor failed to provide rest-rooms under section 17 to contract labours. Breach of Rule 41</p>
+                                        <input type="checkbox" id="switchAct519" class="switch"><label for="switchAct519" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The contractor failed to provide welfare facilities under section 18 regarding whole some drinking water & other facilities (Latrine and Urinals & washing facilities) and First Aid facilities under Section 19. Breach of Rules 40(1)</p>
+                                        <input type="checkbox" id="switchAct5111" class="switch"><label for="switchAct5111" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The Contractor has not ensured the payment of wages to the following contract labour with in prescribed time limit for the month of Breach of Rule 65 read with Section 21(1)</p>
+                                        <input type="checkbox" id="switchAct5112" class="switch"><label for="switchAct5112" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The Contractor has not ensured the presence of the representative authorized by the Principal Employer at the time of the disbursement of wages. Breach of Rule 72 read with Section 21(3).</p>
+                                        <input type="checkbox" id="switchAct5113" class="switch"><label for="switchAct5113" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Contractor has not maintained a register in Form A specified in the Schedule to the Ease of Compliance to Maintain Registers under various Labour Law (Gujarat) Rules, 2017. Breach of Rule 75 read with Section 29(1).</p>
+                                        <input type="checkbox" id="switchAct5114" class="switch"><label for="switchAct5114" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The Contractor has not issued Employment Card in Form XIV to each worker of his employment. Breach of Rule 76.</p>
+                                        <input type="checkbox" id="switchAct5115" class="switch"><label for="switchAct5115" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>During inspection the contractor has not produced copy of license, copy of work order given by the principal employer, I-card register etc. Breach of Rule 80(4).</p>
+                                        <input type="checkbox" id="switchAct5116" class="switch"><label for="switchAct5116" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Contractor has violated / non-complied condition no. of license issued to him. Breach of Rule 25 read with Section 12(2).</p>
+                                        <input type="checkbox" id="switchAct5117" class="switch"><label for="switchAct5117" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Contractor has not maintained Form B/Form C/Form D specified in the Schedule to the Ease of Compliance to Maintain Registers under various Labour Law (Gujarat) Rules, 2017. Breach of Rule 78(2) read with Section 29(1).</p>
+                                        <input type="checkbox" id="switchAct5118" class="switch"><label for="switchAct5118" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>The Inter-State Migrant Workmen (RE & CS) Act, 1979 & Gujarat Rules, 1981 Is Applicable?</label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act6" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act6" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divAct6" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The principal employer has not registered the establishment under the Act. Breach of Rule 3(1) read with Rule 4(1)</p>
+                                        <input type="checkbox" id="switchAct611" class="switch"><label for="switchAct611" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Register of contractors in Form XII has not been maintained at all/ correctly by the principle employer.Breach of Rule 48 read with Section 23.</p>
+                                        <input type="checkbox" id="switchAct612" class="switch"><label for="switchAct612" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The Contractor have not obtained / renewed a valid license under the Act. Breach of Rule 7(2) read with Section 8(1)(b)</p>
+                                        <input type="checkbox" id="switchAct613" class="switch"><label for="switchAct613" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Details of employed Migrant Workmen in Form X have not been sent by the Contractor. Breach of Rule 21(1) read with section 12(1) (a).</p>
+                                        <input type="checkbox" id="switchAct614" class="switch"><label for="switchAct614" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The Contractor has not produced Displacement-cum-Outward Journey Allowances Sheet in Form XV. Breach of Rule 51(1) read with section 12(1)(a)</p>
+                                        <input type="checkbox" id="switchAct615" class="switch"><label for="switchAct615" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>The Child and Adolescent Labour (P&R) Act, 1986 & Gujarat Rules, 2017 Is Applicable?</label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act7" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act7" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divAct7" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Children below the age of 14 years have been employed by the employer in all occupations and processes which is prohibited[Breach of Section 3of the act]</p>
+                                        <input type="checkbox" id="switchAct711" class="switch"><label for="switchAct711" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Adolescents (has completed 14 year of age but not completed 18 year) have been employed by the employer in certain hazardous occupations and processes which is prohibited. [Breach of Section 3A of the act]</p>
+                                        <input type="checkbox" id="switchAct712" class="switch"><label for="switchAct712" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Note: Any person / employer, shall be punishable with fine of Rs. 20,000 to 1,00,000 or imprisonment for 6 months to 2 years or with both.</p>
+                                        <p>Part-2 : Regulation</p>
+                                        <p>Notice containing Abstract of Section 3 and section 14 in English and local language not displayed. [Breach of Section 12 of the act]</p>
+                                        <input type="checkbox" id="switchAct713" class="switch"><label for="switchAct713" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Register in respect of Adolescent employed or permitted to work was not maintained / produced. [Breach of Section 16 of Rule 4 (1) of the act]</p>
+                                        <input type="checkbox" id="switchAct713" class="switch"><label for="switchAct713" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The period of the work of the following Adolescent exceeds three hours without and interval for rest for one hour. [Breach of Section 7(2) of the act]</p>
+                                        <input type="checkbox" id="switchAct713" class="switch"><label for="switchAct713" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>The period of work of the following Adolescent inclusive of interval for rest is spread over more than six hours (including the time spend on waiting). [Breach of section 7(3) of the act]</p>
+                                        <input type="checkbox" id="switchAct714" class="switch"><label for="switchAct714" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>The Industrial Employment Standing Order Act, 1946 & Gujarat Rules, 1959 Is Applicable?</label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act82" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act82" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divAct82" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Identity Card not issued to the workmen. Breach of order no.-5-(a)(1) of Appendix-1(d).</p>
+                                        <input type="checkbox" id="switchActAct8211" class="switch"><label for="switchActAct8211" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Certified Standing Order under the Act is not displayed on the notice board of the establishment.Breach of Section-9.</p>
+                                        <input type="checkbox" id="switchActAct8212" class="switch"><label for="switchActAct8212" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Employer has not paid the Suspension allowance to following Suspended workmen 50% for the first 90 days after suspension and 75% after 90 days. Breach of Section-10.</p>
+                                        <input type="checkbox" id="switchActAct8213" class="switch"><label for="switchActAct8213" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>The Motor Transport Workers Act, 1961 & Gujarat Rules, 1965 Is Applicable?</label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act8" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act8" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divAct8" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Employer has not registered the establishment under the Act. Breach of Rule 4 read with Section 3(2).</p>
+                                        <input type="checkbox" id="switchAct811" class="switch"><label for="switchAct812" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Weekly rest not given to the workers. Breach of Section 19.</p>
+                                        <input type="checkbox" id="switchAct812" class="switch"><label for="switchAct812" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Details of motor transport workers employed have not been maintained in Form 9. Breach of Rule 31.</p>
+                                        <input type="checkbox" id="switchAct813" class="switch"><label for="switchAct813" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Employer has not paid the wages to the workers for extra work done. Breach of Section 26</p>
+                                        <input type="checkbox" id="switchAct814" class="switch"><label for="switchAct814" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                The Working Journalists And Other Newspaper Employees' (Condition of Services) And Miscellaneous Provisions Act, 1955 & Rules – 1957
+                                Is Applicable?
+                            </label><div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act9" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act9" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="divAct9" style="display:none;">
+                                <div class="col-md-11">
+                                    <p>Employer has not implemented recommendations of wage board. Breach of Section-13/13A.</p>
+                                    <input type="checkbox" id="switchAct911" class="switch"><label for="switchAct911" class="switch-label">Toggle</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                The Sales Promotion Employees (Conditions of Service) Act, 1976 Is Applicable?
+                            </label>
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act10" id="" value="Yes">Yes<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="Act10" id="" value="No" checked>No<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="divAct10" style="display:none">
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Employer has not provided appointment letter to following Sales Promotion employee under the Act. Breach of Section-5.</p>
+                                        <input type="checkbox" id="switchAct1011" class="switch"><label for="switchAct1011" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <p>Employer has not maintained register containing the details of employees employed in Form-B, Service Book in Form-C and Leave register in Form-E. Breach of Section-7.</p>
+                                        <input type="checkbox" id="switchAct1012" class="switch"><label for="switchAct1012" class="switch-label">Toggle</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons button_space">
+                            <button class="back_button">Back</button>
+                            <button class="next_button">Next Step</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Contractors Details -->
+                <!-- Start: Work Experiences -->
+                <div class="main">
+                    <div class="input-text">
+                        <div class="input-div">
+                            <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Premise Photo Taken Onsite">
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Authorized Person / Manager's Signature ?</span>
+                            <div class="col-sm-4 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="AuthPerson" id="1" value="Yes" checked>
+                                        Yes
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="AuthPerson" id="" value="No">
+                                        No
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div" id="divASignature" style="display:none;">
+                            <input type="text" class="form-control file-upload-info" placeholder="Upload Authorized Person / Manager's Signature">
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                            </span>
+                        </div>
+                        <div class="input-div" id="divARemark" style="display:none;">
+                            <div class="input-div">
+                                <span>Remarks</span>
+                                @Html.TextAreaFor(x => x.AuthorizedPersonSignatureRemark, new { @class = "form-control"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Non-compliance observed</span>
+                            <div class="col-sm-4 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="Noncompliance" id="1" value="Yes" checked="">
+                                        Yes
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="Noncompliance" id="" value="No" checked="checked">
+                                        No
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Status</span>
+                            <select class="js-example-basic-single w-100">
+                                <option value="AL">--Select--</option>
+                                <option value="WY">Follow Up</option>
+                                <option value="AM">New</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Inspector's Name</span>
+                            @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.MaleCount,new {@id="MaleCount", @onblur="getTotalEmp()" } )
+                            <span asp-validation-for="_inspectionEstablishmentsDetailsModel.MaleCount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Inspector's Email</span>
+                            @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.MaleCount,new {@id="MaleCount", @onblur="getTotalEmp()" } )
+                            <span asp-validation-for="_inspectionEstablishmentsDetailsModel.MaleCount" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>Upload Inspector's Signature</span>
+                            <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Premise Photo Taken Onsite">
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="input-text">
+                        <div class="input-div">
+                            <span>I have received the documents for non-compliance</span>
+                            <div class="col-sm-4 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="receivedNoncompliance" id="1" value="Yes">
+                                        Yes
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-md-5">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="receivedNoncompliance" id="" value="No" checked>
+                                        No
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divNonCompliance" style="display:none;">
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Compliance Documents Received By</span>
+                                @Html.TextBoxFor(x => x._inspectionEstablishmentsDetailsModel.MaleCount,new {@id="MaleCount", @onblur="getTotalEmp()" } )
+                                <span asp-validation-for="_inspectionEstablishmentsDetailsModel.MaleCount" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Upload Signature</span>
+                                <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Premise Photo Taken Onsite">
+                                <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Documents Received Date</span>
+                                @Html.TextBoxFor(x => x.ComplianceDate,new {@id="MaleCount", @onblur="getTotalEmp()" } )
+                            </div>
+                        </div>
+                        <div class="input-text">
+                            <div class="input-div">
+                                <span>Documents Received Time</span>
+                                @Html.TextBoxFor(x => x.ComplianceTime,new {@id="MaleCount", @onblur="getTotalEmp()" } )
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttons button_space">
+                        <button class="back_button">Back</button>
+                        <button class="submit_button">Submit</button>
+                    </div>
+                </div>
+                <!-- END: Work Experiences-->
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+    flatpickr("#myID", {
+        enableTime: false,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+</script>*@
+
+<script>
+    $(document).ready(function () {
+        $("#signature").jSignature()
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        $('input[name="Act0"]:radio').click(function () {
+            if ($('input[name="Act0"]:checked').val() == "Yes") {
+                $("#Act1").show();
+            } else {
+                $("#Act1").hide();
+            }
+        });
+
+        $('input[name="rbnAct2"]:radio').click(function () {
+            if ($('input[name="rbnAct2"]:checked').val() == "Yes") {
+                $("#divAct2").show();
+            } else {
+                $("#divAct2").hide();
+            }
+        });
+
+        $('input[name="Act3"]:radio').click(function () {
+            if ($('input[name="Act3"]:checked').val() == "Yes") {
+                $("#divAct3").show();
+            } else {
+                $("#divAct3").hide();
+            }
+        });
+
+        $('input[name="Act4"]:radio').click(function () {
+            if ($('input[name="Act4"]:checked').val() == "Yes") {
+                $("#divAct4").show();
+            } else {
+                $("#divAct4").hide();
+            }
+        });
+
+        $('input[name="Act5"]:radio').click(function () {
+            if ($('input[name="Act5"]:checked').val() == "Yes") {
+                $("#divAct5").show();
+            } else {
+                $("#divAct5").hide();
+            }
+        });
+
+        $('input[name="Act6"]:radio').click(function () {
+            if ($('input[name="Act6"]:checked').val() == "Yes") {
+                $("#divAct6").show();
+            } else {
+                $("#divAct6").hide();
+            }
+        });
+
+        $('input[name="Act7"]:radio').click(function () {
+            if ($('input[name="Act7"]:checked').val() == "Yes") {
+                $("#divAct7").show();
+            } else {
+                $("#divAct7").hide();
+            }
+        });
+
+        $('input[name="Act82"]:radio').click(function () {
+            if ($('input[name="Act82"]:checked').val() == "Yes") {
+                $("#divAct82").show();
+            } else {
+                $("#divAct82").hide();
+            }
+        });
+
+        $('input[name="Act8"]:radio').click(function () {
+            if ($('input[name="Act8"]:checked').val() == "Yes") {
+                $("#divAct8").show();
+            } else {
+                $("#divAct8").hide();
+            }
+        });
+
+        $('input[name="Act9"]:radio').click(function () {
+            if ($('input[name="Act9"]:checked').val() == "Yes") {
+                $("#divAct9").show();
+            } else {
+                $("#divAct9").hide();
+            }
+        });
+
+        $('input[name="Act10"]:radio').click(function () {
+            if ($('input[name="Act10"]:checked').val() == "Yes") {
+                $("#divAct10").show();
+            } else {
+                $("#divAct10").hide();
+            }
+        });
+
+        $('input[name="ContractorDetails"]:radio').click(function () {
+            if ($('input[name="ContractorDetails"]:checked').val() == "Yes") {
+                $("#divContractor").show();
+            } else {
+                $("#divContractor").hide();
+            }
+        });
+
+        $('input[name="AuthPerson"]:radio').click(function () {
+            if ($('input[name="AuthPerson"]:checked').val() == "Yes") {
+                $("#divASignature").show();
+                $("#divARemark").hide();
+            } else {
+                $("#divARemark").show();
+                $("#divASignature").hide();
+            }
+        });
+
+        $('input[name="receivedNoncompliance"]:radio').click(function () {
+            if ($('input[name="receivedNoncompliance"]:checked').val() == "Yes") {
+                $("#divNonCompliance").show();
+            } else {
+                $("#divNonCompliance").hide();
+            }
+        });
+
+
+        $('input[name="eDetails"]:radio').click(function () {
+            if ($('input[name="eDetails"]:checked').val() == "ESearch") {
+                $("#divEstablishmentsDetails").hide();
+            } else if ($('input[name="eDetails"]:checked').val() == "EManual") {
+                $("#divEstablishmentsDetails").show();
+            } else if ($('input[name="eDetails"]:checked').val() == "ENotRegistered") {
+                $("#divEstablishmentsDetails").show();
+            }
+        });
+
+
+        $('input[name="RegisteredUnder"]:radio').click(function () {
+            if ($('input[name="RegisteredUnder"]:checked').val() == "Yes") {
+                $("#divRegisteredUnder").show();
+            } else {
+                $("#divRegisteredUnder").hide();
+            }
+        });
+
+        $('input[name="InspectionType"]:radio').click(function () {
+            if ($('input[name="InspectionType"]:checked').val() == "ComplainBased") {
+                $("#divInspectiontype").show();
+            } else {
+                $("#divInspectiontype").hide();
+            }
+        });
+
+    });
+
+
+    $('input[name="EmpDesignation"]:radio').click(function () {
+        debugger;
+        if ($('input[name="EmpDesignation"]:checked').val() == "EmpDesOther") {
+            $("#divEmpOtherDesignation").show();
+            $("#OtherDesignation").val('');
+
+        } else {
+            $("#divEmpOtherDesignation").hide();
+            $("#OtherDesignation").val('');
+        }
+    });
+
+    function getTotalEmp() {
+        debugger;
+        $("#lbltotalEmp").text((parseInt($("#MaleCount").val()) + parseInt($("#FeMaleCount").val())))
+    }
+
+    function getContractorTotalCount() {
+        debugger;
+        $("#lbltotalContractEmp").text((parseInt($("#MaleEmployeesContractCount").val()) + parseInt($("#FemaleEmployeesContractCount").val())))
+    }
+</script>
+
+<script>
+    var next_click = document.querySelectorAll(".next_button");
+    var main_form = document.querySelectorAll(".main");
+    var step_list = document.querySelectorAll(".progress-bar li");
+    var num = document.querySelector(".step-number");
+    let formnumber = 0;
+
+    next_click.forEach(function (next_click_form) {
+        next_click_form.addEventListener('click', function () {
+            if (!validateform()) {
+                return false
+            }
+            formnumber++;
+            updateform();
+            progress_forward();
+            contentchange();
+        });
+    });
+
+    var back_click = document.querySelectorAll(".back_button");
+    back_click.forEach(function (back_click_form) {
+        back_click_form.addEventListener('click', function () {
+            formnumber--;
+            updateform();
+            progress_backward();
+            contentchange();
+        });
+    });
+
+    var username = document.querySelector("#user_name");
+    var shownname = document.querySelector(".shown_name");
+
+
+    var submit_click = document.querySelectorAll(".submit_button");
+    submit_click.forEach(function (submit_click_form) {
+        submit_click_form.addEventListener('click', function () {
+            shownname.innerHTML = username.value;
+            formnumber++;
+            updateform();
+        });
+    });
+
+    var heart = document.querySelector(".fa-heart");
+    heart.addEventListener('click', function () {
+        heart.classList.toggle('heart');
+    });
+
+
+    var share = document.querySelector(".fa-share-alt");
+    share.addEventListener('click', function () {
+        share.classList.toggle('share');
+    });
+
+
+
+    function updateform() {
+        main_form.forEach(function (mainform_number) {
+            mainform_number.classList.remove('active');
+        })
+        main_form[formnumber].classList.add('active');
+    }
+
+    function progress_forward() {
+        // step_list.forEach(list => {
+
+        //     list.classList.remove('active');
+
+        // });
+
+
+        num.innerHTML = formnumber + 1;
+        step_list[formnumber].classList.add('active');
+    }
+
+    function progress_backward() {
+        var form_num = formnumber + 1;
+        step_list[form_num].classList.remove('active');
+        num.innerHTML = form_num;
+    }
+
+    var step_num_content = document.querySelectorAll(".step-number-content");
+
+    function contentchange() {
+        step_num_content.forEach(function (content) {
+            content.classList.remove('active');
+            content.classList.add('d-none');
+        });
+        step_num_content[formnumber].classList.add('active');
+    }
+
+
+    function validateform() {
+        validate = true;
+        var validate_inputs = document.querySelectorAll(".main.active input");
+        validate_inputs.forEach(function (vaildate_input) {
+            vaildate_input.classList.remove('warning');
+            if (vaildate_input.hasAttribute('require')) {
+                if (vaildate_input.value.length == 0) {
+                    validate = false;
+                    vaildate_input.classList.add('warning');
+                }
+            }
+        });
+        return validate;
+
+    }
+</script>
+

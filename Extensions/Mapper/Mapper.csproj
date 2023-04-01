@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>   
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
+    <PackageReference Include="DNTCaptcha.Core" Version="4.3.3" />
+    <PackageReference Include="FastReport.Compat" Version="2022.2.0" />
+    <PackageReference Include="FastReport.OpenSource" Version="2022.3.6" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2022.3.4" />
+    <PackageReference Include="FastReport.OpenSource.Web" Version="2022.3.6" />
+    <PackageReference Include="FluentValidation" Version="11.3.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="HarfBuzzSharp.NativeAssets.Linux" Version="2.8.2.2" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
+
+    <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR" Version="2.0.8" />
+
+    <PackageReference Include="MimeKit" Version="3.4.1" />
+
+    <PackageReference Include="MozJpegSharp.GdiPlus" Version="2.1.12" />
+
+    <PackageReference Include="RotativaHQ.AspNetCore" Version="1.2.1" />
+
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.2" />
+
+    <PackageReference Include="System.CodeDom" Version="4.5.0" />
+
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+
+    <PackageReference Include="System.IO.Pipes.AccessControl" Version="5.0.0" />
+
+    <PackageReference Include="System.Security.AccessControl" Version="6.0.0" />
+    <PackageReference Include="UploadStream" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Model\Model\FTS.Model.csproj" />
+  </ItemGroup>
+
+</Project>

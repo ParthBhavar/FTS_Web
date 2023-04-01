@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/10/2022 19:17:15" ReportInfo.Modified="10/11/2022 18:22:32" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlq/K/ICGBqSJZHyPIlONiZf6urvRUubsXOXIPJ1G5wYbG2jECpz0fpzZnWIFcQol0GkM5Qo4PKxMYuBkiTAd/Mp8E318vXoaFulVegY+qnKdCORnw/tftCNZghAWRUBPoNpWC9n8+HQmfOjOxL9S8aUdNOqqohRGQXoRvzbhjghzXkAmIcSbbw5XAPcrZWTyrC/hbUVI4ifhJp+S2Q8LKi5GoEIcypiLvz1tI09Cp3AkU=">
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="DictrictACLOffice" DataType="System.String"/>
+        <Column Name="AppID" DataType="System.String"/>
+        <Column Name="ApplicantDetail" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="ACLName" DataType="System.String"/>
+        <Column Name="LCAddress" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="SendLCDate" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="122.85">
+      <TextObject Name="Text1" Left="179.55" Top="9.45" Width="94.5" Height="18.9" Font="Arial, 22pt"/>
+      <TextObject Name="Text2" Left="132.3" Top="9.45" Width="425.25" Height="18.9" Text="નાયબ શ્રમ આયુક્તશ્રીની કચેરી" Font="Arial, 22pt, style=Bold"/>
+      <TextObject Name="Text3" Left="122.85" Top="56.7" Width="94.5" Height="18.9" Font="Arial, 22pt"/>
+      <TextObject Name="Text4" Left="113.4" Top="66.15" Width="463.05" Height="18.9" Text="[Table1.DictrictACLOffice]" Font="Arial, 14pt"/>
+      <ShapeObject Name="Shape1" Left="9.45" Width="699.3" Height="113.4"/>
+      <RichObject Name="Rich16" Left="179.55" Top="9.45" Width="94.5" Height="18.9"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="126.85" Width="718.2" Height="28.35"/>
+    <DataBand Name="Data1" Top="159.2" Width="718.2" Height="670.95">
+      <ShapeObject Name="Shape2" Left="18.9" Top="9.45" Width="226.8" Height="170.1"/>
+      <ShapeObject Name="Shape3" Left="472.5" Top="9.45" Width="226.8" Height="170.1"/>
+      <RichObject Name="Rich1" Left="28.35" Top="18.9" Width="66.15" Height="18.9"/>
+      <TextObject Name="Text5" Left="28.35" Top="18.9" Width="37.8" Height="18.9" Text="પ્રતિ," Font="Arial, 10pt"/>
+      <RichObject Name="Rich2" Left="28.35" Top="37.8" Width="94.5" Height="18.9"/>
+      <TextObject Name="Text6" Left="28.35" Top="37.8" Width="94.5" Height="18.9" Text="રજીસ્‍ટ્રાર શ્રી" Font="Arial, 10pt"/>
+      <RichObject Name="Rich3" Left="28.35" Top="56.7" Width="94.5" Height="18.9"/>
+      <TextObject Name="Text7" Left="28.35" Top="56.7" Width="94.5" Height="18.9" Text="મજુર અદાલત, બહુમાળી મકાન,   &#13;&#10;લાલ દરવાજા, અમદાવાદ. " Font="Arial, 10pt"/>
+      <RichObject Name="Rich4" Left="500.85" Top="18.9" Width="94.5" Height="18.9"/>
+      <TextObject Name="Text8" Left="510.3" Top="18.9" Width="160.65" Height="18.9" Text="આઇડી.આર. નં. ૪૧૩/વર્ષ" Font="Arial, 10pt"/>
+      <RichObject Name="Rich5" Left="500.85" Top="66.15" Width="94.5" Height="18.9"/>
+      <TextObject Name="Text9" Left="500.85" Top="113.4" Width="94.5" Height="18.9" Text="તારીખ:-" Font="Arial, 10pt"/>
+      <RichObject Name="Rich6" Left="519.75" Top="113.4" Width="94.5" Height="18.9"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="834.15" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

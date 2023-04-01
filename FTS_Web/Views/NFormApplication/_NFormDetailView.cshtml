@@ -1,0 +1,472 @@
+﻿
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+<div class="content-wrapper">
+       
+        <div class="row" id="Establis">
+               
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                         <div id="ApplicantDetail">
+
+                </div>
+                   <div id="EshtablishDetail">
+                       
+
+                </div>
+
+                    <div id="HearingDetile">
+
+                </div>
+
+                <div id="SettlementDetile">
+
+                </div>
+                 <div id="SettlementReviewDetile">
+
+                </div>
+                <div id="AppealDetails">
+
+                </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+     </div>
+
+ <script>
+
+        $(document).ready(function () {
+            debugger;
+            @*$('#ApplicationID').val();*@
+            GetDetail();
+            });
+
+
+         
+function GetDetail() {
+    debugger;
+            $.ajax({
+                type: 'POST',
+                url: "/NFormApplication/NFormHistory",
+                headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                data: { ApplicationID: $('#ApplicationID').val()},
+                success: function(data) {
+                    debugger;
+                    var i;
+
+                    @*//ApplicantDetail*@
+                    var E;
+                    for (E = 0; E < data.data.basicdetailtlst.length; E++) {
+
+
+                        @*  var AddEducationdetails = "<div class='row'>";*@
+                    var AddEducationdetails = "";
+
+                        AddEducationdetails += "<fieldset class='border p-2 mt-5'>";
+                          AddEducationdetails += "<legend  class='w-auto'>Applicant Detail</legend>";
+                            AddEducationdetails += "<div class='form-group'>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Application Name : </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].ApplicantName +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Permanent Address : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].PAddress +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Secondary Address : </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].SAddress +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>District : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].DistrictName +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Taluka : </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].TalukaName +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Gender : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].GanderName +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Zone : </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].ZoneName +" </span>";
+                         AddEducationdetails += "</div>"; 
+                          AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Area : </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].AreaName +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Pincode : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].Pincode +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Email : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.basicdetailtlst[E].Email +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                          AddEducationdetails += "<div class='container'>";
+                          AddEducationdetails += "<div class='row'>";
+
+                          AddEducationdetails += "<div class='col-md-2'>";
+                          @*AddEducationdetails += "<label><b>DOC 1 :</b></label>"+ "  "   +"<a href=/NFormApplication/DownloadApplicationFile/?FileName="+ data.data.basicdetailtlst[E].DOC1  +"><i class='fas fa-eye'></i></a>";*@
+@*                         AddEducationdetails += "<span class='form-control pt-1'>"+ data.data.basicdetailtlst[E].DOC1 +" </span>";
+*@                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-2'>";
+                            @* AddEducationdetails += "<label><b>DOC 2 : </b></label>"+ "  "   + "<a href=/NFormApplication/DownloadApplicationFile/?FileName="+ data.data.basicdetailtlst[E].DOC2  +"><i class='fas fa-eye'></i></a>";*@
+                         @*AddEducationdetails += "<label class='form-control pt-1'>"+ data.data.basicdetailtlst[E].DOC2 +" </label>";*@
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-2'>";
+                         AddEducationdetails += "<label><b>DOC 1 :</b></label>"+ "  "   +"<a href=/NFormApplication/DownloadApplicationFile/?FileName="+ data.data.basicdetailtlst[E].DOC3  +"><i class='fas fa-eye'></i></a>";
+                        @* AddEducationdetails += "<span class='form-control pt-1'>"+ data.data.basicdetailtlst[E].DOC3 +" </span>";*@
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-2'>";
+                             AddEducationdetails += "<label><b>DOC 2 : </b></label>"+ "  "   + "<a href=/NFormApplication/DownloadApplicationFile/?FileName="+ data.data.basicdetailtlst[E].DOC4  +"><i class='fas fa-eye'></i></a>";
+                         @*AddEducationdetails += "<label class='form-control pt-1'>"+ data.data.basicdetailtlst[E].DOC2 +" </label>";*@
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-2'>";
+                             AddEducationdetails += "<label><b>DOC 3 : </b></label>"+ "  "   + "<a href=/NFormApplication/DownloadApplicationFile/?FileName="+ data.data.basicdetailtlst[E].DOC5  +"><i class='fas fa-eye'></i></a>";
+                         @*AddEducationdetails += "<label class='form-control pt-1'>"+ data.data.basicdetailtlst[E].DOC2 +" </label>";*@
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>"; 
+                        AddEducationdetails += "</div>";
+
+                        AddEducationdetails += "</fieldset>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        
+                         $("#ApplicantDetail").append(AddEducationdetails);
+                        E++;
+
+
+                    }
+
+                     var A;
+                    for (A = 0; A < data.data.establishdetaillst.length; A++) {
+
+                        @*  var AddEducationdetails = "<div class='row'>";*@
+                    var AddEducationdetails = "";
+                    
+                        AddEducationdetails += "<fieldset class='border p-2 mt-5'>";
+                        AddEducationdetails += "<legend  class='w-auto'>Establishment Detail</legend>";
+
+                        for (A = 0; A < data.data.establishdetaillst.length; A++) {
+                            AddEducationdetails += "<fieldset class='border p-2 ' id='fieldset_" + A + "'>";
+                         
+                                AddEducationdetails += "<div class='form-group'>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Establishment Code : </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].EstablishmentCode +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Establishment Name : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].EstablishmentName +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Permanent Address : </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].PAddress +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Secondary Address : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].SAddress +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>District : </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].DistrictName +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-6'>";
+                         AddEducationdetails += "<label><b>Taluka : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].TalukaName +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Zone :</b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].ZoneName +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Area : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].AreaName +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Pincode : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.establishdetaillst[A].Pincode +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</fieldset>";
+                        
+                        }
+                          AddEducationdetails += "</fieldset>";
+                         $("#EshtablishDetail").append(AddEducationdetails);
+                       @* A++;*@
+
+
+                    }
+
+
+                      @*  //HearingDetail*@
+                     @* var C;
+                    for (C = 0; C < data.data.hearingdetaillst.length; C++) {
+
+                        if (data.data.hearingdetaillst[C].HearingDatee != null || data.data.hearingdetaillst[C].HearingDatee != "") {
+                          
+                      var AddEducationdetails = "";
+                    
+                        
+                        AddEducationdetails += "<fieldset class='border p-2 mt-5'>";
+                        AddEducationdetails += "<legend  class='w-auto mt-3'>Hearing Detail</legend>";
+
+                           for (C = 0; C < data.data.hearingdetaillst.length; C++) {
+                         AddEducationdetails += "<div class='border p-1' id='fieldset_" + A + "'>";
+                         AddEducationdetails += "<div class='form-group mb-1'>";
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Hearing Date: </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.hearingdetaillst[C].HearingDatee +" </span>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "<div class='col-md-4'>";
+                        AddEducationdetails += "<label><b>Hearing Note : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.hearingdetaillst[C].HearingNote +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-4'>";
+                        AddEducationdetails += "<label><b>Hearing Reason : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.hearingdetaillst[C].HearingReasonName +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "</div>";
+                            }
+                              AddEducationdetails += "</fieldset>";
+                            $("#HearingDetile").append(AddEducationdetails);
+                            
+                        }
+                    }
+*@
+
+               @*     Settlement Review Detail*@
+                       var G;
+                    for (G = 0; G < data.data.SettlementReviewdetaillst.length; G++) {
+
+                        if (data.data.SettlementReviewdetaillst[G].SettlementReviewDatee != null) {
+                    var AddEducationdetails = "";
+
+                         AddEducationdetails += "<fieldset class='border p-2 mt-5'>";
+                         AddEducationdetails += "<legend  class='w-auto'>Review Case Details</legend>";
+                         AddEducationdetails += "<div class='form-group'>";
+                           
+
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+
+
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Case Close Date: </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.SettlementReviewdetaillst[G].SettlementReviewDatee +" </span>";
+                         AddEducationdetails += "</div>"; 
+
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Case Close Note : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.SettlementReviewdetaillst[G].SettlementReviewNote +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Case Close Doc :  </b></label>"+ "  "   +"<a href=/NFormApplication/DownloadSettlementFile/?FileName="+ data.data.SettlementReviewdetaillst[G].SettlementReviewDocURL +"><i class='fas fa-eye'></i></a>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.SettlementReviewdetaillst[G].SettlementReviewDocURL +" </label>";
+                         AddEducationdetails += "</div>";
+
+
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</fieldset>";
+
+                            $("#SettlementReviewDetile").append(AddEducationdetails);
+                            G++;
+                        }
+
+                    }
+
+                     @*     Settlement Detail*@
+                       var D;
+                    for (D = 0; D < data.data.Settlementdetaillst.length; D++) {
+
+                        if (data.data.Settlementdetaillst[D].SettlementDatee != null) {
+                    var AddEducationdetails = "";
+
+                         AddEducationdetails += "<fieldset class='border p-2 mt-5'>";
+                         AddEducationdetails += "<legend  class='w-auto'>Case Detail</legend>";
+                         AddEducationdetails += "<div class='form-group'>";
+                           
+
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+
+
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Case Close Date: </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.Settlementdetaillst[D].SettlementDatee +" </span>";
+                         AddEducationdetails += "</div>"; 
+
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Case Close Note : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Settlementdetaillst[D].SettlementNote +" </label>";
+                         AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-4'>";
+                         AddEducationdetails += "<label><b>Case Close Doc :  </b></label>"+ "  "   +"<a href=/NFormApplication/DownloadSettlementFile/?FileName="+ data.data.Settlementdetaillst[D].SettlementDocURL +"><i class='fas fa-eye'></i></a>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Settlementdetaillst[D].SettlementDocURL +" </label>";
+                         AddEducationdetails += "</div>";
+
+
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</fieldset>";
+
+                            $("#SettlementDetile").append(AddEducationdetails);
+                            D++;
+                        }
+
+                    }
+
+                      @*     Appeal Detail*@
+                       var F;
+                    for (F = 0; F < data.data.Appealdetaillst.length; F++) {
+
+                        if (data.data.Appealdetaillst[F].AppealID != null) {
+                    var AddEducationdetails = "";
+
+                         AddEducationdetails += "<fieldset class='border p-2 mt-5'>";
+                         AddEducationdetails += "<legend  class='w-auto'>Case Appeal Details</legend>";
+                         AddEducationdetails += "<div class='form-group'>";
+                           
+
+                         AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+
+
+                         AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Appeal No.: </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.Appealdetaillst[F].AppealID +" </span>";
+                         AddEducationdetails += "</div>"; 
+
+                         AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Applicant Name : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Appealdetaillst[F].ApplicantName +" </label>";
+                         AddEducationdetails += "</div>";
+
+                         AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Case Favour In : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Appealdetaillst[F].CaseFavour +" </label>";
+                         AddEducationdetails += "</div>";
+
+                          AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Challan No : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Appealdetaillst[F].ChallanNo +" </label>";
+                         AddEducationdetails += "</div>";
+
+                        @* AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Case Close Doc :  </b></label>"+ "  "   +"<a href=/NFormApplication/DownloadSettlementFile/?FileName="+ data.data.Settlementdetaillst[D].SettlementDocURL +"><i class='fas fa-eye'></i></a>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Settlementdetaillst[D].SettlementDocURL +" </label>";
+                         AddEducationdetails += "</div>";*@
+
+
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+
+
+                           AddEducationdetails += "<div class='col-md-12'>";
+                         AddEducationdetails += "<div class='row'>";
+
+
+                         AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Appeal Reason.: </b></label>";
+                         AddEducationdetails += "<span class='form-control pt-1 disablecolor'>"+ data.data.Appealdetaillst[F].AppealReason +" </span>";
+                         AddEducationdetails += "</div>"; 
+
+                         AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Challan Amount : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Appealdetaillst[F].ChallanAmount +" </label>";
+                         AddEducationdetails += "</div>";
+
+                         AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Date Of Challan : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Appealdetaillst[F].DateOfChallan +" </label>";
+                         AddEducationdetails += "</div>";
+
+                          AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Challan File : </b></label>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Appealdetaillst[F].ChallanFile +" </label>";
+                         AddEducationdetails += "</div>";
+
+                        @* AddEducationdetails += "<div class='col-md-3'>";
+                         AddEducationdetails += "<label><b>Case Close Doc :  </b></label>"+ "  "   +"<a href=/NFormApplication/DownloadSettlementFile/?FileName="+ data.data.Settlementdetaillst[D].SettlementDocURL +"><i class='fas fa-eye'></i></a>";
+                         AddEducationdetails += "<label class='form-control pt-1 disablecolor'>"+ data.data.Settlementdetaillst[D].SettlementDocURL +" </label>";
+                         AddEducationdetails += "</div>";*@
+
+
+                         AddEducationdetails += "</div>"; 
+                         AddEducationdetails += "</div>";
+
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";
+                            AddEducationdetails += "</fieldset>";
+
+                            $("#AppealDetails").append(AddEducationdetails);
+                            F++;
+                        }
+
+                    }
+
+
+              
+                       
+                }
+            });
+
+    }
+ </script>
+}

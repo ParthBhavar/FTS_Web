@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - COL</title>
+
+    <link rel="stylesheet" href="~/Scripts/vendors/feather/feather.css" />
+    <link rel="stylesheet" href="~/Scripts/vendors/ti-icons/css/themify-icons.css" />
+    <link rel="stylesheet" href="~/Scripts/vendors/css/vendor.bundle.base.css" />
+    <link rel="stylesheet" href="~/Scripts/vendors/select2/select2.min.css" />
+    <link rel="stylesheet" href="~/Scripts/vendors/select2-bootstrap-theme/select2-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Scripts/css/vertical-layout-light/style.css" />
+
+     <link href="~/Scripts/css/all.css" rel="stylesheet">
+     <link href="~/Scripts/css/fontawesome.css" rel="stylesheet">
+    <link href="~/Scripts/css/brands.css" rel="stylesheet">
+    <link href="~/Scripts/css/solid.css" rel="stylesheet">
+    <link href="~/Scripts/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/chosen.min.css" rel="stylesheet">
+
+@*    <link rel="stylesheet" href="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <link rel="stylesheet" href="~/Scripts/js/select.dataTables.min.css" />*@
+    @*    <script src="~/Scripts/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/Scripts/js/dataTables.select.min.js"></script>*@
+@*    <script src="~/Scripts/js/datatables/datatables.min.js"></script>*@
+@*    <link href="~/Scripts/css/datatables/datatables.min.css" rel="stylesheet">*@
+
+     <link href="~/Scripts/css/kendo.common.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/kendo.d_efault.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/kendo.default.mobile.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/customscrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">
+  
+    <script src="~/Scripts/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/Scripts/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+    <script src="~/Scripts/vendors/select2/select2.min.js"></script>
+    <script src="~/Scripts/js/off-canvas.js"></script>
+    <script src="~/Scripts/js/hoverable-collapse.js"></script>
+    <script src="~/Scripts/js/template.js"></script>
+    <script src="~/Scripts/js/settings.js"></script>
+    <script src="~/Scripts/js/todolist.js"></script>
+    <script src="~/Scripts/vendors/js/file-upload.js"></script>
+    <script src="~/Scripts/vendors/js/typeahead.js"></script>
+    <script src="~/Scripts/vendors/js/select2.js"></script>
+    <script src="~/Scripts/vendors/chart.js/Chart.min.js"></script>
+     <script src="~/Scripts/js/sweetalert.min.js"></script>
+    <script src="~/Scripts/js/chosen.jquery.min.js"></script>
+    <script src="~/Scripts/js/dashboard.js"></script>
+    <script src="~/Scripts/js/Chart.roundedBarCharts.js"></script>
+    <script src="~/Scripts/vendors\Pagination\script.js"></script>
+    <script src="~/Scripts/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/js/jszip.min.js"></script>
+    <script src="~/Scripts/js/kendo.all.min.js"></script>
+    <script src="~/Scripts/js/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/js/customscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+
+</head>
+
+<body>
+    @*Title*@
+    <div class="container-scroller">
+        <div class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex" style="background-color:#F5F7FF">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:#F5F7FF">
+                <ul class="navbar-nav">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                                <span class="input-group-text" id="search">
+                                    <i class="icon-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul>
+                <div class="navbar-menu-wrapper d-flex align-items-center justify-content-center" style="background-color:#F5F7FF">
+                    <h2 style="font-weight:bold;">Commissionerate of Labour</h2>
+                </div>
+                <div class="navbar-nav navbar-nav-right">
+                   <input type="text" , readonly="readonly", class="form-control" id="test" >                 
+                    @Html.ActionLink("Logout", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary m-2", @style = "font-weight: bold;" })
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid page-body-wrapper">
+            @*Slider*@
+            <nav class="sidebar sidebar-offcanvas" id="sidebar" style="width:auto;">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index","Dashboard")">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                       @* <a class="nav-link" href="@Url.Action("Index","Position")">*@
+                           <a class="nav-link" data-toggle="collapse" href="#applicantprofile" aria-expanded="false" aria-controls="applicantprofile"> 
+                           <i class="icon-ribbon menu-icon"></i>
+                            <span class="menu-title">Applicant Profile</span>
+                             <i class="menu-arrow"></i>
+                         </a>
+                        <div class="collapse" id="applicantprofile">
+                            <ul class="nav flex-column sub-menu">
+                                @*<li class="nav-item"><a class="nav-link" href="#"> Applicant Profile </a></li>*@
+                                <li class="nav-item">@Html.ActionLink("Applicant Profile", "Index", "ApplicantProfile", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                                <li class="nav-item"><a class="nav-link" href="#">Change Password </a></li>
+                           </ul>
+                        </div>    
+                    </li>                               
+                                
+                     <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#form-elements-Registration" aria-expanded="false" aria-controls="form-elements-Registration">
+                            <i class="icon-ribbon menu-icon"></i>
+                            <span class="menu-title">Registration</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="form-elements-Registration">
+                            <ul class="nav flex-column sub-menu">
+                                
+                                @*<li class="nav-item"><a class="nav-link" href="#">Registration of Concilliation </a></li>*@
+                                <li class="nav-item">@Html.ActionLink("ConciliationApplication", "Index", "ConciliationApplication", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                                <li class="nav-item"><a class="nav-link" href="#">Registration of Reinstatement </a></li>
+                                @*<li class="nav-item">@Html.ActionLink("Registration of Establishment(4)", "Index", "ApplicantProfile", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>*@
+                                <li class="nav-item"><a class="nav-link" href="#">Commencement/Cessation(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">License/Renewal/Amendment(1)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Industrial premises(3)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Inter-State Migrant Workers(4)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Trade Union(1)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Withdraw/Cancel Certificate(7)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Registration of Trade Union(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Change Name/Amalgamation(3)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Trade Union to Registrar(8)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Employer to Authority(6)</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    @*<li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#caseclaim" aria-expanded="false" aria-controls="caseclaim">
+                            <i class="icon-briefcase menu-icon"></i>
+                            <span class="menu-title">CASE/CLAIM MANAGEMENT</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="caseclaim">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">@Html.ActionLink("Single Application Claim(4)", "CaseClaimDtl", "CaseClaim", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                                <li class="nav-item"><a class="nav-link" href="#">Reference of Claims(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Failure Report(1)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Retrenchment/Closure(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Lay Off/Retrenchment/Closure(3)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Notice to the Employer(1)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Complaint under Section 91(6)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Certification of Standing Order(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Application for Direction(8)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Competent Authority/Summon(5)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Notice for Payment of Gratuity(7)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Recovery of Gratuity(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Payment of Cess(6)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Compounding of Offences(5)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Composition of Offence(3)</a></li>
+                            </ul>
+                        </div>
+                    </li>*@
+                    @*<li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#Master" aria-expanded="false" aria-controls="Master">
+                            <i class="icon-bell menu-icon"></i>
+                            <span class="menu-title">Master</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="Master">
+                            <ul class="nav flex-column sub-menu">
+
+                                <li class="nav-item">@Html.ActionLink("Role Master","Index" , "RoleMaster", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                                 <li class="nav-item">@Html.ActionLink("Branch Master","Index" , "BranchMaster", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                <li class="nav-item">@Html.ActionLink("Role Master","Index" , "RoleMaster", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>                    
+
+                                <li class="nav-item"><a class="nav-link" href="#">Reference of Claims(2)</a></li>
+                            </ul>
+                        </div>
+
+                       
+                    </li>*@
+                    @*<li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-bell menu-icon"></i>
+                            <span class="menu-title">Online CESS(9)</span>
+                        </a>
+                    </li>*@
+                   @* <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-eye menu-icon"></i>
+                            <span class="menu-title">BOCW(5)</span>
+                        </a>
+                    </li>*@
+                   @* <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-columns menu-icon"></i>
+                            <span class="menu-title">Inspection(8)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-bar-graph menu-icon"></i>
+                            <span class="menu-title">MIS Reports</span>
+                        </a>
+                    </li>*@ 
+                    
+                   @* <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-paper menu-icon"></i>
+                            <span class="menu-title">Common Document Repository</span>
+                        </a>
+                    </li>*@
+                </ul>
+            </nav>
+            @*Main Content*@
+            <div class="main-panel">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <center>
+                        <p>Copyright &copy; @DateTime.Now.Year</p>
+                    </center>
+                </footer>
+            </div>
+        </div>
+
+    </div>
+    @using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor HttpContextAccessor
+<script>
+   var isFiltered = '@HttpContextAccessor.HttpContext.Session.GetString("_ApplicantName")';
+$('#test').val(isFiltered);
+</script>
+    <script>
+    
+
+              $("input[type='checkbox']").on('change', function(){
+       $(this).val(this.checked ? "true" : "false");
+       })
+
+       $(".datepicker").kendoDatePicker();
+
+    </script>
+
+</body>
+</html>
+

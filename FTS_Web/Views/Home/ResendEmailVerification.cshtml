@@ -1,0 +1,248 @@
+﻿@model FTS.Model.Entities.ApplicantMasterModel
+@{
+    ViewBag.Title = "Resend Email Verification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="body">
+    @Html.AntiForgeryToken();
+    <div class="main-wrapper py-5">
+            <div class="container-fluid">               
+                <div class="content-box reg-box">
+                    <div>
+                          <img src="~/images/govtlogo.png" class="rounded mx-auto d-block pt-3" alt="logo">
+                      <div class="content-header py-1">
+                        <h3 class="text-center text-white mt-3" ><i class="fas fa-user mr-2"></i>
+                           Resend Email Verification
+                        </h3>
+                      </div> 
+                    </div>                    
+                            <div class="content-body">
+                                                                @*EMAIL *@
+                                <div class="form-group">
+                                    <label for="inputEmail" class="col-form-label">
+                                        <i class="fas fa-envelope mr-2"></i>
+                                        <span id="lblEmail">Email</span><span class="text-danger">*</span>
+                                     </label>
+                                   <div class="col-6 col-sm-7 col-md-12 px-0">
+                                        @Html.TextBoxFor(e =>e.EmailID, new { @class = "form-control", @type = "email",@ID="EmailID", @placeholder = "Enter EmailID" })
+                                        @Html.HiddenFor(e => e.ApplicantOTP , new { @ID="ApplicantOTP"})
+                                        <span class="text-danger ValidationSpan" id="SpanEmailID" style="display:none;">Please Enter EmailID</span>
+                                        <span class="text-danger ValidationSpan" id="SpanvalidEmail" style="display:none;">Please Enter Valid Email Address.</span>
+                                   </div>
+                                </div>
+
+                                <div class="form-group">  
+                                    <div class="d-md-flex d-block">
+                                        <div class="col-md-12 text-center">
+                                             <input type="button" id="btnsubmit" class="btn btn-primary w-30 w-md-auto mb-3 mb-md-0" value="Submit" onclick="SubmitMailId();" /> 
+                                        </div>
+                                    </div>
+                                </div>
+             
+                                </div>
+                            </div>
+                </div>
+            </div>           
+</div>
+
+                
+                    
+	
+<style>
+    body {
+    position: relative;
+    font-family: 'Nunito', sans-serif;
+    color: #333;
+    background-color: #eeeeee;
+    font-weight: 400;
+}
+.container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.content-box {
+    background: #fff;
+    border-radius: 1.5rem;
+    -moz-box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0px 2px 15px rgb(0 0 0 / 20%);
+    box-shadow: 0px 2px 15pxrgb(0 0 0 / 20%);
+    overflow: hidden;
+    height: 100%;
+}
+.reg-box {
+    max-width: 620px;
+    margin: 0 auto;
+    width: 100%;
+    height: auto !important;
+}
+.content-header {
+    background: #022d62 !important;
+    color: #ffffff;
+    padding: 5px 2px;
+        margin-top: 15px;
+}
+.content-body {
+    padding: 20px;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+.form-group{
+     width: 100%;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.content-body .col-form-label {
+    font-weight: 600;
+    padding-top: 0;
+}
+.col-form-label {
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: 1.5;
+}
+.btn-primary {
+    background: #ef3139;
+    border-color: #ef3139;
+}
+.btn-primary::hover{
+    background: #0a73aa;
+    border-color: #0a73aa;
+}
+
+</style>
+<script>
+
+     function SubmitMailId() {
+            debugger;
+             var ErrorCnt = 0;
+             var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+             var email = $("#EmailID").val(); 
+
+            $('.ValidationSpan').hide();
+            if ($("#EmailID").val() == "0" || $("#EmailID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmailID').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    EmailID: $('#EmailID').val(),
+                    ApplicantOTP: $('#ApplicantOTP').val(),  
+                    IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/Home/SaveApplicantResendEmailRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+
+                            if (data.data.ErrorCode == 0) {
+                                SendMailApplicant();
+                            }
+                            else {
+                                swal({
+                                        title: data.data.ErrorMassage,
+                                        type: "error",
+                                        confirmButtonText: "OK"
+                                  })
+                            }
+                        },
+
+                        error: function (request, message, error) 
+                          {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+
+    function SendMailApplicant() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#EmailID").val() == "0" || $("#EmailID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmailID').show();
+            }
+           
+       
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    EmailID: $('#EmailID').val(),                 
+                    Title: "Resend Email Verify for COL Applcation",
+                    Body:  $('#ApplicantOTP').val(),                
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/Home/ReSendMailApplicant",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+
+                            if (data.data.ErrorCode == 0) {
+                                 var Querystring = "ID=" + data.data.EmailID;
+                                 swal({
+                                        title: "Email Is SuccessFully Sent",
+                                        type: "success",
+                                        confirmButtonText: "OK"
+                                 },)
+                                        .then((value) => {
+                                            window.location.href = "/Home/ResendVerifyOTP?" + Querystring;
+                                        });
+                            }
+                            else {
+                                swal({
+                                        title: "Something Went Wrong",
+                                        type: "error",
+                                        confirmButtonText: "OK"
+                                  })
+                            }
+                        },
+
+                         error: function (request, message, error) 
+                         {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+</script>

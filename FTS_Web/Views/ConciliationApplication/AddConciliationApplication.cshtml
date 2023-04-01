@@ -1,0 +1,451 @@
+﻿@model  FTS.Model.Entities.ConciliationApplicationModel
+@{
+   ViewBag.Title = "Conciliation Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@*<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+       <br />
+    <section>
+        <h3 style="font-weight:bold;">Conciliation Application</h3>
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+    </section>   
+
+ <div class="content-wrapper">
+      
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                             <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab"  style="padding-bottom: 0rem;">
+             <a class="nav-link active" id="step1-tab" data-bs-toggle="tab">Step 1</a>
+             <a class="nav-link" id="step3-tab" data-bs-toggle="tab">Step 2</a>
+              <a class="nav-link" id="step2-tab" data-bs-toggle="tab">Step 3</a>
+              <a class="nav-link" id="step3-tab" data-bs-toggle="tab">Step 4</a>
+            @* @if(@Model.IsSubmit == true )
+             {
+                <a class="nav-link" id="step2-tab" data-bs-toggle="tab"  href="/ConciliationApplication/AddConciliationEstablishment?ApplicationID=@Model.ApplicationID&ISNew=1">Step 2</a>
+              }
+              else
+              {
+               <a class="nav-link" id="step3-tab" data-bs-toggle="tab">Step 2</a>         
+              }
+
+              @if(@Model.IsSubmit == true)
+             {
+                  <a class="nav-link" id="step3-tab" data-bs-toggle="tab"  href="/ConciliaitonApplication/AddConciliationTradunion?ApplicationID=@Model.ApplicationID&ISNew=1" > Next</a>
+             }
+             else
+             {
+                 <a class="nav-link" id="step2-tab" data-bs-toggle="tab">Step 3</a>
+              }
+
+              @if(@Model.IsSubmit == true )
+             {
+              <a class="nav-link" id="step3-tab" data-bs-toggle="tab"  href="/ConciliaitonApplication/AddConcilUploadDocument?ApplicationID=@Model.ApplicationID">Step 4</a>
+             }
+              else
+             {
+                 <a class="nav-link" id="step3-tab" data-bs-toggle="tab">Step 4</a>
+             }*@
+                        </div>
+          </nav>
+                    <div class="card-body">
+                       @* <span class="text-danger">All * Fields are mandatory</span>*@
+                        <div class="form-group">
+                             <div class="row">
+                                <div class="col-md-6 mb-2">
+                                   @Html.Label("Application Send To: ")
+                                     
+                                    @Html.RadioButtonFor(model => model.IsSendHO, "false")  
+                                     District
+                                    @Html.RadioButtonFor(model => model.IsSendHO, "true")  
+                                     HO  
+                                   @*<input type="radio" value="false"  id="IsSendHO" name="item.Value" /> <span> District</span>
+                                    <input type="radio" value="true" id="IsSendHO" name="item.Value" /> <span> HO</span>*@
+                                    <span class="text-danger ValidationSpan" id="SpanSenHO" style="display:none;">Invalid Selection</span>
+
+                                   @*   @Html.RadioButtonFor(e => e. , new { @ID="ApplicationID"})
+                                      @Html.RadioButtonFor(e => e.ApplicantName, new { @class = "form-control", @ID="ApplicantName", required = "required" })*@
+                                </div>
+                              
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.Label("Applicant Name : / અરજદારનું નામ :") <span class="text-danger">*</span>
+                                    @Html.HiddenFor(e => e.AppliactionIDEdit , new { @ID="ApplicationID"})
+                                    @Html.TextBoxFor(e => e.ApplicantName, new { @class = "form-control", @ID="ApplicantName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanApplicantName" style="display:none;">Please Add Applicant Name</span>
+                                </div>
+                                 <div class="col-md-6">
+                                     @Html.Label("Applicant's Email Address : / અરજદારોનું ઇમેઇલ સરનામું:") <span class="text-danger">*</span>
+                                    @Html.TextBoxFor(e => e.ApplicantEmailId, new { @class = "form-control", @ID="ApplicantEmailId", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanApplicantEmail" style="display:none;">Please Add Email Address</span>
+                                     <span class="text-danger ValidationSpan" id="SpanvalidEmail" style="display:none;">Please Enter Valid Email Address.</span>
+                                 </div>
+                              
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                  <div class="col-md-5">
+                                    @Html.Label("Permanent Address : / કાયમી સરનામુ:")<span class="text-danger ml-1">*</span>
+                                   @Html.TextAreaFor(e => e.Address1, new { @class = "form-control", @ID="Address1", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanApplicantAddress" style="display:none;">Please Add Permanent Address</span>
+                                </div>
+                                 <div class="col-md-2" style="margin-top: auto;">
+                                    @Html.Label("Copy Permanent Address")
+                                    @Html.CheckBox("SameasPaddress", new { @ID="SameasPaddress"})
+                                </div>
+                                  <div class="col-md-5">
+                                      @Html.Label("Secondary Address : / ગૌણ સરનામું:")
+                                   @Html.TextAreaFor(e => e.Address2, new { @class = "form-control", @ID="Address2", required = "required" })
+                                </div>
+                         </div>
+                         </div>  
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.Label("District: / જિલ્લો:")<span class="text-danger ml-1">*</span>
+                                    @Html.DropDownListFor(e => e.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID", })
+                                   <span class="text-danger ValidationSpan" id="Spandistrict" style="display:none;">Please Select District</span>
+                                </div>
+
+                                 <div class="col-md-3">
+                                    @Html.Label("Taluka: / તાલુકો:")<span class="text-danger ml-1">*</span>
+                                     @* @Html.HiddenFor(e => e.TalukaID , new { @ID="drpTalukaID"})
+                                    <select    id="TalukaID" name="TalukaID"></select> *@ 
+                                    @Html.DropDownListFor(e => e.TalukaID, new SelectList(Model.Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TalukaID", })
+                                <span class="text-danger ValidationSpan" id="Spantaluka" style="display:none;">Please Select Taluka</span>
+                                </div>
+                                   <div class="col-md-3" id="DivArea" style="display:none;">
+                                    @Html.Label("Area : / વિસ્તાર:") <span class="text-danger ml-1">*</span>
+                                    @Html.HiddenFor(e => e.ZoneID , new { @ID="ZoneID"})
+                                    @Html.HiddenFor(e => e.AreaID , new { @ID="AreaID"})
+                                     <input id="ddlArea" class="form-control" value="@Model.AreaID" style="width:100%;" />
+                                      @*@Html.DropDownListFor(e => e.ddlArea, new SelectList(Model.AreaList,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TalukaID", })*@
+@*                                   @Html.DropDownListFor(e => e.AreaID, new SelectList(Model.AreaList,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="ddlArea"})
+*@                                <span class="text-danger ValidationSpan" id="SpanArea" style="display:none;">Please Select Taluka</span>
+                                </div>
+                                   <div class="col-md-3">
+                                    @Html.Label("Pincode :/ પીન કોડ:")<span class="text-danger ml-1">*</span>
+                                      @*@Html.TextBoxFor(e => e.Pincode, new { @class = "form-control", @ID="Pincode", required = "required",@type = "number", maxlength="6",oninput="numberOnly(this.id);"})*@
+                                      @Html.TextBoxFor(e => e.Pincode, new { @class = "form-control", @ID="Pincode", required = "required",maxlength="6"})
+                                        <span class="text-danger ValidationSpan" id="Spanpincode" style="display:none;">Please Enter Pincode</span>
+                                        <span class="text-danger ValidationSpan" id="Spanvalidpincode" style="display:none;">Please Enter valid  Pincode</span>
+                                       <span class="text-danger ValidationSpan" id="Spanlengthpincode" style="display:none;">Please Enter 6 digit pin code</span>
+                                       <span class="text-danger ValidationSpan" id="spaninvalid" style="display:none;">Invalid Pincode</span>
+                                </div>
+                        </div>
+                         </div>  
+                        
+                          @*<div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitAppliaction();" />
+                            @Html.ActionLink("Cancel", "index", "ConciliationAppliaction", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   *@
+                          <div class="form-group">
+                            @if(@Model.IsSubmit == true )
+                            {
+                                <a id="Edit" class="btn btn-info"  href="/ConciliationApplication/AddConciliationEstablishment?ApplicationID=@Model.ApplicationID&ISNew=1" > Next</a>
+                            }
+                            else
+                            {
+                                 <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitAppliaction();" />
+                            }
+
+                            @Html.ActionLink("Cancel", "index", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+
+ <script>
+
+    $(document).ready(function () {
+      
+          debugger   
+                  @* if ('@Model.IsSubmit' == 'True') {
+                   $('#IsSendHO').attr("disabled", true);
+                   }*@
+
+                bindAreaDropdown(@Html.Raw(Json.Serialize(Model.AreaList))); 
+                   if ('@Model.AppliactionIDEdit' > '0' && '@Model.AreaID' > '0') 
+                  {
+                      $("#DivArea").show();
+                  }
+                  else 
+                  {
+                       $("#DivArea").hide();
+                  }
+
+               if ($("#Pincode").val() == "0") {
+                 $("#Pincode").val(""); 
+              }
+
+              @*$("input[name='gender']:checked").val();*@
+
+            });
+
+
+    function bindAreaDropdown(obj) {
+            
+        $("#ddlArea").kendoMultiColumnComboBox({
+            dataTextField: "DisplayValue",
+            dataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue"],
+            dataSource: {
+                data: obj
+            },
+             autoClose: false,
+             close: function (e) {
+             
+                if (this.dataSource.data().length > 0)
+                {
+                    if (this.dataSource.data()[this.selectedIndex] != undefined) 
+                    {
+                         var data = this.dataSource._pristineData.find(x => x.DataValue == this.value());
+                        if (data != undefined) 
+                        {
+                            @*$('#ZoneID').val(this.dataSource.data()[this.selectedIndex].ZoneID);*@
+                                @*$('#AreaID').val(this.dataSource.data()[this.selectedIndex].DataValue);*@
+                            $('#ZoneID').val(data.ZoneID);
+                            $('#AreaID').val(data.DataValue);
+                            @*$('#ddlArea').val(this.dataSource.data()[this.selectedIndex].areaID);*@
+                        }
+                       else
+                        {
+                            $('#ddlArea').data("kendoMultiColumnComboBox").value('');
+                            swal("Please Select Valid Area");
+                            $('#ZoneID').val(0);
+                            $('#AreaID').val(0);
+                        }
+                   @* }*@
+                    
+                }
+                else
+                {
+                     $('#ddlArea').data("kendoMultiColumnComboBox").value('');
+                     swal("Please Select Valid Area");
+                        $('#ZoneID').val(0);
+                        $('#AreaID').val(0);
+                }
+            }
+            },
+
+        });
+    }
+    $("#Pincode").bind("keypress", function (e) {
+        debugger
+       var keyCode = e.which ? e.which : e.keyCode
+       if (!(keyCode >= 48 && keyCode <= 57)) {
+
+           return false;
+       } 
+
+   });
+
+      //Distric Change Method
+         //Distric Change Method
+      $(function () {
+        $("#DistrictID").change(function () {
+            debugger;
+                $.ajax({
+                    type: "GET",
+                    url: "/ConciliationApplication/AllList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#EstablisDetailID").val(), DistrictID: $("#DistrictID").val() },
+                    success: function (response) {
+                        
+                        $("#ddlArea").kendoMultiColumnComboBox().empty();
+                        $("#TalukaID").empty();
+                        var row = "";
+                         row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                          $("#TalukaID").html(row).trigger('chosen:updated');
+
+                        if (response.data.AreaList != "") {
+                            $("#DivArea").show();
+                            bindAreaDropdown(response.data.AreaList);
+
+                        }
+                        else {
+                            $("#DivArea").hide();
+                             $('#ZoneID').val(0);
+                        $('#AreaID').val(0);
+                        }
+                    },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                   @* error: function (response) {
+                        respone will be returned here
+                        $("#error").val(response.responseText);
+                    }*@
+                    error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                });
+            });
+        });
+
+
+
+           function SubmitAppliaction() {
+            debugger;
+             var ErrorCnt = 0;
+              var pincoderegx = "[1-9][1-9][0-9]{4}$";
+             @*var pincodeEx = /^[1-9][0-9]{5}$/;*@
+           @*  var pincode = $("#Pincode").val();*@
+             var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+             var email = $("#ApplicantEmailId").val();
+
+
+            $('.ValidationSpan').hide();
+            if ($("#ApplicantName").val() == "0" || $("#ApplicantName").val() == "") {
+                ErrorCnt++;
+                $('#SpanApplicantName').show();
+            }
+
+            if ($("#ApplicantEmailId").val() == "0" || $("#ApplicantEmailId").val() == "") {
+                ErrorCnt++;
+                $('#SpanApplicantEmail').show();
+            }
+             if ($("#Address1").val() == "0" || $("#Address1").val() == "") {
+                ErrorCnt++;
+                $('#SpanApplicantAddress').show();
+            }
+
+            if ($("#DistrictID").val() == "0" || $("#DistrictID").val() == "") {
+                ErrorCnt++;
+                $('#Spandistrict').show();
+            }
+            
+            if ($("#TalukaID").val() == "0" || $("#TalukaID").val() == "") {
+                ErrorCnt++;
+                $('#Spantaluka').show();
+            }
+
+            if ($("#Pincode").val() == "0" || $("#Pincode").val() == "") {
+                ErrorCnt++;
+                $('#Spanpincode').show();
+            }
+             var pincode = $("#Pincode").val();
+
+             if (!pincode.match(pincoderegx)) {
+                 ErrorCnt++;
+                $("#Spanvalidpincode").show();
+             }	
+           @*  if ($("#IsSendHO").val() === "undefined")) {
+                ErrorCnt++;
+                $('#SpanSenHO').show();
+               
+            }*@
+            if ($("#DivArea").is(":visible")) {  
+                if ($("#ddlArea").val() == "0" || $("#ddlArea").val() == "") {
+                ErrorCnt++;
+                $('#SpanArea').show();
+                }
+              }
+
+            if ($("#Pincode").val().length < 6 ) {
+                ErrorCnt++;
+                $('#Spanlengthpincode').show();
+            }
+
+          
+             if ($("#ApplicantEmailId").val() == "0" || $("#ApplicantEmailId").val() == "") {
+                ErrorCnt++;
+            $('#SpanApplicantEmail').show();
+            }
+             else if (!email.match(mailregEx)) {
+                ErrorCnt++;
+            $('#SpanvalidEmail').show();
+            }
+
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    ApplicantName: $('#ApplicantName').val(),
+                    ApplicantEmailId: $('#ApplicantEmailId').val(),
+                    Address1: $('#Address1').val(),
+                    Address2: $('#Address2').val(),
+                    DistrictID: $('#DistrictID').val(),
+                    TalukaCode: $('#TalukaID').val(),
+                    Pincode: $('#Pincode').val(),
+                    IsActive: $('#IsActive').val(),
+                    URL: document.URL,
+                    ZoneID: $('#ZoneID').val(),
+                    AreaID: $('#AreaID').val(),
+                    IsSendHO :$(":radio:checked").val()
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ConciliationApplication/SaveApplicationRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                var ApplicationID = data.data.ApplicationID;
+                                var ISNew =  data.data.ISNew;
+                                 var Querystring = "ApplicationID=" + ApplicationID + "&ISNew=" + ISNew;
+                                window.location.href = "/ConciliationApplication/AddConciliationEstablishment?" + Querystring;
+                               @*alert(data.data.errorMassage);*@
+                            }
+                            else {
+                                swal(data.data.errorMassage);
+                            }
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+    $('#SameasPaddress').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+          var val = $('#Address1').val();
+           $('#Address2').val(val);
+            $('#Address2').attr("disabled", true);
+        } 
+        else{
+            $('#Address2').attr("disabled", false);
+        }
+    });
+
+
+     </Script>
+  
+ }

@@ -1,0 +1,183 @@
+﻿@model FTS.Model.Entities.EmployeeMasterModel
+@{
+    ViewBag.Title = "Employee Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                   <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="form-group"> 
+			 		                <select class  ="form-control" name="state" id="maxRows">
+						                    <option value="5000">Show ALL Rows</option>
+						                    <option value="5">5</option>
+						                    <option value="10">10</option>
+						                    <option value="15">15</option>
+						                    <option value="20">20</option>
+						                    <option value="50">50</option>
+						                    <option value="70">70</option>
+						                    <option value="100">100</option>
+						                </select>
+			                      </div>
+                                </div> 
+                                <div class="col-md-2">
+                                   @Html.ActionLink("Apply New", "AddEmployeeMaster", "EmployeeMaster", new { EmployeeID = 0 }, new { @class = "btn btn-primary" })
+                                </div>
+                                
+                                <div class="col-md-1">
+                                   <input type="button"  value="Search" class="btn btn-primary" onclick="EmployeeList();" />
+                                </div>
+                            </div>
+                        </div>
+                                <div class="table-responsive">
+                                    <table id="EmployeeList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                  <th id="EmployeeID"> Employee ID </th>
+                                                  <th id="EmpCode"> EmpCode  </th>
+                                                  <th id="DesignationID"> Designation ID </th>
+                                                  <th id="RegionID"> Region ID </th>
+                                                  <th id="FirstName"> FirstName </th>
+                                                  <th id="MiddleName"> MiddleName </th>
+                                                  <th id="LastName"> LastName </th>
+                                                  <th id="EmailID"> EmailID </th>
+                                                  <th id="MobileNo"> MobileNo </th>
+                                                  <th id="PAddress"> PAddress </th>
+                                                  <th id="SAddress"> SAddress </th>
+                                                  <th id="Gender"> Gender </th>
+                                                   <th id="DOB">DOB</th>
+                                                   <th id="Password"> Password </th>
+                                                  <th id="Edit">Edit</th>
+                                                  <th id="Delete">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                   <!--		Start Pagination -->
+			                    <div class='pagination-container' >
+				                    <nav>
+				                      <ul class="pagination">
+                                           <li data-page="prev" >
+                                               <span class="page-link"> Previous <span class="sr-only">(current)</span>
+                                               </span>
+                                            </li>
+                                           <li data-page="next" id="prev">
+                                               <span class="page-link"> Next<span class="sr-only">(current)</span>
+                                               </span>
+                                            </li>
+				                      </ul>
+				                    </nav>
+			                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+      $( document ).ready(function() {
+        EmployeeList();
+    });
+
+        function EmployeeList() {
+          
+            var myData = {
+                serchstring: $('#serchstring').val()
+            };
+            $.ajax
+             ({
+               type: "POST",
+               url: "/EmployeeMaster/Index",
+               dataType: "json",
+               data: myData,
+               success: function (data) {
+                   debugger;
+                   if (data.data.result != "") 
+                   {
+                       $("#EmployeeList tbody").html("");
+                       var RowHtml = "";
+                          for (var i = 0; i < data.data.result.length; i++) {
+                               RowHtml = RowHtml + "<tr>";
+                               RowHtml = RowHtml + '<td id="EmployeeID">' + data.data.result[i].employeeID + '</td>';
+                               RowHtml = RowHtml + '<td id="EmpCode">' + data.data.result[i].empCode + '</td>';
+                               RowHtml = RowHtml + '<td id="DesignationID">' + data.data.result[i].designationID + '</td>';
+                               RowHtml = RowHtml + '<td id="RegionID">' + data.data.result[i].regionID + '</td>';
+                               RowHtml = RowHtml + '<td id="FirstName">' + data.data.result[i].firstName + '</td>';
+                               RowHtml = RowHtml + '<td id="MiddleName">' + data.data.result[i].middleName + '</td>';
+                               RowHtml = RowHtml + '<td id="LastName">' + data.data.result[i].lastName + '</td>';
+                               RowHtml = RowHtml + '<td id="EmailID">' + data.data.result[i].emailID + '</td>';
+                               RowHtml = RowHtml + '<td id="MobileNo">' + data.data.result[i].mobileNo + '</td>';
+                               RowHtml = RowHtml + '<td id="PAddress">' + data.data.result[i].pAddress + '</td>';
+                               RowHtml = RowHtml + '<td id="SAddress">' + data.data.result[i].sAddress + '</td>';
+                               RowHtml = RowHtml + '<td id="Gender">' + data.data.result[i].gender + '</td>';
+                               RowHtml = RowHtml + '<td id="DOB">' + data.data.result[i].dOB + '</td>';
+                               RowHtml = RowHtml + '<td id="Password">' + data.data.result[i].password + '</td>';
+                               RowHtml = RowHtml + '<td> <a id="Edit" href="/EmployeeMaster/AddEmployeeMaster/?EmployeeID=' + data.data.result[i].employeeID + '" class="btn btn-primary" >Edit'+'<i class="bi bi-pencil"></i>'+ '</a>' + '</td>';
+                               RowHtml = RowHtml + '<td> <a id="Delete" onclick="return DeleteEmployeeRecord(' + data.data.result[i].employeeID + ');" class="btn btn-primary" >Delete'+'<i class="bi bi-pencil"></i>'+ '</a>' + '</td>';
+                                // RowHtml = RowHtml + '<td> <button id="Edit" onclick="Test();" class="btn btn-primary" >Edit </button>' + '</td>';
+                               RowHtml = RowHtml + "</tr>";
+                             }
+                                   $("#EmployeeList tbody").html(RowHtml);
+                           }
+                           
+                    else {
+                       alert('Data not found!');
+                   }
+                    getPagination('#EmployeeList');
+               },
+               error: function () {
+                   alert('Something went wrong!');
+               }
+              })
+    }
+
+    function DeleteEmployeeRecord(employeeID) {
+        debugger;
+                var myData = {
+                    EmployeeID: EmployeeID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/EmployeeMaster/DeleteEmployeeRecord",
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.errorCode == 0) {
+                                window.location.href = "/EmployeeMaster/Index";
+                                alert(data.data.errorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+
+                        },
+
+                        error: function() {
+                            alert('Something went wrong!');
+                        }
+                    })
+           
+    }
+
+        </script>
+
+}

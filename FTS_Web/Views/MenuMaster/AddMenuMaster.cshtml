@@ -1,0 +1,282 @@
+﻿@model FTS.Model.Entities.MenuMasterModel
+@{
+    ViewBag.Title = "MENU MASTER";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+        @using (Html.BeginForm("AddMenuMaster", "MenuMasterController", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken();
+     
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">@ViewBag.Title</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                    <div class="form-group-required">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+                    </div>
+
+                     <form class="form-row" asp-controller="MenuMaster" asp-action="Index" asp-antiforgery="true" method="post">
+                         
+                            <div class="form-group">
+                            <div class="row">
+
+                               
+                                    @*<div class="col-md-4">
+                                    
+                                     <label class="col-md-4 ">MenuId<span class="text-danger"> *</span></label>                                
+                                     @Html.TextBoxFor(x => x.MenuId, new { @class = "form-control BlockSpecialChar", @ID="MenuId" ,title = "Enter MenuId.", placeholder = "Enter MenuId", maxlength = 100, data_val = "true" })
+                                     @Html.ValidationMessageFor(x => x.MenuId)
+                                     @html.hiddenfor(e => e.menuidedit , new { @id="menuid"})
+                                     <span class="text-danger ValidationSpan" id="SpanMenuId" style="display:none;">Please Select MenuId </span>
+ 
+                                    </div>*@
+
+                                    <div class="col-md-4">
+                                     @Html.Label("Parent Menu")
+                                     @Html.DropDownListFor(model => model.ParentMenuId, new SelectList(Model.MenuList, "DataValue", "DisplayValue"), "--Select--", new { @class = "form-control chosen-select span4",@ID="ParentMenuId",onchange="jsFunction(this.value);" })
+                                     @Html.HiddenFor(e => e.MenuIdEdit , new { @ID="MenuId"})
+                                   @* <span class="text-danger ValidationSpan" id="SpanDesignationID" style="display:none;">Please Select DesignationID </span>*@
+
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                            @Html.Label("Menu Name")<span class="text-danger"> *</span>
+                                       @Html.TextBoxFor(x => x.MenuName, new { @class = "form-control BlockSpecialChar", @ID="MenuName" ,title = "Enter MenuName.", placeholder = "Enter MenuName", maxlength = 100, data_val = "true" })
+                                       @Html.ValidationMessageFor(x => x.MenuName)
+                                       <span class="text-danger ValidationSpan" id="SpanMenuName" style="display:none;">Please Select MenuName </span>
+                                    </div>
+                                    
+                               
+                            </div> 
+                            </div> 
+
+                              <div class="form-group">
+                            <div class="row">
+                                    <div class="col-md-4">
+                                        @Html.Label("Menu Description")<span class="text-danger"> *</span>
+                                        @Html.TextBoxFor(x => x.MenuDescription, new { @class = "form-control BlockSpecialChar", @ID="MenuDescription" ,title = "Enter MenuDescription.", placeholder = "Enter MenuDescription", maxlength = 100, data_val = "true" })
+                                        @Html.ValidationMessageFor(x => x.MenuDescription)
+                                        <span class="text-danger ValidationSpan" id="SpanMenuDescription" style="display:none;">Please Select MenuDescription </span>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        @Html.Label("Page Name")<span class="text-danger"> *</span>
+                                       @Html.TextBoxFor(x => x.PageName, new { @class = "form-control BlockSpecialChar", @ID="PageName" ,title = "Enter PageName.", placeholder = "Enter LastName", maxlength = 100, data_val = "true" })
+                                       @Html.ValidationMessageFor(x => x.PageName)
+                                       <span class="text-danger ValidationSpan" id="SpanPageName" style="display:none;">Please Enter Page Name </span>
+                                   </div>
+                                                      
+                                 </div>
+                                 </div>
+
+
+                                  <div class="form-group">
+                            <div class="row">
+                        
+                                     <div class="col-md-4">
+                                          @Html.Label("Page URL")<span class="text-danger"> *</span>
+                                       
+                                           @Html.TextBoxFor(x => x.PageURL, new { @class = "form-control BlockSpecialChar", @ID="PageURL" ,title = "Enter PageURL.", placeholder = "Enter PageURL", maxlength = 100, data_val = "true" })
+                                           @Html.ValidationMessageFor(x => x.PageURL)
+                                           <span class="text-danger ValidationSpan" id="SpanPageURL" style="display:none;">Please Enter Page URL</span>
+                                           
+                                     </div>
+
+                                     <div class="col-md-4">
+                                          @Html.Label("Node Level")<span class="text-danger"> *</span>
+                                           @Html.TextBoxFor(x => x.NodeLevel, new { @class = "form-control BlockSpecialChar", @ID="NodeLevel" ,title = "Enter NodeLevel.", placeholder = "Enter NodeLevel", maxlength = 100, data_val = "true" })
+                                           @Html.ValidationMessageFor(x => x.NodeLevel)
+                                           <span class="text-danger ValidationSpan" id="SpanNodeLevel" style="display:none;">Please Enter NodeLevel.</span>
+                                           <span class="text-danger ValidationSpan" id="SpanValidNodeLevel" style="display:none;">Please Enter Valid Mobile No.</span>
+                                     </div>
+
+                              </div>
+                              </div>
+                              
+                            <div class="form-group">
+                            <div class="row">
+                                     <div class="col-md-1">
+                                           @Html.Label("Is Assign")
+                                             @Html.DropDownListFor(model => model.IsAssign, new SelectList(Model.AssignMenuList, "DataValue", "DisplayValue"), "--Select--", new { @class = "form-control chosen-select span4",@ID="IsAssign" })
+                                     </div>
+
+                                        <div class="col-md-4">
+                                          @Html.Label("Icon")<span class="text-danger"> *</span>
+                                           @Html.TextBoxFor(x => x.Icon, new { @class = "form-control BlockSpecialChar", @ID="Icon" ,title = "Enter Icon.", placeholder = "Enter Icon", maxlength = 100, data_val = "true" })
+                                           @Html.ValidationMessageFor(x => x.Icon)
+                                           
+                                        </div>
+
+                                        <div class="col-md-1" style="margin-top: auto;">
+                                     @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    @Html.ValidationMessageFor(e => e.IsActive, null, new { @class = "text-danger" })
+                                    <span class="text-danger ValidationSpan" id="SpanIsActive" style="display:none;">Please Select IsActive </span>
+                                    </div>
+                                  </div>
+                                  </div>
+                         <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitMenuMaster();" />
+                            @Html.ActionLink("Cancel", "index", "MenuMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div> 
+                        
+                      </form>    
+
+                </div> 
+            </div>
+
+        </div>
+     </div>     
+   </div>  
+   }
+  <script>
+      $( document ).ready(function() {
+          jsFunction($("#ParentMenuId").val());
+        });
+
+      $("input[type='checkbox']").on('change', function(){
+       $(this).val(this.checked ? "true" : "false");
+       })
+
+        function jsFunction(value)
+        {
+            if (value > 0) 
+            {
+                 $('#IsAssign').prop('disabled', false).trigger("chosen:updated");
+            }
+            else 
+            {
+                 $('#IsAssign').prop('disabled', true).trigger("chosen:updated");
+            }
+        }
+     
+        function SubmitMenuMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            // var regEx = /^[5-9][0-9]{9}$/;
+            
+            
+            $('.ValidationSpan').hide();
+
+            //  if ($("#MenuId").val() == "0" || $("#MenuId").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanMenuId').show();
+            //}
+
+            //  if ($("#ParentMenuId").val() == "0" || $("#ParentMenuId").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanParentMenuId').show();
+            //}
+
+              if ($("#MenuName").val() == "0" || $("#MenuName").val() == "") {
+                ErrorCnt++;
+                $('#SpanMenuName').show();
+            }
+
+              if ($("#MenuDescription").val() == "0" || $("#MenuDescription").val() == "") {
+                ErrorCnt++;
+                $('#SpanMenuDescription').show();
+            }
+
+              if ($("#PageName").val() == "0" || $("#PageName").val() == "") {
+                ErrorCnt++;
+                $('#SpanPageName').show();
+            }
+
+             if ($("#PageURL").val() == "0" || $("#PageURL").val() == "") {
+                ErrorCnt++;
+                $('#SpanPageURL').show();
+            }
+
+            
+
+
+            //  if ($("#PageURL").val() == "0" || $("#PageURL").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanPageURL').show();
+            //}
+
+            //  if ($("#NodeLevel").val() == "0" || $("#NodeLevel").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanNodeLevel').show();
+            //}
+
+            
+            // if ($("#IsActive").val() == "0" || $("#IsActive").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanIsActive').show();
+            //}
+
+           
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+
+            //if (ErrorCnt == 0) {
+            {
+                var myData = {
+                    MenuId: $('#MenuId').val(),
+                    ParentMenuId: $('#ParentMenuId').val(),
+                    MenuName: $('#MenuName').val(),
+                    MenuDescription: $('#MenuDescription').val(),
+                    PageName: $('#PageName').val(),
+                    PageURL: $('#PageURL').val(),
+                      Icon: $('#Icon').val(),
+                    NodeLevel: $('#NodeLevel').val(),
+                    IsActive: $('#IsActive').val(),
+                    IsAssign: $('#IsAssign').val(),
+                   
+                };
+
+                 $.ajax
+                    ({
+                        type: "POST",
+                        traditional: true,  
+                        async: false,  
+                        cache: false,  
+                        url: "/MenuMaster/SaveMenuRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                         data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/MenuMaster/Index";
+                             });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+
+                            //if (data.data.ErrorCode == 0) {
+                            //    window.location.href = "/MenuMaster/Index";
+                            //    alert(data.data.ErrorMassage);
+                            //}
+                            //else {
+                            //       alert(data.data.ErrorMassage);
+                            //}
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+             
+            }
+    }
+   </script>

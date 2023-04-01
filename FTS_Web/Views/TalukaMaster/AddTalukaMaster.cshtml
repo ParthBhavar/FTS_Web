@@ -1,0 +1,132 @@
+﻿@model FTS.Model.Entities.TalukaMasterModel
+@{
+    ViewBag.Title = "Taluka Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Application For Claims</h4>
+                        <div class="form-group">
+                            <div class="row">                              
+                                <div class="col-md-3">
+                                    @Html.Label("Taluka Name")
+                                    @Html.HiddenFor(e => e.TalukaIDEdit , new { @ID="TalukaID"})
+                                    @Html.TextBoxFor(e => e.TalukaName, new { @class = "form-control", @ID="TalukaName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanTalukaName" style="display:none;">Please Insert Taluka Name</span>
+                                </div>
+
+                                 <div class="col-md-3">
+                                    @Html.Label("Taluka Code")
+                                    @Html.TextBoxFor(e => e.TalukaCode, new { @class = "form-control", @ID="TalukaCode", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanTalukaCode" style="display:none;">Please Select Taluka Code</span>
+                                </div>
+                                                                
+                                <div class="col-md-3">
+                                    @Html.Label("District Id")
+                                    @Html.DropDownListFor(M => M.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID", })
+                                    <span class="text-danger ValidationSpan" id="SpanDistrictId" style="display:none;">Please Select District ID </span>
+                                </div>
+                                
+
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitTalukaMaster();" />
+                            @Html.ActionLink("Cancel", "index", "TalukaMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+  <script>
+     
+        function SubmitTalukaMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#TalukaName").val() == "0" || $("#TalukaName").val() == "") {
+                ErrorCnt++;
+                $('#SpanTalukaName').show();
+            }
+
+             if ($("#TalukaCode").val() == "0" || $("#TalukaCode").val() == "") {
+                ErrorCnt++;
+                $('#SpanTalukaCode').show();
+            }
+
+              if ($("#DistrictId").val() == "0" || $("#DistrictId").val() == "") {
+                ErrorCnt++;
+                $('#SpanDistrictId').show();
+            }          
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    TalukaID: $('#TalukaID').val(),
+                    TalukaName: $('#TalukaName').val(),
+                    TalukaCode: $('#TalukaCode').val(),
+                    DistrictID: $('#DistrictID').val(),
+                    IsActive: $('#IsActive').val(),
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/TalukaMaster/SaveTalukaRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/TalukaMaster/Index";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+
+
+                            //if (data.data.
+                            //    ErrorCode == 0) {
+                            //    window.location.href = "/TalukaMaster/Index";
+                            //    alert(data.data.ErrorMassage);
+                            //}
+                            //else {
+                            //    alert('Something went wrong!');
+                            //}
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+   </script>

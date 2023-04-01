@@ -1,0 +1,522 @@
+﻿@model FTS.Model.Entities.NFormApplicationModel
+@{
+     ViewBag.Title = "Gratuity Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+       @Html.AntiForgeryToken();
+       <br />
+    <section>
+        <h3 style="font-weight:bold;">@ViewBag.Title</h3>
+    </section>   
+       @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+       @Html.HiddenFor(e => e.DOC1 , new { @ID="DOC1"})
+       @Html.HiddenFor(e => e.DOC2 , new { @ID="DOC2"})
+       @Html.HiddenFor(e => e.DOC3 , new { @ID="DOC3"})
+       @Html.HiddenFor(e => e.DOC4 , new { @ID="DOC4"})
+       @Html.HiddenFor(e => e.DOC5 , new { @ID="DOC5"})
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                     <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" style="padding-bottom: 0rem;">
+              <a class="nav-link" id="step1-tab" data-bs-toggle="tab">Step 1</a>
+              <a class="nav-link" id="step2-tab" data-bs-toggle="tab">Step 2</a>
+              <a class="nav-link active" id="step4-tab" data-bs-toggle="tab">Step 3</a>
+            </div>
+          </nav>
+             <br>
+                    <div class="card-body">
+                            <div class="form-group-required">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+                    </div>
+                          <div class="form-group">
+                              <div class="row">
+                                  <div class="col-md-12" style="padding-left: 20%;">
+                                      <p3><b>Upload Required Document(Only .PDF, .Doc, .Docx, .JPG, .JPEG, .xls, .xlsx files are allowed)</b></p3>
+                                </div>
+                                </div>
+                         </div>  
+
+                          <div class="form-group">
+                            <div class="row" >
+                                 <div class="col-12" style="padding-left: 25%;">
+                                <div class="table-responsive">
+                                    <table id="ReinstementList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                  <th style="width:20%; text-align:center;" id="roleName">Name</th>
+                                                  <th  style="width:5%; text-align:center;" id="Edit">Document</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @*  <tr>
+                                              <td>
+                                                  @Html.Label("Adhar: / આધાર:")
+                                              </td>
+                                          <td>
+                                          <input type="file" id="fileUpload1" class="fileUpload1"   onchange="return fileValidation(this.id)" >
+                                       <span class="text-danger ValidationSpan" id="SpanfileUpload1" style="display:none;">Please Insert File</span>   
+                                      </td>
+                                          <td>
+                                              @if (@Model.DOC1 != "")
+                                              {
+                                                  <a  href="/NFormApplication/DownloadApplicationFile/?FileName=@Model.DOC1" ><i class="fas fa-download"></i></a>
+                                              }
+                                         </td>
+                                          </tr>
+                                          <tr>
+                                               <td>
+                                                  @Html.Label("Pan: / પાન:")
+                                              </td>
+                                              <td>
+                                           <input type="file" id="fileUpload2" class="fileUpload2"   onchange="return fileValidation(this.id)" >
+                                           <span class="text-danger ValidationSpan" id="SpanfileUpload2" style="display:none;">Please Insert File</span>
+                                         </td>
+                                         <td>
+                                            @if (@Model.DOC2 != "")
+                                              {
+                                            <a  href="/NFormApplication/DownloadApplicationFile/?FileName=@Model.DOC2" ><i class="fas fa-download"></i></a>
+                                                 }
+                                        </td>
+                                          </tr>*@
+                                          <tr>
+                                               <td>
+                                                  @Html.Label("Form N Annexure: / દસ્તાવેજ:")<span class='text-danger'>*</span>
+                                              </td>
+                                              <td>
+                                           <input type="file" id="fileUpload3" class="fileUpload3"   onchange="return fileValidation(this.id)" >
+                                           <span class="text-danger ValidationSpan" id="SpanfileUpload3" style="display:none;">Please Insert File</span>
+                                         </td>
+                                         <td>
+                                              @if (@Model.DOC3 != "")
+                                              {
+                                                 <a href="/NFormApplication/DownloadApplicationFile/?FileName=@Model.DOC3" ><i class="fas fa-download"></i></a>
+                                              }
+                                             </td>
+                                          </tr>
+
+                                           <tr>
+                                               <td>
+                                                  @Html.Label("Form I: / દસ્તાવેજ 1:")<span class='text-danger'>*</span>
+                                              </td>
+                                              <td>
+                                           <input type="file" id="fileUpload4" class="fileUpload4"   onchange="return fileValidation(this.id)" >
+                                           <span class="text-danger ValidationSpan" id="SpanfileUpload4" style="display:none;">Please Insert File</span>
+                                         </td>
+                                         <td>
+                                              @if (@Model.DOC4 != "")
+                                              {
+                                                 <a href="/NFormApplication/DownloadApplicationFile/?FileName=@Model.DOC4" ><i class="fas fa-download"></i></a>
+                                              }
+                                             </td>
+                                          </tr>
+
+
+                                           <tr>
+                                               <td>
+                                                  @Html.Label("RPAD Receipt: / દસ્તાવેજ 2")<span class='text-danger'>*</span>
+                                              </td>
+                                              <td>
+                                           <input type="file" id="fileUpload5" class="fileUpload5"   onchange="return fileValidation(this.id)" >
+                                           <span class="text-danger ValidationSpan" id="SpanfileUpload5" style="display:none;">Please Insert File</span>
+                                         </td>
+                                         <td>
+                                              @if (@Model.DOC5 != "")
+                                              {
+                                                 <a href="/NFormApplication/DownloadApplicationFile/?FileName=@Model.DOC5" ><i class="fas fa-download"></i></a>
+                                              }
+                                             </td>
+                                          </tr>
+                                     
+                                              <tr>
+                                              <td>
+                                                  @Html.Label("Other: / અન્ય:")
+                                              </td>
+                                          <td>
+                                          <input type="file" id="fileUpload1" class="fileUpload1"   onchange="return fileValidation(this.id)" >
+                                       <span class="text-danger ValidationSpan" id="SpanfileUpload1" style="display:none;">Please Insert File</span>   
+                                      </td>
+                                          <td>
+                                              @if (@Model.DOC1 != "")
+                                              {
+                                                  <a  href="/NFormApplication/DownloadApplicationFile/?FileName=@Model.DOC1" ><i class="fas fa-download"></i></a>
+                                              }
+                                         </td>
+                                          </tr>
+                                          <tr>
+                                               <td>
+                                                  @Html.Label("Other: / અન્ય:")
+                                              </td>
+                                              <td>
+                                           <input type="file" id="fileUpload2" class="fileUpload2"   onchange="return fileValidation(this.id)" >
+                                           <span class="text-danger ValidationSpan" id="SpanfileUpload2" style="display:none;">Please Insert File</span>
+                                         </td>
+                                         <td>
+                                            @if (@Model.DOC2 != "")
+                                              {
+                                            <a  href="/NFormApplication/DownloadApplicationFile/?FileName=@Model.DOC2" ><i class="fas fa-download"></i></a>
+                                                 }
+                                        </td>
+                                          </tr>
+                                      </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>              
+                        </div>
+                         </div>  
+
+                          <div class="form-group">
+                            <div class="row">
+                                 <div class="col-md-12" style="padding-left: 20%;">
+                                      @Html.CheckBoxFor(e => e.IsSubmit, new { @ID="IsSubmit"})
+                                       <span class="text-danger ValidationSpan" id="SpanIsSubmit" style="display:none;">Please Insert File</span>
+                                      @Html.Label("I Hereby Declare That The Particulars Given Above Are True To The Best Of My Knowledge And Beliefs")
+                                     <br> @Html.Label("હું આથી જાહેર કરું છું કે ઉપર આપેલ વિગતો મારી શ્રેષ્ઠ જાણકારી અને માન્યતાઓ માટે સાચી છે")
+                                  </div>
+                        </div>
+
+                         </div> 
+                           <div class="form-group">
+                        <div class="row">
+                                   <div class="col-md-12" style="padding-left: 35%;">
+                                       <a id="Edit" class="btn btn-info"  href="/NFormApplication/AddnFormEstablishment?ApplicationID=@Model.ApplicationID&ISNew=1" > Previous</a>
+                                       <input type="button" id="btnSave" class="btn btn-primary" value="Save" onclick="saveDocument(0)"/>
+                                    @if (@Model.DOC1 == "" && @Model.DOC2 == "" && @Model.DOC3 == "" && @Model.DOC4 == "" && @Model.DOC5 == "")
+                                    {
+                                        <input type="button" id="btnSubmit" disabled="disabled"  class="btn btn-primary" value="Submit" onclick="saveDocument(1)"/>
+                                    }
+                                    else
+                                    {
+                                          <input type="button" id="btnSubmit" disabled="disabled"  class="btn btn-primary" value="Submit" onclick="SubmitApplication()"/>
+                                    }
+                                    @Html.ActionLink("Cancel", "index", "NFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                                </div>
+                        </div>
+                         </div> 
+                         
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+
+ <script>
+
+     
+           $(document).ready(function () {
+            debugger;
+               if ('@Model.IsSubmit' == "True") {
+                    $("#btnSave").attr('disabled', true); //disable input
+                    $("#btnSubmit").attr('disabled', true); //disable input
+                    $("#IsSubmit").attr('disabled', true); //disable input
+                } 
+
+                if ('@Model.ActionCode' == "5") {
+                    $("#btnSave").attr('disabled', false); //disable input
+                     $("#btnSubmit").attr('disabled', false); //disable input
+
+                } 
+            
+            });
+
+   var ApplicationID = $('#ApplicationID').val();
+ var AppIDl = ApplicationID.padStart(6, '0');
+  var AppID = "GC" + AppIDl;
+
+   function saveDocument(id) {
+
+        var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+@*
+       if ($("#DOC1").val() == "") {
+            if ($("#fileUpload1").val() == "0" || $("#fileUpload1").val() == "") {
+                ErrorCnt++;
+                $('#SpanfileUpload1').show();
+            }
+             }*@
+
+ @*          if ($("#DOC2").val() == "") {
+           if ($("#fileUpload2").val() == "0" || $("#fileUpload2").val() == "") {
+               ErrorCnt++;
+               $('#SpanfileUpload2').show();
+           }
+       }
+*@
+       if ($("#DOC3").val() == "") {
+           if ($("#fileUpload3").val() == "0" || $("#fileUpload3").val() == "") {
+               ErrorCnt++;
+               $('#SpanfileUpload3').show();
+           }
+       }
+
+       
+       if ($("#DOC4").val() == "") {
+           if ($("#fileUpload4").val() == "0" || $("#fileUpload4").val() == "") {
+               ErrorCnt++;
+               $('#SpanfileUpload4').show();
+           }
+       }
+
+       
+       if ($("#DOC5").val() == "") {
+           if ($("#fileUpload5").val() == "0" || $("#fileUpload5").val() == "") {
+               ErrorCnt++;
+               $('#SpanfileUpload5').show();
+           }
+       }
+
+                 if (ErrorCnt > 0) {
+                return false;
+            }
+
+       if (ErrorCnt == 0) {
+           var IsSubmit = id;
+           var files1 = $('#fileUpload1').prop("files");
+           var files2 = $('#fileUpload2').prop("files");
+           var files3 = $('#fileUpload3').prop("files");
+           var files4 = $('#fileUpload4').prop("files");
+           var files5 = $('#fileUpload5').prop("files");
+           var ApplicationID = $('#ApplicationID').val();
+           var URL = document.URL;
+           var AppIDl = ApplicationID.padStart(6, '0');
+           var AppID = "GC" + AppIDl;
+
+            var DOC1FileName ="0";
+            var DOC2FileName ="1";
+            var DOC3FileName ="2";
+            var DOC4FileName ="3";
+            var DOC5FileName ="4";
+            //var DOC6FileName ="5";
+
+           var url = "/NFormApplication/UploadNFormDocument?handler=MyUploader" + "&ApplicationID=" + ApplicationID + "&IsSubmit=" + IsSubmit + "&URL=" + URL + "&AppID=" + AppID;
+           formData = new FormData();
+           @*formData.append("MyUploader", files1[0]);
+           formData.append("MyUploader", files2[0]);
+           formData.append("MyUploader", files3[0]);
+           formData.append("MyUploader", files4[0]);
+           formData.append("MyUploader", files5[0]);*@
+
+            if(files1.length > 0)
+            {
+                formData.append("MyUploader", files1[0], DOC1FileName);
+            }
+            else
+            {
+                formData.append("MyUploader", files1[0]);
+            }
+           
+             if(files2.length > 0)
+            {
+               formData.append("MyUploader", files2[0], DOC2FileName);
+            }
+            else
+            {
+                formData.append("MyUploader", files2[0]);
+            }
+
+             if(files3.length > 0)
+            {
+                formData.append("MyUploader", files3[0], DOC3FileName);
+            }
+            else
+            {
+                formData.append("MyUploader", files3[0]);
+            }
+
+             if(files4.length > 0)
+            {
+                formData.append("MyUploader", files4[0], DOC4FileName);
+            }
+            else
+            {
+                formData.append("MyUploader", files4[0]);
+            }
+            
+            if(files5.length > 0)
+            {
+                formData.append("MyUploader", files5[0], DOC5FileName);
+            }
+            else
+            {
+                formData.append("MyUploader", files5[0]);
+            }
+
+           if(files3.length == 0 && files4.length  == 0 && files5.length  == 0 && $("#DOC3").val() != "")
+           {
+                swal("You are already upoaded Document if you need update So please select Document");
+                 return false;
+           }
+
+           jQuery.ajax({
+               type: 'POST',
+               url: url,
+               headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+               data: formData,
+               cache: false,
+               contentType: false,
+               processData: false,
+               success: function(repo) {
+                   debugger;
+                    if (repo.status.ErrorCode == 0) {
+                        swal(repo.status.ErrorMassage)
+                                .then((value) => {
+                                    location.reload();
+                                });
+                   }
+                  else {
+                     swal(repo.status.ErrorMassage);
+                   }
+@*
+                   if (repo.status.ErrorCode == 0) {
+                       alert(repo.status.ErrorMassage);
+                       location.reload();
+                   }
+                   else{
+                         alert(repo.status.ErrorMassage);
+                   }*@
+               },
+               error: function (request, message, error) 
+                    {
+                         debugger; 
+                       swal(request.responseJSON);
+                   }
+               @*error: function() {
+                   alert("Error occurs");
+               }*@
+           });
+       }
+}
+
+
+   function fileValidation(id) {
+    debugger;
+    var fileInput = document.getElementById(id); 
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+                swal('Invalid file type');
+                fileInput.value = '';
+                return false;
+            }
+            
+          var size = $("#" + id)[0].files[0].size;
+
+        if (size > 20000000) {
+            //alert("Please upload file less than 20MB. Thanks!!");
+            swal("Please upload file less than 20MB. Thanks!!");
+            fileInput.value = '';
+            return false;
+        }
+        }
+
+
+    $('#IsSubmit').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+            $('#btnSubmit').removeAttr('disabled'); //enable input
+
+        } else {
+            $('#btnSubmit').attr('disabled', true); //disable input
+        }
+    });
+
+
+
+    function SubmitApplication() {
+            debugger;
+             var ErrorCnt = 0;
+           var files3 = $('#fileUpload3').prop("files");
+           var files4 = $('#fileUpload4').prop("files");
+           var files5 = $('#fileUpload5').prop("files");
+
+            $('.ValidationSpan').hide();
+            if ($("#IsSubmit").val() == "0" || $("#IsSubmit").val() == "") {
+                ErrorCnt++;
+                $('#SpanIsSubmit').show();
+            }
+
+          if(files3.length > 0)
+           {
+                swal("You are upoaded Document So please click first save after than click Submit");
+                 return false;
+           }
+
+           if(files4.length  > 0)
+           {
+                  swal("You are upoaded Document So please click first save after than click Submit");
+                 return false;
+           }
+
+           if(files5.length  > 0)
+           {
+                 swal("You are upoaded Document So please click first save after than click Submit");
+                 return false;
+           }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    IsSubmit: $('#IsSubmit').val(),
+                    URL: document.URL,
+                    AppID: AppID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/NFormApplication/NFormAppliactionUpdateSubmit",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/NFormApplication/Index";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+                           @* if (data.data.ErrorCode == 0) {
+                                window.location.href = "/NFormApplication/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                 alert(data.data.ErrorMassage);
+                            }*@
+
+                        },
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(data.data.ErrorMassage);
+                          }
+                        @*error: function() {
+                            alert('Something went wrong!');
+                        }*@
+                    })
+            }
+    }
+     </Script>
+  
+ }
+
+ 

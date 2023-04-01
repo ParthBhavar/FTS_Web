@@ -1,0 +1,168 @@
+﻿@model  IEnumerable<FTS.Model.Entities.LicenceApplicationModel>
+ @{
+    ViewBag.Title = "License Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>   
+    @if (TempData["message"] != null)
+    {
+    <script>alert('@TempData["message"]');</script>
+    }
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3 mb-3">
+                            
+                                        <a id="Add" href="/LicenceApplication/AddLicenceApplication/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>New Application</a>
+                                    </div>
+                                    <table id="LicenceAppList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                  <th style="width:2%;" id="roleName">Sr.No</th>
+                                                  <th style="width:5%;" id="roleName">Application ID</th>
+                                                    <th style="width:20%;" id="roleName">Applicant Name</th>
+                                      @*             <th style="width:5%;" id="roleName">Appl</th>
+                                                  <th style="width:20%;" id="roleName">Name</th>*@
+                                                  <th style="width:20%;" id="roleName">Application Date</th>
+                                                    <th style="width:20%;" id="roleName">Status</th>
+                                                    <th style="width:20%;" id="roleName">Type</th>
+                                                    <th style="width:20%;" id="roleName">Is Amendment?</th>
+                                                  <th  style="width:2%;" id="Edit">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                         @foreach (var item in Model)
+                                        {
+                                            <tr> 
+                                                @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                <td valign="top" class="text-left">@item.ID </td>
+                                                       <td valign="top" class="text-left">@item.ApplicationID </td>
+                                                  <td valign="top" class="text-left">@item.ContractorName </td>
+                                            <td valign="top" class="text-left">@item.AppDate </td>
+                                                <td valign="top" class="text-left">@item.StatusName </td>
+                                                <td valign="top" class="text-left">@item.Applicationtype</td>
+                                                <td valign="top" class="text-left">@item.ISAmendmentType</td>
+                                                <td>
+
+                                                    
+                                                    
+                                                     @if(@item.IsSubmit == true && @item.ActionCode != 4)
+                                                        {
+                                                            @*<a id="Edit" href="/NFormApplication/AddNFormApplication/?id=@item.EncryptedId" ><i class="fas fa-eye"></i></a>*@
+                                                            <a id="Edit" href="/LicenceApplication/AddLicenceApplication/?id=@item.EncryptedId&ISACL=0&ISView=1" ><i class="fas fa-eye"></i></a>
+                                                        }
+                                                        else
+                                                        {
+                                                             <a id="Edit" href="/LicenceApplication/AddLicenceApplication/?id=@item.EncryptedId&ISACL=0&ISDCL=0" ><i class="fas fa-pen"></i></a>
+                                                        }
+                                                        @* <a id="Delete" onclick="return DeletePositionRecord(@item.ApplicationID);"><i class="fas fa-trash-alt"></i></a>*@
+
+                                                        @if (@item.ActionCode == 4 || @item.ActionCode == 3)
+                                                        {
+                                                            <a  class="btn btn-outline-primary ml-3 mt-1"  data-toggle="modal" data-target="#exampleModal_@item.ID" id="DivAssign"><i class="fas fa-comments"></i> comments </a>
+                                                        }
+                                                      @*  @if (@item.ActionCode == 4)
+                                                        {
+                                                            <a  class="btn btn-outline-primary ml-3 mt-1"  data-toggle="modal" data-target="#exampleModal_@item.ID" id="DivAssign"><i class="fas fa-comments"></i> comments </a>
+                                                        }*@
+
+                                                          <div class="modal fade" id="exampleModal_@item.ID">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                             Query Remarks
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">
+                                                                                ×
+                                                                            </span>
+                                                                        </button>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                              <div class="col-md-6">
+                                                                                @if(@item.ActionCode == 3)
+                                                                                {
+                                                                                    @if(@item.IsCLRA == true)
+                                                                                    {
+                                                                                        <textarea id="Comments_@item.ID" name="w3review" rows="4" cols="50" disabled>@item.CLRANote</textarea>
+                                                                                    }
+                                                                                    @if(@item.ISMTW == true)
+                                                                                    {
+                                                                                        <textarea id="Comments_@item.ID" name="w3review" rows="4" cols="50" disabled>@item.MTWNote</textarea>
+                                                                                    }
+                                                                                    @if(@item.IsIMW == true)
+                                                                                    {
+                                                                                        <textarea id="Comments_@item.ID" name="w3review" rows="4" cols="50" disabled>@item.IMWNote</textarea>
+                                                                                    }
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <textarea id="Comments_@item.ID" name="w3review" rows="4" cols="50" disabled>@item.RejectRemarks</textarea>
+                                                                                }
+
+                                                                              </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                   @* Applicant Not showing *@
+                                                                    @if (@item.UserMode == 1){
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                            Close
+                                                                        </button>
+
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                         onclick="CheckSave(@item.ID,'@item.EncryptedId')">
+                                                                            save
+                                                                        </button>
+                                                                    </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <script>
+
+      $( document ).ready(function() {
+        $('#LicenceAppList').dataTable( {} );
+    });
+
+        </script>
+  
+}

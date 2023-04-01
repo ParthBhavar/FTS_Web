@@ -1,0 +1,471 @@
+﻿@model FTS.Model.Entities.EmployeeMasterModel
+@{
+    ViewBag.Title = "Add Employee";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+        @using (Html.BeginForm("AddEmployeeMaster", "EmployeeMasterController", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+     @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">Employee Master</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        @*<h4 class="card-title">Establishment Details</h4>*@
+                    <div class="form-group-required">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+                    </div>
+
+                     <form class="form-row" asp-controller="EmployeeMaster" asp-action="Index" asp-antiforgery="true" method="post">
+                     
+
+                     
+                         
+                            <div class=" form-group row col-lg-12">
+
+                               
+                                    <div class="col-md-4">
+                                    
+                                     @Html.Label("EmpCode")<span class="text-danger"> *</span>
+                                     @Html.TextBoxFor(x => x.EmpCode, new { @class = "form-control BlockSpecialChar", @ID="EmpCode" ,title = "Enter EmpCode.", placeholder = "Enter EmpCode", maxlength = 100, data_val = "true" })
+                                     @Html.ValidationMessageFor(x => x.EmpCode)
+                                     @Html.HiddenFor(e => e.EmployeeIDEdit , new { @ID="EmployeeID"})
+                                     <span class="text-danger ValidationSpan" id="SpanEmpCode" style="display:none;">Please Select EmpCode </span>
+ 
+                                    </div>
+
+                                    <div class="col-md-4">
+                                     @Html.Label("Designation")<span class="text-danger"> *</span>
+                                     @Html.DropDownListFor(model => model.DesignationID, new SelectList(Model.DesignationList, "DataValue", "DisplayValue"), "--Select--", new { @class = "form-control chosen-select",@ID="DesignationID" })
+                                    <span class="text-danger ValidationSpan" id="SpanDesignationID" style="display:none;">Please Select DesignationID </span>
+                                     </div>
+
+
+                                    <div class="col-md-4">
+                                     @Html.Label("Region")<span class="text-danger"> *</span>
+                                    @Html.DropDownListFor(e => e.RegionID, new SelectList(Model.Regionlist, "DataValue","DisplayValue"),"Select", new { @class = "form-control chosen-select",@ID="RegionID" })
+                                    @Html.ValidationMessageFor(x => x.RegionID)
+                                    <span class="text-danger ValidationSpan" id="SpanRegionID" style="display:none;">Please Select RegionID </span>
+
+                                    </div>
+                                    
+                               
+                            </div> 
+                            
+
+                       
+
+
+                       <div class=" form-group row col-lg-12">
+                            
+
+                                    <div class="col-md-4">
+                                       @Html.Label("FirstName")<span class="text-danger"> *</span>
+                                       @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control BlockSpecialChar", @ID="FirstName" ,title = "Enter FirstName.", placeholder = "Enter FirstName", maxlength = 100, data_val = "true" , onkeypress = "return allowOnlyLetters(event,this);"})
+                                       @Html.ValidationMessageFor(x => x.FirstName)
+                                       <span class="text-danger ValidationSpan" id="SpanFirstName" style="display:none;">Please Select FirstName </span>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        @Html.Label("MiddleName")
+                                        @Html.TextBoxFor(x => x.MiddleName, new { @class = "form-control BlockSpecialChar", @ID="MiddleName" ,title = "Enter MiddleName.", placeholder = "Enter MiddleName", maxlength = 100, data_val = "true" , onkeypress = "return allowOnlyLetters(event,this);" })
+                                        @Html.ValidationMessageFor(x => x.MiddleName)
+                                       @* <span class="text-danger ValidationSpan" id="SpanMiddleName" style="display:none;">Please Select MiddleName </span>*@
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                       @Html.Label("LastName")<span class="text-danger"> *</span>
+                                       @Html.TextBoxFor(x => x.LastName, new { @class = "form-control BlockSpecialChar", @ID="LastName" ,title = "Enter LastName.", placeholder = "Enter LastName", maxlength = 100, data_val = "true" , onkeypress = "return allowOnlyLetters(event,this);"})
+                                       @Html.ValidationMessageFor(x => x.LastName)
+                                       <span class="text-danger ValidationSpan" id="SpanLastName" style="display:none;">Please Select LastName </span>
+                                   </div>
+                                                      
+                      </div>
+
+
+                      <div class=" form-group row col-lg-12">
+
+
+                        
+                                     <div class="col-md-4">
+                                          @Html.Label("EmailID")<span class="text-danger"> *</span>
+                                           @Html.TextBoxFor(x => x.EmailID, new { @class = "form-control BlockSpecialChar", @ID="EmailID" ,title = "Enter EmailID.", placeholder = "Enter EmailID", maxlength = 100, data_val = "true" })
+                                           @Html.ValidationMessageFor(x => x.EmailID)
+                                           <span class="text-danger ValidationSpan" id="SpanEmailID" style="display:none;">Please Enter Email Address.</span>
+                                           <span class="text-danger ValidationSpan" id="SpanvalidEmail" style="display:none;">Please Enter Valid Email Address.</span>
+                                     </div>
+
+                                     <div class="col-md-4">
+                                          @Html.Label("MobileNo")<span class="text-danger"> *</span>
+                                           @Html.TextBoxFor(x => x.MobileNo, new { @class = "form-control BlockSpecialChar", @ID="MobileNo" ,title = "Enter MobileNo.", placeholder = "Enter MobileNo", maxlength="12",oninput="numberOnly(this.id);" })
+                                           @Html.ValidationMessageFor(x => x.MobileNo)
+                                           <span class="text-danger ValidationSpan" id="SpanValidMobileNo" style="display:none;">Please Enter Valid Mobile No.</span>
+                                           <span class="text-danger ValidationSpan" id="SpanvalidregxMobileNo" style="display:none;">Enter the 10 digit</span>
+                                          @* <span class="text-danger ValidationSpan" id="SpanvalidMobileNo" style="display:none;">Please Enter Valid Mobile No</span>*@
+                                     </div>
+
+                                     <div class="col-md-4"  style="margin-top: auto;">
+                                         @Html.Label("Date of Birth")<span class="text-danger"> *</span>
+                                         @Html.TextBoxFor(e => e.DOB,"{0:dd-MM-yyyy}", new { @class = "form-control", id="DOB"})
+                                         @Html.ValidationMessageFor(e => e.UPDOB, null, new { @class = "text-danger" })
+                                          <span class="text-danger ValidationSpan" id="SpanDOB" style="display:none;">Please Select DOB </span>
+                                     </div>
+
+                                 
+                      </div>
+
+
+                         <div class="form-group row col-lg-12" , id="passwordForm">
+                                    
+                              @if(@Model.EmployeeID == 0 )
+                                    {
+                                    <div class="col-md-4">
+                                    @Html.Label("Password")<span class="text-danger"> *</span>
+                                    @Html.TextBoxFor(e => e.Password, new { @class = "form-control", @ID="Password", id="Password" ,type= "Password", required = "required",minlength="8", placeholder = "Enter Password", title="Must contain at least one number , one uppercase , one lowercase letter, one Special Character, and at least 8 or more characters" })
+                                    @Html.ValidationMessageFor(e => e.Password, null, new { @class = "text-danger" })
+
+                                   
+                                     <span class="text-danger ValidationSpan" id="SpanPassword" style="display:none;">Must contain at least one number and one uppercase and lowercase letter,one special letter, and at least 8 or more characters </span>
+                                    <span class="text-danger ValidationSpan" id="SpanvalidlowercasePassword" style="display:none;">Password must contain the following: A <b>lowercase</b> letter</span>
+                                    <span class="text-danger ValidationSpan" id="SpanvalidUppercasePassword" style="display:none;">Password must contain the following: A <b>capital (uppercase)</b> letter</span>
+                                    <span class="text-danger ValidationSpan" id="SpanvalidnumbersPassword" style="display:none;"   >Password must contain the following:A <b>number</b> </span>
+                                     <span class="text-danger ValidationSpan" id="SpanvalidPassword" style="display:none;">Plese Enter Password in Correct Format</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                 @Html.TextBoxFor(e => e.Password, new { @class = "form-control",@style="display:none"})
+  
+                                }
+
+
+                                    <div class="col-md-4">
+                                         @Html.Label("Gender")<span class="text-danger"> *</span>
+                                        @Html.DropDownListFor(e => e.Gender, new SelectList(Model.Ganderlist, "DataValue","DisplayValue"),"Select", new { @class = "form-control span4",@ID="Gender", })
+                                        @Html.ValidationMessageFor(x => x.Gender)
+                                       <span class="text-danger ValidationSpan" id="SpanGender" style="display:none;">Please Select Gender </span>
+                                    </div>
+
+
+                                    <div class="col-md-4"  style="margin-top: auto;">
+                                    @Html.Label("IsActive")<span class="text-danger"> *</span>
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    @Html.ValidationMessageFor(e => e.IsActive, null, new { @class = "text-danger" })
+                                    <span class="text-danger ValidationSpan" id="SpanIsActive" style="display:none;">Please Select IsActive </span>
+                                    </div>
+                                   
+                                                         
+                        </div>
+
+                          <div class=" form-group row col-lg-12">
+                              <div class="col-md-5">
+                                    @Html.Label("Permanent Address")<span class="text-danger"> *</span>
+                                    @Html.TextAreaFor(x => x.PAddress, new { @class = "form-control BlockSpecialChar", @ID="PAddress" ,title = "Enter PAddress.", placeholder = "Enter PAddress", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.PAddress)
+                                    <span class="text-danger ValidationSpan" id="SpanPAddress" style="display:none;">Please Select PAddress </span>
+                                </div>
+                                      <div class="col-md-2" style="margin-top: auto;">
+                                    @Html.Label("Copy Permanent Address")
+                                    @Html.CheckBox("SameasPaddress", new { @ID="SameasPaddress"})
+                                </div>
+                                <div class="col-md-5">
+                                    @Html.Label("Secondary Address")<span class="text-danger"> *</span>
+                                    @Html.TextAreaFor(x => x.SAddress, new { @class = "form-control BlockSpecialChar", @ID="SAddress" ,title = "Enter SAddress.", placeholder = "Enter SAddress", maxlength = 100, data_val = "true" })
+                                    @Html.ValidationMessageFor(x => x.SAddress)
+                                    <span class="text-danger ValidationSpan" id="SpanSAddress" style="display:none;">Please Select SAddress </span>
+                                </div>
+                                                      
+                           </div>
+
+
+                         <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitEmployeeMaster();" />
+                            @Html.ActionLink("Cancel", "index", "EmployeeMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div> 
+                        
+                      </form>    
+
+                </div> 
+
+
+            </div>
+
+        </div>
+     </div>     
+   </div>  
+   }
+<script src="~/Scripts/js/Crypto-sha1.js"></script>
+<script src="~/Scripts/js/GetSHACode.js"></script>
+<script>
+      $("#DOB").kendoDatePicker({
+       format :"dd-MM-yyyy"
+    }); 
+</script>
+<script>
+   jQuery("#Password").toolTip()
+</script>
+   <script>
+          $(document).ready(function () {
+            debugger;
+     
+
+           if ('@Model.EmployeeIDEdit' == 0) {
+               $("#DOB").val("");
+           }
+          
+            
+            });
+
+       </script>  
+
+  <script>
+
+$("#bdate").val('');
+
+
+
+
+      $("input[type='checkbox']").on('change', function(){
+       $(this).val(this.checked ? "true" : "false");
+       })
+     
+        function SubmitEmployeeMaster() {
+            debugger;
+             var ErrorCnt = 0;
+             var MobileregEx = /^[5-9][0-9]{9}$/;
+            var mailregEx = /^\b[A-Z0-9._%-]+@@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i;
+            var passwordregEx = /^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[^\w\s])\S{8,}$/;
+            var lowerCaseLettersregEx = /[a-z]/g;
+             var upperCaseLetters = /[A-Z]/g;
+             var numbers = /[0-9]/g;
+             var regEx = /^\d{10}$/;
+            //var Specialletter = /^[\w&.\-]+$/           
+            var email = $("#EmailID").val();   
+            var password = $("#Password").val();
+            var mobileno = $("#MobileNo").val();
+            var val = $("#MobileNo").val();
+            var ucase = new RegExp("[A-Z]+");
+	        var lcase = new RegExp("[a-z]+");  
+            //var password = $('#Password').val(PWD($('#Password').val()));
+            $('.ValidationSpan').hide();
+
+
+            
+
+              if ($("#EmpCode").val() == "0" || $("#EmpCode").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmpCode').show();
+            }
+
+              if ($("#DesignationID").val() == "0" || $("#DesignationID").val() == "") {
+                ErrorCnt++;
+                $('#SpanDesignationID').show();
+            }
+
+              if ($("#RegionID").val() == "0" || $("#RegionID").val() == "") {
+                ErrorCnt++;
+                $('#SpanRegionID').show();
+            }
+
+              if ($("#FirstName").val() == "0" || $("#FirstName").val() == "") {
+                ErrorCnt++;
+                $('#SpanFirstName').show();
+            }
+
+            //  if ($("#MiddleName").val() == "0" || $("#MiddleName").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanMiddleName').show();
+            //}
+
+              if ($("#LastName").val() == "0" || $("#LastName").val() == "") {
+                ErrorCnt++;
+                $('#SpanLastName').show();
+            }
+
+              if ($("#EmailID").val() == "0" || $("#EmailID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmailID').show();
+            }
+
+             else if (!email.match(mailregEx)) {
+                 ErrorCnt++;
+                $('#SpanvalidEmail').show();
+            }
+
+            if ($("#MobileNo").val() == "0" || $("#MobileNo").val() == "") {
+                ErrorCnt++;
+                $('#SpanValidMobileNo').show();
+            }
+       
+            else if (!mobileno.match(regEx)) {
+              ErrorCnt++;
+            $('#SpanvalidregxMobileNo').show();
+            }
+            
+            //else if (!mobileno < 5000000000) {
+            //  ErrorCnt++;
+            //  $('#SpanvalidMobileNo').show();
+               
+            //}
+
+            if ($("#PAddress").val() == "0" || $("#PAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanPAddress').show();
+            }
+
+
+            if ($("#SAddress").val() == "0" || $("#SAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanSAddress').show();
+            }
+
+             if ($("#Gender").val() == "0" || $("#Gender").val() == "") {
+                ErrorCnt++;
+                $('#SpanGender').show();
+            }
+
+             if ($("#DOB").val() == "0" || $("#DOB").val() == "") {
+                ErrorCnt++;
+                $('#SpanDOB').show();
+            }
+
+            if ($("#EmployeeID").val() == "" || $("#EmployeeID").val() == 0)
+            {
+                if ($("#Password").val() == "0" || $("#Password").val() == "") {
+                    ErrorCnt++;
+                 $('#SpanPassword').show();
+                }
+                else if (!password.match(lowerCaseLettersregEx)) {
+                  ErrorCnt++;
+                  $('#SpanvalidlowercasePassword').show();
+                }
+                else if (!password.match(upperCaseLetters)) {
+                 ErrorCnt++;
+                 $('#SpanvalidUppercasePassword').show();
+                }
+                else if (!password.match(numbers)) {
+                 ErrorCnt++;
+                $('#SpanvalidnumbersPassword').show();
+                }
+                else if (!password.match(passwordregEx)) {
+                 ErrorCnt++;
+                 $('#SpanvalidPassword').show();
+                }
+            }
+       else
+       {
+        
+        }
+  
+             if ($("#IsActive").val() == "0" || $("#IsActive").val() == "") {
+                ErrorCnt++;
+                $('#SpanIsActive').show();
+            }
+          
+
+           
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+
+            if (ErrorCnt == 0) {
+                debugger;
+                var password = $("#Password").val(PWD($("#Password").val()));
+                var myData = {
+                    EmployeeID: $('#EmployeeID').val(),
+                    EmpCode: $('#EmpCode').val(),
+                    DesignationID: $('#DesignationID').val(),
+                    RegionID: $('#RegionID').val(),
+                    FirstName: $('#FirstName').val(),
+                    MiddleName: $('#MiddleName').val(),
+                    LastName: $('#LastName').val(), 
+                    EmailID: $('#EmailID').val(),
+                    MobileNo: $('#MobileNo').val(),
+                    PAddress: $('#PAddress').val(),
+                    SAddress: $('#SAddress').val(),
+                    Gender: $('#Gender').val(),
+                    UPDOB: $('#DOB').val(),
+                     Password: password.val(),
+                   // Password:$("#Password").val(PWD($("#Password").val())),
+                    IsActive: $('#IsActive').val(),
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/EmployeeMaster/SaveEmployeeRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/EmployeeMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+
+                            //if (data.data.ErrorCode == 0) {
+                            //    window.location.href = "/EmployeeMaster/Index";
+                            //    alert(data.data.ErrorMassage);
+                            //}
+                            //else {
+                            //     alert(data.data.ErrorMassage);
+                            //}
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+
+
+     function numberOnly(id)
+     {
+       var element = document.getElementById(id);
+       element.value = element.value.replace(/[^0-9]/gi, "");
+     }
+
+     function allowOnlyLetters(e, t)
+     {
+        var regex = new RegExp("^[a-zA-Z ]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key))
+         {
+            event.preventDefault();
+            return false;
+         }
+    }
+
+   
+       $('#SameasPaddress').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+          var val = $('#PAddress').val();
+           $('#SAddress').val(val);
+        } 
+    });
+
+
+   </script>

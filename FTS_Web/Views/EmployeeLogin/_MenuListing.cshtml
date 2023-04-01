@@ -1,0 +1,192 @@
+﻿@model IEnumerable<FTS.Model.Entities.MenuListModel>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@*Slider*@
+@Html.AntiForgeryToken()
+<nav class="sidebar sidebar-offcanvas" id="sidebar" style="width:auto;">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Index","Dashboard")">
+                <i class="fa fa-tachometer fa-lg menu-icon"  style="margin-top:-3px;"></i>
+               @* <i class="icon-grid menu-icon"></i>*@
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+
+        @{
+            var RowNo1 = 1;
+        }
+
+        @if (@HttpContextAccessor.HttpContext.Session.GetInt32("_UserMode") == 1)
+        {
+            if (Model != null)
+            {
+                @foreach (var item2 in Model.Where(x => x.ParentMenuId == 0))
+                {
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#Div_@RowNo1" aria-expanded="false" aria-controls="Div_@RowNo1">
+                            <i class="@item2.Icon"></i>
+                            <span class="menu-title">@item2.MenuName</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        @foreach (var item1 in Model.Where(x => x.ParentMenuId == @item2.MenuID))
+                        {
+                            <div class="collapse" id="Div_@RowNo1">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"><a class="nav-link" href="@item1.PageURL">@item1.PageName</a></li>
+                                </ul>
+                            </div>
+                        }
+                    </li>
+                    RowNo1++;
+                }
+            }
+
+        }
+        else
+        {
+            if (Model != null)
+            {
+                @foreach (var item2 in Model.Where(x => x.ParentMenuId == 0))
+                {
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#Div_@RowNo1" aria-expanded="false" aria-controls="Div_@RowNo1">
+                            <i class="icon-ribbon menu-icon"></i>
+                            <span class="menu-title">@item2.MenuName</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        @foreach (var item1 in Model.Where(x => x.ParentMenuId == @item2.MenuID))
+                        {
+                            <div class="collapse" id="Div_@RowNo1">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item"><a class="nav-link" href="@item1.PageURL">@item1.PageName</a></li>
+                                </ul>
+                            </div>
+                        }
+                    </li>
+                    RowNo1++;
+                }
+            }
+        }
+    </ul>
+</nav>
+
+ <link href="~/css/font-awesome.min.css" rel="stylesheet">
+@*
+
+                 <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#form-elements-Registration" aria-expanded="false" aria-controls="form-elements-Registration">
+                            <i class="icon-ribbon menu-icon"></i>
+                            <span class="menu-title">Registration</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="form-elements-Registration">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">@Html.ActionLink("Registration of Establishment(4)", "RegistrationDtl", "Registration", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                                 <li class="nav-item">@Html.ActionLink("ConciliationApplication", "ConciliationACLList", "ConciliationApplication", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                                <li class="nav-item"><a class="nav-link" href="#">License/Renewal/Amendment(1)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Industrial premises(3)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Inter-State Migrant Workers(4)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Trade Union(1)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Withdraw/Cancel Certificate(7)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Registration of Trade Union(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Change Name/Amalgamation(3)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Trade Union to Registrar(8)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Employer to Authority(6)</a></li>
+                            </ul>
+                        </div>
+                    </li>
+*@
+
+
+
+
+@*                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#caseclaim" aria-expanded="false" aria-controls="caseclaim">
+                            <i class="icon-briefcase menu-icon"></i>
+                            <span class="menu-title">CASE/CLAIM MANAGEMENT</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="caseclaim">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">@Html.ActionLink("Single Application Claim(4)", "CaseClaimDtl", "CaseClaim", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                                <li class="nav-item"><a class="nav-link" href="#">Reference of Claims(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Failure Report(1)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Retrenchment/Closure(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Lay Off/Retrenchment/Closure(3)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Notice to the Employer(1)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Complaint under Section 91(6)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Certification of Standing Order(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Application for Direction(8)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Competent Authority/Summon(5)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Notice for Payment of Gratuity(7)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Recovery of Gratuity(2)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Payment of Cess(6)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Compounding of Offences(5)</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#">Composition of Offence(3)</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#Master" aria-expanded="false" aria-controls="Master">
+                            <i class="icon-bell menu-icon"></i>
+                            <span class="menu-title">Master</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="Master">
+                            <ul class="nav flex-column sub-menu">
+
+                                <li class="nav-item">@Html.ActionLink("Role Master","Index" , "RoleMaster", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                                 <li class="nav-item">@Html.ActionLink("Branch Master","Index" , "BranchMaster", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                <li class="nav-item">@Html.ActionLink("Role Master","Index" , "RoleMaster", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                <li class="nav-item"><a class="nav-link" href="#">Reference of Claims(2)</a></li>
+                            </ul>
+                        </div>
+
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-bell menu-icon"></i>
+                            <span class="menu-title">Online CESS(9)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-eye menu-icon"></i>
+                            <span class="menu-title">BOCW(5)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-columns menu-icon"></i>
+                            <span class="menu-title">Inspection(8)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-bar-graph menu-icon"></i>
+                            <span class="menu-title">MIS Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-paper menu-icon"></i>
+                            <span class="menu-title">Common Document Repository</span>
+                        </a>
+                    </li>*@
+
+<style>
+    .sidebar .nav.sub-menu {
+        list-style: none;
+        padding: 0 0 0 3.07rem;
+        background: #3165b8;
+    }
+
+</style>

@@ -1,0 +1,107 @@
+﻿@model FTS.Model.Entities.DistrictMasterModel
+@{
+    ViewBag.Title = "District Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">District Master</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                             
+                                <div class="col-md-3">
+                                    @Html.Label("District Name")
+                                     @Html.HiddenFor(e => e.DistrictIDEdit , new { @ID="DistrictID"})
+                                    @Html.TextBoxFor(e => e.DistrictName, new { @class = "form-control", @ID="DistrictName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanDistrictName" style="display:none;">Please Insert District Name</span>
+                                </div>
+                                  
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitDistrictMaster();" />
+                            @Html.ActionLink("Cancel", "index", "DistrictMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <script>
+
+        function SubmitDistrictMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#DistrictName").val() == "0" || $("#DistrictName").val() == "") {
+                ErrorCnt++;
+                $('#SpanDistrictName').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    DistrictID: $('#DistrictID').val(),
+                    DistrictName: $('#DistrictName').val(),                    
+                    IsActive: $('#IsActive').val()
+                };
+                $.ajax
+                    ({
+                        type: "GET",
+                        url: "/DistrictMaster/SaveDistrictRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/DistrictMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/DistrictMaster/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }*@
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            alert(request.responseJSON);
+                          }
+                    })
+            }
+    }
+
+   </script>
+    }
+ 

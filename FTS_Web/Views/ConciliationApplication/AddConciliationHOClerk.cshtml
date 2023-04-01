@@ -1,0 +1,263 @@
+﻿@model FTS.Model.Entities.ConciliationApplicationModel
+@{
+    //ViewBag.Title = "Conciliation Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+       <br />
+    <section>
+        <h3 style="font-weight:bold;">Conciliation Application HO</h3>
+    </section>   
+
+
+     Html.RenderPartial("_DetailView");
+
+ <div class="content-wrapper">
+
+        <div class="row" id="Divpus">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+                                      @Html.CheckBoxFor(e => e.IsPUS, new { @ID="IsPUS"})
+                                       @*<span class="text-danger ValidationSpan" id="SpanIsSubmit" style="display:none;">Please Insert File</span>*@
+                                      @Html.Label("Is Public Utility Service")
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(e => e.IsQuery, new { @ID="IsQuery"})
+                                       @*<span class="text-danger ValidationSpan" id="SpanIsSubmit" style="display:none;">Please Insert File</span>*@
+                                      @Html.Label("Is Query")
+                                </div>
+                            </div>
+                             <div class="form-group" id="divRefer" style="display:none;" >
+                            <div class="row">
+                                <div class="col-md-5">
+                                     @Html.Label("Suggest Refer To")<span class="text-danger">*</span>
+                                     @Html.DropDownListFor(e => e.HOReferStatusID, new SelectList(Model.HOReferStatuList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="HOReferStatusID" ,@width ="15px"})
+                                   <span class="text-danger ValidationSpan" id="SpanHearingReason" style="display:none;">Please Select Status</span>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        <div class="form-group" id="divquery" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                     @Html.Label("Query Remarks")<span class="text-danger">*</span>
+                                   @Html.TextAreaFor(e => e.Query, new { @class = "form-control", @ID="Query", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanQuery" style="display:none;">Please Enter Reamrk</span>
+                               
+                                </div>
+                            </div>
+                        </div>
+                      
+                     
+                          <div class="form-group" id="divsubmit" >
+                              @Html.ActionLink("Cancel", "ConciliationHOClerkList", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitHOClerk();" />
+                          </div>  
+                          <div class="form-group" id="divquerybtn" style="display:none">
+                              @Html.ActionLink("Cancel", "ConciliationHOClerkList", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Query" onclick="SubmitQuery();" />
+                          </div>          
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+ <script>
+       $(document).ready(function () {
+            debugger;
+            $("#divRefer").show();
+            document.getElementById("HearingReasonID_chosen").style.width = "200px";
+       @*    $("#DivHearing").hide();*@
+        @*   $("#DivSettlement").hide();
+           $("#DivSendtolabour").hide();*@
+            
+            if($('#IsPUS').val() ==true)
+            {
+                 $("#divsubmit").show();
+                 
+            }
+           
+            
+            });
+
+ function SubmitHOClerk() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+            if ($("#HOReferStatusID").val() == "0" || $("#HOReferStatusID").val() == "") {
+                ErrorCnt++;
+                $('#SpanHearingReason').show();
+            }
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    IsPUS: $('#IsPUS').val(),
+                     HOReferStatusID : $('#HOReferStatusID').val(),
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ConciliationApplication/UpdateClerkStatustoACL",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+
+                        url: "/ConciliationApplication/UpdateClerkStatustoHO",
+
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                     window.location.href = "/ConciliationApplication/ConciliationHOClerkList";
+                                });
+                            }
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/ConciliationApplication/ConciliationACLList";
+                                alert(data.data.ErrorMassage);
+                            }*@
+                            @*else {
+                                alert('Something went wrong!');
+                            }*@
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+
+ function SubmitQuery() {
+            debugger;
+
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#Query").val() == "0" || $("#Query").val() == "") {
+                ErrorCnt++;
+                $('#SpanQuery').show();
+            }
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    IsQuery: $('#IsQuery').val(),
+                    Query: $('#Query').val(),
+                   
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ConciliationApplication/UpdateQueryByACLClerk",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        url: "/ConciliationApplication/UpdateQueryByHOClerk",
+
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                     window.location.href = "/ConciliationApplication/ConciliationHOClerkList";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/ConciliationApplication/ConciliationACLList";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                              alert(data.data.ErrorMassage);
+                            }*@
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+ 
+
+       $('#IsQuery').click(function () {
+        //check if checkbox is checked
+        debugger;
+        if ($(this).is(':checked')) {
+
+           $("#divquery").show(); 
+            $("#IsPUS").attr("disabled",true);
+            $("#divquerybtn").show();
+            $("#divsubmit").hide();
+             $("#divRefer").hide();
+        } 
+        else{
+            $("#divquery").hide();  
+             $("#IsPUS").attr("disabled",false);
+              $("#divsubmit").show();
+              $("#divquerybtn").hide(); 
+               $("#divRefer").show();
+        }
+    });
+
+     $('#IsPUS').click(function () {
+        //check if checkbox is checked
+        debugger;
+        if ($(this).is(':checked')) {
+
+           $("#IsQuery").attr("disabled",true); 
+            $("#divquerybtn").hide();
+             $("#divRefer").show();
+            
+             $("#divsubmit").show();
+        } 
+        else{
+
+            $("#IsQuery").attr("disabled",false); 
+             $("#divsubmit").hide();
+              $("#divRefer").hide();
+        }
+    });
+
+     </Script>
+  
+ }
+
+ 

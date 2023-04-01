@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Registration of Establishment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.css" />
+<link rel="stylesheet" href="~/Scripts/js/select.dataTables.min.css" />
+
+<script src="~/Scripts/vendors/chart.js/Chart.min.js"></script>
+<script src="~/Scripts/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="~/Scripts/js/dataTables.select.min.js"></script>
+<script src="~/Scripts/js/dashboard.js"></script>
+<script src="~/Scripts/js/Chart.roundedBarCharts.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">Registration of Establishment</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row" style="display:flow-root">
+            <div style="float: right;">
+                @Html.ActionLink("Apply New Certificate", "Index", "Registration", new { area = "" }, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Establishment LIN</th>
+                                                <th>Establishment Name</th>
+                                                <th>Application No</th>
+                                                <th>Applicant Name</th>
+                                                <th>Sector</th>
+                                                <th>Location</th>
+                                                <th>Year</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>ES-01</td>
+                                                <td>Establishment Test</td>
+                                                <td>AP/REG/001</td>
+                                                <td>App1</td>
+                                                <td>Sector 1</td>
+                                                <td>Ahmedabad</td>
+                                                <td>2022</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-success">
+                                                        Completed
+                                                    </div>
+                                                </td>
+                                                <td>@Html.ActionLink("View", "Index", "Registration", new { area = "" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ES-03</td>
+                                                <td>Establishment Test3</td>
+                                                <td>AP/REG/003</td>
+                                                <td>App3</td>
+                                                <td>Sector 1</td>
+                                                <td>Gandhinagar</td>
+                                                <td>2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-warning">
+                                                        Pending
+                                                    </div>
+                                                </td>
+                                                <td>@Html.ActionLink("View", "Index", "Registration", new { area = "" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ES-02</td>
+                                                <td>Establishment Test</td>
+                                                <td>AP/REG/002</td>
+                                                <td>App2</td>
+                                                <td>Sector 2</td>
+                                                <td>Gandhinagar</td>
+                                                <td>2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-danger">
+                                                        Rejected
+                                                    </div>
+                                                </td>
+                                                <td>@Html.ActionLink("View", "Index", "Registration", new { area = "" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ES-04</td>
+                                                <td>Establishment Test</td>
+                                                <td>AP/REG/004</td>
+                                                <td>App4</td>
+                                                <td>Sector 3</td>
+                                                <td>Ahmedabad</td>
+                                                <td>2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-info">
+                                                        Draft
+                                                    </div>
+                                                </td>
+                                                <td>@Html.ActionLink("Edit", "Index", "Registration", new { area = "" })</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+

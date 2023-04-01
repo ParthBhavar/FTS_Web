@@ -1,0 +1,108 @@
+﻿@model  IEnumerable<FTS.Model.Entities.ReinstatementAppliactionModel>
+@{
+         ViewBag.Title = "Reinstatement Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+         @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                 @*   <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/ReinstatementAppliaction/AddReinstatementAppliaction/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i>Add New</a>
+                                              <br>
+                                        <br>
+                                    </div>*@
+                                    <table id="ReinstatementACOLList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                  <th style="width:2%;" id="roleName">ID</th>
+                                                  <th style="width:5%;" id="roleName">AppID</th>
+                                                   <th style="width:5%;" id="roleName">Mode</th>
+                                                  <th style="width:20%;" id="roleName">Name</th>
+                                                  <th style="width:10%;" id="roleName">Application Date</th>
+                                                  <th style="width:10%;" id="roleName">Status</th>
+                                                  <th style="width:10%;" id="roleName">Hearing Date</th>
+                                                  <th  style="width:50%;" id="Edit">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                          {
+                                            <tr> 
+                                                @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                <td valign="top" class="text-left">@item.ID </td>
+                                                <td valign="top" class="text-left">@item.AppID </td>
+                                                  <td valign="top" class="text-left">@item.ApplicationMode </td>
+                                                <td valign="top" class="text-left">@item.Name </td> 
+                                                <td valign="top" class="text-left">@item.AppDate </td>
+                                                <td valign="top" class="text-left">@item.Status </td>
+                                                <td valign="top" class="text-left">@item.HearingDateString </td>
+                                                <td>
+                                                    <div class="row">
+                                                      @if (@item.ActionCode == 1 || @item.ActionCode == 2 || @item.ActionCode == 3)
+                                                        {
+                                                            <div class="col-auto">
+                                                              <a id="Edit"  class="btn btn-outline-primary ml-3 mt-1"  title="Hearing" href="/ReinstatementAppliaction/AddReinstatementHearingALC/?id=@item.EncryptedId&ISNew=0&ISView=0" ><i class="fas fa-calendar-alt"></i>Hearing</a>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                              <a id="Edit"  class="btn btn-outline-primary ml-3 mt-1"  title="Case Resolution" href="/ReinstatementAppliaction/AddReinstatementHearingALC/?id=@item.EncryptedId&ISNew=1&ISView=0" ><i class="fas fa-check-circle"></i>Resolution</a>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                              <a id="Edit"  class="btn btn-outline-primary ml-3 mt-1" title="Send To labour Court" href="/ReinstatementAppliaction/AddReinstatementHearingALC/?id=@item.EncryptedId&ISNew=2&ISView=0" ><i class="fas fa-share"></i>Labour Court</a>
+                                                            </div>
+                                                        }
+                                                        else if(@item.ActionCode == 6)
+                                                        {
+                                                           <div class="col-auto">
+                                                              <a id="Edit" class="btn btn-outline-primary ml-3 mt-1" title="Case Resolution" href="/ReinstatementAppliaction/AddReinstatementHearingALC/?id=@item.EncryptedId&ISNew=1&ISView=0" ><i class="fas fa-check-circle"></i>Resolution</a>
+                                                           </div>
+                                                        }
+                                                        else
+                                                        {
+                                                          <div class="col-auto">
+                                                            <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  title="View" href="/ReinstatementAppliaction/AddReinstatementHearingALC/?id=@item.EncryptedId&ISNew=2&ISView=1" ><i class="fas fa-eye"></i>View</a>
+                                                          </div>
+                                                        }
+                                                        </div>
+                                                        @* @if(@item.UserMode == 1 && @item.IsSubmit == true)
+                                                        {
+                                                         <a id="Edit" href="/ReinstatementAppliaction/AddReinstatementAppliaction/?id=@item.EncryptedId" ><i class="fas fa-calendar-alt"></i></a>
+                                                        }*@
+                                                        @* <a id="Delete" onclick="return DeletePositionRecord(@item.ApplicationID);"><i class="fas fa-trash-alt"></i></a>*@
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <script>
+
+      $( document ).ready(function() {
+        $('#ReinstatementACOLList').dataTable( {} );
+    });
+
+        </script>
+  
+}

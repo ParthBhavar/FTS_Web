@@ -1,0 +1,114 @@
+﻿@model FTS.Model.Entities.AreaMasterModel
+@{
+    ViewBag.Title = "Area Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Add Area </h4>
+                        <div class="form-group">
+                            <div class="row">                              
+                                <div class="col-md-3">
+                                    @Html.Label("Area Name")
+                                    @Html.HiddenFor(e => e.AreaIDEdit , new { @ID="AreaID"})
+                                    @Html.TextBoxFor(e => e.AreaName, new { @class = "form-control", @ID="AreaName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanAreaName" style="display:none;">Please Add Area Name</span>
+                                </div>
+
+                                 <div class="col-md-3">
+                                    @Html.Label("District Name")
+                                    @Html.DropDownListFor(M => M.DistrictId, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictId", })
+                                    <span class="text-danger ValidationSpan" id="SpanDistrictId" style="display:none;">Please Select District Name </span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("Zone Name")
+                                    @Html.DropDownListFor(M => M.ZoneID, new SelectList(Model.Zonelist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="ZoneID", })
+                                    <span class="text-danger ValidationSpan" id="SpanZoneID" style="display:none;">Please Select Zone Name </span>
+                                </div>
+                               
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitAreaMaster();" />
+                            @Html.ActionLink("Cancel", "index", "AreaMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+  <script>
+     
+        function SubmitAreaMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#AreaName").val() == "0" || $("#AreaName").val() == "") {
+                ErrorCnt++;
+                $('#SpanAreaName').show();
+            }
+             if ($("#ZoneID").val() == "0" || $("#ZoneID").val() == "") {
+                ErrorCnt++;
+                $('#SpanZoneID').show();
+            }   
+
+              if ($("#DistrictId").val() == "0" || $("#DistrictId").val() == "") {
+                ErrorCnt++;
+                $('#SpanDistrictId').show();
+            }          
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    AreaID: $('#AreaID').val(),
+                    AreaName: $('#AreaName').val(),
+                    ZoneID: $('#ZoneID').val(),
+                    DistrictID: $('#DistrictID').val(),
+                    IsActive: $('#IsActive').val(),
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/AreaMaster/SaveAreaRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.
+                                ErrorCode == 0) {
+                                window.location.href = "/AreaMaster/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+
+                        },
+
+                        error: function() {
+                            alert('Something went wrong!');
+                        }
+                    })
+            }
+    }
+   </script>

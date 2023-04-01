@@ -1,0 +1,103 @@
+﻿@model FTS.Model.Entities.RegionMasterModel
+@{
+    ViewBag.Title = " ADD REGION";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+<div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">@ViewBag.Title</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                               @* <div class="col-md-1">
+                                    @Html.Label("Region ID")
+                                  @Html.TextBoxFor(e => e.RegionID, new { @class = "form-control", @type = "number" ,@ID="RegionID",@readonly="readonly"})
+                                
+                                </div>*@
+                                <div class="col-md-3">
+                                    @Html.Label("Region Name")
+                                     @Html.HiddenFor(e => e.RegionIDEdit, new { @ID="RegionID"})
+                                    @Html.TextBoxFor(e => e.RegionName, new { @class = "form-control", @ID="RegionName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanRegionName" style="display:none;">Please Insert Region Name</span>
+                                </div>
+                                 
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitRegionMaster();" />
+                            @Html.ActionLink("Cancel", "index", "RegionMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+  <script>
+
+      //$("input[type='checkbox']").on('change', function(){
+      // $(this).val(this.checked ? "true" : "false");
+      // })
+     
+        function SubmitRegionMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#RegionName").val() == "0" || $("#RegionName").val() == "") {
+                ErrorCnt++;
+                $('#SpanRegionName').show();
+            }
+              
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    RegionID: $('#RegionID').val(),
+                    RegionName: $('#RegionName').val(),
+                    IsActive: $('#IsActive').val(),
+                    //IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/RegionMaster/SaveRegionRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                window.location.href = "/RegionMaster/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+
+                        },
+
+                        error: function() {
+                            alert('Something went wrong!');
+                        }
+                    })
+            }
+    }
+   </script>
+
+
+
+

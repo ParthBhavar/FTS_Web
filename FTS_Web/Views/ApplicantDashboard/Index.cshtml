@@ -1,0 +1,367 @@
+﻿
+@{
+    ViewBag.Title = "Applicant Dashboard";
+    Layout = "~/Views/Shared/_ApplicantLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.css" />
+<link rel="stylesheet" href="~/Scripts/js/select.dataTables.min.css" />
+
+<script src="~/Scripts/vendors/chart.js/Chart.min.js"></script>
+<script src="~/Scripts/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="~/Scripts/js/dataTables.select.min.js"></script>
+<script src="~/Scripts/js/dashboard.js"></script>
+<script src="~/Scripts/js/Chart.roundedBarCharts.js"></script>
+
+@using (Html.BeginForm())
+{
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">Applicant Dashboard</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Welcome Commissionerate of Labour</h3>
+                        <h6 class="font-weight-normal mb-0">
+                            Labour, Skill Development &
+                            Employment Department
+                        </h6>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="justify-content-end d-flex">
+                            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                                <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <i class="mdi mdi-calendar"></i> Today (@DateTime.Now.Date.ToString("dd-MMM-yyyy"))
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                                    <a class="dropdown-item" href="#">January - March</a>
+                                    <a class="dropdown-item" href="#">March - June</a>
+                                    <a class="dropdown-item" href="#">June - August</a>
+                                    <a class="dropdown-item" href="#">August - November</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 grid-margin transparent">
+
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4"> Submitted Application </p>
+                                <p class="fs-30 mb-2">260</p>
+                                <p>5.00% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <p class="mb-4"> Under Process Application </p>
+                                <p class="fs-30 mb-2">75</p>
+                                <p>2.25% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin transparent">
+
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                        <div class="card card-light-blue">
+                            <div class="card-body">
+                                <p class="mb-4"> Rejected Application </p>
+                                <p class="fs-30 mb-2">35</p>
+                                <p>1.00% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 stretch-card transparent">
+                        <div class="card card-light-danger">
+                            <div class="card-body">
+                                <p class="mb-4"> Approved Application </p>
+                                <p class="fs-30 mb-2">150</p>
+                                <p>1.75% (30 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Registrations Report</p>
+                        <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with this portal.</p>
+                        <div class="d-flex flex-wrap mb-5">
+                            
+                        </div>
+                        <canvas id="order-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <p class="card-title">Administrative Report</p>
+                            <a href="#" class="text-info">View all</a>
+                        </div>
+                        <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with this portal.</p>
+                        <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
+                        <canvas id="sales-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card position-relative">
+                    <div class="card-body">
+                        <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+                                            <div class="ml-xl-4 mt-3">
+                                                <p class="card-title">Detailed Reports</p>
+                                                <h1 class="text-primary">260</h1>
+                                                <h3 class="font-weight-500 mb-xl-4 text-primary">Gujarat</h3>
+                                                <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with this portal.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xl-9">
+                                            <div class="row">
+                                                <div class="col-md-6 border-right">
+                                                    <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                                        <table class="table table-borderless report-table">
+                                                            <tr>
+                                                                <td class="text-muted">Ahmedabad</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">55</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Amreli</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">25</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Anand</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">40</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Sabarkantha</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">15</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Bhavnagar</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">10</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Valsad</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">15</h5></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mt-3">
+                                                    <canvas id="north-america-chart"></canvas>
+                                                    <div id="north-america-legend"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+                                            <div class="ml-xl-4 mt-3">
+                                                <p class="card-title">Detailed Reports</p>
+                                                <h1 class="text-primary">260</h1>
+                                                <h3 class="font-weight-500 mb-xl-4 text-primary">Gujarat</h3>
+                                                <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with this portal.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xl-9">
+                                            <div class="row">
+                                                <div class="col-md-6 border-right">
+                                                    <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                                        <table class="table table-borderless report-table">
+                                                            <tr>
+                                                                <td class="text-muted">Banaskantha</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">25</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Bharuch</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">15</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Bhavnagar</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">20</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Vadodara</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">15</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Mehsana</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">18</h5></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted">Rajkot</td>
+                                                                <td class="w-100 px-0">
+                                                                    <div class="progress progress-md mx-4">
+                                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><h5 class="font-weight-bold mb-0">12</h5></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mt-3">
+                                                    <canvas id="south-america-chart"></canvas>
+                                                    <div id="south-america-legend"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#detailedReports" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#detailedReports" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Under Process Application</p>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table id="example" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th>Application No.</th>
+                                                <th>Application type</th>
+                                                <th>Created Date</th>
+                                                <th>Status</th>
+                                                <th>Updated Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Application 1</td>
+                                                <td>Claim Application</td>
+                                                <td>15-Nov-2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-success">
+                                                        Completed
+                                                    </div>
+                                                </td>
+                                                <td>01-Jan-2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Application 2</td>
+                                                <td>Certificates</td>
+                                                <td>10-Dec-2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-warning">
+                                                        Pending
+                                                    </div>
+                                                </td>
+                                                <td>04-Jan-2022</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+}
+
+
+

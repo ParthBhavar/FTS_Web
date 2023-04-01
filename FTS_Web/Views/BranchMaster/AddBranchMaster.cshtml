@@ -1,0 +1,128 @@
+﻿@model FTS.Model.Entities.BranchMasterModel
+@{
+    ViewBag.Title = "Branch Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Branch Master Entry</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                               @* <div class="col-md-1">
+                                    @Html.Label("Branch ID")
+                                  @Html.TextBoxFor(e => e.BranchID, new { @class = "form-control", @type = "number" ,@ID="BranchID",@readonly="readonly"})
+                                
+                                </div>*@
+                                <div class="col-md-3">
+                                    @Html.Label("Branch Name")
+                                    @Html.HiddenFor(e => e.BranchIDEdit , new { @ID="BranchID"})
+                                    @Html.TextBoxFor(e => e.BranchName, new { @class = "form-control", @ID="BranchName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanBrnachName" style="display:none;">Please Enter Branch Name</span>
+                                </div>
+
+                              @*    <div class="col-md-3">
+                                    @Html.Label("Parent Branch")
+                                    @Html.TextBoxFor(e => e.ParentBranch, new { @class = "form-control", @type = "number", @ID="ParentBranch", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanParentBranch" style="display:none;">Please Select Parent Branch </span>
+                                </div>*@
+                                 <div class="col-md-3">
+                                    @Html.Label("Parent Branch")
+                                    @Html.DropDownListFor(M => M.ParentBranch, new SelectList(Model.BranchList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="ParentRoleID", })
+                                    <span class="text-danger ValidationSpan" id="SpanParentBranch" style="display:none;">Please Select Parent Role </span>
+                                </div>
+                               
+                                <div class="col-md-3">
+                                    @Html.Label("District")
+                                    @Html.DropDownListFor(M => M.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID", })
+                                    <span class="text-danger ValidationSpan" id="SpanParentBranch" style="display:none;">Please Select Parent Role </span>
+                                </div>
+                                 <div class="col-md-1">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitBranchMaster();" />
+                            @Html.ActionLink("Cancel", "index", "BranchMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+  <script>
+
+      //$("input[type='checkbox']").on('change', function(){
+      // $(this).val(this.checked ? "true" : "false");
+      // })
+     
+        function SubmitBranchMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#BranchName").val() == "0" || $("#BranchName").val() == "") {
+                ErrorCnt++;
+                $('#SpanBrnachName').show();
+            }
+
+            //  if ($("#ParentBranch").val() == "0" || $("#ParentBranch").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanParentBranch').show();
+            //}
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    BranchID: $('#BranchID').val(),
+                    BranchName: $('#BranchName').val(),
+                    ParentBrnach: $('#ParentBranch').val(),
+                    IsActive: $('#IsActive').val(),
+                    DistrictID: $('#DistrictID').val(),
+                    IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/BranchMaster/SaveBranchRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/BranchMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+                        },  
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+   </script>

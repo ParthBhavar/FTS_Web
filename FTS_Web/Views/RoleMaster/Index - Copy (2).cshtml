@@ -1,0 +1,126 @@
+﻿@model  IEnumerable<FTS.Model.Entities.MRoleMaster>
+@{
+    ViewBag.Title = "Role Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="containerWrapper">
+    <div style="float: right;margin-right: 10px;margin-bottom: 10px;">
+        <input type="text" id="txtSearch"><input type="button" id="btnSearch" onclick="GlobalSearch();" value="Go">
+    </div>
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div id="grid"></div>
+                    <script>
+                        $(document).ready(function () {
+                            GlobalSearch();
+                        });
+                        function GlobalSearch() {
+                               $("#grid").html('');
+                            var searchVal = $("#txtSearch").val();
+                                 $("#grid").kendoGrid({
+                                toolbar: ["excel", { text: "Add New" }],
+                                excel: {
+                                    fileName: "Kendo UI Grid Export.xlsx",
+                                    proxyURL: "/RoleMaster/index",
+                                    filterable: true,
+                                     allPages: true
+                                },
+                                dataSource: {
+                                    type: "json",
+                                    transport: {
+                                             read: {
+                                                        url: "@Url.Action("index", "RoleMaster")" + "?Search="+ searchVal,
+                                                        type: "POST",
+                                                        dataType: "json",
+                                                        async: true,
+                                                        cache: false,
+                                                        contentType: 'application/json',
+                                                         data: {Search:searchVal}
+                                                   },
+                                                parameterMap: function (data) {
+                                                    return JSON.stringify(data);
+                                                }
+                                    },
+                                    schema: {
+                                            data: function (result) {
+                                                return result.data;
+                                            },
+                                            total: function (result) {
+                                                return result.TotalRecord;
+                                            }
+                                        },
+
+                                   pageSize: 20,
+                                    serverPaging: true,
+                                    serverFiltering: false,
+                                    serverSorting: false
+                                },
+                                height: 490,
+                                //groupable: true,
+                                sortable: true,
+                                pageable: true,
+                                resizable: true,
+
+                                scrollable: { virtual: true },
+
+                               pageable: {
+                                    refresh: true,
+                                    pageSizes: true,
+                                    buttonCount: 5
+                                                        },
+                                                       dataBound: function () {
+
+                                    var data = this.dataSource.view();
+                                },
+
+                                columns: [
+                                     {
+                                        hidden: false,
+                                        field: "roleID",
+                                        title: "Role ID",
+                                        width: 120
+                                    },
+                                    {
+                                        hidden: false,
+                                        field: "roleName",
+                                        title: "Role Name",
+                                        width: 120
+                                    },
+                                     {
+                                        title: "Action",
+                                        field: "roleID",
+                                       
+                                       template: function (dataItem) {
+                                            var template = "";
+                                           
+                                                template += '<a id="' + dataItem.roleID + '" href="/RoleMaster/AddRoleMaster/?RoleID=' + dataItem.roleID + '"  name="winedit" campid="1"  title ="Edit"><i class="fas fa-edit"></i></a>&nbsp; '
+                                            
+                                            template += '<a id="' + dataItem.roleID + '" class="btnsml_action e-view" name="winedit" campid="1" href="/RoleMaster/AddRoleMaster/?RoleID=' + dataItem.roleID + '" title="View"><i class="fas fa-eye"></i></a>'
+                                            return template
+                                        },
+                                        width: 100
+                                    }
+                                ]
+
+                            });
+                            }
+                        $("#grid").on("click", ".k-grid-AddNew", function () {
+                            window.location = "/RoleMaster/AddRoleMaster?RoleID=0";
+                        });
+
+                    </script>
+                    <style>
+                        th [role="listbox"] {
+                            visibility: hidden;
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,198 @@
+﻿@model FTS.Model.Entities.ApplicationRegistrationActionMasterModel
+@{
+    ViewBag.Title = "Application Registration Action Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Add Application Registratation Action  </h4>
+                        <div class="form-group">
+                            
+                            <div class="row">                              
+                                
+                                <div class="col-md-3">
+                                    @Html.Label("Action Name")
+                                    @Html.HiddenFor(e => e.CanEdit , new { @ID="ActionID"})
+                                    @Html.TextBoxFor(e => e.ActionName, new { @class = "form-control", @ID="ActionName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanActionName" style="display:none;">Please Add Action Name</span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("Action Code")
+                                    @Html.TextBoxFor(e => e.ActionCode, new { @class = "form-control", @ID="ActionCode", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanActionCode" style="display:none;">Please Add Action Code </span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("Status")
+                                    @Html.TextBoxFor(e => e.Status, new { @class = "form-control", @ID="Status", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanStatus" style="display:none;">Please Add Status </span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("Action Text")
+                                    @Html.TextBoxFor(e => e.ActionText, new { @class = "form-control", @ID="ActionText", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanActionText" style="display:none;">Please Add Action Text </span>
+                                </div>
+                             </div>
+
+                             <div class="row">
+                                
+                                    <div class="col-md-3">
+                                    @Html.Label("Perform Action")
+                                    @Html.DropDownListFor(M => M.PerformActionID, new SelectList(Model.Rolelist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="PerformActionID", })
+                                    <span class="text-danger ValidationSpan" id="SpanPerformActionID" style="display:none;">Please Select Perform Action </span>
+                                   </div>
+
+                                    <div class="col-md-3">
+                                    @Html.Label("Forward To")
+                                    @Html.DropDownListFor(M => M.ForwardTo, new SelectList(Model.Rolelist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="PerformActionID", })
+                                    <span class="text-danger ValidationSpan" id="SpanForwardTo" style="display:none;">Please Select Forward To </span>
+                                   </div>
+                              
+                                   @*<div class="col-md-3">
+                                    @Html.Label("Forward To")
+                                    @Html.TextBoxFor(e => e.ForwardTo, new { @class = "form-control", @ID="ForwardTo", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanForwardTo" style="display:none;">Please Add Forward To </span>
+                                   </div>*@
+
+                                    <div class="col-md-3">
+                                    @Html.Label("Parent Action")
+                                    @Html.DropDownListFor(M => M.ParentActionID, new SelectList(Model.Rolelist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="ParentActionID", })
+                                    <span class="text-danger ValidationSpan" id="SpanParentActionID" style="display:none;">Please Select Parent Action</span>
+                                   </div>
+
+                                   <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsQuery")
+                                    @Html.CheckBoxFor(e => e.IsQuery, new { @ID="IsQuery"})
+                                    <span class="text-danger ValidationSpan" id="SpanIsQuery" style="display:none;">Please Select IsQuery</span>
+                                   </div>
+
+                                   <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanIsActive" style="display:none;">Please Select IsActive</span>
+                                   </div>
+
+                            </div>
+                        </div>
+                    </div>
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitApplicationRegistrationActionMaster();" />
+                            @Html.ActionLink("Cancel", "index", "ApplicationRegistrationActionMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    }
+  <script>
+     
+        function SubmitApplicationRegistrationActionMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+           
+             if ($("#ActionName").val() == "0" || $("#ActionName").val() == "") {
+                ErrorCnt++;
+                $('#SpanActionName').show();
+            }   
+             if ($("#ActionCode").val() == "0" || $("#ActionCode").val() == "") {
+                ErrorCnt++;
+                $('#SpanActionCode').show();
+            }
+              if ($("#Status").val() == "0" || $("#Status").val() == "") {
+                ErrorCnt++;
+                $('#SpanStatus').show();
+            }          
+
+             if ($("#ActionText").val() == "0" || $("#ActionText").val() == "") {
+                ErrorCnt++;
+                $('#SpanActionText').show();
+            }  
+             if ($("#PerformActionID").val() == "0" || $("#PerformActionID").val() == "") {
+                ErrorCnt++;
+                $('#SpanPerformActionID').show();
+            }  
+             if ($("#ForwardTo").val() == "0" || $("#ForwardTo").val() == "") {
+                ErrorCnt++;
+                $('#SpanForwardTo').show();
+            }  
+            if ($("#ParentActionID").val() == "0" || $("#ParentActionID").val() == "") {
+                ErrorCnt++;
+                $('#SpanParentActionID').show();
+            }  
+            if ($("#IsQuery").val() == "0" || $("#IsQuery").val() == "") {
+                ErrorCnt++;
+                $('#SpanIsQuery').show();
+            }  
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ActionID: $('#ActionID').val(),
+                    ActionCode: $('#ActionCode').val(),
+                    ActionName: $('#ActionName').val(),
+                    Status: $('#Status').val(),
+                    ActionText: $('#ActionText').val(),
+                    PerformActionID: $('#PerformActionID').val(),
+                    ForwardTo: $('#ForwardTo').val(),
+                    ParentActionID: $('#ParentActionID').val(),
+                    IsQuery: $('#IsQuery').val(),
+                    IsActive: $('#IsActive').val(),
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ApplicationRegistrationActionMaster/SaveAppRegActionRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/ApplicationRegistrationActionMaster/Index";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+
+
+                            //if (data.data.
+                            //    ErrorCode == 0) {
+                            //    window.location.href = "/ReinstatementActionMaster/Index";
+                            //    alert(data.data.ErrorMassage);
+                            //}
+                            //else {
+                            //    alert('Something went wrong!');
+                            //}
+
+                        },
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(data.data.ErrorMassage);
+                          }
+                        //error: function() {
+                        //    alert('Something went wrong!');
+                        //}
+                    })
+            }
+    }
+   </script>

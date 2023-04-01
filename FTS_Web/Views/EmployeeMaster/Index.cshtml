@@ -1,0 +1,150 @@
+﻿@model  IEnumerable<FTS.Model.Entities.EmployeeMasterModel>
+@{
+    ViewBag.Title = "Employee List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                               <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/EmployeeMaster/AddEmployeeMaster/?employeeid=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+                                              <br>
+                                        <br>
+                                    </div>
+
+                                    <table id="EmployeeList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                @* <th style="width:2%;" id="roleID">Role ID</th>*@
+                                                   @*<th id="EmployeeID"> Employee ID </th>*@
+                                                  <th id="EmpCode"> EmpCode  </th>
+                                            @*      <th id="DesignationID"> Designation ID </th>
+                                                  <th id="RegionID"> Region ID </th>*@
+                                                  <th id="FirstName"> FirstName </th>
+                                                  <th id="MiddleName"> MiddleName </th>
+                                                  <th id="LastName"> LastName </th>
+                                                  <th id="EmailID"> EmailID </th>
+                                                  <th id="MobileNo"> MobileNo </th>
+                                @*                  <th id="PAddress"> PAddress </th>
+                                                  <th id="SAddress"> SAddress </th>*@
+                                                  <th id="Gender"> Gender </th>
+                                             @*      <th id="DOB">DOB</th>
+                                                   <th id="Password"> Password </th>*@
+                                                  <th id="Edit">Edit</th>
+                                                  <th id="Delete">Delete</th>
+                                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                   
+                                                    @*<td valign="top" class="text-left">@item.EmployeeID </td>*@
+                                                    <td valign="top" class="text-left">@item.EmpCode </td>
+                                               @*     <td valign="top" class="text-left">@item.DesignationID </td>
+                                                    <td valign="top" class="text-left">@item.RegionID </td>*@
+                                                    <td valign="top" class="text-left">@item.FirstName </td>
+                                                    <td valign="top" class="text-left">@item.MiddleName </td>
+                                                    <td valign="top" class="text-left">@item.LastName </td>
+                                                    <td valign="top" class="text-left">@item.EmailID </td>
+                                                    <td valign="top" class="text-left">@item.MobileNo </td>
+                                            @*        <td valign="top" class="text-left">@item.PAddress </td>
+                                                    <td valign="top" class="text-left">@item.SAddress </td>*@
+                                                    <td valign="top" class="text-left">@item.Gender </td>
+                                             @*       <td valign="top" class="text-left">@item.DOB </td> 
+                                                    <td valign="top" class="text-left">@item.Password </td>*@
+                                            
+                                                <td>
+                                                     <a id="Edit" href="/EmployeeMaster/AddEmployeeMaster/?employeeid=@item.EncryptedId" ><i class="fas fa-pen"></i></a>
+                                                  
+                                                </td>
+
+                                                <td>
+                                                     @*<a id="Delete" onclick="return DeleteEmployeeRecord(@item.EmployeeID);"><i class="fas fa-trash-alt"></i></a>*@
+                                                      <a id="Delete" onclick="DeleteConformation('DeleteEmployeeRecord('+@item.EmployeeID+')')"><i class="fas fa-trash-alt"></i></a>
+                                                      
+                                                         @*<a id="Edit" href="/EmployeeMaster/AddEmployeeMaster/?employeeid=@item.EncryptedId" ><i class="fas fa-pen"></i></a>*@
+
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+      $( document ).ready(function() {
+        $('#EmployeeList').dataTable( {} );
+    });
+
+ 
+   function DeleteEmployeeRecord(EmployeeID) {
+        debugger;
+                var myData = {
+                    EmployeeID: EmployeeID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/EmployeeMaster/DeleteEmployeeRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/EmployeeMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/EmployeeMaster/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }*@
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+           
+    }
+
+        </script>
+
+}

@@ -1,0 +1,59 @@
+﻿
+@model IEnumerable<FTS.Model.Entities.RegistrationCLRAModel>
+@{
+	ViewBag.Title = "Registration CLRA";
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken();
+	<br />
+	<section>
+		<h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+	</section>
+
+	<div class="content-wrapper">
+		<div class="row">
+			<div class="col-12 grid-margin stretch-card">
+				<div class="card">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-12">
+								<div class="table-responsive">
+									<div id="Filter" class="dataTables_filter float-right mx-3">
+										<a id="Add" href="/RegistrationCLRA/AddRegistrationCLRA/?registrationid=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+									</div>
+									<table id="RegistrationCLRAList" class="display expandable-table" style="width:100%">
+										<thead>
+											<tr>
+												@* <th style="width:2%;" id="RegionID">region ID</th>*@
+												<th style="width:20%;" id="establishmentName">Establishment Name</th>
+												<th style="width:2%;" id="Edit">Action</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (var item in Model)
+											{
+												<tr>
+													@*<td valign="top" class="text-left">@item.RegionID </td>*@
+													<td valign="top" class="text-left">@item.EstablishmentName </td>
+													<td>
+														<a id="Edit" href="/RegistrationCLRA/AddRegistrationCLRA/?registrationid=@item.EncryptedId"><i class="fas fa-pen"></i></a>
+														@*<a id="Delete" onclick="return DeleteRecord(@item.ProjectID);"><i class="fas fa-trash-alt"></i></a>*@
+													</td>
+												</tr>
+											}
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+}

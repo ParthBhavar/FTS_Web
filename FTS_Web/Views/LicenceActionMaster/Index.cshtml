@@ -1,0 +1,116 @@
+﻿
+@model  IEnumerable<FTS.Model.Entities.LicenceActionMasterModel>
+@{
+    ViewBag.Title = "Licence Action Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/LicenceActionMaster/AddlicenceActionMaster/?actionid=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+                                            </div>
+                                    <table id="NFormActionList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                
+                                                  <th style="width:20%;" id="actionName">Action Name</th>
+                                                  <th  style="width:2%;" id="Edit">Action</th>
+                                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    
+                                                    <td valign="top" class="text-left">@item.ActionName </td>
+                                                <td>
+                                                     <a id="Edit" href="/LicenceActionMaster/AddlicenceActionMaster/?actionid=@item.EncryptedId" ><i class="fas fa-pen"></i></a>
+                                                   @* <a id="Delete" onclick=" return DeleteRecord(@item.ActionID);"><i class="fas fa-trash-alt"></i></a>*@
+                                                    <a id="Delete" onclick="DeleteConformation('DeleteRecord('+@item.ActionID+')')"><i class="fas fa-trash-alt"></i></a>
+                                                    
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <script>
+
+      $( document ).ready(function() {
+       // NFormActionList();
+        //$('#NFormActionList').DataTable();
+        $('#NFormActionList').dataTable( {} );
+    });
+
+   
+    function DeleteRecord(actionID) {
+        debugger;
+                var myData = {
+                    ActionID: actionID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/LicenceActionMaster/DeleteLicenceActionRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/LicenceActionMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+                           @* if (data.data.ErrorCode == 0) {
+                                window.location.href = "/NFormActionMaster/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }*@
+
+                        },
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                        }
+                        @*error: function() {
+                            alert('Something went wrong!');
+                        }*@
+                    })
+           
+    }
+
+        </script>
+
+}

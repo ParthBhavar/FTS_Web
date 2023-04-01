@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Single Application Claim";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@*<link rel="stylesheet" href="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.css" />
+<link rel="stylesheet" href="~/Scripts/js/select.dataTables.min.css" />
+
+<script src="~/Scripts/vendors/chart.js/Chart.min.js"></script>
+<script src="~/Scripts/vendors/datatables.net/jquery.dataTables.js"></script>
+<script src="~/Scripts/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+<script src="~/Scripts/js/dataTables.select.min.js"></script>
+<script src="~/Scripts/js/dashboard.js"></script>
+<script src="~/Scripts/js/Chart.roundedBarCharts.js"></script>*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">Single Application Claim</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row" style="display:flow-root">
+            <div style="float: right;">
+                @Html.ActionLink("Apply New Claim", "Index", "CaseClaim", new { area = "" }, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+        <br />
+
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Claim No</th>
+                                                <th>Claim Details</th>
+                                                <th>Application No</th>
+                                                <th>Name</th>                                                
+                                                <th>Year</th>
+                                                <th>Claim Date</th>
+                                                <th>Claim Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>CL-04</td>
+                                                <td>Test4</td>
+                                                <td>App/CL/04</td>
+                                                <td>xyz</td>
+                                                <td>2022</td>
+                                                <td>17-Jan-2022</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-info">
+                                                        Draft
+                                                    </div>
+                                                </td>
+                                                <td>@Html.ActionLink("Edit", "Index", "CaseClaim", new { area = "" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CL-01</td>
+                                                <td>Test</td>
+                                                <td>App/CL/01</td>
+                                                <td>xyz</td>                                                
+                                                <td>2021</td>
+                                                <td>01-Dec-2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-warning">
+                                                        Pending
+                                                    </div>
+                                                </td>
+                                                <td>@Html.ActionLink("View", "Index", "CaseClaim", new { area = "" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CL-02</td>
+                                                <td>Test2</td>
+                                                <td>App/CL/02</td>
+                                                <td>xyz</td>                                                
+                                                <td>2021</td>
+                                                <td>15-Dec-2021</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-danger">
+                                                        Rejected
+                                                    </div>
+                                                </td>
+                                                <td>@Html.ActionLink("View", "Index", "CaseClaim", new { area = "" })</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CL-03</td>
+                                                <td>Test3</td>
+                                                <td>App/CL/03</td>
+                                                <td>abc</td>
+                                                <td>2022</td>
+                                                <td>10-Jan-2022</td>
+                                                <td class="font-weight-medium">
+                                                    <div class="badge badge-success">
+                                                        Completed
+                                                    </div>
+                                                </td>
+                                                <td>@Html.ActionLink("View", "Index", "CaseClaim", new { area = "" })</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+

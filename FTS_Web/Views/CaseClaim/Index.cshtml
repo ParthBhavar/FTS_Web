@@ -1,0 +1,330 @@
+﻿
+@{
+    ViewBag.Title = "Case Claim Management";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;">Single Application Claim</h3>
+    </section>
+
+    <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Application For Claims</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Claim Details:")
+                                    @Html.TextBox("ClaimDetails","", new { @class = "form-control", placeholder = "Claim Detail"})
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Claim Area:")
+                                    @Html.TextBox("ClaimArea", "", new { @class = "form-control", placeholder = "Area"})
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Application No:")
+                                    @Html.TextBox("AppNo", "", new { @class = "form-control", placeholder = "Application Number"})
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Year:")
+                                    @Html.DropDownList("Year", new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Text = "2021", Value = "1"},
+                                        new SelectListItem {Text = "2022", Value = "2"},
+                                        new SelectListItem {Text = "2023", Value = "3"}
+                                    }, "Select Year", new { @class = "form-control" }) 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Name:")
+                                    @Html.TextBox("Name", "", new { @class = "form-control", placeholder = "Name"})
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Facilitator Address:")
+                                    @Html.TextArea("FacilitatorAddress", "", new { @class = "form-control", rows = "3", placeholer = "Facilitator Address" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.Label("Employed From:")
+                                    @Html.TextBox("EmployedFrom", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Employed To:")
+                                    @Html.TextBox("EmployedTo", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>  
+                                <div class="col-md-6">
+                                    @Html.Label("Category:")
+                                    @Html.DropDownList("Category", new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Text = "Category1", Value = "1" },
+                                        new SelectListItem {Text = "Category2", Value = "2" },
+                                        new SelectListItem {Text = "Category3", Value = "3" }
+                                    }, "Selet Category", new { @class = "form-control" })
+                                </div>                              
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">                                
+                                <div class="col-md-6">
+                                    @Html.Label("Applicant Name:")  
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            @Html.DropDownList("NameType", new List<SelectListItem>
+                                            {
+                                                new SelectListItem {Text = "Shri.", Value = "1" },
+                                                new SelectListItem {Text = "Mr.", Value = "2" },
+                                                new SelectListItem {Text = "Ms.", Value = "3" },
+                                                new SelectListItem {Text = "Mrs.", Value = "4" }
+                                            }, "Selet", new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Html.TextBox("ApplicantName", "", new { @class = "form-control", placeholder = "Applicant Name" })
+                                        </div>                               
+                                    </div>                                                                    
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Establishment:")
+                                    @Html.TextBox("Establishment", "", new { @class = "form-control", placeholder = "Establishment" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Nature of Work:")
+                            @Html.TextArea("NatureOfWork", "", new { @class = "form-control", rows = "3", placeholder = "Work"})
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Wages Details</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Minimum Wages:")
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-primary text-white"><del>&#2352;</del></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-11">
+                                            @Html.TextBox("Wages", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Minimum Wages" })
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Minimum From:")
+                                    @Html.TextBox("MinimumWagesFrom", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Minimum Wages To:")
+                                    @Html.TextBox("MinimumWagesTo", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Actual Wages:")
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-primary text-white"><del>&#2352;</del></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-11">
+                                            @Html.TextBox("Wages", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Actual Wages" })
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Actual Wages From:")
+                                    @Html.TextBox("ActualWagesFrom", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Actual Wages To:")
+                                    @Html.TextBox("ActualWagesTo", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Overtime Wages:")
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-primary text-white"><del>&#2352;</del></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-11">
+                                            @Html.TextBox("Wages", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Overtime Wages" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Overtime Wages From:")
+                                    @Html.TextBox("OvertimeWagesFrom", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Overtime Wages To:")
+                                    @Html.TextBox("OvertimeWagesTo", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Deduction:")
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-primary text-white"><del>&#2352;</del></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-11">
+                                            @Html.TextBox("Wages", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Overtime Wages" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Wages Pending From:")
+                                    @Html.TextBox("PendingWagesFrom", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Wages Pending To:")
+                                    @Html.TextBox("PendingWagesTo", "", new { @class = "form-control datepicker", placeholder = "dd/mm/yyyy" })
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Bonus Pending For Year:")
+                                    @Html.DropDownList("Year", new List<SelectListItem>
+                                    {
+                                        new SelectListItem {Text = "2021", Value = "1"},
+                                        new SelectListItem {Text = "2022", Value = "2"},
+                                        new SelectListItem {Text = "2023", Value = "3"}
+                                    }, "Select Year", new { @class = "form-control" })                                    
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Estimated Total Rs:")
+                                    @Html.TextBox("EstimatedValue", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Estimated Rs." })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Wages Payable:")
+                                    @Html.TextBox("WagesPayable", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Wages Payable" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Label("Wages Actually Paid:")
+                                    @Html.TextBox("WagesActuallyPaid", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Wages Actually Paid" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Remuneration Days:")
+                                    @Html.TextBox("RemunerationDays", "", new { @class = "form-control", type = "number", @min = "0", placeholder = "Remuneration Days" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Overtime Rates:")
+                                    @Html.TextBox("OvertimeRates", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Overtime Rates" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Compensation Rates:")
+                                    @Html.TextBox("CompensationRates", "", new { @class = "form-control", type = "phone", onkeypress = "return isNumber(event)", placeholder = "Compensation Rates" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.CheckBox("chkCheck", false , new { Style = "form-control" })
+                            @Html.Label("The applicant(s) do hereby solemnly declare(s) that the facts stated in this application are true to the best of his / their knowledge, belief and information")
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.Label("Dated:")
+                                    @Html.TextBox("Dated", "", new { @class = "form-control datepicker",@Value = DateTime.Now.ToShortDateString(), placeholder = "dd/mm/yyyy" })
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Signature of Employed Person:") <br />
+                                    @Html.ActionLink("Signature", "CaseClaimDtl", "CaseClaim", new { area = "" }, new { @class = "btn btn-primary" })
+                                </div>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            @Html.ActionLink("Submit", "CaseClaimDtl", "CaseClaim", new { area = "" }, new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Cancel", "CaseClaimDtl", "CaseClaim", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $('.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+</script>
+

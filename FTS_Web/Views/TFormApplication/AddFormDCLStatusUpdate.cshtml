@@ -1,0 +1,1009 @@
+﻿@model FTS.Model.Entities.TFormAppealApplicationModel
+@{
+    ViewBag.Title = "T Form Appeal Application ";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+       <br />
+    <section>
+        <h3 style="font-weight:bold;">TForm Appeal Application</h3>
+    </section>   
+
+
+     Html.RenderPartial("_DetailView");
+
+ <div class="content-wrapper">
+
+       @* <div class="row" id="DivHearing" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.HiddenFor(e => e.AppealID , new { @ID="AppealID"})
+                                     @Html.Label("Hearing Date: / સુનાવણી તારીખ:")<span class="text-danger">*</span>
+                                     <br/>
+                                   @Html.TextBoxFor(e => e.HearingDate, "{0:dd-MM-yyyy}", new { @class = "form-control datepicker", @ID="HearingDate", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanHearingDate" style="display:none;">Please Select Hearing Date</span>
+                                </div>
+                                  <div class="col-md-6">
+                                     @Html.Label("Hearing Reason: / સુનાવણીનું કારણ:")<span class="text-danger">*</span>
+                                     <br/>
+                                       @Html.DropDownListFor(e => e.HearingReasonID, new SelectList(Model.HearingReasonList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="HearingReasonID" ,@width ="15px"})
+                                   <span class="text-danger ValidationSpan" id="SpanHearingReason" style="display:none;">Please Select Reason</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        
+                          <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                     @Html.Label("Hearing Remark: / સુનાવણીની ટિપ્પણી:")<span class="text-danger">*</span>
+                                   @Html.TextAreaFor(e => e.HearingRemarks, new { @class = "form-control", @ID="HearingRemark", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanHearingRemark" style="display:none;">Please Enter Hearing Reamrk</span>
+                               
+                                </div>
+                            </div>
+                        </div>
+
+                     
+                          <div class="form-group">
+                          <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitHearing();" />
+                            @Html.ActionLink("Cancel", "TFormApplicationDCLList", "TFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>*@
+     <div class="row" id="DivHearing">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+                 <fieldset>
+                          <legend>Hearing Detail</legend>
+                        <div id="Hearing">
+
+                        </div>
+                         </fieldset>
+
+                        <div class="form-group">
+                            <input type="button" id="btnHearing" class="btn btn-primary" value="Save" onclick="SubmitHearing(0);" />
+                                                         <input type="button" id="btnHearingOfNotice" class="btn btn-primary" value="Save and send to Notice" onclick="SubmitHearing(1);" />
+                            @Html.ActionLink("Cancel", "TFormApplicationDCLList", "TFormApplication", new { area = "" }, new { @class = "btn btn-primary",@ID = "btnCancel" })
+                             <input type="button" id="btnAddHearing" class="btn btn-info" value="More Hearing" onclick="Fn_AddHearing();" />
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+
+ @*Remand Back*@
+
+    <div class="row" id="DivRemankdBack" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            @*<div class="row">
+                                <div class="col-md-4">
+                                    @Html.HiddenFor(e => e.AppealID , new { @ID="AppealID"})
+                                    @Html.HiddenFor(e => e.RefNApplicationID , new { @ID="RefNApplicationID"})
+                                     @Html.Label("Remand Back Date: / રિમાન્ડ બેક તારીખ:")<span class="text-danger">*</span>
+                                   @Html.TextBoxFor(e => e.ReamandBackDate,"{0:dd-MM-yyyy}", new { @class = "form-control datepicker", @ID="RemandBackDate", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanRemandDate" style="display:none;">Please Select Remand Back Date</span>
+                                
+                                </div>
+                            </div>*@
+                             <div class="row">
+                            <div class="col-md-2">
+                                      @Html.HiddenFor(e => e.AppealID , new { @ID="AppealID"})
+                                       @Html.HiddenFor(e => e.RefNApplicationID , new { @ID="RefNApplicationID"})
+                                      @Html.Label("Case Resolution Date: / કેસ બંધ તારીખ:") <span class='text-danger'>*</span><br>
+                                      @Html.TextBoxFor(e => e.SettlementDate,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="SettlementDate", required = "required" })
+                                      <span class="text-danger ValidationSpan" id="SpanJoinningDate" style="display:none;">Please Insert Joinning Date</span>
+                                </div>
+                                <div class="col-md-2">
+                                     @Html.Label("Resolution Reason")<span class="text-danger ml-1">*</span>
+                                     <br>
+                                       @Html.DropDownListFor(e => e.HearingReasonID, new SelectList(Model.HearingReasonList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="HearingReasonID" ,@width ="15px"})
+                                   <span class="text-danger ValidationSpan" id="SpanResolutionReason" style="display:none;">Please Select Reason</span>
+                                </div>
+                                </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                @*<div class="col-md-6">
+                                     @Html.Label("Remand Back Remark: / રિમાન્ડ બેક ટિપ્પણી: ")<span class="text-danger">*</span>
+                                   @Html.TextAreaFor(e => e.RemandRemark, new { @class = "form-control", @ID="RemandRemark", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanRemandBackRenarj" style="display:none;">Please Enter Remand Reason</span>
+                               
+                                </div>*@
+                                <div class="col-md-6">
+                                                           @*SettlementNote*@
+                                        @Html.Label("Case Resolution Note: / કેસ બંધ નોંધ:") <span class='text-danger'>*</span>
+                                        @Html.TextAreaFor(e => e.SettlementNote, new { @class = "form-control", @ID="SettlementNote", required = "required" })
+                                        <span class="text-danger ValidationSpan" id="SpanSettlementNote" style="display:none;">Please Enter Hearing Note</span>
+                                     </div>
+                                                              @*SettlementfileUpload*@
+                                      <div class="col-md-6">
+                                          
+                                         @Html.Label("Resolution Document: / ઓર્ડર દસ્તાવેજ:") <span class='text-danger'>*</span>
+                                         <br/>
+                                         <input type="file" id="SettlementfileUpload" class="fileUpload" onchange="return fileValidation()" >
+                                         <span class="text-danger ValidationSpan" id="SpanSettlementfileUpload" style="display:none;">Please Select file </span>
+                                          @if (@Model.SettlementDocURL != "")
+                                             {
+                                                 <a href="/NFormApplication/DownloadSettlementFile/?FileName=@Model.SettlementDocURL" ><i class="fas fa-download"></i></a>
+                                             } 
+                                      </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                          <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitCaseResolution();" />
+                            @Html.ActionLink("Cancel", "TFormApplicationDCLList", "TFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+        @*
+  Confirm by DCL*@
+     <div class="row" id="Divconfirm" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.HiddenFor(e => e.AppealID , new { @ID="AppealID"})
+                                     @Html.Label("Confirm Date: / તારીખની પુષ્ટિ કરો:")<span class="text-danger">*</span>
+                                   @Html.TextBoxFor(e => e.ConfirmDate,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="ConfirmDate", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanConfirmDate" style="display:none;">Please Add Confirm Date</span>
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.Label("Confirm Remark: / ટિપ્પણીની પુષ્ટિ કરો:")<span class="text-danger">*</span>
+                                   @Html.TextAreaFor(e => e.ConfirmRemark, new { @class = "form-control", @ID="ConfirmRemark", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanConfirmRemark" style="display:none;">Please Enter Remark</span>
+                               
+                                </div>
+                            </div>
+                        </div>
+                     
+                          <div class="form-group">
+                          <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitConfirm();" />
+                            @Html.ActionLink("Cancel", "TFormApplicationDCLList", "TFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+        @*
+  Dissmiss by DCL*@
+     <div class="row" id="DivDissmis" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.HiddenFor(e => e.AppealID , new { @ID="AppealID"})
+                                     @Html.Label("Dissmis Date: / બરતરફ તારીખ:")<span class="text-danger">*</span>
+                                   @Html.TextBoxFor(e => e.DissmissDate,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="DissmissDate", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanDissmisDate" style="display:none;">Please select Dissmis Date</span>
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.Label("Dissmis Remark: / બરતરફ ટિપ્પણી:")<span>*</span>
+                                   @Html.TextAreaFor(e => e.DissmisRemark, new { @class = "form-control", @ID="DissmisRemark", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanDissmisRemark" style="display:none;">Please Enter Remark</span>
+                               
+                                </div>
+                            </div>
+                        </div>
+                     
+                          <div class="form-group">
+                          <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitDissmis();" />
+                            @Html.ActionLink("Cancel", "TFormApplicationDCLList", "TFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="DivAcceptReject" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.HiddenFor(e => e.AppealID , new { @ID="AppealID"})
+                                      @Html.CheckBoxFor(e => e.IsAccept, new { @ID="IsAccept"})
+                                       @*<span class="text-danger ValidationSpan" id="SpanIsSubmit" style="display:none;">Please Insert File</span>*@
+                                      @Html.Label("Accept")
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(e => e.IsDissmis, new { @ID="IsDissmis"})
+                                       @*<span class="text-danger ValidationSpan" id="SpanIsSubmit" style="display:none;">Please Insert File</span>*@
+                                      @Html.Label("Dismiss")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="divquery" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                     @Html.Label("Dismiss Remarks")<span class="text-danger">*</span>
+                                   @Html.TextAreaFor(e => e.DissmisRemark, new { @class = "form-control", @ID="DissmisRemark", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanQuery" style="display:none;">Please Enter Reamrk</span>
+                               
+                                </div>
+                            </div>
+                        </div>
+                     
+                         <div class="form-group" id="divsubmit" >
+                              @Html.ActionLink("Cancel", "TFormApplicationDCLList", "TFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitConfirm();" />
+                          </div>  
+                          <div class="form-group" id="divquerybtn" style="display:none;">
+                              @Html.ActionLink("Cancel", "TFormApplicationDCLList", "TFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitDissmis();" />
+                          </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+<script>
+@*     $("#ConfirmDate").kendoDatePicker({
+       format :"dd-MM-yyyy"
+    }); 
+    $("#DissmissDate").kendoDatePicker({
+       format :"dd-MM-yyyy"
+    }); *@
+   
+</script>
+<script>
+        $("#SettlementDate").kendoDatePicker({
+          format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+         }
+        }); 
+
+     </script>
+
+
+ <script>
+       $(document).ready(function () {
+            debugger;
+            @*document.getElementById("HearingReasonID_chosen").style.width = "200px";*@
+       @*    $("#DivHearing").hide();*@
+        @*   $("#DivSettlement").hide();
+           $("#DivSendtolabour").hide();*@
+            if($('#IsAccept').val() ==true)
+            {
+                 $("#divsubmit").show();
+            }
+
+            $("#ConfirmDate").kendoDatePicker({
+        format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+      $("#DissmissDate").kendoDatePicker({
+        format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+    $("#RemandBackDate").kendoDatePicker({
+        format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+            HearingDetail();
+
+           if ('@Model.ISNew' == 0) {
+               $("#DivHearing").show();
+           }
+           else if ('@Model.ISNew' == 1)    
+           {
+                   @*$("#DivEstablishACL").hide();*@
+               $("#DivRemankdBack").show();
+                $("#btnHearing").hide();
+                $("#btnCancel").hide();
+                $("#btnAddHearing").hide();
+           }
+           else if ('@Model.ISNew' == 2)
+           {
+               @*$("#Divconfirm").show();*@
+               $("#DivAcceptReject").show();
+                $("#DivEstablishACL").hide();
+                 $("#btnHearing").hide();
+                $("#btnCancel").hide();
+                $("#btnAddHearing").hide();
+
+           }
+           else if ('@Model.ISNew' == 3)
+           {
+               $("#DivDissmis").show();
+                $("#DivEstablishACL").hide();
+                 $("#btnHearing").hide();
+                $("#btnCancel").hide();
+                $("#btnAddHearing").hide();
+
+           }
+            
+            });
+
+ @*function SubmitHearing() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+            if ($("#HearingReason").val() == "0" || $("#HearingReason").val() == "") {
+                ErrorCnt++;
+                $('#SpanHearingreason').show();
+            }
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    AppealID: $('#AppealID').val(),
+                    HearingDate: $('#HearingDate').val(),
+                    HearingReasonID: $('#HearingReasonID').val(),
+                     HearingRemarks: $('#HearingRemark').val(),
+                    URL: document.URL,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/TFormApplication/SaveTFormHearingDCLRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/TFormApplication/TFormApplicationDCLList";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                           swal(data.data.ErrorMassage);
+                          }
+                    })
+            }
+    }*@
+   
+
+
+ function SubmitCaseResolution() {
+            debugger;
+
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#RemandRemark").val() == "0" || $("#RemandRemark").val() == "") {
+                ErrorCnt++;
+                $('#SpanRemandBackRenarj').show();
+            }
+            if ($("#SettlementfileUpload").val() == "0" || $("#SettlementfileUpload").val() == "") {
+                ErrorCnt++;
+                $('#SpanSettlementfileUpload').show(); 
+            }
+            if ($("#HearingReasonID").val() == "0" || $("#HearingReasonID").val() == "") {
+                ErrorCnt++;
+                $('#SpanResolutionReason').show();
+            }
+             if ($("#SettlementNote").val() == "0" || $("#SettlementNote").val() == "") {
+                ErrorCnt++;
+                $('#SpanSettlementNote').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                 var files = $('#SettlementfileUpload').prop("files");
+                 var AppealID = $('#AppealID').val();
+                 var RemandBackDate = $('#SettlementDate').val();
+                 var RemandRemark = $('#SettlementNote').val();
+                 var URL = document.URL;
+                 var ResolutionReasonId = $('#HearingReasonID').val();
+                 var RefNApplicationID = $('#RefNApplicationID').val();
+
+                 var url = "/TFormApplication/SaveTFormResolutionDCLRecord?handler=MyUploader" + "&AppealID=" + AppealID + "&RemandBackDate=" + RemandBackDate  + "&RemandRemark=" + RemandRemark + "&URL=" + URL + "&ResolutionReasonId=" + ResolutionReasonId + "&RefNApplicationID=" + RefNApplicationID;
+                 formData = new FormData();
+                 formData.append("MyUploader", files[0]);
+               @* var myData = {
+                    AppealID: $('#AppealID').val(),
+                    RemandBackDate: $('#RemandBackDate').val(),
+                    RemandRemark: $('#RemandRemark').val(),
+                    URL: document.URL,
+                    ResolutionReasonId : $('#HearingReasonID').val(),
+                    RefNApplicationID :$('#RefNApplicationID').val(),
+                };*@
+                jQuery.ajax({
+                        @*type: "POST",
+                        url: "/TFormApplication/SaveTFormRemandBackDCLRecord",*@
+                        type: 'POST',
+                        url: url,
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        @*dataType: "json",*@
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function(repo) {
+                            debugger;
+
+                            if (repo.status.ErrorCode == 0) {
+                                swal(repo.status.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/TFormApplication/TFormApplicationDCLList";
+                                });
+                             }
+                            else {
+                                swal(repo.status.ErrorMassage);
+                             }
+
+
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/TFormApplication/TFormApplicationDCLList";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                              alert(data.data.ErrorMassage);
+                            }*@
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+ 
+ function SubmitConfirm() {
+      debugger; 
+
+        var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+      
+           @* if ($("#ConfirmRemark").val() == "0" || $("#ConfirmRemark").val() == "") {
+                ErrorCnt++;
+                $('#SpanConfirmRemark').show();
+            }
+          
+            if (ErrorCnt > 0) {
+                return false;
+            }*@
+
+      @* if (ErrorCnt == 0) {*@
+         var d = new Date();
+          var myData = {
+                  AppealID: $('#AppealID').val(),
+                  ConfirmDate: d.getDate(),
+                  ConfirmRemark: $('#ConfirmRemark').val(),
+                  URL: document.URL,
+              };
+              $.ajax
+                  ({
+                      type: "POST",
+                      url: "/TFormApplication/SaveTFormConfirmDCLRecord",
+                      headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                      dataType: "json",
+                      data: myData,
+                      success: function(data) {
+                          debugger;
+
+                           if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/TFormApplication/TFormApplicationDCLList";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+                          @*if (data.data.ErrorCode == 0) {
+                              window.location.href = "/TFormApplication/TFormApplicationDCLList";
+                              alert(data.data.ErrorMassage);
+                          }
+                          else {
+                            alert(data.data.ErrorMassage);
+                          }*@
+
+                      },
+
+                       error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                  })
+     @*  }*@
+}
+
+function SubmitDissmis() {
+
+        var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+      
+          @*  if ($("#DissmisRemark").val() == "0" || $("#DissmisRemark").val() == "") {
+                ErrorCnt++;
+                $('#SpanDissmisRemark').show();
+            }
+          
+            if (ErrorCnt > 0) {
+                return false;
+            }*@
+
+       @*if (ErrorCnt == 0) {*@
+         var d = new Date();
+          var myData = {
+                  AppealID: $('#AppealID').val(),
+                  DissmissDate: d.getDate(),
+                  DissmisRemark: $('#DissmisRemark').val(),
+                  URL: document.URL,
+              };
+              $.ajax
+                  ({
+                      type: "POST",
+                      url: "/TFormApplication/SaveTFormDismissDCLRecord",
+                      headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                      dataType: "json",
+                      data: myData,
+                      success: function(data) {
+                          debugger;
+
+                           if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/TFormApplication/TFormApplicationDCLList";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+                        @*  if (data.data.ErrorCode == 0) {
+                              window.location.href = "/TFormApplication/TFormApplicationDCLList";
+                              alert(data.data.ErrorMassage);
+                          }
+                          else {
+                            alert(data.data.ErrorMassage);
+                          }*@
+
+                      },
+
+                       error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                  })
+    @*   }*@
+}
+
+  @*function fileValidation() {
+    debugger;
+    var fileInput = document.getElementById('SettlementfileUpload'); 
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+                alert('Invalid file type');
+                fileInput.value = '';
+                return false;
+            }
+            
+        }*@
+
+     </Script>
+      <script>
+                var B = 0;
+
+        function HearingDetail() {
+        debugger;
+        var data = @Html.Raw(Json.Serialize(@Model.HearingdetailACL));
+        var i;
+        for (B = 0; B < data.length; B++) {
+
+             var AddEducationdetails = "";
+            AddEducationdetails += "<div id='DivHearingdetail_" + B + "'>";
+            AddEducationdetails += "<fieldset class='border p-2'>";
+
+            AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+                 AddEducationdetails += "<input type='hidden' name='AppealID_" + B + "' value='" + data[B].AppealID + "' id='AppealID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='HearingID_" + B + "'  value='" + data[B].Id + "' id='HearingID_" + B + "' />";
+                    AddEducationdetails += "<input type='hidden' name='IsActive_" + B + "' value='" + data[B].IsActive + "' id='IsActive_" + B + "' />";
+            AddEducationdetails += "<label for='Applicant_Name'>Hearing Date <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control datetimepicker' style='width: 100%;' id='HearingDate_" + B + "' name='HearingDate_" + B + "'  type='text' value='" + data[B].HearingDate + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingDate_" + B + "' style='display:none;'>Please Enter Hearing Date</span>";
+            AddEducationdetails += "</div>";
+
+            // AddEducationdetails += "<div class='col-md-2'>";
+            //AddEducationdetails += "<label for='District_Name'>Hearing Reason <span class='text-danger'>*</span></label>";
+            //AddEducationdetails += "<select class='chosen-select form-control' name='HearingReasonID_" + B + "' id='HearingReasonID_" + B + "'>";
+            //AddEducationdetails += "<option value='0'>Select</option>";
+            //for (i = 0; i < data[B].HearingReasonList.length; ++i) {
+            //    if (data[B].HearingReasonList[i].DataValue == data[B].HearingReasonID) {
+            //        AddEducationdetails += "<option value=" + data[B].HearingReasonList[i].DataValue + " selected='selected'>" + data[B].HearingReasonList[i].DisplayValue + "</option>";
+            //    }
+            //    else {
+
+            //        AddEducationdetails += "<option value=" + data[B].HearingReasonList[i].DataValue + ">" + data[B].HearingReasonList[i].DisplayValue + "</option>";
+            //    }
+            //}
+            //AddEducationdetails += "</select>";
+            //AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingReasonID_" + B + "' style='display:none;'>Please Select Reason </span>";
+            //AddEducationdetails += "</div>";
+
+                AddEducationdetails += "<div class='col-md-5'>";
+            AddEducationdetails += "<label for='P_Address'>Hearing Note <span class='text-danger'>*</span></label>";
+                AddEducationdetails += "<textarea class='form-control'' id='HearingNote_" + B + "' name='HearingNote_" + B + "'  type='text'>" + data[B].HearingRemarks + "</textarea>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingNote_" + B + "' style='display:none;'>Please Hearing Note</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>IsCancle <span> &nbsp</span></label>";
+            AddEducationdetails += "<input type='hidden' name='IsTempCancle_" + B + "'  value='' id='IsTempCancle_" + B + "' />";
+                 AddEducationdetails += "<input type='checkbox' class='myCheckbox' onclick='canclecheckbox("+B+")' name='IsCancle_" + B + "' value='" + data[B].IsCancle + "' id='IsCancle_" + B + "' />";
+            AddEducationdetails += "</div>";
+
+
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</fieldset>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</Br>"
+
+            $("#Hearing").append(AddEducationdetails);
+            $(".chosen-select").chosen();
+            $('.chosen-container').css('width', '100%');
+           $("#HearingDate_" + B).kendoDateTimePicker({ format: "dd-MM-yyyy HH:mm",  disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }});
+           if($("#HearingID_" + B).val() == 0)
+           {
+                $("#HearingDate_" + B).val("")
+                $("#btnHearingOfNotice").attr("disabled", "disabled");
+           }
+              if( $("#IsCancle_" + B).val() == 'true')
+              {
+                   $("#IsCancle_" + B).attr('checked', 'checked');
+              }
+            if( $("#HearingNote_" + B).val().length > 1 || $("#IsCancle_" + B).val() == 'true')
+            {
+                $("#HearingDate_" + B).data('kendoDateTimePicker').enable(false);
+                $("#HearingNote_" + B).attr("disabled", "disabled");
+                $("#IsCancle_" + B).attr("disabled", "disabled");
+                $("#btnHearingOfNotice").attr("disabled", "disabled");
+                //$("#HearingReasonID_" + B).prop('disabled', true).trigger("chosen:updated");
+            }      
+            else{
+                 $("#btnAddHearing").attr("disabled", "disabled");
+            }
+            
+
+        }
+
+    }
+
+    //Contractor`s Details
+    function Fn_AddHearing() {
+
+        debugger
+        var i;
+        var AppealID = $('#AppealID').val();
+        var HearingID = 0;
+        //var HearingReasonList = @Html.Raw(Json.Serialize(@Model.HearingReasonList));
+
+
+          var AddEducationdetails = "";
+            AddEducationdetails += "<div id='DivHearingdetail_" + B + "'>";
+            AddEducationdetails += "<fieldset class='border p-2'>";
+
+            AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<input type='hidden' name='AppealID_" + B + "' value='" + AppealID + "' id='AppealID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='HearingID_" + B + "'  value='" + HearingID + "' id='HearingID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='IsActive_" + B + "' value='true' id='IsActive_" + B + "' />";
+            AddEducationdetails += "<label for='Applicant_Name'>Hearing Date <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control datepicker' style='width: 100%;' id='HearingDate_" + B + "' name='HearingDate_" + B + "'  type='text' value=''>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingDate_" + B + "' style='display:none;'>Please Enter Hearing Date</span>";
+            AddEducationdetails += "</div>";
+
+            //AddEducationdetails += "<div class='col-md-2'>";
+            //AddEducationdetails += "<label for='District_Name'>Hearing Reason <span class='text-danger'>*</span></label>";
+            //AddEducationdetails += "<select class='chosen-select form-control' name='HearingReasonID_" + B + "' id='HearingReasonID_" + B + "'>";
+            //AddEducationdetails += "<option value='0'>Select</option>";
+            //for (i = 0; i < HearingReasonList.length; ++i) {
+            //AddEducationdetails += "<option value=" + HearingReasonList[i].DataValue + ">" + HearingReasonList[i].DisplayValue + "</option>";
+            //}
+            //AddEducationdetails += "</select>";
+            //AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingReasonID_" + B + "' style='display:none;'>Please Select Reason </span>";
+            //AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-6' style='display:none;'>";
+            AddEducationdetails += "<label for='P_Address'>Hearing Note <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<textarea class='form-control'' id='HearingNote_" + B + "' name='HearingNote_" + B + "'  type='text'></textarea>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingNote_" + B + "' style='display:none;'>Please Enter Hearing Note</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2' style='display:none;'>";
+            AddEducationdetails += "<label for='Applicant_Name'>IsCancle <span> &nbsp</span></label>";
+            AddEducationdetails += "<input type='hidden' name='IsTempCancle_" + B + "'  value='' id='IsTempCancle_" + B + "' />";
+            AddEducationdetails += "<input type='checkbox' class='myCheckbox' onclick='canclecheckbox("+B+")' name='IsCancle_" + B + "' value='false' id='IsCancle_" + B + "' />";
+            AddEducationdetails += "</div>";
+
+
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</fieldset>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</Br>"
+
+            $("#Hearing").append(AddEducationdetails);
+            $(".chosen-select").chosen();
+            $('.chosen-container').css('width', '100%');
+            $("#btnAddHearing").attr("disabled", "disabled");
+            $("#btnHearingOfNotice").removeAttr("disabled");
+            $("#HearingDate_" + B).kendoDateTimePicker({ format: "dd-MM-yyyy HH:mm",  disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }});
+            B++;
+
+    }
+
+       function GetHearingXML() {
+        var xml = '';
+        xml += '<DataTable>';
+        var i = B;
+        var v;
+        for (v = 0; v < i; ++v) {
+            xml += '<DataRow>';
+            xml += "<" + "AppealID" + ">" + $("#AppealID_" + v + "").val() + "</" + "AppealID" + ">";
+            xml += "<" + "Id" + ">" + $("#HearingID_" + v + "").val() + "</" + "Id" + ">";
+            xml += "<" + "HearingDate" + ">" + $("#HearingDate_" + v + "").val() + "</" + "HearingDate" + ">";
+            //xml += "<" + "HearingReasonID" + ">" + $("#HearingReasonID_" + v + "").val() + "</" + "HearingReasonID" + ">";
+            xml += "<" + "HearingRemark" + ">" + $("#HearingNote_" + v + "").val() + "</" + "HearingRemark" + ">";
+            
+              if ($("#IsCancle_" + v + "").val() == "true") {
+                  xml += "<" + "IsCancle" + ">" + 1 + "</" + "IsCancle" + ">";
+              }
+              else {
+                  xml += "<" + "IsCancle" + ">" + 0 + "</" + "IsCancle" + ">";
+              }
+
+              
+              if ($("#IsActive_" + v + "").val() == "true") {
+                  xml += "<" + "IsActive" + ">" + 1 + "</" + "IsActive" + ">";
+              }
+              else {
+                  xml += "<" + "IsActive" + ">" + 0 + "</" + "IsActive" + ">";
+              }
+               if ($("#IsTempCancle_" + v + "").val() == "true") {
+                  xml += "<" + "IsTempCancle" + ">" + 1 + "</" + "IsTempCancle" + ">";
+              }
+              else
+              {
+                  xml += "<" + "IsTempCancle" + ">" + 0 + "</" + "IsTempCancle" + ">";
+              }
+
+            xml += "<" + "URL" + ">" + document.URL + "</" + "URL" + ">";
+            xml += "<" + "IP_Address" + ">" + $("#IP_Address").val() + "</" + "IP_Address" + ">";
+            xml += "<" + "Action" + ">" + 3 + "</" + "Action" + ">";
+            xml += '</DataRow>';
+        }
+        xml += '</DataTable>'
+        return xml;
+    }
+      function SubmitHearing(id) {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+             var i = B;
+        var v;
+
+        for (v = 0; v < i; ++v) {
+
+            if ($("#HearingDate_" + v + "").val() == "0" || $("#HearingDate_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanHearingDate_" + v + "").show();
+            }
+
+            //if ($("#HearingReasonID_" + v + "").val() == "0" || $("#HearingReasonID_" + v + "").val() == "") {
+            //    ErrorCnt++;
+            //    $("#SpanHearingReasonID_" + v + "").show();
+            //}
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+        }
+
+                     
+        if (ErrorCnt == 0) {
+            var myData = {
+                XMLString: GetHearingXML(),
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/TFormApplication/SaveTFormHearingDCLRecord",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    dataType: "json",
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+                        if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage)
+                            .then((value) => {
+                                 window.location.href = "/TFormApplication/TFormApplicationDCLList";
+                            });
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function(request, message, error) {
+                        debugger;
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+
+    }
+    $('#IsDissmis').click(function () {
+        //check if checkbox is checked
+        debugger;
+        if ($(this).is(':checked')) {
+
+           $("#divquery").show(); 
+            $("#IsAccept").attr("disabled",true);
+            $("#divquerybtn").show();
+            $("#divsubmit").hide();
+        } 
+        else{
+            $("#divquery").hide();  
+             $("#IsAccept").attr("disabled",false);
+              $("#divsubmit").show();
+              $("#divquerybtn").hide(); 
+        }
+    });
+
+     $('#IsAccept').click(function () {
+        //check if checkbox is checked
+        debugger;
+        if ($(this).is(':checked')) {
+
+           $("#IsDissmis").attr("disabled",true); 
+            $("#divquerybtn").hide();
+             $("#divsubmit").show();
+        } 
+        else{
+
+            $("#IsDissmis").attr("disabled",false); 
+             $("#divsubmit").hide();
+        }
+    });
+    function canclecheckbox(id) {
+              debugger;
+       
+            if ($("#IsCancle_"+id).is(':checked')) {
+          $("#IsCancle_"+id).val(true);
+          $("#IsTempCancle_"+id).val(true);
+         
+        } 
+
+       } 
+       </script>
+  
+ }
+
+ 

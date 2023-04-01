@@ -1,0 +1,410 @@
+﻿@model FTS.Model.Entities.ApplicantMasterModel
+@{
+    ViewBag.Title = "Applicant Login";
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<div class="body">
+    <div class="main-wrapper py-5">
+            <div class="container-fluid">               
+                <div class="content-box reg-box">
+                    <div >
+                          <img src="~/images/govtlogo.png" class="rounded mx-auto d-block pt-3" alt="logo">
+
+                         <div class="content-header py-1">
+                        <h3 class="text-center text-white mt-3" ><i class="fas fa-user mr-2"></i>
+                           Applicant Login
+                        </h3>
+                        </div> 
+                        
+                    </div>                    
+                            <div class="content-body">
+
+                                                          @*MOBILE NUMBER*@
+
+                                <div class="form-group" >
+                                    <label for="inputMobile" class="col-form-label">
+                                        <i class="fas fa-mobile-alt mr-2"></i>
+                                        <span id="labelMobile">Mobile</span><span class="text-danger">*</span>                                      
+                                     </label>
+                                     <div class="col-6 col-sm-7 col-md-12 px-0">
+                                      @Html.TextBoxFor(e =>e.MobileNo, new { @class = "form-control",@ID="MobileNo", placeholder = "Enter Mobile No." })
+                                      <span class="text-danger ValidationSpan" id="SpanMobileNo" style="display:none;">Please Enter Mobile Number</span>
+                                      </div>
+                                 </div>
+
+                               
+
+                                                                  @*PASSWORD*@
+
+                                <div class="form-group">
+                                    <label for="inputpassword" class="col-form-label">
+                                        <i class="fas fa-lock mr-2"></i>
+                                        <span id="lblPassword">Password</span><span class="text-danger">*</span>
+                                       
+                                    </label>
+                                    
+                                        <div class="col-6 col-sm-7 col-md-12 px-0">
+                                        @Html.TextBoxFor(e =>e.Password, new { @class = "form-control", type = "password",@ID="Password", placeholder = "Enter Password" })
+                                        <span class="text-danger ValidationSpan" id="SpanPassword" style="display:none;">Please Enter Password.</span>
+                                      </div>                                   
+                                  
+                                </div>                                
+                                          <div class="col-6 col-sm-7 col-md-12 px-0">
+                                         @*@Html.TextBoxFor(e =>e.Password, "", new { @class = "form-control", type = "password",@ID="CPassword", placeholder = "Enter Confirm Password" })*@
+                                      </div>                                   
+                                   
+                                </div>
+
+
+                                                                   @*CAPTCHA*@
+                               <div class="form-group">
+                                    @*<label for="inputCaptcha" class="col-form-label">
+                                        <i class="far fa-eye mr-2"></i>
+                                        <span id="lblCaptcha">Enter captcha</span>
+                                        <span class="text-danger">*</span>
+                                    </label>*@
+                                    <div class="row">
+                                        <div class="col-md-5 col-sm-12">
+                                          @*  <input name="txtcaptcha" type="text" id="txtcaptcha" class="form-control mb-md-0" autocomplete="off">*@
+                                          
+                                        </div>
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-6">
+                                           @* <img src="Handler.ashx" id="imgCaptcha" class="form-control p-0">*@
+                                        </div>
+
+                                                                      @*REFRESH CLICK *@
+                                        <div class="col-md-3 col-6">
+                                             <a href="/ApplicantForgotPassword/Index">Forgot Password?</a>
+                                            @*<a asp-action="Index" asp-controller="ApplicantForgotPassword">Forgot Password</a>*@
+                                            @*<a id="captcha" href="#" onclick="javascript:RefreshCaptcha();" class="btn btn-primary w-100 w-md-auto">
+                                                <i class="fas fa-sync-alt mr-2"></i>Refresh
+                                            </a>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                                                 @*SAVE CANCEL RESET BTN *@
+                                <div class="form-group">
+                                    <div class="d-md-flex d-block">
+                                        <div class="col-md-12 text-center">
+
+                                        <input type="button" id="btnsubmit" class="btn btn-primary w-50 w-md-auto mb-3 mb-md-0" value="Login" onclick="SubmitApplicantMaster();" />
+                                        
+                                        @*<a id="btncancel" class="btn btn-primary mx-0 mx-md-3 w-100 w-md-auto mb-3 mb-md-0 mx-md-2 mx-0" href="javascript:__doPostBack('btncancel','')"><i class="far fa-times-circle"></i> Cancel</a>*@
+                                       </div>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">
+                                     <div class="form-check">                                    
+                                            @Html.CheckBox("chkCheck", false, new { Style = "form-control", type = "Checkbox" })
+                                            @Html.Label("Keep me signed in")
+                                            <i class="input-helper"></i>                                    
+                                      </div>
+                                </div>
+                            <div>                                    
+                             <div class="text-center mt-4 font-weight-light">                                
+                                @Html.Label("Don't have an account? ")
+                                @Html.ActionLink("Sign Up", "Index", "ApplicantMaster", new { area = "" }, new { @class = "auth-link text-black", @style = "font-weight: bold;" })                                
+                            </div>
+                      
+
+                                                                     @*PASSWORD POLICY *@
+                                <span class="text-denger">#</span>
+                                Password Policy: Password must be between 6-20 characters, it should be a combination of alphanumeric letters with at least one numeric, one upper case character, one lower case character and one special charater from ,#,?,$
+                            </div>
+                        
+                </div>
+
+
+                <!-- content-box End -->
+
+
+
+
+                <input type="submit" name="btnDisplayModelpopupRactinoCard" value="" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnDisplayModelpopupRactinoCard&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="btnDisplayModelpopupRactinoCard" style="display: none;">
+                
+                <div id="PNL" class="PNL_MODEL" style="display: none; position: fixed; z-index: 100001;">
+	
+                    <div id="pnOTP">
+		
+                        <div class="container">
+                            <div class="">
+                                <div class="card custom-card approved-details-info">
+                                    <h5 class="card-header bg-delta text-alpha">
+                                        <span id="Label27">Confirmation code</span>
+                                    </h5>
+                                    <div class="card-body col-md-12">
+                                        <div class="">
+                                            <p>
+                                                You are almost there to complete your Registration. Please enter the OTP received on your mobile.
+                                            </p>
+                                            <hr>
+                                        </div>
+                                        <div class="">
+                                            <div class="row verify">
+                                                <div class="col-md-5">
+                                                    <span id="Label29" class="mb-2 d-inline-block">Request ID</span>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <span id="lblOTPID" class="mb-2 d-inline-block"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <div class="row verify">
+                                                <div class="col-md-5">
+                                                    <span id="Label30" class="mb-2 d-inline-block">Verification code (OTP)</span>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <input name="txtOTPNO" type="text" maxlength="4" id="txtOTPNO" class="form-control mb-2 d-inline-block" onkeypress="return OnlyNumeric(event);" autocomplete="off">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="">
+                                            <a id="btnCofrimOTP" class="btn btn-primary" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnCofrimOTP&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))"><i class="fas fa-check-circle"></i> Confirm</a>
+                                            <a id="btnotpCancel" class="btn btn-primary mx-3" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnotpCancel&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))"><i class="far fa-times-circle"></i> Cancel</a>
+                                        </div>
+                                        <div class="py-2">
+                                            
+                                            <div class="mb-2">
+                                                <a id="lnkReSend" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;lnkReSend&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, true))">Resend SMS</a>
+                                            </div>
+                                            <div class="">
+                                                <span id="lblResendattent" class="text-red"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+	</div>
+                
+</div>
+                <!--Registration page end-->
+
+                <input type="submit" name="btnAdharOTPConfirmDisplay" value="" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnAdharOTPConfirmDisplay&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="btnAdharOTPConfirmDisplay" class="d-none">
+                
+                <div id="Panel4" class="PNL_MODEL d-none" style="display: none; position: fixed; z-index: 100001;">
+	
+                    <div id="Panel5">
+		
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                                    <div class="form">
+                                        <h2>Confirmation code</h2>
+                                        <p>Enter OTP No Received in your mobile </p>
+                                        <hr>
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <div class="col-md-4 verify">
+                                                    <p>
+                                                        Verification code
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input name="txtAdharOTPVerfiy" type="text" maxlength="12" id="txtAdharOTPVerfiy" class="form-control">
+                                                    <span id="RequiredFieldValidator9" style="color:Red;visibility:hidden;">Enter Verification code</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-12 verify">
+                                                    <span id="lblAadharOTPMSG" class="control-label"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4 verify">
+                                                    <input type="submit" name="btnAdharOTPConfirm" value="Confirm" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnAdharOTPConfirm&quot;, &quot;&quot;, true, &quot;VGroupUser&quot;, &quot;&quot;, false, false))" id="btnAdharOTPConfirm" class="btn btn-default reg">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="submit" name="btnAdharOTPCancel" value="Cancel" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnAdharOTPCancel&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="btnAdharOTPCancel" class="btn btn-default reg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+	</div>
+                
+</div>
+
+                <input type="submit" name="btnAdharProfileChangeDisplay" value="" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnAdharProfileChangeDisplay&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="btnAdharProfileChangeDisplay" class="d-none">
+                
+                <div id="Panel6" class="PNL_MODEL d-none" style="display: none; position: fixed; z-index: 100001;">
+	
+                    <div id="Panel7">
+		
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                                    <div class="form">
+                                        <p>Do You Want To Fill Up Regstration Details From Aadhar Card ?</p>
+                                        <hr>
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4"><b>Aadhar Name : </b></label>
+                                                <span id="adname" class="control-label"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-4 verify">
+                                                    <input type="submit" name="BtnChangePofileAdhar" value="Yes" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;BtnChangePofileAdhar&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="BtnChangePofileAdhar" class="btn btn-default reg">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="submit" name="btnCancelProfileAdhar" value="NO" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnCancelProfileAdhar&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="btnCancelProfileAdhar" class="btn btn-default reg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+	</div>
+                
+</div>
+
+            <div id="ModalPopupExtender1_backgroundElement" class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div><div id="ModelPopupAdharOTP_backgroundElement" class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div><div id="ModalPopupExtenderAdharProfileChange_backgroundElement" class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div></div>
+            
+        </div>
+</div>
+<style>
+    body {
+    position: relative;
+    font-family: 'Nunito', sans-serif;
+    color: #333;
+    background-color: #eeeeee;
+    font-weight: 400;
+}
+.container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.content-box {
+    background: #fff;
+    border-radius: 1.5rem;
+    -moz-box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0px 2px 15px rgb(0 0 0 / 20%);
+    box-shadow: 0px 2px 15pxrgb(0 0 0 / 20%);
+    overflow: hidden;
+    height: 100%;
+}
+.reg-box {
+    max-width: 620px;
+    margin: 0 auto;
+    width: 100%;
+    height: auto !important;
+}
+.content-header {
+    background: #022d62 !important;
+    color: #ffffff;
+    padding: 5px 2px;
+        margin-top: 15px;
+}
+.content-body {
+    padding: 20px;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+.form-group{
+     width: 100%;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.content-body .col-form-label {
+    font-weight: 600;
+    padding-top: 0;
+}
+.col-form-label {
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+    margin-bottom: 0;
+    font-size: inherit;
+    line-height: 1.5;
+}
+.btn-primary {
+    background: #ef3139;
+    border-color: #ef3139;
+}
+.btn-primary::hover{
+    background: #0a73aa;
+    border-color: #0a73aa;
+}
+
+</style>
+<script>
+    function SubmitApplicantMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#MobileNo").val() == "0" || $("#MobileNo").val() == "") {
+                ErrorCnt++;
+                $('#SpanMobileNo').show();
+            }
+           
+            if ($("#Password").val() == "0" || $("#Password").val() == "") {
+                ErrorCnt++;
+                $('#SpanPassword').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    MobileNo: $('#MobileNo').val(),                 
+                    Password: $('#Password').val(),
+                    IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/AppliantLogin/SaveApplicantLoginRecord",
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                window.location.href = "/Dashboard/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+                        },
+
+                        error: function() {
+                            alert('Something went wrong!');
+                        }
+                    })
+            }
+    }
+</script>

@@ -1,0 +1,107 @@
+﻿@model FTS.Model.Entities.AppealDayMasterModel
+@{
+    ViewBag.Title = "Appeal Day Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Appeal Day Master</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                              
+                                <div class="col-md-3">
+                                    @Html.Label("Number of Days")
+                                    @Html.HiddenFor(e => e.AppealMasterIDEdit , new { @ID="ID"})
+                                    @Html.TextBoxFor(e => e.Days, new { @class = "form-control", @ID="Days", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanDays" style="display:none;">Please Enter Number of Days</span>
+                                </div>
+
+                            
+                                   <div class="col-md-3">
+                                    @Html.Label("Action")
+                                    @Html.TextBoxFor(e => e.Action, new { @class = "form-control", @ID="Action", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanAction" style="display:none;">Please Select Action </span>
+                                </div>
+                               
+                                 <div class="col-md-1">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanIsActive" style="display:none;">Please Select IsActive</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitAppealDayMaster();" />
+                            @Html.ActionLink("Cancel", "index", "AppealDayMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+  <script>
+     
+        function SubmitAppealDayMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#Days").val() == "0" || $("#Days").val() == "") {
+                ErrorCnt++;
+                $('#SpanDays').show();
+            }
+             if ($("#Action").val() == "0" || $("#Action").val() == "") {
+                ErrorCnt++;
+                $('#SpanAction').show();
+            }
+            if (ErrorCnt > 0) {
+                return false;
+            }
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ID: $('#ID').val(),
+                    Days: $('#Days').val(),
+                    Action: $('#Action').val(),
+                    IsActive: $('#IsActive').val(),
+                    IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/AppealDayMaster/SaveAppealDayRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/AppealDayMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+                        },  
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+   </script>

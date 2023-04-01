@@ -1,0 +1,138 @@
+﻿@model  IEnumerable<FTS.Model.Entities.EstablishmentMasterModel>
+@{
+    ViewBag.Title = "ESTABLISH LIST";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/EstablishmentMaster/AddEstablishmentMaster/?establishmentid=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+                                            </div>
+                                    <table id="EstablishmentMasterList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                @* <th style="width:2%;" id="roleID">Role ID</th>*@
+                                                   @*<th id="EmployeeID"> Employee ID </th>*@
+                                                  <th id="EstablishmentCode"> EstablishmentCode  </th>
+                                                  <th id="EstablishmentName"> EstablishmentName </th>
+                                                  <th id="PAddress"> PAddress </th>
+                                                  <th id="SAddress"> SAddress </th>
+                                                  <th id="TalukaID"> TalukaID </th>
+                                                  <th id="DistrictID"> DistrictID </th>
+                                                  <th id="Pincode"> Pincode </th>
+                                                  <th id="IsActive"> IsActive </th>
+                                                  <th id="Edit">Edit</th>
+                                                  <th id="Delete">Delete</th>
+                                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                   
+                                                    @*<td valign="top" class="text-left">@item.EmployeeID </td>*@
+                                                    <td valign="top" class="text-left">@item.EstablishmentCode </td>
+                                                    <td valign="top" class="text-left">@item.EstablishmentName </td>
+                                                    <td valign="top" class="text-left">@item.PAddress </td>
+                                                    <td valign="top" class="text-left">@item.SAddress </td>
+                                                    <td valign="top" class="text-left">@item.TalukaID </td>
+                                                    <td valign="top" class="text-left">@item.DistrictID </td>
+                                                    <td valign="top" class="text-left">@item.Pincode </td>
+                                                    <td valign="top" class="text-left">@item.IsActive </td>
+                                            
+                                                <td>
+                                                     <a id="Edit" href="/EstablishmentMaster/AddEstablishmentMaster/?establishmentid=@item.EncryptedId" ><i class="fas fa-pen"></i></a>
+                                                  
+                                                </td>
+
+                                                <td>
+                                                     <a id="Delete" onclick="DeleteConformation('DeleteEstablishmentRecord('+@item.EstablishmentID+')')"><i class="fas fa-trash-alt"></i></a>
+                                                   @*  <a id="Delete" onclick="return DeleteEmployeeRecord(@item.EmployeeID);"><i class="fas fa-trash-alt"></i></a>*@
+                                                      @*   <a id="Edit" href="/EstablishmentMaster/AddEstablishmentMaster/?establishmentid=@item.EncryptedId" ><i class="fas fa-pen"></i></a>*@
+
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+      $( document ).ready(function() {
+        $('#EstablishmentMasterList').dataTable( {} );
+    });
+
+ 
+   function DeleteEstablishmentRecord(establishmentID) {
+        debugger;
+                var myData = {
+                    establishmentID: establishmentID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/EstablishmentMaster/DeleteEstablishmentRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/EstablishmentMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+
+
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/EstablishmentMaster/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }*@
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            alert(request.responseJSON);
+                          }
+                    })
+           
+    }
+
+        </script>
+
+}

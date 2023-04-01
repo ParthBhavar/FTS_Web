@@ -1,0 +1,106 @@
+﻿@model  IEnumerable<FTS.Model.Entities.BranchMasterModel>
+@{
+    ViewBag.Title = "Branch Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/BranchMaster/AddBranchMaster/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+                                            </div>
+                                    <table id="BranchList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                               
+                                                  <th style="width:20%;" id="branchName">Branch Name</th>
+                                                  <th  style="width:2%;" id="Edit">Action</th>
+                                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                              
+                                                <td valign="top" class="text-left">@item.BranchName </td>
+                                                <td>
+                                                     <a id="Edit" href="/BranchMaster/AddBranchMaster/?id=@item.EncryptedId" ><i class="fas fa-pen"></i></a>
+                                                    <a id="Delete" onclick="DeleteConformation('DeleteBranchRecord('+@item.BranchID+')')"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>           
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <script>
+
+      $( document ).ready(function() {
+       // BranchList();
+        //$('#BranchList').DataTable();
+        $('#BranchList').dataTable( {} );
+    });
+
+   
+    function DeleteBranchRecord(branchID) {
+        debugger;
+                var myData = {
+                    BranchID: branchID,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/BranchMaster/DeleteBranchRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                       success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/BranchMaster/Index";
+                                });
+                                
+                               
+                            }
+                            else {
+                                alert(data.data.ErrorMassage);
+                            }
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            alert(request.responseJSON);
+                          }
+                    })
+           
+    }
+
+        </script>
+
+}

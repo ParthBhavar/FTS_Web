@@ -1,0 +1,334 @@
+﻿@model FTS.Model.Entities.CessProjectDetailsModel
+@{
+    ViewBag.Title = "Project Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Project Details</h4>
+                        <div class="form-group-required">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+                         </div>
+                        <div class="form-group">
+                            <div class="row">                             
+                                    <div class="col-md-12">
+                                    @Html.Label("Project: / પ્રોજેક્ટ:")<span class="text-danger"> *</span>  
+                                     @Html.HiddenFor(e => e.ProjectIDEdit, new { @ID="ProjectID"})
+                                    @Html.TextBoxFor(e => e.ProjectName, new { @class = "form-control", @ID="ProjectName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanProjectName" style="display:none;">Please Insert Project Name</span>
+                                    </div>
+                             </div>
+                        </div>
+
+                             <div class="form-group">                              
+                                  <div class="row">                              
+                                    <div class="col-md-6">
+                                    @Html.Label("Project Description: / પ્રોજેક્ટ નું વર્ણન:") <span class="text-danger"> *</span>                                   
+                                    @Html.TextAreaFor(e => e.ProjectDescription, new { @class = "form-control", @ID="ProjectDescription", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanProjectDescription" style="display:none;">Please Add Project Description</span>
+                                     </div>
+
+                                      <div class="col-md-6">
+                                       @Html.Label("Project Address: / પ્રોજેક્ટ સરનામું:")<span class="text-danger"> *</span>                                   
+                                       @Html.TextAreaFor(e => e.ProjectAddress, new { @class = "form-control", @ID="ProjectAddress", required = "required" })
+                                       <span class="text-danger ValidationSpan" id="SpanProjectAddress" style="display:none;">Please Add Project Address</span>
+                                       </div> 
+                                 </div>
+                             </div>
+
+                                <div class="form-group">                              
+                                     <div class="row">                                            
+                                        <div class="col-md-6">                                
+                                        @Html.Label("District: / જિલ્લો:")<span class="text-danger"> *</span> 
+                                        @Html.DropDownListFor(e => e.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID", })
+                                        <span class="text-danger ValidationSpan" id="SpanDistrictID" style="display:none;">Please Select District ID </span>
+                                        </div>
+
+                                        <div class="col-md-6">   
+                                        @Html.Label("Taluka: / તાલુકો:")<span class="text-danger"> *</span>                                   
+                                        @Html.DropDownListFor(e => e.TalukaID, new SelectList(Model.Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TalukaID", })
+                                        <span class="text-danger ValidationSpan" id="SpanTalukaID" style="display:none;">Please Select Taluka</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="form-group">                              
+                                       <div class="row">                                            
+                                            <div class="col-md-6"> 
+                                             @Html.Label("Area/Road: / વિસ્તાર/રસ્તા:") <span class="text-danger"> *</span>                                  
+                                             @Html.TextBoxFor(e => e.AreaRoad, new { @class = "form-control", @ID="AreaRoad", required = "required" })
+                                             <span class="text-danger ValidationSpan" id="SpanAreaRoad" style="display:none;">Please Insert Area/Road Name</span>
+                                            </div>
+
+                                             <div class="col-md-6">                                  
+                                             @Html.Label("Landmark: / સીમાચિહ્ન:") <span class="text-danger"> *</span>                                    
+                                             @Html.TextBoxFor(e => e.LandMark, new { @class = "form-control", @ID="LandMark", required = "required" })
+                                             <span class="text-danger ValidationSpan" id="SpanLandMark" style="display:none;">Please Insert Landmark</span>
+                                             </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">                              
+                                     <div class="row">                                            
+                                             <div class="col-md-6">
+                                             @Html.Label("Pincode: / પીન કોડ:")<span class="text-danger"> *</span>                                   
+                                             @Html.TextBoxFor(e => e.Pincode, new { @class = "form-control", @ID="Pincode", required = "required" , maxlength="6", oninput="numberOnly(this.id);" })
+                                              <span class="text-danger ValidationSpan" id="SpanPincode" style="display:none;">Please Insert Pincode</span>
+                                                 <span class="text-danger ValidationSpan" id="Spanlengthpincode" style="display:none;">Please Enter 6 digit pin code</span>    
+                                          </div>
+
+                                         <div class="col-md-6">
+                                         @Html.Label("Department: / વિભાગ:") <span class="text-danger"> *</span>                                  
+                                         @Html.DropDownListFor(e => e.DepartmentID, new SelectList(Model.DepartmentList,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DepartmentID", })
+                                         <span class="text-danger ValidationSpan" id="SpanDepartmentID" style="display:none;">Please Select Department</span>
+                                         </div>
+                                     </div>
+                                </div>
+
+                                 <div class="form-group">                              
+                                     <div class="row">                                            
+                                        <div class="col-md-6">  
+                                        @Html.Label("Number of Workers Employed: / કાર્યરત કામદારોની સંખ્યા:") <span class="text-danger"> *</span>                                     
+                                        @Html.TextBoxFor(e => e.NoOfWorkersEmployed, new { @class = "form-control", @ID="NoOfWorkersEmployed", required = "required", @type = "number" , oninput="numberOnly(this.id);"})
+                                        <span class="text-danger ValidationSpan" id="SpanNoOfWorkersEmployed" style="display:none;">Please Insert Number of Workers Employed</span>
+                                        </div>
+
+                                        <div class="col-md-6">                                   
+                                        @Html.Label("Date of Commencement of Work:/ કામ શરૂ કરવાની તારીખ:") <span class="text-danger"> *</span>  
+                                        <br>
+                                        @Html.TextBoxFor(e => e.DateOfCommencementOfWork, "{0:dd-MM-yyyy}", new { @class = "form-control", @ID="DateOfCommencementOfWork", required = "required" })
+                                        <span class="text-danger ValidationSpan" id="SpanDateOfCommencementOfWorke" style="display:none;">Please Insert Date Of Commencement Of Work</span>
+                                
+                                        </div>
+                                     </div>
+                                  </div>
+
+                               <div class="form-group">                              
+                                     <div class="row">                                            
+                                        <div class="col-md-6">  
+                                         @Html.Label("Estimated Period of Work: / કામનો અંદાજિત સમયગાળો:") <span class="text-danger"> *</span>      
+                                         <br>
+                                         @Html.TextBoxFor(e => e.EstimatedPeriodOfWork, "{0:dd-MM-yyyy}", new { @class = "form-control", @ID="EstimatedPeriodOfWork", required = "required" })
+                                         <span class="text-danger ValidationSpan" id="SpanEstimatedPeriodOfWork" style="display:none;">Please Insert Estimated Period Of Work</span>
+                                        </div>  
+
+                                         <div class="col-md-6">
+                                         @Html.Label("Total Estimated Project Cost: / કુલ અંદાજિત પ્રોજેક્ટ ખર્ચ:") <span class="text-danger"> *</span>                                   
+                                         @Html.TextBoxFor(e => e.TotalEstimatedProjectCost, new { @class = "form-control", @ID="TotalEstimatedProjectCost", required = "required",@type = "number",@step= "any" })
+                                         <span class="text-danger ValidationSpan" id="SpanTotalEstimatedProjectCost" style="display:none;">Please Insert Total Estimated Project Cost</span>
+                                         </div> 
+                                      </div>
+                               </div>
+
+                               
+						      <div class="form-group">
+                                    <div class="row" style="display:none;">
+                                    <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+									</div>
+                                    </div>
+                               </div>
+
+                               
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitProjectDetails();" />
+                            @Html.ActionLink("Cancel", "index", "CessProjectDetails", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+        
+    
+
+}
+<script>
+         
+         $("#EstimatedPeriodOfWork").kendoDatePicker({
+         format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+           });
+
+    $("#DateOfCommencementOfWork").kendoDatePicker({
+        format: "dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+</script>
+ 
+<script>     
+        function SubmitProjectDetails() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#ProjectName").val() == "0" || $("#ProjectName").val() == "") {
+                ErrorCnt++;
+                $('#SpanProjectName').show();
+            }
+             if ($("#ProjectDescription").val() == "0" || $("#ProjectDescription").val() == "") {
+                ErrorCnt++;
+                $('#SpanProjectDescription').show();
+            }
+            if ($("#ProjectAddress").val() == "0" || $("#ProjectAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanProjectAddress').show();
+            }
+             if ($("#AreaRoad").val() == "0" || $("#AreaRoad").val() == "") {
+                ErrorCnt++;
+                $('#SpanAreaRoad').show();
+            }
+             if ($("#Pincode").val() == "0" || $("#Pincode").val() == "") {
+                ErrorCnt++;
+                $('#Spanlengthpincode').show();
+            }
+             if ($("#DistrictID").val() == "0" || $("#DistrictID").val() == "") {
+                ErrorCnt++;
+                $('#SpanDistrictID').show();
+            }
+            if ($("#TalukaID").val() == "0" || $("#TalukaID").val() == "") {
+                ErrorCnt++;
+                $('#SpanTalukaID').show();
+            }
+             if ($("#LandMark").val() == "0" || $("#LandMark").val() == "") {
+                ErrorCnt++;
+                $('#SpanLandMark').show();
+            }
+             if ($("#DepartmentID").val() == "0" || $("#DepartmentID").val() == "") {
+                ErrorCnt++;
+                $('#SpanDepartmentID').show();
+            }
+             if ($("#NoOfWorkersEmployed").val() == "0" || $("#NoOfWorkersEmployed").val() == "") {
+                ErrorCnt++;
+                $('#SpanNoOfWorkersEmployed').show();
+            }
+            if ($("#DateOfCommencementOfWork").val() == "0" || $("#DateOfCommencementOfWork").val() == "") {
+                ErrorCnt++;
+                $('#SpanDateOfCommencementOfWork').show();
+            }
+            if ($("#EstimatedPeriodOfWork").val() == "0" || $("#EstimatedPeriodOfWork").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstimatedPeriodOfWork').show();
+            }
+             if ($("#TotalEstimatedProjectCost").val() == "0" || $("#TotalEstimatedProjectCost").val() == "") {
+                ErrorCnt++;
+                $('#SpanTotalEstimatedProjectCost').show();
+            }
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ProjectID: $('#ProjectID').val(),
+                    ProjectName: $('#ProjectName').val(),
+                     ProjectDescription: $('#ProjectDescription').val(),
+                     ProjectAddress: $('#ProjectAddress').val(),
+                     AreaRoad: $('#AreaRoad').val(),
+                     Pincode: $('#Pincode').val(),
+                     DistrictID: $('#DistrictID').val(),
+                     TalukaID: $('#TalukaID').val(),
+                     LandMark: $('#LandMark').val(),
+                     DepartmentID: $('#DepartmentID').val(),
+                     NoOfWorkersEmployed: $('#NoOfWorkersEmployed').val(),
+                     DateOfCommencementOfWork: $('#DateOfCommencementOfWork').val(),
+                     EstimatedPeriodOfWork: $('#EstimatedPeriodOfWork').val(),
+                     TotalEstimatedProjectCost: $('#TotalEstimatedProjectCost').val(),                    
+                     IsActive: $('#IsActive').val(),
+                    //IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/CessProjectDetails/SaveProjectDetails",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                window.location.href = "/CessProjectDetails/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            alert(request.responseJSON);
+                          }
+                    })
+            }
+    }
+        $(function () {
+        $("#DistrictID").change(function () {
+             
+                $.ajax({
+                    type: "GET",
+                    url: "/CessProjectDetails/AllList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#ProjectID").val(), DistrictID: $("#DistrictID").val() },
+                    success: function (response) {                        
+                       
+                        $("#TalukaID").empty();
+                        var row = "";
+                        row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                          $("#TalukaID").html(row).trigger('chosen:updated');
+
+                       @* if (response.data.AreaList != "")
+                        {
+                      bindAreaDropdown(response.data.AreaList);
+                     
+                        }*@
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    //error: function (response) {
+                        //respone will be returned here
+                        //$("#error").val(response.responseText);
+                    //}
+                    error: function (request, message, error) 
+                        {
+                            debugger; 
+                            alert(request.responseJSON);
+                          }
+                });
+            });
+        });
+
+        function numberOnly(id) {
+    var element = document.getElementById(id);
+    element.value = element.value.replace(/[^0-9]/gi, "");
+}
+
+   </script>
+
+     

@@ -1,0 +1,248 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>8dbb0715-719e-4bbb-9c37-00e5c3a9f8e1</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="$(IsPackable) == True">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	
+  <ItemGroup>
+    <Compile Remove="Views\PositionMaster212\**" />
+    <Compile Remove="Views\RegistrationApplicationCLA\**" />
+    <Compile Remove="wwwroot\Document\**" />
+    <Content Remove="Views\PositionMaster212\**" />
+    <Content Remove="Views\RegistrationApplicationCLA\**" />
+    <Content Remove="wwwroot\Document\**" />
+    <EmbeddedResource Remove="Views\PositionMaster212\**" />
+    <EmbeddedResource Remove="Views\RegistrationApplicationCLA\**" />
+    <EmbeddedResource Remove="wwwroot\Document\**" />
+    <None Remove="Views\PositionMaster212\**" />
+    <None Remove="Views\RegistrationApplicationCLA\**" />
+    <None Remove="wwwroot\Document\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\ApplicantMaster.cs" />
+    <Compile Remove="Controllers\RegistrationApplicationCLAController.cs" />
+    <Compile Remove="LogErrorToLogFile.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\ApplicationRegistration\AddApplicationRegistration.cshtml" />
+    <Content Remove="Views\ApplicationRegistration\ApplicationRegistrationDCLList.cshtml" />
+    <Content Remove="Views\Home\ChangeApplicantPassword.cshtml" />
+    <Content Remove="Views\ReinstatementAppliaction\Index1.cshtml" />
+    <Content Remove="wwwroot\Documents\Report\Report1.rdlc" />
+    <Content Remove="wwwroot\js\Crypto-sha1.js" />
+    <Content Remove="wwwroot\js\GetSHACode.js" />
+    <Content Remove="wwwroot\Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Remove="wwwroot\Scripts\jquery-1.10.2.min.js" />
+    <Content Remove="wwwroot\Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\Documents\Report\Report1.rdlc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="wwwroot\Content\formValidation\Scripts\formhelper.bundle.min.js" />
+    <None Include="wwwroot\Content\formValidation\Scripts\formhelper.js" />
+    <None Include="wwwroot\Content\formValidation\Scripts\formhelper.min.js" />
+    <None Include="wwwroot\Content\formValidation\Scripts\jquery.validate.min.js" />
+    <None Include="wwwroot\Content\formValidation\Scripts\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\js\Crypto-sha1.js" />
+    <None Include="wwwroot\js\GetSHACode.js" />
+    <None Include="wwwroot\Rotativa\wkhtmltoimage.exe" />
+    <None Include="wwwroot\Rotativa\wkhtmltopdf.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
+    <PackageReference Include="DNTCaptcha.Core" Version="4.3.3" />
+    <PackageReference Include="FastReport.Compat" Version="2022.2.0" />
+    <PackageReference Include="FastReport.OpenSource" Version="2022.3.6" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2022.3.4" />
+    <PackageReference Include="FastReport.OpenSource.Web" Version="2022.3.6" />
+    <PackageReference Include="FluentValidation" Version="11.3.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="HarfBuzzSharp.NativeAssets.Linux" Version="2.8.2.2" />
+    <PackageReference Include="Kendo.for.AspNet.Core" Version="2019.1.115" />
+    <PackageReference Include="KendoNET.DynamicLinq" Version="3.1.2" />
+    <PackageReference Include="KendoUICore" Version="2022.2.621" />
+    <PackageReference Include="MailKit" Version="3.4.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR" Version="2.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+    <PackageReference Include="MimeKit" Version="3.4.1" />
+    <PackageReference Include="MozJpegSharp.GdiPlus" Version="2.1.12" />
+    <PackageReference Include="RotativaHQ.AspNetCore" Version="1.2.1" />
+    <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="6.0.5.128" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="2.88.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.3.1" />
+    <PackageReference Include="System.CodeDom" Version="4.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.IO.Pipes.AccessControl" Version="5.0.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.19" />
+    <PackageReference Include="System.Security.AccessControl" Version="6.0.0" />
+    <PackageReference Include="UploadStream" Version="3.1.1" />
+    <PackageReference Include="wilx.Kendo.DynamicLinq.Core" Version="2.1.2" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business\FTS.Business.csproj" />
+    <ProjectReference Include="..\Configuration\Configuration\FTS.Configuration.csproj" />
+    <ProjectReference Include="..\Extensions\Cryptography\Cryptography.csproj" />
+    <ProjectReference Include="..\Extensions\FileImportManager\FileManager.csproj" />
+    <ProjectReference Include="..\Extensions\FormHelper\FormHelper\FormHelper.csproj" />
+    <ProjectReference Include="..\Extensions\JwtManager\JwtManager.csproj" />
+    <ProjectReference Include="..\Extensions\Logger\Logger.csproj" />
+    <ProjectReference Include="..\Extensions\Mapper\Mapper.csproj" />
+    <ProjectReference Include="..\Model\Model\FTS.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Conciliation\" />
+    <Folder Include="Areas\Admin\assets\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="wwwroot\capcha\" />
+    <Folder Include="wwwroot\CessProjectCollection\" />
+    <Folder Include="wwwroot\Documents\Appeal\Challan\" />
+    <Folder Include="wwwroot\Documents\Appeal\Resolution\" />
+    <Folder Include="wwwroot\Documents\ApplicationRegistration\" />
+    <Folder Include="wwwroot\Documents\Inspection\Signature\" />
+    <Folder Include="wwwroot\Documents\LicenceApplication\ChallanDoc\" />
+    <Folder Include="wwwroot\Documents\Review\ApplicantDoc\" />
+    <Folder Include="wwwroot\Reinstatement\Settlement\" />
+    <Folder Include="wwwroot\Scripts\Signature\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\Documents\Report\ApplicationHistory.Designer.cs">
+      <DependentUpon>ApplicationHistory.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ApplicationHistory.xsd">
+      <LastGenOutput>ApplicationHistory.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ApplicationHistory1.Designer.cs">
+      <DependentUpon>ApplicationHistory1.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ApplicationHistory1.xsd">
+      <LastGenOutput>ApplicationHistory1.Designer.cs</LastGenOutput>
+      <Generator>MSDataSetGenerator</Generator>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ConciliaitonSendToLC.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConciliaitonSendToLC.xsd</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ConciliaitonSendToLC.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ConciliaitonSendToLC.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ConciliationApp.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConciliationApp.xsd</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ConciliationApp.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ConciliationApp.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ConciliationSendToHO.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ConciliationSendToHO.xsd</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\ConciliationSendToHO.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ConciliationSendToHO.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\gretihearing.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>gretihearing.xsd</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\gretihearing.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>gretihearing.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\gretipresenthearing.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>gretipresenthearing.xsd</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\gretipresenthearing.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>gretipresenthearing.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\reinhearing.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>reinhearing.xsd</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Documents\Report\reinhearing.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>reinhearing.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Report\ApplicationHistory - Copy.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ApplicationHistory - Copy.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Report\ApplicationHistory.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ApplicationHistory.xsd</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Report\ApplicationHistory.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ApplicationHistory.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Update="wwwroot\Report\ApplicationHistory1.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ApplicationHistory1.xsd</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\Report\ApplicationHistory1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ApplicationHistory1.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://datahubproject.io/schemas/datahub_ingestion_schema.json" /></VisualStudio></ProjectExtensions>
+
+</Project>

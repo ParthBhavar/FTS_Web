@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" TextQuality="Regular" ReportInfo.Name="Simple List" ReportInfo.Author="Fast Reports Inc" ReportInfo.Description="Demonstrates a simple list report. To create it:&#13;&#10;- go to &quot;Data&quot; menu and select &quot;Choose Report Data...&quot; item to select a datasource;&#13;&#10;- go to &quot;Report|Configure Bands...&quot; menu to create the band structure;&#13;&#10;- return to the report page, doubleclick the data band to show its editor;&#13;&#10;- choose the datasource;&#13;&#10;- drag data from the Data Dictionary window to the band." ReportInfo.Created="01/17/2008 03:05:57" ReportInfo.Modified="11/30/2022 18:36:55" ReportInfo.CreatorVersion="2022.2.12.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqlEl9AJGOxoee/xda4ADDClTAKzr53KwQdMB1l2YwBEYP3rKp5z2Lxtoea/IWzqzWkkJDRhfOClAdvbsLsqBJLH0IKC5ty9D2sCX6BVOQBIqofD6CetlmaxXNK8Jql4Ev">
+      <TableDataSource Name="Table11" Alias="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="ApplicationID" DataType="System.Int32"/>
+        <Column Name="ApplicantName" DataType="System.String"/>
+        <Column Name="Address1" DataType="System.String"/>
+        <Column Name="Address2" DataType="System.String"/>
+        <Column Name="ApplicantEmailId" DataType="System.String"/>
+        <Column Name="DistrictName" DataType="System.String"/>
+        <Column Name="TalukaName" DataType="System.String"/>
+        <Column Name="Pincode" DataType="System.Int32"/>
+        <Column Name="ZoneName" DataType="System.String"/>
+        <Column Name="AreaName" DataType="System.String"/>
+        <Column Name="TradeUnionRegistrationNo" DataType="System.Int32"/>
+        <Column Name="TradeUnionRegistrationName" DataType="System.String"/>
+        <Column Name="TradeUnionAddress" DataType="System.String"/>
+        <Column Name="TradeUnionAddress1" DataType="System.String"/>
+        <Column Name="TotalNoOfWorkingEmpInUnion" DataType="System.Int32"/>
+        <Column Name="TotalWorkingEmpInEstablishment" DataType="System.Int32"/>
+        <Column Name="NumberOfEmpUnderDemand" DataType="System.Int32"/>
+        <Column Name="DepartmentName" DataType="System.String"/>
+        <Column Name="BusinessOfEstablishment" DataType="System.String"/>
+        <Column Name="CopyofCharteredDemandFile" DataType="System.String"/>
+        <Column Name="LetterOfIntervention" DataType="System.String"/>
+        <Column Name="Demand" DataType="System.String"/>
+        <Column Name="Remarks" DataType="System.String"/>
+        <Column Name="OwnerCopyOfChartered" DataType="System.String"/>
+        <Column Name="MembershipVerificaionDetail" DataType="System.String"/>
+        <Column Name="AnnualReturnStatement" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Table2" DataType="System.Int32" Enabled="true" TableName="Table2">
+        <Column Name="EstablishmentCode" DataType="System.String"/>
+        <Column Name="EstablishmentName" DataType="System.String"/>
+        <Column Name="EstablishEmailId" DataType="System.String"/>
+        <Column Name="PAddress" DataType="System.String"/>
+        <Column Name="SAddress" DataType="System.String"/>
+        <Column Name="DistrictName" DataType="System.String"/>
+        <Column Name="TalukaName" DataType="System.String"/>
+        <Column Name="ZoneName" DataType="System.String"/>
+        <Column Name="AreaName" DataType="System.String"/>
+        <Column Name="Pincode" DataType="System.Int32"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="66.15" CanGrow="true">
+      <TextObject Name="Text1" Top="9.45" Width="718.2" Height="47.25" Text="Conciliation Application" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 14pt, style=Bold"/>
+      <ChildBand Name="Child2" Top="70.15" Width="718.2" Height="18.9"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Top="93.05" Width="718.2" Height="767.34" Border.Lines="All" Border.Color="Maroon" CanGrow="true">
+      <TextObject Name="Text3" Left="37.8" Top="66.15" Width="207.9" Height="28.35" Text="Applicant Name :" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text9" Left="264.6" Top="28.35" Width="311.85" Height="28.35" CanGrow="true" CanShrink="true" Text="[Table1.ApplicationID]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text15" Left="37.8" Top="28.35" Width="207.9" Height="28.35" Text="Application Id :" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text19" Left="264.6" Top="66.15" Width="311.85" Height="28.35" CanGrow="true" CanShrink="true" Text="[Table1.ApplicantName]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text20" Left="37.8" Top="103.95" Width="207.9" Height="28.35" CanBreak="false" Text="Applicant Email Id :" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text21" Left="264.6" Top="103.95" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.ApplicantEmailId]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" AutoWidth="true" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text22" Left="37.8" Top="141.75" Width="207.9" Height="28.35" CanBreak="false" Text="Applicant Address :" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text23" Left="264.6" Top="141.75" Width="311.85" Height="28.35" CanGrow="true" CanShrink="true" Text="[Table1.Address1]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text24" Left="37.8" Top="255.15" Width="207.9" Height="28.35" CanBreak="false" Text="Pincode :" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text25" Left="264.6" Top="255.15" Width="311.85" Height="28.35" CanGrow="true" CanShrink="true" Text="[Table1.PinCode]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text26" Left="37.8" Top="179.55" Width="207.9" Height="28.35" CanBreak="false" Text="Applicant District :" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text27" Left="264.6" Top="179.55" Width="311.85" Height="28.35" CanGrow="true" CanShrink="true" Text="[Table1.DistrictName]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text28" Left="37.8" Top="217.35" Width="207.9" Height="28.35" Text="Applicant Taluka :" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text29" Left="264.6" Top="217.35" Width="311.85" Height="28.35" CanGrow="true" CanShrink="true" Text="[Table1.TalukaName]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text30" Left="37.8" Top="292.95" Width="207.9" Height="28.35" CanBreak="false" Text="Trade Union Registration No :" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text31" Left="264.6" Top="292.95" Width="311.85" Height="28.35" CanGrow="true" CanShrink="true" Text="[Table1.TradeUnionRegistrationNo]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text32" Left="37.8" Top="330.75" Width="207.9" Height="28.35" CanBreak="false" Text="Trade Union Registration Name:" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text33" Left="37.8" Top="368.55" Width="207.9" Height="28.35" CanBreak="false" Text="Trade Union Address :" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text34" Left="37.8" Top="406.35" Width="207.9" Height="28.35" CanBreak="false" Text="Trade Union District :" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text35" Left="37.8" Top="444.15" Width="207.9" Height="28.35" CanBreak="false" Text="Trade Union Taluka :" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text36" Left="264.6" Top="330.75" Width="321.3" Height="28.35" CanBreak="false" Text="[Table1.TradeUnionRegistrationName]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text37" Left="264.6" Top="368.55" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.TradeUnionAddress]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text38" Left="264.6" Top="406.35" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.DistrictName]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text39" Left="264.6" Top="444.15" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.TalukaName]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text40" Left="37.8" Top="481.95" Width="207.9" Height="28.35" CanBreak="false" Text="Trade Union Pincode:" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text41" Left="37.8" Top="519.75" Width="207.9" Height="28.35" CanBreak="false" Text="Total Working Employee In Union :" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text42" Left="264.6" Top="481.95" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.Pincode]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text43" Left="264.6" Top="519.75" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.TotalNoOfWorkingEmpInUnion]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text44" Left="37.8" Top="557.55" Width="207.9" Height="28.35" Text="Total Working Employee In Establishment :" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text45" Left="37.8" Top="595.35" Width="207.9" Height="28.35" CanBreak="false" Text="Number of Employee Under Demand" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text46" Left="37.8" Top="633.15" Width="207.9" Height="28.35" CanBreak="false" Text="Department Name :" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text47" Left="264.6" Top="557.55" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.TotalWorkingEmpInEstablishment]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" WordWrap="false" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text48" Left="264.6" Top="595.35" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.NumberOfEmpUnderDemand]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text49" Left="264.6" Top="633.15" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.Demand]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text50" Left="37.8" Top="670.95" Width="207.9" Height="28.35" CanBreak="false" Text="Remarks :" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text51" Left="264.6" Top="670.95" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.Remarks]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text52" Left="37.8" Top="708.75" Width="207.9" Height="28.35" Text="Department Name" VertAlign="Center" Font="Microsoft Sans Serif, 9pt, style=Bold"/>
+      <TextObject Name="Text53" Left="264.6" Top="708.75" Width="311.85" Height="28.35" CanBreak="false" Text="[Table1.DepartmentName]" Padding="2, 0, 2, 10" Format="Date" Format.Format="d" VertAlign="Bottom" Font="Microsoft Sans Serif, 9pt"/>
+      <ChildBand Name="Child1" Top="864.39" Width="718.2" Height="179.55">
+        <TextObject Name="Text54" Left="9.45" Top="9.45" Width="718.2" Height="47.25" Text="Establishment Details" VertAlign="Center" Font="Microsoft Sans Serif, 14pt, style=Bold"/>
+        <TableObject Name="Table1" Left="37.8" Top="75.6" Width="623.76" Height="94.49" Border.Lines="All" GrowToBottom="true">
+          <TableColumn Name="Column1" Width="59.07"/>
+          <TableColumn Name="Column2" Width="96.87"/>
+          <TableColumn Name="Column3" Width="106.32"/>
+          <TableColumn Name="Column4" Width="87.42"/>
+          <TableColumn Name="Column5" Width="87.42"/>
+          <TableColumn Name="Column6" Width="59.07"/>
+          <TableColumn Name="Column7" Width="59.07"/>
+          <TableColumn Name="Column8" Width="68.52"/>
+          <TableRow Name="Row1" Height="33.07">
+            <TableCell Name="Cell1" Border.Lines="Right, Bottom" Text="Sr. No." Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+            <TableCell Name="Cell2" Border.Lines="Right, Bottom" Text="Code" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+            <TableCell Name="Cell3" Border.Lines="Right, Bottom" Text="Name" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+            <TableCell Name="Cell4" Border.Lines="Right, Bottom" Text="Email Id" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+            <TableCell Name="Cell5" Border.Lines="Right, Bottom" Text="Address" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+            <TableCell Name="Cell36" Border.Lines="Right, Bottom" Text="District" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+            <TableCell Name="Cell55" Border.Lines="Right, Bottom" Text="Taluka" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+            <TableCell Name="Cell78" Border.Lines="Right, Bottom" Text="Pincode" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row2" Height="61.42">
+            <TableCell Name="Cell6" Border.Lines="Right, Bottom" Text="[Row#]" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+            <TableCell Name="Cell7" Border.Lines="Right, Bottom" Text="[Table2.EstablishmentCode]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+            <TableCell Name="Cell8" Border.Lines="Right, Bottom" Text="[Table2.EstablishmentName]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+            <TableCell Name="Cell9" Border.Lines="Right, Bottom" Text="[Table2.EstablishEmailId]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+            <TableCell Name="Cell10" Border.Lines="Right, Bottom" Text="[Table2.PAddress]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+            <TableCell Name="Cell37" Border.Lines="Right, Bottom" Text="[Table2.DistrictName]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+            <TableCell Name="Cell56" Border.Lines="Right, Bottom" Text="[Table2.TalukaName]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+            <TableCell Name="Cell79" Border.Lines="Right, Bottom" Text="[Table2.Pincode]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </ChildBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="1047.94" Width="718.2" Height="56.7" Fill.Color="WhiteSmoke" CanGrow="true">
+      <TextObject Name="Text10" Left="614.25" Top="28.35" Width="94.5" Height="28.35" Text="[PageN]" HorzAlign="Right" VertAlign="Center" Font="Tahoma, 8pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

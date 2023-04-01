@@ -1,0 +1,570 @@
+﻿@model FTS.Model.Entities.ReinstatementAppliactionModel
+@{
+  ViewBag.Title = "Reinstatement Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+         @Html.AntiForgeryToken();
+          <br />
+    <section>
+                   <h3 style="font-weight:bold;">@ViewBag.Title</h3>
+    </section>   
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                         
+                             <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" style="padding-bottom: 0rem;">
+              <a class="nav-link" id="step1-tab" data-bs-toggle="tab">Step 1</a>
+              <a class="nav-link" id="step2-tab" data-bs-toggle="tab">Step 2</a>
+              <a class="nav-link active" id="step3-tab" data-bs-toggle="tab">Step 3</a>
+              <a class="nav-link" id="step4-tab" data-bs-toggle="tab">Step 4</a>
+            </div>
+          </nav>
+          <br>
+          <div class="form-group-required">
+                   <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+          </div>
+          
+                        <div class="form-group">
+                            <div class="row">
+                                 <div class="col-md-6">
+                                     @Html.Label("Representative Union Number: / પ્રતિનિધિ સંઘ નંબર: ") 
+                                    <input id="ddlRegistrationNo" class="form-control" value="@Model.RegistrationNo" style="width:100%;" />
+                                    @* <span class="text-danger ValidationSpan" id="SpanddlRegistrationNo" style="display:none;">Please Enter number</span>*@
+                           @*@Html.TextBoxFor(e => e.RegistrationNo, new { @class = "form-control", @ID="RegistrationNo", required = "required" })*@
+                                </div>
+                                <div class="col-md-6">
+                                     @Html.Label("Union Name: / સંઘ નામ:") <span class='text-danger'>*</span>
+                                    @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+                                    @Html.HiddenFor(e => e.TradunionID , new { @ID="TradunionID"})
+                                    @Html.HiddenFor(e => e.RegistrationNo , new { @ID="RegistrationNo"})
+                                    @Html.TextBoxFor(e => e.RegistrationName, new { @class = "form-control", @ID="txt_RegistrationName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanApplicantName" style="display:none;">Please Insert Applicant Name</span>
+                                </div>
+                            </div>
+                        </div>
+                 
+                           <div class="form-group">
+                            <div class="row">
+                                  <div class="col-md-5">
+                                     @Html.Label("Permanent Address: / કાયમી સરનામુ:")
+                                   @Html.TextAreaFor(e => e.PAddress, new { @class = "form-control", @ID="PAddress", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanApplicantAddress" style="display:none;">Please Insert Address</span>
+                                </div>
+                                  <div class="col-md-2" style="margin-top: auto;">
+                                    @Html.Label("Copy Permanent Address")
+                                    @Html.CheckBox("SameasPaddress", new { @ID="SameasPaddress"})
+                                </div>
+                                  <div class="col-md-5">
+                                       @Html.Label("Secondary Address: / ગૌણ સરનામું:")
+                                   @Html.TextAreaFor(e => e.SAddress, new { @class = "form-control", @ID="SAddress", required = "required" })
+                                </div>
+                                  
+                        </div> 
+                         </div>  
+
+                          <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("District: / જિલ્લો:")
+                                    @Html.DropDownListFor(e => e.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID"})
+                                   <span class="text-danger ValidationSpan" id="Spandistrict" style="display:none;">Please Select District</span>
+                                </div>
+
+                                 <div class="col-md-2">
+                                    @Html.Label("Taluka: / તાલુકો:")
+                                   @Html.DropDownListFor(e => e.TalukaID, new SelectList(Model.Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TalukaID" })
+                                <span class="text-danger ValidationSpan" id="Spantaluka" style="display:none;">Please Select Taluka</span>
+                                </div>
+                              
+                                 <div class="col-md-2" id="DivArea">
+                                    @Html.Label("Area: / વિસ્તાર:")
+                                    @Html.HiddenFor(e => e.ZoneID , new { @ID="ZoneID"})
+                                    @Html.HiddenFor(e => e.AreaID , new { @ID="AreaID"})
+                                     <input id="ddlArea" class="form-control" value="@Model.AreaID" style="width:100%;" />
+@*                                   @Html.DropDownListFor(e => e.AreaID, new SelectList(Model.AreaList,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="ddlArea"})
+*@                                <span class="text-danger ValidationSpan" id="Spantaluka" style="display:none;">Please Select Taluka</span>
+                                </div>
+                                   <div class="col-md-2">
+                                    @Html.Label("Pincode: / પીન કોડ:")
+                                      @Html.TextBoxFor(e => e.Pincode, new { @class = "form-control", @ID="Pincode", required = "required",maxlength="6",oninput="numberOnly(this.id);"})
+                                       <span class="text-danger ValidationSpan" id="Spanpincode" style="display:none;">Please insert Pincode</span>
+                                </div>
+                                 <div class="col-md-2">
+                                    @Html.Label("Department: / વિભાગ: ")
+                                   @Html.DropDownListFor(e => e.Department, new SelectList(Model.DepartmentList,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="Department"})
+                                <span class="text-danger ValidationSpan" id="Spantaluka" style="display:none;">Please Select Taluka</span>
+                                </div>
+                             <div class="col-md-2">
+                                    @Html.Label("Work Type: /કામનો પ્રકાર") <span class='text-danger'>*</span>
+                                   @Html.DropDownListFor(e => e.WorkType, new SelectList(Model.WorkTypeList,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="WorkType" })
+                                <span class="text-danger ValidationSpan" id="Spantaluka" style="display:none;">Please Select Taluka</span>
+                                </div>
+                        </div>
+                         </div>  
+
+                         <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                      @Html.Label("Age: / ઉંમર:")<span class='text-danger'>*</span>
+                                   @Html.TextBoxFor(e => e.WorkerAge, new { @class = "form-control", @ID="WorkerAge", required = "required",maxlength="3",oninput="numberOnly(this.id);" })
+                                 <span class="text-danger ValidationSpan" id="SpanWorkerAge" style="display:none;">Please insert Worker Age</span>
+                               </div>
+                                  <div class="col-md-2">
+                                      @Html.Label("Total Workers:/કુલ કામદારો:")
+                                   @Html.TextBoxFor(e => e.TotalWorkers, new { @class = "form-control", @ID="TotalWorkers", required = "required",maxlength="6",oninput="numberOnly(this.id);"  })
+                                </div>
+
+                                  <div class="col-md-3">
+                                      @Html.Label("Last Salary Drawn:/છેલ્લો પગાર:") <span class='text-danger'>*</span>
+                                   @Html.TextBoxFor(e => e.LastSalaryDrawn, new { @class = "form-control", @ID="LastSalaryDrawn", required = "required",@type = "number"  })
+                                <span class="text-danger ValidationSpan" id="SpanLastSalaryDrawn" style="display:none;">Please insert Last Salary Drawn</span>
+                               </div>
+
+                                <div class="col-md-2">
+                                      @Html.Label("Joinning Date:/જોડાવાની તારીખ:") <span class='text-danger'>*</span>
+                                      @Html.TextBoxFor(e => e.JoinningDate,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="JoinningDate", required = "required",onchange="datediff()"})
+                                     <span class="text-danger ValidationSpan" id="SpanJoinningDate" style="display:none;">Please Insert Joinning Date</span>
+                                </div>
+
+                                <div class="col-md-2">
+                                   @Html.Label("Termination Date:/સમાપ્તિ તારીખ:") <span class='text-danger'>*</span>
+                                   @Html.TextBoxFor(e => e.TerminationDate,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="TerminationDate", required = "required",onchange="datediff()"})
+                                   <span class="text-danger ValidationSpan" id="SpanTerminationDate" style="display:none;">Please Insert Termination Date</span>
+                               </div>
+
+                               <div class="col-md-2">
+                                      @Html.Label("Total Year:/કુલ વર્ષ:")
+                                   @Html.TextBoxFor(e => e.TotalYr, new { @class = "form-control", @ID="TotalYr", required = "required", Onclick="datediff()"  })
+                                </div>
+                        </div>
+                         </div>  
+
+                          <div class="form-group">
+                            <div class="row">
+                                    <div class="col-md-2">
+                                    @Html.Label("Mobile: / મોબાઈલ:")
+                                    @Html.TextBoxFor(e => e.mobile, new { @class = "form-control", @ID="mobile", required = "required",maxlength="10",oninput="numberOnly(this.id);"  })
+                                        <span class="text-danger ValidationSpan" id="Spanmobile" style="display:none;">Please Enter Mobile</span>
+                                </div>
+
+                                      <div class="col-md-2">
+                                    @Html.Label("Email:") <span class='text-danger'>*</span>
+                                    @Html.TextBoxFor(e => e.Email, new { @class = "form-control", @ID="Email", required = "required"  })
+                                            <span class="text-danger ValidationSpan" id="SpanEmail" style="display:none;">Please Enter Email</span>
+                                   </div>
+                                 <div class="col-md-6">
+                                    @Html.Label("Termination Reason: : / સમાપ્તિ કારણ: ")
+                                      @Html.TextBoxFor(e => e.Note, new { @class = "form-control", @ID="Note", required = "required" })
+                                </div>
+                                
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            @if(@Model.IsSubmit == true )
+                            {
+                                  <a id="Edit" class="btn btn-info"  href="/ReinstatementAppliaction/AddReinstatementEstablishment?ApplicationID=@Model.ApplicationID&ISNew=1" > Previous</a>
+                                 <a id="Edit" class="btn btn-info"  href="/ReinstatementAppliaction/AddUploadDocment?ApplicationID=@Model.ApplicationID" > Next</a>
+                            }
+                            else
+                            {
+                             <a id="Edit" class="btn btn-info"  href="/ReinstatementAppliaction/AddReinstatementEstablishment?ApplicationID=@Model.ApplicationID&ISNew=1" > Previous</a>
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitAppliaction();" />
+                            } 
+                            @Html.ActionLink("Cancel", "index", "ReinstatementAppliaction", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+
+     <script>
+
+          function humanise(diff) {
+            var str = '';
+            var values = {
+                ' year': 365,
+                ' month': 30,
+                ' day': 1
+            };
+
+            for (var x in values) {
+                var amount = Math.floor(diff / values[x]);
+
+                if (amount >= 1) {
+                    str += amount + x + (amount > 1 ? 's' : '') + ' ';
+                    diff -= amount * values[x];
+                }
+            }
+
+            return str;
+        }
+
+     function datediff(){
+       debugger;
+
+                var startDate = $("#JoinningDate").data("kendoDatePicker").value();
+                var endDate = $("#TerminationDate").data("kendoDatePicker").value();
+                var days = Math.round((endDate - startDate)/1000/60/60/24);
+                var years = Math.floor(days / 365);
+                var months = Math.floor(days % 365 / 30);
+                var dayss = Math.floor(days % 365 % 30);
+               var totalyear = [years, months, dayss].join(':');
+                 
+                 $("#TotalYr").val(totalyear);
+     }
+    
+ </script>
+
+     @*<script>
+         document.getElementById('getYearsBtn').addEventListener('click', function () {
+  var joiningdate = document.getElementById('JoinningDate').value;
+  var terminatedate = document.getElementById('TerminationDate').value;
+  // Below one is the single line logic to calculate the no. of years...
+
+  var years = Math.abs(new Date(new Date(terminatedate) - new Date(joiningdate)).getMonth() - 1970);
+  console.log(years);
+});
+
+
+         </script>*@
+ <script>
+      $("#JoinningDate").kendoDatePicker({
+          format :"dd-MM-yyyy",
+
+      }); 
+       $("#TerminationDate").kendoDatePicker({
+          format :"dd-MM-yyyy"
+      }); 
+
+
+      @*var TerminationDatepicker = $("#TerminationDate").data("kendoDatePicker");
+
+    $("#JoinningDate").change(function () {
+        debugger;
+        var JoinningDate = document.getElementById("JoinningDate").value;
+        TerminationDatepicker.min(JoinningDate);
+         TerminationDatepicker.max(new Date(2100, 0, 1));
+         $("#TerminationDate").val("");
+        datediff();
+    });*@
+ </script>
+
+ <script>
+
+           $(document).ready(function () {
+            debugger;
+
+            if ($("#Pincode").val() == "0") {
+                 $("#Pincode").val(""); 
+              }
+               
+                 if ('@Model.IsSubmit'=="True") 
+                 {
+                  $('.k-widget.k-combobox.form-control.k-dropdowngrid.k-combobox-clearable').kendoMultiColumnComboBox({ enabled: false });
+                   $('.k-widget').css('display', 'unset');
+                   $('.form-control').attr('readonly', 'readonly');
+                   $('.chosen-select').prop('disabled', true).trigger("chosen:updated");
+                 }
+
+            if ('@Model.TradunionID' > '0' && '@Model.AreaID' > '0') 
+            {
+                $("#DivArea").show();
+            }
+            else 
+            {
+                $("#DivArea").hide();
+            }
+
+            bindTradunionDropdown(@Html.Raw(Json.Serialize(Model.TradunionList)));
+            bindAreaDropdown(@Html.Raw(Json.Serialize(Model.AreaList))); 
+            });
+
+     function bindAreaDropdown(obj) {
+             debugger;
+        $("#ddlArea").kendoMultiColumnComboBox({
+            dataTextField: "DisplayValue",
+            dataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue"],
+            dataSource: {
+                data: obj
+            },
+             autoClose: false,
+             close: function (e) 
+             {
+                debugger;
+                 
+                if (this.dataSource.data().length > 0) 
+                {
+
+                     if (this.dataSource.data()[this.selectedIndex] != undefined) 
+                     {
+                          
+                          var data = this.dataSource._pristineData.find(x => x.DataValue == this.value());
+                          if(data != undefined)
+                          {
+                            $('#ZoneID').val(data.ZoneID);
+                            $('#AreaID').val(data.DataValue);
+                            @*$('#ddlArea').val(this.dataSource.data()[this.selectedIndex].areaID);*@
+                          }
+                          else
+                          {
+                              $('#ddlArea').data("kendoMultiColumnComboBox").value('');
+                                 swal("Please Select Valid Area");
+                                   $('#ZoneID').val(0);
+                                   $('#AreaID').val(0);
+                          }
+                     }
+                     else
+                      {
+                              $('#ddlArea').data("kendoMultiColumnComboBox").value('');
+                                 swal("Please Select Valid Area");
+                                   $('#ZoneID').val(0);
+                                   $('#AreaID').val(0);
+                      }
+                }
+                
+            },
+            
+
+        });
+    }
+
+         function bindTradunionDropdown(obj) {
+             debugger;
+        $("#ddlRegistrationNo").kendoMultiColumnComboBox({
+            dataTextField: "RegistrationNo",
+            DataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "RegistrationNo", title: "Regis. No", width: 100 },
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue","RegistrationNo"],
+            dataSource: {
+                data: obj
+            },
+             change: function (e) {
+                debugger;
+                if (this.dataSource.data().length > 0) {
+            @*     a.TradunionID as DataValue
+        ,a.RegistrationName as DisplayValue
+        ,a.RegistrationNo as RegistrationNo
+        ,a.PAddress as PAddress
+        ,a.SAddress as SAddress
+        ,a.TalukaID as TalukaID
+        ,a.DistrictID as DistrictID
+        ,a.Pincode as Pincode*@
+        if (this.dataSource.data()[this.selectedIndex] != undefined) {
+                    $('#txt_RegistrationName').val(this.dataSource.data()[this.selectedIndex].DisplayValue);
+                    $('#ddlRegistrationNo').val(this.dataSource.data()[this.selectedIndex].RegistrationNo);
+        }
+      }}
+
+        });
+    }
+
+      $(function () {
+        $("#DistrictID").change(function () {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: "/ReinstatementAppliaction/AllList",
+                      headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#TradunionID").val(), DistrictID: $("#DistrictID").val() },
+                    success: function (response) {
+                        
+                        $("#ddlArea").kendoMultiColumnComboBox().empty();
+                        $("#TalukaID").empty();
+                        var row = "";
+                         row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                          $("#TalukaID").html(row).trigger('chosen:updated');
+
+                        if (response.data.AreaList != "") {
+                            $("#DivArea").show();
+                            bindAreaDropdown(response.data.AreaList);
+                       }
+                        else {
+                            $("#DivArea").hide();
+                             $("#ZoneID").val(0);
+                           $("#AreaID").val(0);
+                        }
+                    },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                    error: function (response) {
+                        //respone will be returned here
+                        $("#error").val(response.responseText);
+                    }
+                });
+            });
+        });
+
+          function SubmitAppliaction() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#txt_RegistrationName").val() == "0" || $("#txt_RegistrationName").val() == "") {
+                ErrorCnt++;
+                $('#SpanApplicantName').show();
+            }
+
+             if ($("#txt_RegistrationName").val() == "0" || $("#txt_RegistrationName").val() == "") {
+                ErrorCnt++;
+                $('#SpanApplicantName').show();
+            }
+
+            if ($("#WorkerAge").val() == "0" || $("#WorkerAge").val() == "") {
+                ErrorCnt++;
+                $('#SpanWorkerAge').show();
+            }
+
+             if ($("#LastSalaryDrawn").val() == "0" || $("#LastSalaryDrawn").val() == "") {
+                ErrorCnt++;
+                $('#SpanLastSalaryDrawn').show();
+            }
+
+             if ($("#JoinningDate").val() == "0" || $("#JoinningDate").val() == "") {
+                ErrorCnt++;
+                $('#SpanJoinningDate').show();
+            }
+
+                 if ($("#mobile").val() == "0" || $("#mobile").val() == "") {
+                ErrorCnt++;
+                    $('#Spanmobile').show();
+            }
+
+                 if ($("#Email").val() == "0" || $("#Email").val() == "") {
+                    ErrorCnt++;
+                    $('#SpanEmail').show();
+                }
+
+            @*if ($("#ddlRegistrationNo").val() == "0" || $("#ddlRegistrationNo").val() == "") {
+                ErrorCnt++;
+                $('#SpanddlRegistrationNo').show();
+            }*@
+     
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    RegistrationNo: $('#ddlRegistrationNo').val(),
+                    ApplicationID: $('#ApplicationID').val(),
+                    TradunionID: $('#TradunionID').val(),
+                    RegistrationName: $('#txt_RegistrationName').val(),
+                    DistrictID: $('#DistrictID').val(),
+                    TalukaID: $('#TalukaID').val(),
+                    WorkType: $('#WorkType').val(),
+                    WorkerAge: $('#WorkerAge').val(),
+                    TotalWorkers: $('#TotalWorkers').val(),
+                    LastSalaryDrawn: $('#LastSalaryDrawn').val(),
+                    UPJoinningDate: $('#JoinningDate').val(),
+                    UPTerminationDate: $('#TerminationDate').val(),
+                    TotalYr: $('#TotalYr').val(),
+                    PAddress: $('#PAddress').val(),
+                    SAddress: $('#SAddress').val(),
+                    Pincode: $('#Pincode').val(),
+                    Department: $('#Department').val(),
+                    ZoneID: $('#ZoneID').val(),
+                    AreaID: $('#AreaID').val(),
+                    Note: $('#Note').val(),
+                    mobile: $("#mobile").val(),
+                    Email: $("#Email").val(),
+                    URL: document.URL,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ReinstatementAppliaction/SaveReinstatementTradunionRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                var ApplicationID = data.data.ApplicationID;
+                                var ISNew =  data.data.IsNew;
+                                // var Querystring = "ApplicationID=" + ApplicationID + "&ISNew=" + ISNew;
+                                 var Querystring = "ApplicationID=" + ApplicationID;
+                                window.location.href = "/ReinstatementAppliaction/AddUploadDocment?" + Querystring;
+                              
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+
+      $('#SameasPaddress').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+          var val = $('#PAddress').val();
+           $('#SAddress').val(val);
+        } 
+    });
+
+   @* function test() {
+        debugger;
+  var joiningdate = document.getElementById('JoinningDate').value;
+  var terminatedate = document.getElementById('TerminationDate').value;
+  // Below one is the single line logic to calculate the no. of years...
+ 
+    var month =(terminatedate.getDate() - joiningdate.getDate()) / 30 +
+    terminatedate.getMonth() - joiningdate.getMonth() +
+    (12 * (terminatedate.getFullYear() - joiningdate.getFullYear()));
+  );*@
+@*  console.log(month);*@
+    @* var years = new Date(new Date(terminatedate) - new Date(joiningdate)).getMonth() + 
+   (12 *  new Date((new Date(joiningdate) - new Date(terminatedate)).getFullYear())
+  console.log(years);*@
+               @*var getmonth = joiningdate.getMonth() - terminatedate.getMonth() + 
+               (12 * (joiningdate.getFullYear() - terminatedate.getFullYear()));
+               console.log(getmonth);*@
+ 
+
+    @*}*@
+    @*function monthDiff(joiningdate, terminatedate) {
+        var joiningdate = document.getElementById('JoinningDate').value;
+  var terminatedate = document.getElementById('TerminationDate').value;
+ var getmonth = joiningdate.getMonth() - terminatedate.getMonth() + 
+   (12 * (joiningdate.getFullYear() - terminatedate.getFullYear()));
+   console.log(getmonth);
+}*@
+
+        function numberOnly(id) {
+    var element = document.getElementById(id);
+    element.value = element.value.replace(/[^0-9]/gi, "");
+}
+     </Script>
+  
+ }

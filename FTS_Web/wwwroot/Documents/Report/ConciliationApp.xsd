@@ -1,0 +1,75 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Table">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ErrorCode" type="xs:long" minOccurs="0" />
+              <xs:element name="ErrorMassage" type="xs:string" minOccurs="0" />
+              <xs:element name="ApplicationID" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Table1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ApplicationID" type="xs:int" minOccurs="0" />
+              <xs:element name="ApplicantName" type="xs:string" minOccurs="0" />
+              <xs:element name="Address1" type="xs:string" minOccurs="0" />
+              <xs:element name="Address2" type="xs:string" minOccurs="0" />
+              <xs:element name="ApplicantEmailId" type="xs:string" minOccurs="0" />
+              <xs:element name="DistrictName" type="xs:string" minOccurs="0" />
+              <xs:element name="TalukaName" type="xs:string" minOccurs="0" />
+              <xs:element name="Pincode" type="xs:int" minOccurs="0" />
+              <xs:element name="ZoneName" type="xs:string" minOccurs="0" />
+              <xs:element name="AreaName" type="xs:string" minOccurs="0" />
+              <xs:element name="TradeUnionRegistrationNo" type="xs:int" minOccurs="0" />
+              <xs:element name="TradeUnionRegistrationName" type="xs:string" minOccurs="0" />
+              <xs:element name="TradeUnionAddress" type="xs:string" minOccurs="0" />
+              <xs:element name="TradeUnionAddress1" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalNoOfWorkingEmpInUnion" type="xs:int" minOccurs="0" />
+              <xs:element name="TotalWorkingEmpInEstablishment" type="xs:int" minOccurs="0" />
+              <xs:element name="NumberOfEmpUnderDemand" type="xs:int" minOccurs="0" />
+              <xs:element name="DepartmentName" type="xs:string" minOccurs="0" />
+              <xs:element name="BusinessOfEstablishment" type="xs:string" minOccurs="0" />
+              <xs:element name="CopyofCharteredDemandFile" type="xs:string" minOccurs="0" />
+              <xs:element name="LetterOfIntervention" type="xs:string" minOccurs="0" />
+              <xs:element name="Demand" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" type="xs:string" minOccurs="0" />
+              <xs:element name="OwnerCopyOfChartered" type="xs:string" minOccurs="0" />
+              <xs:element name="MembershipVerificaionDetail" type="xs:string" minOccurs="0" />
+              <xs:element name="AnnualReturnStatement" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Table2">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EstablishmentCode" type="xs:string" minOccurs="0" />
+              <xs:element name="EstablishmentName" type="xs:string" minOccurs="0" />
+              <xs:element name="EstablishEmailId" type="xs:string" minOccurs="0" />
+              <xs:element name="PAddress" type="xs:string" minOccurs="0" />
+              <xs:element name="SAddress" type="xs:string" minOccurs="0" />
+              <xs:element name="DistrictName" type="xs:string" minOccurs="0" />
+              <xs:element name="TalukaName" type="xs:string" minOccurs="0" />
+              <xs:element name="ZoneName" type="xs:string" minOccurs="0" />
+              <xs:element name="AreaName" type="xs:string" minOccurs="0" />
+              <xs:element name="Pincode" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Table3">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SettlementDate" type="xs:string" minOccurs="0" />
+              <xs:element name="SettlmentRemark" type="xs:string" minOccurs="0" />
+              <xs:element name="SettlementDocURL" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

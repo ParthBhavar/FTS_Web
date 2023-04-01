@@ -1,0 +1,204 @@
+﻿@model FTS.Model.Entities.TradeUnionRegistrationMasterModel
+@{
+    ViewBag.Title = "Trade Union Registration Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Application For Claims</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                               
+                                <div class="col-md-3">
+                                    @Html.Label("Registration Number")
+                                    @Html.HiddenFor(e => e.TradeIDEdit , new { @ID="TradunionID"})
+                                    @Html.TextBoxFor(e => e.RegistrationNo, new { @class = "form-control", @ID="RegistrationNo", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanRegistrationNo" style="display:none;">Please Insert Registration Number</span>
+                                </div>
+                                 
+                                <div class="col-md-3">
+                                    @Html.Label("Registration Name")
+                                    @Html.TextBoxFor(e => e.RegistrationName, new { @class = "form-control",  @ID="RegistrationName", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanRegistrationName" style="display:none;">Please Insert Registration Name</span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("Current Address")
+                                    @Html.TextBoxFor(e => e.PAddress, new { @class = "form-control", @ID="PAddress", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanPAddress" style="display:none;">Please Insert Current Address</span>
+                                </div>
+
+                                
+                                <div class="col-md-3">
+                                    @Html.Label("Permanent Address")
+                                    @Html.TextBoxFor(e => e.SAddress, new { @class = "form-control", @ID="SAddress", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanPAddress" style="display:none;">Please Insert Permanent Address</span>
+                                </div>
+
+                                 <div class="col-md-3">
+                                    @Html.Label("District Name")
+                                    @Html.DropDownListFor(M => M.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID", })
+                                    <span class="text-danger ValidationSpan" id="SpanDistrictID" style="display:none;">Please Select District ID </span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    @Html.Label("Taluka Name")
+                                    @Html.DropDownListFor(M => M.TalukaID, new SelectList(Model.Talukalist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TalukaID", })
+                                    <span class="text-danger ValidationSpan" id="SpanTalukalist" style="display:none;">Please Select Taluka ID </span>
+                                </div>
+
+                                 <div class="col-md-3">
+                                    @Html.Label("Pincode")
+                                    @Html.TextBoxFor(e => e.Pincode, new { @class = "form-control",  @ID="Pincode", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanPincode" style="display:none;">Please Insert Pincode </span>
+                                </div>
+
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanIsActive" style="display:none;">Please Select Level</span>
+                                                                       
+                                </div>
+                            </div>
+                        </div>
+
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitTradeUnionRegistrationMaster();" />
+                            @Html.ActionLink("Cancel", "index", "TradeUnionRegistrationMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+  <script>
+     
+        function SubmitTradeUnionRegistrationMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+           
+            if ($("#RegistrationName").val() == "0" || $("#RegistrationName").val() == "") {
+                ErrorCnt++;
+                $('#SpanRegistrationName').show();
+            }
+
+            if ($("#PAddress").val() == "0" || $("#PAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanPAddress').show();
+            }
+
+            if ($("#SAddress").val() == "0" || $("#SAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanSAddress').show();
+            }
+
+           if ($("#DistrictID").val() == "0" || $("#DistrictID").val() == "") {
+                ErrorCnt++;
+                $('#SpanDistrictID').show();
+           }
+
+            if ($("#TalukaID").val() == "0" || $("#TalukaID").val() == "") {
+                ErrorCnt++;
+                $('#SpanTalukaID').show();
+            }
+                if ($("#Pincode").val() == "0" || $("#Pincode").val() == "") {
+                ErrorCnt++;
+                $('#SpanPincode').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    TradunionID: $('#TradunionID').val(),
+                    RegistrationNo: $('#RegistrationNo').val(),
+                    RegistrationName: $('#RegistrationName').val(),
+                    PAddress: $('#PAddress').val(),
+                    SAddress: $('#SAddress').val(),
+                    DistrictID: $('#DistrictID').val(),
+                    TalukaID: $('#TalukaID').val(),
+                    Pincode: $('#Pincode').val(),
+                    IsActive: $('#IsActive').val(),
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/TradeUnionRegistrationMaster/SaveTradeUnionRegistrationRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/TradeUnionRegistrationMaster/Index";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+                            //if (data.data.ErrorCode == 0) {
+                            //    window.location.href = "/TradeUnionRegistrationMaster/Index";
+                            //    alert(data.data.ErrorMassage);
+                            //}
+                            //else {
+                            //    alert('Something went wrong!');
+                            //}
+
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+
+
+
+          //Distric Change Method
+      $(function () {
+        $("#DistrictID").change(function () {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: "/TradeUnionRegistrationMaster/TalukaList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#TradunionID").val(), DistrictID: $("#DistrictID").val() },
+                    success: function (response) {
+                        var row = "";
+                        $("#TalukaID").empty();
+                         for (var i = 0; i < response.data.length; i++) {
+                            row += "<option value=" + response.data[i].dataValue + ">" + response.data[i].displayValue + "</option>";
+                        };
+
+                      $("#TalukaID").html(row).trigger('chosen:updated');
+                    },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                    error: function (response) {
+                        //respone will be returned here
+                        $("#error").val(response.responseText);
+                    }
+                });
+            });
+        });
+   </script>

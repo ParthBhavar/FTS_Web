@@ -1,0 +1,238 @@
+﻿@model FTS.Model.Entities.TFormAppealApplicationModel
+@{
+    ViewBag.Title = "Graduity Appeal Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+       <br />
+    <section>
+        <h3 style="font-weight:bold;">Graduity Appeal Application</h3>
+    </section>   
+
+ <div class="content-wrapper">
+
+        <div class="row">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+              
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Gratuity Application No.: / ગ્રેચ્યુટી અરજી નંબર:</label> 
+                                    @Html.HiddenFor(e => e.ApplicationIDEdit , new { @ID="AppealID"})
+                                     @Html.HiddenFor(e => e.CaseFavourIn , new { @ID="CaseFavourIn"})
+                                    @*@Html.TextBoxFor(e => e.ApplicationID, new { @class = "form-control", @ID="RefNApplicationID", required = "required" ,disabled = "disabled"})*@
+                                     @Html.DropDownListFor(e => e.GraduityAppId, new SelectList(Model.GraduityAppIDList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="GraduityAppId",@onchange="IsMultipulOnchange()" })
+
+                                </div>
+                                @* <div class="col-md-6">
+                                    <label> Graduity Applicant Name: / અરજદારનું નામ:</label> 
+                                    @Html.TextBoxFor(e => e.ApplicantName, new { @class = "form-control", @ID="ApplicantName", required = "required" ,disabled = "disabled"})
+                                </div>*@
+                                 <div class="col-md-6">
+                                       <label>Gratuity Case Status: / ગ્રેચ્યુટી કેસની સ્થિતિ:</label> 
+                                    @Html.TextBoxFor(e => e.Status, new { @class = "form-control", @ID="Status", required = "required" ,disabled = "disabled"})
+                                </div>
+                            </div>
+                        </div>
+                       @* <div class="form-group">
+                            <div class="row">
+                                
+                            </div>
+                        </div>*@
+
+                         <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Challan No: / ચલણ નંબર:") <span class="text-danger">*</span>
+                                    @Html.TextBoxFor(e => e.ChallanNo, new { @class = "form-control", @ID="ChallanNo", required = "required"})
+                                     <span class="text-danger ValidationSpan" id="SpanChallanno" style="display:none;">Please Enter Challan No.</span>
+                                </div>
+                                 <div class="col-md-6">
+                                      @Html.Label("Challan Amount: / ચલનની રકમ:") <span class="text-danger">*</span> 
+                                    @Html.TextBoxFor(e => e.ChallanAmount, new { @class = "form-control", @ID="ChallanAmount", required = "required"})
+                                     <span class="text-danger ValidationSpan" id="SpanChallanAmount" style="display:none;">Please Enter Challan Amount.</span>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.Label("Date Of Challan: / ચલણની તારીખ:") <span class="text-danger">*</span>
+                                   @Html.TextBoxFor(e => e.DateOfChallan,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="ChallanDate", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanChallanDate" style="display:none;">Please Select Date of Challan</span>
+                                </div>
+                                 <div class="col-md-6">
+                                      @Html.Label("Challan File: / ચલણ ફાઇલ:") <span class="text-danger">*</span> <br>
+                                     <input type="file" id="ChallanfileUpload" class="fileUpload" onchange="return fileValidation()">
+                                     <span class="text-danger ValidationSpan" id="SpanChallanfileUpload" style="display:none;">Please Select file </span>
+                                </div>
+                            </div>
+                        </div>
+                           <div class="form-group" id="divreason" style="display:none;">
+                            <div class="row">
+                                
+                                <div class="col-md-12" >
+                                      @Html.Label("Reason: / કારણ:")<span class="text-danger">*</span>
+                                    @Html.TextAreaFor(e => e.AppealReason, new { @class = "form-control", @ID="AppealReason", required = "required"})
+                                    <span class="text-danger ValidationSpan" id="SpanAppealReason" style="display:none;">Please Enter Reason for Late Appeal</span>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                        
+                         
+                        <div class="form-group">
+                           
+                        <input type="button" id="btnsubmit" class="btn btn-primary" value="Request For Appeal" onclick="SubmitAppliaction();" />
+
+                         @Html.ActionLink("Cancel", "TFormEmployerList", "TFormApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+<script>
+     $("#ChallanDate").kendoDatePicker({
+       format :"dd-MM-yyyy"
+    }); 
+</script>
+ <script>
+
+      $(document).ready(function () {
+           debugger;
+
+           if ('@Model.DiffDay' > 60) {
+               $("#divreason").show();
+           }
+            
+            });
+
+ 
+
+  
+    function SubmitAppliaction() {
+
+        var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+      
+            if ($("#ChallanNo").val() == "0" || $("#ChallanNo").val() == "") {
+                ErrorCnt++;
+                $('#SpanChallanno').show();
+            }
+
+            if ($("#ChallanAmount").val() == "0" || $("#ChallanAmount").val() == "") {
+                ErrorCnt++;
+                $('#SpanChallanAmount').show();
+            }
+            if ($("#DateOfChallan").val() == "0" || $("#DateOfChallan").val() == "") {
+                ErrorCnt++;
+                $('#SpanChallanDate').show();
+            }
+            if ($("#ChallanfileUpload").val() == "0" || $("#ChallanfileUpload").val() == "") {
+                ErrorCnt++;
+                $('#SpanChallanfileUpload').show();
+            }
+             if ('@Model.DiffDay' > 60) {
+                if ($("#AppealReason").val() == "0" || $("#AppealReason").val() == "") {
+                ErrorCnt++;
+                $('#SpanAppealReason').show();
+            }
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+       if (ErrorCnt == 0) {
+           var files = $('#ChallanfileUpload').prop("files");
+           var ApplicantName = $('#ApplicantName').val();
+           var RefNApplicationID = $('#GraduityAppId').val();
+           var AppealID = $('#AppealID').val();
+           var ChallanNo = $('#ChallanNo').val();
+           var ChallanAmount = $('#ChallanAmount').val();
+           var ChallanDate = $('#ChallanDate').val();
+           var CaseFavourIn = $('#CaseFavourIn').val();
+           var AppealReason = $('#AppealReason').val();
+           var URL = document.URL;
+
+           var url = "/TFormApplication/SaveTFormForEmployer?handler=MyUploader" + "&ApplicantName=" + ApplicantName + "&RefNApplicationID=" + RefNApplicationID + "&AppealID=" + AppealID + "&ChallanNo=" + ChallanNo  + "&ChallanAmount=" + ChallanAmount + "&ChallanDate=" + ChallanDate + "&CaseFavourIn=" + CaseFavourIn+ "&AppealReason=" + AppealReason+ "&URL=" + URL;
+           formData = new FormData();
+           formData.append("MyUploader", files[0]);
+
+           jQuery.ajax({
+               type: 'POST',
+               url: url,
+               headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+               data: formData,
+               cache: false,
+               contentType: false,
+               processData: false,
+               success: function(repo) {
+                   debugger;
+
+                   
+                 @*  if (repo.status.ErrorCode == 0) {
+                          swal(data.data.ErrorMassage)
+                         .then((value) => {
+                         window.location.href = "/TFormApplication/TFormEmployerList";
+                           location.reload();
+                     });
+                   }
+                   else {
+                           swal(data.data.ErrorMassage);
+                        }*@
+
+
+                   if (repo.status.ErrorCode == 0) {
+                          window.location.href = "/TFormApplication/TFormEmployerList";
+                       swal(repo.status.ErrorMassage);
+                      
+                       @*location.reload();*@
+                   }
+                   else{
+                         swal(repo.status.ErrorMassage);
+                   }
+               },
+                error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+           });
+       }
+}
+
+  function fileValidation() {
+    debugger;
+    var fileInput = document.getElementById('ChallanfileUpload'); 
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+                swal('Invalid file type');
+                fileInput.value = '';
+                return false;
+            }
+            
+        }
+
+     </Script>
+  
+ }
+
+ 

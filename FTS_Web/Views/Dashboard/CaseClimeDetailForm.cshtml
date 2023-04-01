@@ -1,0 +1,932 @@
+﻿@using Kendo.Mvc.UI
+@model FTS.Model.Entities.DashBoardModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>
+
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class=" form-group row col-lg-12">
+
+                            @*Start Date *@
+                            <div class="col-md-3">
+                                @Html.Label("From Date:")
+                                @Html.HiddenFor(e => e.ID , new { @ID="ID"})
+                                @Html.TextBoxFor(e => e.StartDate,new { @class = "form-control StartDate", @ID="StartDate", required = "required"})
+                                @* @Html.LabelFor(e => e.StartDate, htmlAttributes: new { @class = "control-label col-md-2 k-label" })*@
+                                @* <div class="col-md-10">
+                            @(Html.Kendo().DatePicker().Name("StartDate").Value(Model.StartDate).HtmlAttributes(new { style = "width:250px"}).Events(e => e.Change("startChange")))
+
+                            @Html.ValidationMessageFor(e => e.StartDate, "", new { @class = "text-danger" })
+                            </div>*@
+                            </div>
+
+                            @*End Date*@
+                            <div class="col-md-3">
+                                @Html.Label("To Date:")
+                                @Html.TextBoxFor(e => e.EndDate,new { @class = "form-control", @ID="EndDate", required = "required"})
+                                @*   @Html.LabelFor(e => e.EndDate, htmlAttributes: new { @class = "control-label col-md-2 k-label" })*@
+                                @*<div class="col-md-10">
+                            @(Html.Kendo().DatePicker().Name("EndDate").Value(Model.EndDate).HtmlAttributes(new { style = "width:250px"}).Events(e => e.Change("endChange")))
+
+                            @Html.ValidationMessageFor(e => e.EndDate, "", new { @class = "text-danger" })
+                            </div>*@
+                            </div>
+
+                            <div class="col-md-3">
+                                @Html.Label("District :")
+                                @Html.DropDownListFor(M => M.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID", })
+                            </div>
+
+                            <div class="col-md-2" style="margin-top: 20px;">
+                                <input type="button" id="btnsubmit" class="btn btn-primary" value="Search" onclick="CaseClimeDetail()" />
+                            </div>
+
+
+                        </div>
+
+
+                        @if (Model.ID == 1)
+                        {
+                            @if (Model.IsDashoardList == 3) //3 Mins ACL
+                            {
+                                <div class="table-responsive">
+                                    @*   <table  class="table table-bordered  table-striped">*@
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th scope="col">ID</th>
+                                                <th scope="col">District Name</th>
+                                                <th scope="col">Submitted</th>
+                                                <th scope="col">Pending</th>
+                                                <th scope="col">CaseClose</th>
+                                                <th scope="col">WithACL</th>
+                                                <th scope="col">Hearing</th>
+                                                <th scope="col">RemandBack</th>
+                                                <th scope="col">Review</th>
+                                                <th scope="col">ReviewApprove</th>
+                                                <th scope="col">ReviewReject</th>
+                                                <th scope="col">ReviewHearing</th>
+                                                <th scope="col">Setttalement</th>
+                                                <th scope="col">ReviewResolution</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody style="height: 10px !important; overflow: scroll; ">
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Submited > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.DistrictName </td>
+                                                    <td valign="top" class="txtCal">@item.Submited</td>
+                                                    <td valign="top" class="text-left">@item.Pending</td>
+                                                    <td valign="top" class="text-left">@item.CaseClose</td>
+                                                    <td valign="top" class="text-left">@item.WithACL</td>
+                                                    <td valign="top" class="text-left">@item.Hearing</td>
+                                                    <td valign="top" class="text-left">@item.RemandBack</td>
+                                                    <td valign="top" class="text-left">@item.Review</td>
+                                                    <td valign="top" class="text-left">@item.ReviewApprove</td>
+                                                    <td valign="top" class="text-left">@item.ReviewReject</td>
+                                                    <td valign="top" class="text-left">@item.ReviewHearing</td>
+                                                    <td valign="top" class="text-left">@item.Setttalement</td>
+                                                    <td valign="top" class="text-left">@item.ReviewResolution</td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+
+
+
+
+                                        <tfoot>
+                                            @foreach (var item in Model.TotalDashboardDetail)
+                                            {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+                                                    <th>@item.TotalSubmited</th>
+                                                    <th>@item.TotalPending</th>
+                                                    <th>@item.TotalCaseClose</th>
+                                                    <th>@item.TotalWithACL</th>
+                                                    <th>@item.TotalHearing</th>
+                                                    <th>@item.TotalRemandBack</th>
+                                                    <th>@item.TotalReview</th>
+                                                    <th>@item.TotalReviewApprove</th>
+                                                    <th>@item.TotalReviewReject</th>
+                                                    <th>@item.TotalReviewHearing</th>
+                                                    <th>@item.TotalSetttalement</th>
+                                                    <th>@item.TotalReviewResolution</th>
+                                                </tr>
+                                            }
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            }
+
+                            @if (Model.IsDashoardList == 4) //3 Mins ACL
+                            {
+                                <div class="table-responsive">
+                                    @*   <table  class="table table-bordered  table-striped">*@
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th scope="col">ID</th>
+                                                <th scope="col">District Name</th>
+                                                <th scope="col">Submitted</th>
+                                                <th scope="col">Pending</th>
+                                                <th scope="col">CaseClose</th>
+                                                <th scope="col">WithDCL</th>
+                                                <th scope="col">Hearing</th>
+                                                <th scope="col">settlement</th>
+                                                <th scope="col">WithconfirmDCL</th>
+                                                <th scope="col">WithDismissDCL</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody style="height: 10px !important; overflow: scroll; ">
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Submited > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.DistrictName </td>
+                                                    <td valign="top" class="txtCal">@item.Submited</td>
+                                                    <td valign="top" class="text-left">@item.Pending</td>
+                                                    <td valign="top" class="text-left">@item.CaseClose</td>
+                                                    <td valign="top" class="text-left">@item.WithDCL</td>
+                                                    <td valign="top" class="text-left">@item.Hearing</td>
+                                                    <td valign="top" class="text-left">@item.Setttalement</td>
+                                                    <td valign="top" class="text-left">@item.WithconfirmDCL</td>
+                                                    <td valign="top" class="text-left">@item.WithDismissDCL</td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            @foreach (var item in Model.TotalDashboardDetail)
+                                            {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+                                                    <th>@item.TotalSubmited</th>
+                                                    <th>@item.TotalPending</th>
+                                                    <th>@item.TotalCaseClose</th>
+                                                    <th>@item.TotalWithDCL</th>
+                                                    <th>@item.TotalHearing</th>
+                                                    <th>@item.TotalSetttalement</th>
+                                                    <th>@item.TotalWithconfirmDCL</th>
+                                                    <th>@item.TotalWithDismissDCL</th>
+                                                </tr>
+                                            }
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            }
+
+                            else
+                            {
+                                <div class="table-responsive">
+                                    @*   <table  class="table table-bordered  table-striped">*@
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th scope="col">ID</th>
+                                                <th scope="col">District Name</th>
+                                                <th scope="col">Total</th>
+                                                <th scope="col">Submitted</th>
+                                                <th scope="col">Pending</th>
+                                                <th scope="col">CaseClose</th>
+                                                <th scope="col">WithClerk</th>
+                                                <th scope="col">WithACL</th>
+                                                <th scope="col">Hearing</th>
+                                                <th scope="col">Query</th>
+                                                <th scope="col">RemandBack</th>
+                                                <th scope="col">Review</th>
+                                                <th scope="col">ReviewApprove</th>
+                                                <th scope="col">ReviewReject</th>
+                                                <th scope="col">ReviewHearing</th>
+                                                <th scope="col">ReviewResolution</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody style="height: 10px !important; overflow: scroll; ">
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Total > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.DistrictName </td>
+                                                    <td valign="top" class="txtCal">@item.Total</td>
+                                                    <td valign="top" class="text-left">@item.Submited</td>
+                                                    <td valign="top" class="text-left">@item.Pending</td>
+                                                    <td valign="top" class="text-left">@item.CaseClose</td>
+                                                    <td valign="top" class="text-left">@item.WithCleak</td>
+                                                    <td valign="top" class="text-left">@item.WithACL</td>
+                                                    <td valign="top" class="text-left">@item.Hearing</td>
+                                                    <td valign="top" class="text-left">@item.Query</td>
+                                                    <td valign="top" class="text-left">@item.RemandBack</td>
+                                                    <td valign="top" class="text-left">@item.Review</td>
+                                                    <td valign="top" class="text-left">@item.ReviewApprove</td>
+                                                    <td valign="top" class="text-left">@item.ReviewReject</td>
+                                                    <td valign="top" class="text-left">@item.ReviewHearing</td>
+                                                    <td valign="top" class="text-left">@item.ReviewResolution</td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+
+
+
+
+                                        <tfoot>
+                                            @foreach (var item in Model.TotalDashboardDetail)
+                                            {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+                                                    <th>@item.TotalTotal</th>
+                                                    <th>@item.TotalSubmited</th>
+                                                    <th>@item.TotalPending</th>
+                                                    <th>@item.TotalCaseClose</th>
+                                                    <th>@item.TotalWithCleak</th>
+                                                    <th>@item.TotalWithACL</th>
+                                                    <th>@item.TotalHearing</th>
+                                                    <th>@item.TotalQuery</th>
+                                                    <th>@item.TotalRemandBack</th>
+                                                    <th>@item.TotalReview</th>
+                                                    <th>@item.TotalReviewApprove</th>
+                                                    <th>@item.TotalReviewReject</th>
+                                                    <th>@item.TotalReviewHearing</th>
+                                                    <th>@item.TotalReviewResolution</th>
+                                                </tr>
+                                            }
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            }
+
+                        }
+
+                        @if (Model.ID == 2)
+                        {
+                            @if (Model.IsDashoardList == 3) //3 Mins ACL
+                            {
+                                <div class="table-responsive">
+                                    @*   <table  class="table table-bordered  table-striped">*@
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th scope="col">ID</th>
+                                                <th scope="col">District Name</th>
+                                                <th scope="col">Submitted</th>
+                                                <th scope="col">Pending</th>
+                                                <th scope="col">CaseClose</th>
+                                                <th scope="col">WithACL</th>
+                                                <th scope="col">Hearing</th>
+                                                <th scope="col">settlement</th>
+                                                <th scope="col">Labourcourt</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody style="height: 10px !important; overflow: scroll; ">
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Submited > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.DistrictName</td>
+                                                    <td valign="top" class="text-left">@item.Submited</td>
+                                                    <td valign="top" class="text-left">@item.Pending</td>
+                                                    <td valign="top" class="text-left">@item.CaseClose</td>
+                                                    <td valign="top" class="text-left">@item.WithACL</td>
+                                                    <td valign="top" class="text-left">@item.Hearing</td>
+                                                    <td valign="top" class="text-left">@item.Setttalement</td>
+                                                    <td valign="top" class="text-left">@item.Labourcourt</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+
+
+
+                                        <tfoot>
+                                            @foreach (var item in Model.TotalDashboardDetail)
+                                            {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+                                                    <th>@item.TotalSubmited</th>
+                                                    <th>@item.TotalPending</th>
+                                                    <th>@item.TotalCaseClose</th>
+                                                    <th>@item.TotalWithACL</th>
+                                                    <th>@item.TotalHearing</th>
+                                                    <th>@item.TotalSetttalement</th>
+                                                    <th>@item.TotalLabourcourt</th>
+
+                                                </tr>
+                                            }
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            }
+
+                            else
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th>ID</th>
+                                                <th>District Name</th>
+                                                <th>Total</th>
+                                                <th>Submited</th>
+                                                <th>Pending</th>
+                                                <th>CaseClose</th>
+                                                <th>Setttalement</th>
+                                                <th>Labourcourt</th>
+                                                <th>WithACL</th>
+                                                <th>Hearing</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Total > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.DistrictName </td>
+                                                    <td valign="top" class="text-left">@item.Total</td>
+                                                    <td valign="top" class="text-left">@item.Submited</td>
+                                                    <td valign="top" class="text-left">@item.Pending</td>
+                                                    <td valign="top" class="text-left">@item.CaseClose</td>
+                                                    <td valign="top" class="text-left">@item.Setttalement</td>
+                                                    <td valign="top" class="text-left">@item.Labourcourt</td>
+                                                    <td valign="top" class="text-left">@item.WithACL</td>
+                                                    <td valign="top" class="text-left">@item.Hearing</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+
+                                        <tfoot>
+                                            @foreach (var item in Model.TotalDashboardDetail)
+                                            {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+                                                    <td valign="top">@item.TotalTotal </td>
+                                                    <td valign="top">@item.TotalSubmited </td>
+                                                    <td valign="top">@item.TotalPending</td>
+                                                    <td valign="top">@item.TotalCaseClose</td>
+                                                    <td valign="top">@item.TotalSetttalement</td>
+                                                    <td valign="top">@item.TotalLabourcourt</td>
+                                                    <td valign="top">@item.TotalWithACL</td>
+                                                    <td valign="top">@item.TotalHearing</td>
+                                                </tr>
+                                            }
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            }
+
+                        }
+
+                        @if (Model.ID == 3)
+                        {
+
+                            @if (Model.IsDashoardList == 3) //3 Mins ACL
+                            {
+                                <div class="table-responsive">
+                                    @*   <table  class="table table-bordered  table-striped">*@
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th scope="col">ID</th>
+                                                <th scope="col">District Name</th>
+                                                <th scope="col">Submitted</th>
+                                                <th scope="col">Pending</th>
+                                                <th scope="col">CaseClose</th>
+                                                <th scope="col">WithACL</th>
+                                                <th scope="col">Hearing</th>
+                                                <th scope="col">settlement</th>
+                                                <th scope="col">Labourcourt</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody style="height: 10px !important; overflow: scroll; ">
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Submited > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.DistrictName</td>
+                                                    <td valign="top" class="text-left">@item.Submited</td>
+                                                    <td valign="top" class="text-left">@item.Pending</td>
+                                                    <td valign="top" class="text-left">@item.CaseClose</td>
+                                                    <td valign="top" class="text-left">@item.WithACL</td>
+                                                    <td valign="top" class="text-left">@item.Hearing</td>
+                                                    <td valign="top" class="text-left">@item.Setttalement</td>
+                                                    <td valign="top" class="text-left">@item.Labourcourt</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+
+
+
+                                        <tfoot>
+                                            @foreach (var item in Model.TotalDashboardDetail)
+                                            {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+                                                    <th>@item.TotalSubmited</th>
+                                                    <th>@item.TotalPending</th>
+                                                    <th>@item.TotalCaseClose</th>
+                                                    <th>@item.TotalWithACL</th>
+                                                    <th>@item.TotalHearing</th>
+                                                    <th>@item.TotalSetttalement</th>
+                                                    <th>@item.TotalLabourcourt</th>
+                                                </tr>
+                                            }
+                                        </tfoot>
+
+                                    </table>
+                                </div>
+                            }
+                            @if (Model.IsDashoardList == 2) //3 Mins Clerak
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th>ID</th>
+                                                <th>District Name</th>
+                                                <th>Total</th>
+                                                <th>Submitted</th>
+                                                <th>Pending</th>
+                                                <th>CaseClose</th>
+                                                <th>WithClerk</th>
+                                                <th>WithACL</th>
+                                                <th>Hearing</th>
+                                                <th>Query</th>
+                                                <th>RemandBack</th>
+                                                <th>Review</th>
+                                                <th>ReviewApprove</th>
+                                                <th>ReviewReject</th>
+                                                <th>settlement</th>
+                                                <th>Labourcourt</th>
+                                                <th>WithconfirmDCL</th>
+                                                <th>WithDismissDCL</th>
+                                                <th>WithDCL</th>
+                                                <th>WithHOQuery</th>
+                                                <th>WithHOLE</th>
+                                                <th>WithHOCOl</th>
+                                                <th>WithHOClerkQuery</th>
+                                                <th>WithHoClerk</th>
+                                                <th>AClQuery</th>
+                                                <th>WithDCLHOCLERK</th>
+                                                <th>WithDCLLC</th>
+                                                <th>WithDCLTC</th>
+                                                <th>WithDCLclerk</th>
+                                                <th>ReviewResolution</th>
+                                                <th>ReviewHearing</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Total > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top">@item.ID </td>
+                                                    <td valign="top">@item.DistrictName </td>
+                                                    <td valign="top">@item.Total</td>
+                                                    <td valign="top">@item.Submited</td>
+                                                    <td valign="top">@item.Pending</td>
+                                                    <td valign="top">@item.CaseClose</td>
+                                                    <td valign="top">@item.WithCleak</td>
+                                                    <td valign="top">@item.WithACL</td>
+                                                    <td valign="top">@item.Hearing</td>
+                                                    <td valign="top">@item.Query</td>
+                                                    <td valign="top">@item.RemandBack</td>
+                                                    <td valign="top">@item.Review</td>
+                                                    <td valign="top">@item.ReviewApprove</td>
+                                                    <td valign="top">@item.ReviewReject</td>
+                                                    <td valign="top">@item.Setttalement</td>
+                                                    <td valign="top">@item.Labourcourt</td>
+                                                    <td valign="top">@item.WithconfirmDCL</td>
+                                                    <td valign="top">@item.WithDismissDCL</td>
+                                                    <td valign="top">@item.WithDCL</td>
+                                                    <td valign="top">@item.WithHOQuery</td>
+                                                    <td valign="top">@item.WithHOLE</td>
+                                                    <td valign="top">@item.WithHOCOl</td>
+                                                    <td valign="top">@item.WithHOClerkQuery</td>
+                                                    <td valign="top">@item.WithHoClerk</td>
+                                                    <td valign="top">@item.AClQuery</td>
+                                                    <td valign="top">@item.WithDCLHOCLERK</td>
+                                                    <td valign="top">@item.WithDCLLC</td>
+                                                    <td valign="top">@item.WithDCLTC</td>
+                                                    <td valign="top">@item.WithDCLclerk</td>
+                                                    <td valign="top">@item.ReviewResolution</td>
+                                                    <td valign="top">@item.ReviewHearing</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+                                        <tfoot>
+                                            @foreach (var item in Model.TotalDashboardDetail)
+                                            {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+
+                                                    <td valign="top">@item.TotalTotal </td>
+                                                    <td valign="top">@item.TotalSubmited </td>
+                                                    <td valign="top">@item.TotalPending</td>
+                                                    <td valign="top">@item.TotalCaseClose</td>
+                                                    <td valign="top">@item.TotalWithCleak</td>
+                                                    <td valign="top">@item.TotalWithACL</td>
+                                                    <td valign="top">@item.TotalHearing</td>
+                                                    <td valign="top">@item.TotalQuery</td>
+                                                    <td valign="top">@item.TotalRemandBack</td>
+                                                    <td valign="top">@item.TotalReview</td>
+                                                    <td valign="top">@item.TotalReviewApprove</td>
+                                                    <td valign="top">@item.TotalReviewReject</td>
+                                                    <td valign="top">@item.TotalSetttalement</td>
+                                                    <td valign="top">@item.TotalLabourcourt</td>
+                                                    <td valign="top">@item.TotalWithconfirmDCL</td>
+                                                    <td valign="top">@item.TotalWithDismissDCL</td>
+                                                    <td valign="top">@item.TotalWithDCL</td>
+                                                    <td valign="top">@item.TotalWithHOQuery</td>
+                                                    <td valign="top">@item.TotalWithHOLE</td>
+                                                    <td valign="top">@item.TotalWithHOCOl</td>
+                                                    <td valign="top">@item.TotalWithHOClerkQuery</td>
+                                                    <td valign="top">@item.TotalWithHoClerk</td>
+                                                    <td valign="top">@item.TotalAClQuery</td>
+                                                    <td valign="top">@item.TotalWithDCLHOCLERK</td>
+                                                    <td valign="top">@item.TotalWithDCLLC</td>
+                                                    <td valign="top">@item.TotalWithDCLTC</td>
+                                                    <td valign="top">@item.TotalWithDCLclerk</td>
+                                                    <td valign="top">@item.TotalReviewResolution</td>
+                                                    <td valign="top">@item.TotalReviewHearing</td>
+                                                </tr>
+                                            }
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="table-responsive">
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th>ID</th>
+                                                <th>District Name</th>
+                                                <th>Total</th>
+                                                <th>Submited</th>
+                                                <th>Pending</th>
+                                                <th>CaseClose</th>
+                                                <th>Resolution</th>
+                                                <th>WithconfirmDCL</th>
+                                                <th>WithDismissDCL</th>
+                                                <th>WithDCL</th>
+                                                <th>Hearing</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Total > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.DistrictName </td>
+                                                    <td valign="top" class="text-left">@item.Total</td>
+                                                    <td valign="top" class="text-left">@item.Submited</td>
+                                                    <td valign="top" class="text-left">@item.Pending</td>
+                                                    <td valign="top" class="text-left">@item.CaseClose</td>
+                                                    <td valign="top" class="text-left">@item.Resolution</td>
+                                                    <td valign="top" class="text-left">@item.WithconfirmDCL</td>
+                                                    <td valign="top" class="text-left">@item.WithDismissDCL</td>
+                                                    <td valign="top" class="text-left">@item.WithDCL</td>
+                                                    <td valign="top" class="text-left">@item.Hearing</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot>
+
+                                        <tfoot>
+
+                                                @foreach (var item in Model.TotalDashboardDetail)
+                                                {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+                                                    <td valign="top">@item.TotalTotal </td>
+                                                    <td valign="top">@item.TotalSubmited </td>
+                                                    <td valign="top">@item.TotalPending</td>
+                                                    <td valign="top">@item.TotalCaseClose</td>
+                                                    <td valign="top">@item.TotalResolution</td>
+                                                    <td valign="top">@item.TotalWithconfirmDCL</td>
+                                                    <td valign="top">@item.TotalWithDismissDCL</td>
+                                                    <td valign="top">@item.TotalWithDCL</td>
+                                                    <td valign="top">@item.TotalHearing</td>
+                                                </tr>
+                                                }
+                                        </tfoot>
+
+
+                                    </table>
+                                </div>
+                            }
+
+                        }
+
+                        @if (Model.ID == 4)
+                        {
+                             <div class="table-responsive">
+                                    <table class="table table-bordered  table-striped">
+                                        <thead class="table__head">
+                                            <tr class="winner__table">
+                                                <th>ID</th>
+                                                <th>District Name</th>
+                                                <th>Total</th>
+                                                <th>Submitted</th>
+                                                <th>Pending</th>
+                                                <th>CaseClose</th>
+                                                <th>WithClerk</th>
+                                                <th>WithACL</th>
+                                                <th>Hearing</th>
+                                                <th>Query</th>
+                                                <th>RemandBack</th>
+                                                <th>Review</th>
+                                                <th>ReviewApprove</th>
+                                                <th>ReviewReject</th>
+                                                <th>settlement</th>
+                                                <th>Labourcourt</th>
+                                                <th>WithconfirmDCL</th>
+                                                <th>WithDismissDCL</th>
+                                                <th>WithDCL</th>
+                                                <th>WithHOQuery</th>
+                                                <th>WithHOLE</th>
+                                                <th>WithHOCOl</th>
+                                                <th>WithHOClerkQuery</th>
+                                                <th>WithHoClerk</th>
+                                                <th>AClQuery</th>
+                                                <th>WithDCLHOCLERK</th>
+                                                <th>WithDCLLC</th>
+                                                <th>WithDCLTC</th>
+                                                <th>WithDCLclerk</th>
+                                                <th>ReviewResolution</th>
+                                                <th>ReviewHearing</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @foreach (var item in Model.CashClaimList.Where(x => x.Total > 0))
+                                            {
+                                                <tr class="winner__table">
+                                                    <td valign="top">@item.ID </td>
+                                                    <td valign="top">@item.DistrictName </td>
+                                                    <td valign="top">@item.Total</td>
+                                                    <td valign="top">@item.Submited</td>
+                                                    <td valign="top">@item.Pending</td>
+                                                    <td valign="top">@item.CaseClose</td>
+                                                    <td valign="top">@item.WithCleak</td>
+                                                    <td valign="top">@item.WithACL</td>
+                                                    <td valign="top">@item.Hearing</td>
+                                                    <td valign="top">@item.Query</td>
+                                                    <td valign="top">@item.RemandBack</td>
+                                                    <td valign="top">@item.Review</td>
+                                                    <td valign="top">@item.ReviewApprove</td>
+                                                    <td valign="top">@item.ReviewReject</td>
+                                                    <td valign="top">@item.Setttalement</td>
+                                                    <td valign="top">@item.Labourcourt</td>
+                                                    <td valign="top">@item.WithconfirmDCL</td>
+                                                    <td valign="top">@item.WithDismissDCL</td>
+                                                    <td valign="top">@item.WithDCL</td>
+                                                    <td valign="top">@item.WithHOQuery</td>
+                                                    <td valign="top">@item.WithHOLE</td>
+                                                    <td valign="top">@item.WithHOCOl</td>
+                                                    <td valign="top">@item.WithHOClerkQuery</td>
+                                                    <td valign="top">@item.WithHoClerk</td>
+                                                    <td valign="top">@item.AClQuery</td>
+                                                    <td valign="top">@item.WithDCLHOCLERK</td>
+                                                    <td valign="top">@item.WithDCLLC</td>
+                                                    <td valign="top">@item.WithDCLTC</td>
+                                                    <td valign="top">@item.WithDCLclerk</td>
+                                                    <td valign="top">@item.ReviewResolution</td>
+                                                    <td valign="top">@item.ReviewHearing</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+                                        <tfoot>
+                                            @foreach (var item in Model.TotalDashboardDetail)
+                                            {
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>:-</th>
+
+                                                    <td valign="top">@item.TotalTotal </td>
+                                                    <td valign="top">@item.TotalSubmited </td>
+                                                    <td valign="top">@item.TotalPending</td>
+                                                    <td valign="top">@item.TotalCaseClose</td>
+                                                    <td valign="top">@item.TotalWithCleak</td>
+                                                    <td valign="top">@item.TotalWithACL</td>
+                                                    <td valign="top">@item.TotalHearing</td>
+                                                    <td valign="top">@item.TotalQuery</td>
+                                                    <td valign="top">@item.TotalRemandBack</td>
+                                                    <td valign="top">@item.TotalReview</td>
+                                                    <td valign="top">@item.TotalReviewApprove</td>
+                                                    <td valign="top">@item.TotalReviewReject</td>
+                                                    <td valign="top">@item.TotalSetttalement</td>
+                                                    <td valign="top">@item.TotalLabourcourt</td>
+                                                    <td valign="top">@item.TotalWithconfirmDCL</td>
+                                                    <td valign="top">@item.TotalWithDismissDCL</td>
+                                                    <td valign="top">@item.TotalWithDCL</td>
+                                                    <td valign="top">@item.TotalWithHOQuery</td>
+                                                    <td valign="top">@item.TotalWithHOLE</td>
+                                                    <td valign="top">@item.TotalWithHOCOl</td>
+                                                    <td valign="top">@item.TotalWithHOClerkQuery</td>
+                                                    <td valign="top">@item.TotalWithHoClerk</td>
+                                                    <td valign="top">@item.TotalAClQuery</td>
+                                                    <td valign="top">@item.TotalWithDCLHOCLERK</td>
+                                                    <td valign="top">@item.TotalWithDCLLC</td>
+                                                    <td valign="top">@item.TotalWithDCLTC</td>
+                                                    <td valign="top">@item.TotalWithDCLclerk</td>
+                                                    <td valign="top">@item.TotalReviewResolution</td>
+                                                    <td valign="top">@item.TotalReviewHearing</td>
+                                                </tr>
+                                            }
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<style>
+    .table-bordered td {
+        border: 0px solid #FFF;
+    }
+
+    .table-bordered th {
+        border: 0px solid #FFF;
+    }
+
+    .table__head {
+        color: #FFF;
+        font-weight: 700;
+        background: #9b4085;
+        background: -moz-linear-gradient(-45deg, #9b4085 0%, #608590 100%);
+        background: -webkit-linear-gradient(-45deg, #9b4085 0%,#608590 100%);
+        background: linear-gradient(135deg, #9b4085 0%,#608590 100%);
+        white-space: nowrap;
+    }
+
+    .winner__table {
+        white-space: nowrap;
+    }
+
+    .table-bordered td, .table-bordered th {
+        border: 0px solid #FFF;
+    }
+
+    .table-responsive {
+        width: 1500px;
+        height: 630px;
+        overflow: auto;
+    }
+
+    table {
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 1rem;
+    }
+
+    thead,
+    tfoot {
+        background: #eee;
+    }
+
+    thead {
+        position: sticky;
+        top: 0;
+        border-bottom: 2px solid #ccc;
+    }
+
+    tfoot {
+        position: sticky;
+        bottom: 0;
+        border-top: 2px solid #ccc;
+    }
+
+    body {
+        font: 110%/1.4 system-ui;
+    }
+
+</style>
+<script>
+ 
+    $("#StartDate").kendoDatePicker({
+       format: "dd-MM-yyyy"
+    });
+   $("#EndDate").kendoDatePicker({
+        format: "dd-MM-yyyy"
+    });
+    var EndDatepicker = $("#EndDate").data("kendoDatePicker");
+
+    $("#StartDate").change(function () {
+        debugger;
+        var startDate = document.getElementById("StartDate").value;
+        EndDatepicker.min(startDate);
+         EndDatepicker.max(new Date(2100, 0, 1));
+         $("#EndDate").val("");
+    });
+   
+    
+
+       @* $("#btnsubmit").change(function () {
+            var startDate = document.getElementById("StartDate").value;
+            var endDate = document.getElementById("EndDate").value;
+         
+            if ((Date.parse(endDate) <= Date.parse(startDate))) {
+                swal("End date should be greater than Start date");
+                document.getElementById("EndDate").value = "";
+                document.getElementById("StartDate").value = "";
+            }
+        });*@
+
+    function CaseClimeDetail() {
+        var StartDate = $("#StartDate").val();
+        var EndDate = $("#EndDate").val();
+        var DistrictID = $("#DistrictID").val();
+        var ID = $("#ID").val();
+@*         var ErrorCnt = 0;*@
+
+        @*var sTimestamp = moment(StartDate).format('DD/MM/YYYY');
+         var eTimestamp = moment(EndDate).format('DD/MM/YYYY');*@
+
+        @*if (StartDate != "" || EndDate != "")
+        {
+            if ((Date.parse(eTimestamp) <= Date.parse(sTimestamp)))
+            {
+                swal("End date should be greater than Start date");
+                document.getElementById("EndDate").value = "";
+                    ErrorCnt++;
+            }
+        }*@
+
+         @*if (ErrorCnt == 0) {*@
+        var url = "/Dashboard/CaseClimeDetail?StartDate=" + StartDate + "&EndDate=" + EndDate + "&DistrictID=" + DistrictID + "&ID=" + ID;
+        location.href = url;
+         @*}*@
+    }
+</script>
+<script>
+    $(document).ready(function () {
+
+
+        $("#myTable").on('.txtCal', function () {
+            var calculated_total_sum = 0;
+
+            $("#myTable .txtCal").each(function () {
+                var get_textbox_value = $(this).val();
+                if ($.isNumeric(get_textbox_value)) {
+                    calculated_total_sum += parseFloat(get_textbox_value);
+                }
+            });
+            $("#total_sum_value").html(calculated_total_sum);
+        });
+
+    });
+
+</script>

@@ -1,0 +1,1195 @@
+﻿@model FTS.Model.Entities.ConciliationApplicationModel
+@{
+    ViewBag.Title = "Conciliation Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+       <br />
+    <section>
+        <h3 style="font-weight:bold;">Conciliation Application</h3>
+    </section>   
+
+
+     Html.RenderPartial("_DetailView");
+
+ <div class="content-wrapper">
+     @Html.HiddenFor(e => e.IP_Address, new { @ID="IP_Address"})
+        @*<div class="row" id="DivHearing" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+                                     @Html.Label("Hearing Date")<span class="text-danger">*</span>
+                                     <br>
+                                   @Html.TextBoxFor(e => e.HearingDate,"{0:dd-MM-yyyy}", new { @class = "form-control datetimepicker", @ID="HearingDate", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanHearingDate" style="display:none;">Please Select Hearing Date</span>
+                                </div>
+                                <div class="col-md-6">
+                                     @Html.Label("Hearing Reason")<span>*</span>
+                                     <br>
+                                       @Html.DropDownListFor(e => e.HearingReasonID, new SelectList(Model.HearingReasonList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="HearingReasonID" ,@width ="15px"})
+                                   <span class="text-danger ValidationSpan" id="SpanHearingReason" style="display:none;">Please Select</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                          <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                     @Html.Label("Hearing Remark")<span class="text-danger">*</span>
+                                   @Html.TextAreaFor(e => e.HearingRemarks, new { @class = "form-control", @ID="HearingRemark", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanHearingRemark" style="display:none;">Please Enter Hearing Reamrk</span>
+                               
+                                </div>
+                            </div>
+                        </div>
+
+                     
+                          <div class="form-group">
+                          <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitHearing();" />
+                            @Html.ActionLink("Cancel", "ConciliationACLList", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>*@
+      <div class="row" id="DivEstablishACL">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                    <div class="card-body">
+                          <fieldset>
+                          <legend>Establishment Address</legend>
+                        <div class="form-group">
+                              <div class="col-md-12"> 
+                                      <div class="row">
+                                                <div class="col-md-2">
+                                                    @Html.HiddenFor(e => e.EstalishmentdetailACL[0].EstablisDetailID, new { @ID="EstablisDetailID"})
+                                                    @Html.Label("Establishment Name: / સ્થાપના નામ:")
+                                                    @Html.TextBoxFor(x => x.EstalishmentdetailACL[0].EstablishmentName, new { @class = "form-control", @ID="EstablisDetailID",@disabled = "disabled" })
+                                                </div>
+                                                <div class="col-md-2">
+                                                    @Html.Label("District: / જિલ્લો:") <span class="text-danger">*</span>
+                                                    @Html.DropDownListFor(e => e.EstalishmentdetailACL[0].DistrictID, new SelectList(Model.EstalishmentdetailACL[0].Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EstablishmentDistrictID" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentDistrictID" style="display:none;">Please Select District</span>
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    @Html.Label("Taluka: / તાલુકો:")
+                                                    @Html.DropDownListFor(e => e.EstalishmentdetailACL[0].TalukaID, new SelectList(Model.EstalishmentdetailACL[0].Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EstablishmentTalukaID" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentTalukaID" style="display:none;">Please Select Taluka</span>
+                                                </div>
+                                                <div class="col-md-2" id="DivArea">
+                                                    @Html.Label("Area: / વિસ્તાર:") 
+                                                    @Html.HiddenFor(e => e.EstalishmentdetailACL[0].ZoneID , new { @ID="EstablishmentZoneID"})
+                                                    @Html.HiddenFor(e => e.EstalishmentdetailACL[0].AreaID , new { @ID="EstablishmentAreaID"})
+                                                    <input id="ddlEstablishmentArea" class="form-control" value="@Model.EstalishmentdetailACL[0].AreaID" style="width:100%;" />
+                                                    <span class="text-danger ValidationSpan" id="SpanddlEstablishmentArea" style="display:none;">Please Select Area</span>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    @Html.Label("Pincode: / પીન કોડ:")
+                                                    @Html.TextBoxFor(x => x.EstalishmentdetailACL[0].Pincode, new { @class = "form-control", @ID="EstablishmentPincode" , placeholder = "Enter Pincode", maxlength="6",oninput="numberOnly(this.id);" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentPincode" style="display:none;">Please Enter Pincode </span>
+                                                    <span class="text-danger ValidationSpan" id="SpanvalidEstablishmentPincode" style="display:none;">Please Enter valid Pincode </span>
+                                                </div>
+                                            </div>
+                                  </div>
+                        </div>
+                           <div class="form-group">
+                              <div class="col-md-12"> 
+                                      <div class="row">
+                                                <div class="col-md-4">
+                                                    @Html.Label("Email Id: / ઈમેલ આઈડી:") <span class="text-danger">*</span>
+                                                   @Html.TextBoxFor(x => x.EstalishmentdetailACL[0].EstablishEmailId, new { @class = "form-control", @ID="EstablishEmailId" , placeholder = "Enter Email Id" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentEmailID" style="display:none;">Please Enter EmailID</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.Label("Mobile No: / મોબાઈલ નમ્બર:")
+                                                    @Html.TextBoxFor(x => x.EstalishmentdetailACL[0].EstablisMobileNo, new { @class = "form-control", @ID="EstablisMobileNo" , placeholder = "Enter Mobile No.", maxlength="10",oninput="numberOnly(this.id);" })
+                                                    <span class="text-danger ValidationSpan" id="SpanEstablishmentmonileNo" style="display:none;">Please Enter Mobile No.</span>
+                                                </div>
+                                                
+                                            </div>
+                                  </div>
+                        </div>
+                          </fieldset>
+                          <div class="form-group">
+                          <input type="button" id="btnEshtablishment" class="btn btn-primary" value="Update" onclick="UpdateEshtablishment();" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+     <div class="row" id="DivHearing" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+                 <fieldset>
+                          <legend>Hearing Detail</legend>
+                        <div id="Hearing">
+
+
+                        </div>
+                         </fieldset>
+
+                        <div class="form-group">
+                            <input type="button" id="btnHearing" class="btn btn-primary" value="Save" onclick="SubmitHearing(0);" />
+                             <input type="button" id="btnHearingOfNotice" class="btn btn-primary" value="Save and send to Notice" onclick="SubmitHearing(1);" />
+                            @Html.ActionLink("Cancel", "ConciliationACLList", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary",@ID = "btnCancel" })
+                             <input type="button" id="btnAddHearing" class="btn btn-info" value="More Hearing" onclick="Fn_AddHearing();" />
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+
+ @*Settlement*@
+
+    <div class="row" id="DivSettlement" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">            
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+                                     @Html.Label("Resolution Date : / કેસ બંધ તારીખ:")<span class="text-danger ml-1">*</span>
+                                   @Html.TextBoxFor(e => e.SettlementDate,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="SettlementDate", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanSettlementDate" style="display:none;">Please Select Resolution Date</span>
+                                
+                                </div>
+                                 <div class="col-md-2">
+                                     @Html.Label("Resolution Reason")<span class="text-danger ml-1">*</span>
+                                     <br>
+                                       @Html.DropDownListFor(e => e.ResolutionReasonID, new SelectList(Model.HearingReasonList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="HearingReasonID" ,@width ="15px"})
+                                   <span class="text-danger ValidationSpan" id="SpanResolutionReason" style="display:none;">Please Select Reason</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.Label("Case Resolution Note")<span class="text-danger ml-1">*</span>
+                                   @Html.TextAreaFor(e => e.SettlementRemark, new { @class = "form-control", @ID="SettlementRemark", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanResolutionreason" style="display:none;">Please Enter Resolution Remarks</span>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-md-8 mt-3"  id="DivOutward">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @Html.Label("Order Outward Date: / કેસ બંધ નોંધ:") <span class='text-danger'>*</span>
+                                        @Html.TextBoxFor(e => e.OrderOutwardDate,"{0:dd-MM-yyyy}", new { @class = "form-control ", @ID="OrderOutwardDate", required = "required" })
+                                        <span class="text-danger ValidationSpan" id="SpanOrderOutwardDate" style="display:none;">Please Insert Joinning Date</span>
+                                     </div>
+
+                                     <div class="col-md-3">
+                                        @Html.Label("Order No:") <span class='text-danger'>*</span>
+                                        @Html.TextBoxFor(e => e.OrderOutwardNo, new { @class = "form-control", @ID="OrderOutwardNo", required = "required" })
+                                        <span class="text-danger ValidationSpan" id="SpanOrderOutwardNo" style="display:none;">Please Insert Order Outward No</span>
+                                     </div>
+
+                                      <div class="col-md-6">
+                                          
+                                         @Html.Label("Order Document: / ઓર્ડર દસ્તાવેજ:") <span class='text-danger'>*</span>
+                                         <br/>
+                                         <input type="file" id="SettlementfileUpload" class="fileUpload" onchange="return fileValidation()" >
+                                         <span class="text-danger ValidationSpan" id="SpanSettlementfileUpload" style="display:none;">Please Select file </span>
+                                          @if (@Model.SettlementDocURL != ""  || @Model.SettlementDocURL != null)
+                                             {
+                                                 @*<a href="/ConciliationApplication/DownloadSettelementFile/?FileName=@Model.SettlementDocURL" ><i class="fas fa-download ml-2"></i></a>*@
+                                                 <a href="~/Documents/Conciliation/Settlement/@Model.SettlementDocURL" download><i class="fas fa-download ml-2"></i></a>
+                                             } 
+                                      </div>
+                                </div>
+                            </div>
+
+                          <div class="form-group pt-5">
+                          <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitSettlement();" />
+                            @Html.ActionLink("Cancel", "ConciliationACLList", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+
+        @*
+   Send to Labour*@
+     <div class="row" id="DivSendtolabour" style="display:none;">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+                                     @Html.Label("Send To DCL Clerk ")<span class="text-danger ml-1">*</span>
+                                   @Html.TextBoxFor(e => e.SendLCDate,"{0:dd-MM-yyyy}", new { @class = "form-control", @ID="SendLCDate1", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanJoinningDate" style="display:none;">Please Add LC Date</span>
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.Label("Case Failure Remarks")<span class="text-danger ml-1">*</span>
+                                   @Html.TextAreaFor(e => e.SendLCRemark, new { @class = "form-control", @ID="SendLCRemark", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanSendLCNote" style="display:none;">Please Enter Remark</span>
+                               
+                                </div>
+                            </div>
+                        </div>
+                     
+                          <div class="form-group">
+                          <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitLabour();" />
+                            @Html.ActionLink("Cancel", "ConciliationACLList", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+     </div>
+ <script>
+       $(document).ready(function () {
+            debugger;
+            @*document.getElementById("HearingReasonID_chosen").style.width = "200px";*@
+               HearingDetail();
+               bindAreaDropdown(@Html.Raw(Json.Serialize(@Model.EstalishmentdetailACL[0].AreaList)));
+
+                if ('@Model.EstalishmentdetailACL[0].AreaID' > '0') 
+                  {
+                      $("#DivArea").show();
+                  }
+                  else 
+                  {
+                       $("#DivArea").hide();
+                  }
+           @*    $("#DivHearing").hide();*@
+               @*   $("#DivSettlement").hide();
+               $("#DivSendtolabour").hide();*@
+               @* $(function () {
+               var datepicker = $("#HearingDate_" + B).kendoDatePicker({
+               value: presentDate,
+               min: presentDate,
+               }).data('kendoDatePicker');
+               });*@
+
+
+               $("#SettlementDate").kendoDatePicker({
+                   format: "dd-MM-yyyy",
+                   disableDates: function(date) {
+
+                       if (date <= new Date()) {
+                           return true;
+                       }
+                       else {
+                           return false;
+                       }
+                   }
+               });
+      $("#SendLCDate1").kendoDatePicker({
+        format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+     $("#OrderOutwardDate").kendoDatePicker({
+          format :"dd-MM-yyyy",
+        disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+         }
+        }); 
+    @* $("#SettlementDate").change(function () {
+*@
+           if ('@Model.ActionCode' == 17) {
+               $("#DivOutward").show();
+           }
+           else
+           {
+               $("#DivOutward").hide();
+           }
+
+           if ('@Model.ISNew' == 0) {
+               $("#DivHearing").show();
+           }
+           else if ('@Model.ISNew' == 1)    
+           {
+               if('@Model.HearingdetailACL.Count' > 0)
+               {
+                   $("#DivHearing").show();
+                   $("#DivSendtolabour").hide();
+                   $("#btnHearing").hide();
+                   $("#btnCancel").hide();
+                   $("#btnAddHearing").hide();
+               }
+               else
+               {
+                   $("#DivHearing").hide();
+               }
+               $("#DivSettlement").show();
+               $("#DivEstablishACL").hide();
+           }
+            else if ('@Model.ISNew' == 2)
+           {
+               if('@Model.HearingdetailACL.Count' > 0)
+               {
+                   $("#DivHearing").show();
+                   $("#btnHearing").hide();
+                   $("#btnCancel").hide();
+                   $("#btnAddHearing").hide();
+               }
+               else
+               {
+                   $("#DivHearing").hide();
+               }
+               $("#DivSendtolabour").show();
+              
+           }
+         
+            
+            });
+
+          if ('@Model.ISView' == 2)
+           {
+               if('@Model.HearingdetailACL.Count' > 0)
+               {
+                   $("#DivHearing").show();
+                   $("#btnHearing").hide();
+                   $("#btnCancel").show();
+                   $("#btnAddHearing").hide();
+               }
+               else
+               {
+                   $("#DivHearing").hide();
+               }
+                @*$("#DivSendtolabour").show();*@
+                  
+                 $("#btnAddHearing").attr("disabled", "disabled");
+                @*$("#btnHearingOfNotice").removeAttr("disabled");*@
+           }
+
+            @*function SubmitHearing() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+             var i = B;
+        var v;
+
+        for (v = 0; v < i; ++v) {
+
+            if ($("#HearingDate_" + v + "").val() == "0" || $("#HearingDate_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanHearingDate_" + v + "").show();
+            }
+
+            if ($("#HearingReasonID_" + v + "").val() == "0" || $("#HearingReasonID_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanHearingReasonID_" + v + "").show();
+            }*@
+@*
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+        }
+
+                     
+        if (ErrorCnt == 0) {
+            var myData = {
+                XMLString: GetHearingXML(),
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/ConciliationApplication/SaveConciliaitonHearingACLRecord",
+                    dataType: "json",
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+                        if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage)
+                            .then((value) => {
+                                 window.location.href = "/ConciliationApplication/ConciliationACLList";
+                            });
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function(request, message, error) {
+                        debugger;
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+
+    }
+@* function SubmitHearing() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+            if ($("#HearingReason").val() == "0" || $("#HearingReason").val() == "") {
+                ErrorCnt++;
+                $('#SpanHearingreason').show();
+            }
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    HearingDate: $('#HearingDate').val(),
+                    HearingReason: $('#HearingReasonID').val(),
+                     HearingRemark: $('#HearingRemark').val(),
+                    URL: document.URL,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ConciliationApplication/SaveConciliaitonHearingACLRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                     window.location.href = "/ConciliationApplication/ConciliationACLList";
+                                });
+                            }
+                           
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }*@
+     
+     function UpdateEshtablishment() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+               var pincoderegx = "[1-9][1-9][0-9]{4}$";
+
+            $('.ValidationSpan').hide();
+         
+       if ($("#EstablishmentDistrictID").val() == "0" || $("#EstablishmentDistrictID").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentDistrictID').show();
+        }
+
+        if ($("#EstablishmentTalukaID").val() == "0" || $("#EstablishmentTalukaID").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentTalukaID').show();
+        }
+
+        if ($("#DivArea").is(":visible")) {
+            if ($("#ddlEstablishmentArea").val() == "0" || $("#ddlEstablishmentArea").val() == "") {
+                ErrorCnt++;
+                $('#SpanddlEstablishmentArea').show();
+            }
+        }
+
+
+        if ($("#EstablishmentPincode").val() == "0" || $("#EstablishmentPincode").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentPincode').show();
+        }
+        var pincode = $("#EstablishmentPincode").val();
+             if (!pincode.match(pincoderegx)) {
+                 ErrorCnt++;
+                $("#SpanvalidEstablishmentPincode").show();
+              }	
+         if ($("#EstablishEmailId").val() == "0" || $("#EstablishEmailId").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentEmailID').show();
+        }
+         if ($("#EstablisMobileNo").val() == "0" || $("#EstablisMobileNo").val() == "") {
+            ErrorCnt++;
+            $('#SpanEstablishmentmonileNo').show();
+        }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    EstablisDetailID: $('#EstablisDetailID').val(),
+                    ApplicationID: $('#ApplicationID').val(),
+                    DistrictID: $('#EstablishmentDistrictID').val(),
+                    TalukaID: $('#EstablishmentTalukaID').val(),
+                    AreaID: $('#EstablishmentAreaID').val(),
+                    ZoneID: $('#EstablishmentZoneID').val(),
+                    Pincode: $('#EstablishmentPincode').val(),
+                    EstablishEmailId: $('#EstablishEmailId').val(),
+                    EstablisMobileNo: $('#EstablisMobileNo').val(),
+                    URL: document.URL,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ConciliationApplication/UpdateEshtablishmentdetailByACL",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/ConciliationApplication/ConciliationACLList";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+
+
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/NFormApplication/NFormACLList";
+                              alert(data.data.ErrorMassage);
+                            }
+                            else {
+                              alert(data.data.ErrorMassage);
+                            }*@
+
+                        },
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                        @*error: function() {
+                            alert('Something went wrong!');
+                        }*@
+                    })
+            }
+  }
+
+
+
+ function SubmitLabour() {
+            debugger;
+
+            var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#SendLCRemark").val() == "0" || $("#SendLCRemark").val() == "") {
+                ErrorCnt++;
+                $('#SpanHearingRemark').show();
+            }
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    SendLCDate: $('#SendLCDate1').val(),
+                    SendLCRemark: $('#SendLCRemark').val(),
+                    URL: document.URL,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ConciliationApplication/SaveConciliationSendtolabourACLRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                     window.location.href = "/ConciliationApplication/ConciliationACLList";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/ConciliationApplication/ConciliationACLList";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                              alert(data.data.ErrorMassage);
+                            }*@
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+ 
+ function SubmitSettlement() {
+     debugger;
+        var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+      
+            if ($("#SettlementRemark").val() == "0" || $("#SettlementRemark").val() == "") {
+                ErrorCnt++;
+                $('#SpanResolutionreason').show();
+            }
+
+             if ($("#DivOutward").is(":visible")) 
+              {
+
+               @* if ($("#SettlementfileUpload").val() == "")
+                {*@
+                     if ($("#SettlementfileUpload").val() == "0" || $("#SettlementfileUpload").val() == "") {
+                        ErrorCnt++;
+                        $('#SpanSettlementfileUpload').show();
+                    }
+                @* }*@
+
+                  if ($("#OrderOutwardDate").val() == "0" || $("#OrderOutwardDate").val() == "") {
+                        ErrorCnt++;
+                        $('#SpanOrderOutwardDate').show();
+                    }
+
+                     if ($("#OrderOutwardNo").val() == "0" || $("#OrderOutwardNo").val() == "") {
+                        ErrorCnt++;
+                        $('#SpanOrderOutwardNo').show();
+                    }
+             }
+
+           @* if ($("#SettlementfileUpload").val() == "0" || $("#SettlementfileUpload").val() == "") {  
+                ErrorCnt++;
+                $('#SpanSettlementfileUpload').show();
+            }*@
+            if ($("#HearingReasonID").val() == "0" || $("#HearingReasonID").val() == "") {
+                ErrorCnt++;
+                $('#SpanResolutionReason').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+       if (ErrorCnt == 0) {
+           var files = $('#SettlementfileUpload').prop("files");
+           var ApplicationID = $('#ApplicationID').val();
+           var SettlementDate = $('#SettlementDate').val();
+           var HearingReasonID = $('#HearingReasonID').val();
+           var OrderOutwardDate = $('#OrderOutwardDate').val();
+           var OrderOutwardNo = $('#OrderOutwardNo').val();
+           var SettlementRemark = $('#SettlementRemark').val();
+           var URL = document.URL;
+
+           var url = "/ConciliationApplication/SaveConciliationACLSettlementrecord?handler=MyUploader"
+           + "&ApplicationID=" + ApplicationID + "&SettlementDate=" + SettlementDate  + "&SettlementRemark=" 
+           + SettlementRemark + "&URL=" + URL + "&HearingReasonID=" + HearingReasonID + "&OrderOutwardDate=" + OrderOutwardDate + "&OrderOutwardNo=" + OrderOutwardNo;
+           formData = new FormData();
+           formData.append("MyUploader", files[0]);
+
+           jQuery.ajax({
+               type: 'POST',
+               url: url,
+               headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+               data: formData,
+               cache: false,
+               contentType: false,
+               processData: false,
+               success: function(repo) {
+                   debugger;
+                   if (repo.status.ErrorCode == 0) {
+                          swal(repo.status.ErrorMassage)
+                          .then((value) => {
+                           window.location.href = "/ConciliationApplication/ConciliationACLList";
+                          @* location.reload();*@
+                      });
+                   }
+                   else {
+                          swal(repo.status.ErrorMassage);
+                        }
+                   @*if (repo.status.ErrorCode == 0) {
+                          window.location.href = "/ConciliationApplication/ConciliationACLList";
+                       alert(repo.status.ErrorMassage);
+                      
+                       location.reload();
+                   }
+                   else{
+                         alert(repo.status.ErrorMassage);
+                   }*@
+               },
+               error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+           });
+       }
+}
+
+  function fileValidation() {
+    debugger;
+    var fileInput = document.getElementById('SettlementfileUpload'); 
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+                swal('Invalid file type');
+                fileInput.value = '';
+                return false;
+            }
+            
+        }
+
+         function bindAreaDropdown(obj) {
+
+        $("#ddlEstablishmentArea").kendoMultiColumnComboBox({
+            dataTextField: "DisplayValue",
+            dataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue"],
+            dataSource: {
+                data: obj
+            },
+            change: function(e) {
+                debugger;
+                if (this.dataSource.data().length > 0) {
+                    if (this.dataSource.data()[this.selectedIndex] != undefined) {
+                        $('#EstablishmentZoneID').val(this.dataSource.data()[this.selectedIndex].ZoneID);
+                        $('#EstablishmentAreaID').val(this.dataSource.data()[this.selectedIndex].DataValue);
+                    }
+                    else {
+                        $('#ddlEstablishmentArea').data("kendoMultiColumnComboBox").value('');
+                        swal("Please Select Valid Area");
+                    }
+                }
+            }
+
+        });
+    }
+
+      $(function() {
+        $("#EstablishmentDistrictID").change(function() {
+            debugger;
+            $.ajax({
+                type: "GET",
+                url: "/ReinstatementAppliaction/AllList",
+                headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                data: { mode: $("#RegistrationID").val(), DistrictID: $("#EstablishmentDistrictID").val() },
+                success: function(response) {
+                    debugger;
+                    $("#ddlEstablishmentArea").kendoMultiColumnComboBox().empty();
+                    $("#EstablishmentTalukaID").empty();
+                    var row = "";
+                     row += "<option value='none' selected>Select</option>";
+                    for (var i = 0; i < response.data.Talukalist.length; i++) {
+                        row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                    }
+                    $("#EstablishmentTalukaID").html(row).trigger('chosen:updated');
+
+                    if (response.data.AreaList != "") {
+                        $("#DivArea").show();
+                        bindAreaDropdown(response.data.AreaList);
+                    }
+                    else {
+                        $("#DivArea").hide();
+                             $("#EstablishmentZoneID").val(0);
+                    $("#EstablishmentAreaID").val(0);
+                    }
+                },
+                failure: function(response) {
+                    swal(response.responseText)
+                        .then((value) => {
+
+                        });
+                },
+                error: function(response) {
+                    //respone will be returned here
+                    $("#error").val(response.responseText);
+                }
+            });
+        });
+    });
+
+     </Script>
+      <script>
+                var B = 0;
+                
+
+        function HearingDetail() {
+        debugger;
+        var data = @Html.Raw(Json.Serialize(@Model.HearingdetailACL));
+        var i;
+        for (B = 0; B < data.length; B++) {
+
+    @*  var AddEducationdetails = "<div class='row'>";*@
+             var AddEducationdetails = "";
+            AddEducationdetails += "<div id='DivHearingdetail_" + B + "'>";
+            AddEducationdetails += "<fieldset class='border p-2'>";
+    @*  AddEducationdetails += "<legend  class='w-auto'>Establish Detail:" + E + " </legend>";*@
+
+            AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+                 AddEducationdetails += "<input type='hidden' name='ApplicationID_" + B + "' value='" + data[B].ApplicationID + "' id='ApplicationID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='HearingID_" + B + "'  value='" + data[B].Id + "' id='HearingID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='IsActive_" + B + "' value='" + data[B].IsActive + "' id='IsActive_" + B + "' />";
+            AddEducationdetails += "<label for='Applicant_Name'>Hearing Date <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control datetimepicker' style='width: 100%;' id='HearingDate_" + B + "' name='HearingDate_" + B + "'  type='text' value='" + data[B].HearingDate + "'>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingDate_" + B + "' style='display:none;'>Please Enter Hearing Date</span>";
+            AddEducationdetails += "</div>";
+
+            // AddEducationdetails += "<div class='col-md-2'>";
+            //AddEducationdetails += "<label for='District_Name'>Hearing Reason <span class='text-danger'>*</span></label>";
+            //AddEducationdetails += "<select class='chosen-select form-control' name='HearingReasonID_" + B + "' id='HearingReasonID_" + B + "'>";
+            //AddEducationdetails += "<option value='0'>Select</option>";
+            //for (i = 0; i < data[B].HearingReasonList.length; ++i) {
+            //    if (data[B].HearingReasonList[i].DataValue == data[B].HearingReasonID) {
+            //        AddEducationdetails += "<option value=" + data[B].HearingReasonList[i].DataValue + " selected='selected'>" + data[B].HearingReasonList[i].DisplayValue + "</option>";
+            //    }
+            //    else {
+
+            //        AddEducationdetails += "<option value=" + data[B].HearingReasonList[i].DataValue + ">" + data[B].HearingReasonList[i].DisplayValue + "</option>";
+            //    }
+            //}
+            //AddEducationdetails += "</select>";
+            //AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingReasonID_" + B + "' style='display:none;'>Please Select Reason </span>";
+            //AddEducationdetails += "</div>";
+
+                AddEducationdetails += "<div class='col-md-6'>";
+            AddEducationdetails += "<label for='P_Address'>Hearing Note</label>";
+            //AddEducationdetails += "<textarea class='form-control'' id='HearingNote_" + B + "' name='HearingNote_" + B + "'  type='text'>" + data[B].HearingNote + "</textarea>";
+                AddEducationdetails += "<textarea class='form-control'' id='HearingNote_" + B + "' name='HearingNote_" + B + "'  type='text'>" + data[B].HearingRemarks + "</textarea>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingNote_" + B + "' style='display:none;'>Please Enter Hearing Note</span>";
+            AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<label for='Applicant_Name'>IsCancle <span> &nbsp</span></label>";
+            AddEducationdetails += "<input type='hidden' name='IsTempCancle_" + B + "'  value='' id='IsTempCancle_" + B + "' />";
+            AddEducationdetails += "<input type='checkbox' class='myCheckbox' onclick='canclecheckbox("+B+")'  name='IsCancle_" + B + "' value='" + data[B].IsCancle + "' id='IsCancle_" + B + "' />";
+            AddEducationdetails += "</div>";
+
+
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</fieldset>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</Br>"
+
+            $("#Hearing").append(AddEducationdetails);
+            $(".chosen-select").chosen();
+            $('.chosen-container').css('width', '100%');
+           $("#HearingDate_" + B).kendoDateTimePicker({ format: "dd-MM-yyyy HH:mm",  disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }});
+           if($("#HearingID_" + B).val() == 0)
+           {
+                $("#HearingDate_" + B).val("")
+                $("#btnHearingOfNotice").attr("disabled", "disabled");
+           }
+
+              if( $("#IsCancle_" + B).val() == 'true')
+              {
+                   $("#IsCancle_" + B).attr('checked', 'checked');
+              }
+            if( $("#HearingNote_" + B).val().length > 1 || $("#IsCancle_" + B).val() == 'true')
+            {
+                $("#HearingDate_" + B).data('kendoDateTimePicker').enable(false);
+                $("#HearingNote_" + B).attr("disabled", "disabled");
+                $("#IsCancle_" + B).attr("disabled", "disabled");
+                 //$("#btnHearingOfNotice").attr("disabled", "disabled");
+                  $("#btnHearingOfNotice").attr("disabled", "disabled");
+                //$("#HearingReasonID_" + B).prop('disabled', true).trigger("chosen:updated");
+            }      
+            else{
+                 $("#btnAddHearing").attr("disabled", "disabled");
+                 //$("#btnHearingOfNotice").attr("disabled", "disabled");
+            }
+            //B++;
+
+        }
+
+    }
+
+    //Contractor`s Details
+    function Fn_AddHearing() {
+
+        debugger;
+        var i;
+        var ApplicationID = $('#ApplicationID').val();
+        var HearingID = 0;
+        var HearingReasonList = @Html.Raw(Json.Serialize(@Model.HearingReasonList));
+
+
+          var AddEducationdetails = "";
+            AddEducationdetails += "<div id='DivHearingdetail_" + B + "'>";
+            AddEducationdetails += "<fieldset class='border p-2'>";
+    @*  AddEducationdetails += "<legend  class='w-auto'>Establish Detail:" + E + " </legend>";*@
+
+            AddEducationdetails += "<div class='form-group'>";
+            AddEducationdetails += "<div class='row'>";
+
+            AddEducationdetails += "<div class='col-md-2'>";
+            AddEducationdetails += "<input type='hidden' name='ApplicationID_" + B + "' value='" + ApplicationID + "' id='ApplicationID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='HearingID_" + B + "'  value='" + HearingID + "' id='HearingID_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' name='IsActive_" + B + "' value='true' id='IsActive_" + B + "' />";
+            AddEducationdetails += "<label for='Applicant_Name'>Hearing Date <span class='text-danger'>*</span></label>";
+            AddEducationdetails += "<input class='form-control datepicker' style='width: 100%;' id='HearingDate_" + B + "' name='HearingDate_" + B + "'  type='text' value=''>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingDate_" + B + "' style='display:none;'>Please Enter Hearing Date</span>";
+            AddEducationdetails += "</div>";
+
+            //AddEducationdetails += "<div class='col-md-2'>";
+            //AddEducationdetails += "<label for='District_Name'>Hearing Reason <span class='text-danger'>*</span></label>";
+            //AddEducationdetails += "<select class='chosen-select form-control' name='HearingReasonID_" + B + "' id='HearingReasonID_" + B + "'>";
+            //AddEducationdetails += "<option value='0'>Select</option>";
+            //for (i = 0; i < HearingReasonList.length; ++i) {
+            //AddEducationdetails += "<option value=" + HearingReasonList[i].DataValue + ">" + HearingReasonList[i].DisplayValue + "</option>";
+            //}
+            //AddEducationdetails += "</select>";
+            //AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingReasonID_" + B + "' style='display:none;'>Please Select Reason </span>";
+            //AddEducationdetails += "</div>";
+
+            AddEducationdetails += "<div class='col-md-6' style='display:none;'>";
+            AddEducationdetails += "<label for='P_Address'>Hearing Note</label>";
+            AddEducationdetails += "<textarea class='form-control'' id='HearingNote_" + B + "' name='HearingNote_" + B + "'  type='text'></textarea>";
+            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanHearingNote_" + B + "' style='display:none;'>Please Hearing Note</span>";
+            AddEducationdetails += "</div>";
+
+
+            AddEducationdetails += "<div class='col-md-2' style='display:none;'>";
+            AddEducationdetails += "<label for='Applicant_Name'>IsCancle <span> &nbsp</span></label>";
+             AddEducationdetails += "<input type='hidden' name='IsTempCancle_" + B + "'  value='' id='IsTempCancle_" + B + "' />";
+           // AddEducationdetails += "<input type='checkbox' class='myCheckbox' onclick='canclecheckbox("+B+")' name='IsCancle_" + B + "' value='false' id='IsCancle_" + B + "' />";
+            AddEducationdetails += "<input type='hidden' class='myCheckbox' onclick='canclecheckbox("+B+")' name='IsCancle_" + B + "' value='false' id='IsCancle_" + B + "' />";
+            AddEducationdetails += "</div>";
+
+
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</fieldset>";
+            AddEducationdetails += "</div>";
+            AddEducationdetails += "</Br>"
+
+            $("#Hearing").append(AddEducationdetails);
+            $(".chosen-select").chosen();
+            $('.chosen-container').css('width', '100%');
+            $("#btnAddHearing").attr("disabled", "disabled");
+            $("#btnHearingOfNotice").removeAttr("disabled");
+            $("#HearingDate_" + B).kendoDateTimePicker({ format: "dd-MM-yyyy HH:mm",  disableDates: function (date) {
+            if (date <= new Date()) {
+                return true;
+            } else {
+                return false;
+            }
+        }});
+
+    
+     //$("#HearingDate_" + B).kendoDateTimePicker({
+     //     format :"dd-MM-yyyy HH:mm"
+
+     //   }); 
+    
+            B++;
+
+    }
+
+    function canclecheckbox(id) {
+              debugger;
+       
+            if ($("#IsCancle_"+id).is(':checked')) {
+           $("#IsCancle_"+id).val(true);
+          $("#IsTempCancle_"+id).val(true);
+        } 
+
+       } 
+
+    function GetHearingXML() {
+        var xml = '';
+        xml += '<DataTable>';
+        var i = B;
+        var v;
+        for (v = 0; v < i; ++v) {
+            xml += '<DataRow>';
+            xml += "<" + "ApplicationID" + ">" + $("#ApplicationID_" + v + "").val() + "</" + "ApplicationID" + ">";
+            xml += "<" + "Id" + ">" + $("#HearingID_" + v + "").val() + "</" + "Id" + ">";
+            xml += "<" + "HearingDate" + ">" + $("#HearingDate_" + v + "").val() + "</" + "HearingDate" + ">";
+            //xml += "<" + "HearingReasonID" + ">" + $("#HearingReasonID_" + v + "").val() + "</" + "HearingReasonID" + ">";
+            xml += "<" + "HearingRemark" + ">" + $("#HearingNote_" + v + "").val() + "</" + "HearingRemark" + ">";
+            
+              if ($("#IsCancle_" + v + "").val() == "true") {
+                  xml += "<" + "IsCancle" + ">" + 1 + "</" + "IsCancle" + ">";
+              }
+              else {
+                  xml += "<" + "IsCancle" + ">" + 0 + "</" + "IsCancle" + ">";
+              }
+
+              
+              if ($("#IsActive_" + v + "").val() == "true") {
+                  xml += "<" + "IsActive" + ">" + 1 + "</" + "IsActive" + ">";
+              }
+              else {
+                  xml += "<" + "IsActive" + ">" + 0 + "</" + "IsActive" + ">";
+              }
+
+               if ($("#IsTempCancle_" + v + "").val() == "true") {
+                  xml += "<" + "IsTempCancle" + ">" + 1 + "</" + "IsTempCancle" + ">";
+              }
+              else
+              {
+                  xml += "<" + "IsTempCancle" + ">" + 0 + "</" + "IsTempCancle" + ">";
+              }
+
+            xml += "<" + "URL" + ">" + document.URL + "</" + "URL" + ">";
+            xml += "<" + "IP_Address" + ">" + $("#IP_Address").val() + "</" + "IP_Address" + ">";
+            xml += "<" + "Action" + ">" + 4 + "</" + "Action" + ">";
+            //xml += "<" + "UserID" + ">" + $("#UserID").val() + "</" + "UserID" + ">";
+            xml += '</DataRow>';
+        }
+        xml += '</DataTable>'
+        return xml;
+    }
+
+
+    function SubmitHearing(id) {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+             var i = B;
+        var v;
+
+        for (v = 0; v < i; ++v) {
+
+            if ($("#HearingDate_" + v + "").val() == "0" || $("#HearingDate_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanHearingDate_" + v + "").show();
+            }
+
+            if ($("#HearingReasonID_" + v + "").val() == "0" || $("#HearingReasonID_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanHearingReasonID_" + v + "").show();
+            }
+
+            //if ($("#hearingnote_" + v + "").val() == "0" || $("#hearingnote_" + v + "").val() == "") {
+            //    errorcnt++;
+            //    $("#spanhearingnote_" + v + "").show();
+            //}
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+        }
+
+                     
+        if (ErrorCnt == 0) {
+            var myData = {
+                XMLString: GetHearingXML(),
+                IsNotice: id,
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/ConciliationApplication/SaveConciliaitonHearingACLRecord",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    dataType: "json",
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+                        if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage)
+                            .then((value) => {
+                                 window.location.href = "/ConciliationApplication/ConciliationACLList";
+                            });
+                        }
+                        else {
+                            swal(data.data.ErrorMassage)
+                        }
+
+                    },
+
+                    error: function(request, message, error) {
+                        debugger;
+                        //alert(request.responseJSON);
+                        swal(request.responseJSON);
+                    }
+                })
+        }
+
+    }
+
+    
+
+        </script>
+  
+ }
+
+ 

@@ -1,0 +1,570 @@
+﻿@model IEnumerable<FTS.Model.Entities.NFormApplicationModel>
+@{
+    ViewBag.Title = "Gratuity List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    i{
+        margin-right:10px;
+    }
+
+</style>
+
+@using (Html.BeginForm())
+{
+       @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/NFormApplication/AddNFormApplication/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+                                        <br>
+                                        <br>
+                                    </div>
+                                    <table id="NFormList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:2%;" id="roleName">ID</th>
+                                                <th style="width:5%;" id="roleName">AppID</th>
+                                                <th style="width:5%;" id="roleName">user Mode</th>
+                                                <th style="width:20%;" id="roleName">Name</th>
+                                                <th style="width:5%;" id="roleName">Application Date</th>
+                                                <th style="width:10%;" id="roleName">Status</th>
+                                                 <th style="width:20%;" id="roleName">Appeal Status</th>
+                                                <th style="width:60%;" id="Edit">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.AppID </td>
+                                                    <td valign="top" class="text-left">@item.ApplicationMode </td>
+                                                    <td valign="top" class="text-left">@item.Name   </td>
+                                                    <td valign="top" class="text-left">@item.AppDate </td>
+                                                        <td valign="top" class="text-left">@item.Status 
+                                                        @if (@item.IsSubmit == true)
+                                                        {
+                                                           <a id="Edit"   title="Status History" href="/NFormApplication/StatusHistory/?id=@item.EncryptedId&ISNew=0&ISView=1" ><i class="fas fa-history ml-2"></i></a>
+                                                        }
+                                                        </td>
+                                                        <td valign="top" class="text-left">@item.AppealStatus </td>
+                                                        
+                                                    <td>
+                                                        <div class="row">
+                                                        @if (@item.IsSubmit == true && @item.ActionCode != 5)
+                                                        {
+                                                            @* @if(@item.RecoveryDays == @item.AppealDayDiff)
+                                                {
+                                                <a id="Edit" href="/NFormApplication/AddNFormApplication/?id=@item.EncryptedId" >Gratuity Recovery </a>
+                                                }*@        
+                                                           <div class="col-auto">
+                                                            <a id="Edit" class="btn btn-outline-primary ml-3 mt-1" href="/NFormApplication/AddNFormApplication/?id=@item.EncryptedId"><i class="fas fa-eye"></i>View</a>
+                                                           </div>
+                                                        }
+                                                        else
+                                                        {
+                                                             <div class="col-auto">
+                                                            <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  href="/NFormApplication/AddNFormApplication/?id=@item.EncryptedId"><i class="fas fa-pen"></i>Edit</a>
+                                                           </div>
+                                                        }
+                                                        @* <a id="Delete" onclick="return DeletePositionRecord(@item.ApplicationID);"><i class="fas fa-trash-alt"></i></a>*@
+
+
+                                                       @* Office User Side*@
+                                                        @if (@item.UserMode == 1)
+                                                        {
+                                                            @if (@item.ActionCode == 1 || @item.ActionCode == 5)
+                                                            {
+                                                                <div class="col-auto">
+                                                                <a id="Send To ACL" class="btn btn-outline-primary ml-3 mt-1" onclick="Sendtoacl('SendACL(@item.EncryptedId)')"><i class="fas fa-share"></i>Send ACL</a>
+                                                                 </div>
+                                                                  <div class="col-auto">
+                                                                <a  data-toggle="modal" class="btn btn-outline-primary ml-3 mt-1" data-target="#exampleModal_@item.ID" id="DivAssign"><i class="fas fa-comments"></i>Comments</a>
+                                                                 </div>
+                                                            }
+                                                        }
+
+                                                      @*  Appliacnt Side*@
+                                                        @if(@item.UserMode == 2 && @item.ActionCode == 5)
+                                                        {
+                                                            <div class="col-auto">
+                                                             <a  data-toggle="modal" class="btn btn-outline-primary ml-3 mt-1"  data-target="#exampleModal_@item.ID" id="DivAssign"><i class="fas fa-comments"></i>Comments</a>
+                                                              </div>
+                                                        }
+                                                        @if(Convert.ToInt32(@item.DiffDay) <= @item.Reviewdays && @item.ActionCode == 4 && @item.UserMode == 2) @*&& @item.AppealStatus == "")*@
+                                                        {
+                                                            @if(@item.IsAppeal == 0)
+                                                            {
+                                                                 <div class="col-auto">
+                                                                <a data-toggle="modal" data-target="#ReviewComment_@item.ID" id="DivAssign" class="btn btn-outline-primary ml-2">Review</a>
+                                                                </div>
+                                                            }
+                                                           @* else
+                                                            {
+                                                                <a id="DivAssign" class="btn btn-outline-primary ml-2" onclick="return false;" style="cursor:none;">Review</a>
+                                                            }*@
+                                                        }
+                                                        @if((Convert.ToInt32(@item.DiffDay) <= @item.AppealDays && (@item.ActionCode == 4 || @item.ActionCode == 11) && @item.UserMode == 2) || @item.ActionCode == 7 || @item.ActionCode == 9) @*&& @item.AppealStatus == "")*@
+                                                        {
+                                                            @if((@item.ActionCode == 9 || @item.ActionCode == 4 || @item.ActionCode == 11)  && (@item.IsAppeal == 0))
+                                                            {
+                                                                 <div class="col-auto">
+                                                                <a id="Edit"  href="/TFormApplication/AddTFormForEmployee/?id=@item.EncryptedId" class="btn btn-outline-primary ml-2">Appeal</a>
+                                                                </div>
+                                                            }
+                                                           @* else
+                                                            {
+                                                                    <a id="Edit" href="/TFormApplication/AddTFormForEmployee/?id=@item.EncryptedId" class="btn btn-outline-primary ml-2" onclick="return false;" style="cursor:none;">Appeal</a>
+                                                            }*@
+
+                                                         }
+                                                        @if(Convert.ToInt32(@item.DiffDay) > @item.RecoveryDays && @item.UserMode == 2)
+                                                        {
+
+                                                            @if(item.IsRecovery != true)
+                                                            {
+                                                                <a id="Edit" class="btn btn-outline-primary ml-3 mt-1" onclick="Sendrecovery('@item.EncryptedId','@item.AppealID')">Recovery</a>
+                                                            }
+
+                                                            <div class="col-auto">
+                                                               <a id="Edit" class="btn btn-outline-primary ml-3 mt-1" onclick="Sendrecovery();">Recovery</a>
+                                                             </div>
+
+                                                        }
+                                                        </div>
+                                                        <div class="modal fade" id="exampleModal_@item.ID">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            Please Enter your Query
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">
+                                                                                ×
+                                                                            </span>
+                                                                        </button>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                      <div class="col-md-6">
+                                          <textarea id="Comments_@item.ID" name="w3review" rows="4" cols="50">@item.Comments</textarea>
+                                           <span class="text-danger ValidationSpan" id="Spancomment_@item.ID" style="display:none;">Please Enter Comment</span>
+                                 </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                   @* Applicant Not showing *@
+                                                                    @if (@item.UserMode == 1){
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                            Close
+                                                                        </button>
+
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                         onclick="CheckSave(@item.ID,'@item.EncryptedId')">
+                                                                            save
+                                                                        </button>
+                                                                    </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                         <div class="modal fade" id="ReviewComment_@item.ID">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            Applicant Review
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">
+                                                                                ×
+                                                                            </span>
+                                                                        </button>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                      <div class="col-sm-12">
+                                                                                    <h5>Review Description <span class="text-danger ml-1">*</span></h5>
+                                                                                    @*<textarea id="Codereview_@item.ID" name="codereview"  rows="4" cols="50">@item.ReviewReason</textarea>*@
+                                                                                    <textarea id="Codereview_@item.ID" name="codereview"  rows="4" cols="50">@item.ReviewReason</textarea>
+
+                                                                                    <span class="text-danger ValidationSpan" id="Spanremarks_@item.ID" style="display:none;">Please Enter Remarks</span>
+                                                                                    <br>
+                                                                                    <br>
+                                                                                    <h5>Review Document<span class="text-danger ml-1">*</span></h5>
+                                                                                    @*<input type="file" id="reviewfiles" class="fileUpload" > @*onchange="return fileValidation()*@
+                                                                                   <input type="file" id="reviewfiles_@item.ID" class="fileUpload" > @*onchange="return fileValidation(this.i)"*@
+                                                                                    <div>
+                                                                                        <span class="text-danger ValidationSpan" id="SpanReviewdoc_@item.ID" style="display:none;">Please Select Review Document</span>
+                                                                                    </div>
+                                                                                    <br>
+                                                                                    <div>
+                                                                                        <a id="Edit" onclick="SendReviews(@item.ID,'@item.EncryptedId')" class="btn btn-outline-primary">Review</a>
+                                                                                    </div>
+                                                                                     
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                   @* Applicant Not showing *@
+                                                                    @if (@item.UserMode == 1){
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                            Close
+                                                                        </button>
+
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                         onclick="CheckSave(@item.ID,'@item.EncryptedId')">
+                                                                            save
+                                                                        </button>
+                                                                    </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        $(document).ready(function() {
+            $('#NFormList').dataTable({});
+
+        });
+
+
+    </script>
+
+
+    <script>
+        function fileValidation() {
+    debugger;
+    var fileInput = document.getElementById('fileUpload'); 
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.jpg|\.jpeg|\.png|\.pdf|\.doc|\.docx|\.xls|\.xlsx)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+                swal('Invalid file type');
+                fileInput.value = '';
+                return false;
+            }
+            
+              var size = $("#" + id)[0].files[0].size;
+
+        if (size > 20000000) {
+            //alert("Please upload file less than 20MB. Thanks!!");
+            swal("Please upload file less than 20MB. Thanks!!");
+            fileInput.value = '';
+            return false;
+        }
+        }
+
+        function Sendtoacl(string) {
+
+            swal({
+                title: "Are you sure?",
+                text: "This Record Send TO ACL!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        debugger;
+                        var result = string.split('(');
+                        var data = result[1].split(')');
+                        window[result[0]](data[0]);
+                    }
+                    else {
+                        swal("Your Recored is safe!");
+                    }
+                });
+        }
+
+
+
+                function Sendrecovery(id,AppealId) {
+                    debugger;
+                    var myData = {
+                    id: id,
+                    URL: document.URL,
+                    AppealID :AppealId
+                    };
+                $.ajax
+                ({
+                    type: "POST",
+                    url: "/NFormApplication/TFormRecoveryCerti",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    dataType: "json",
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+
+
+                        if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/NFormApplication/Index";
+                                });
+                        }
+                        else {
+                            swal(data.data.ErrorMassage);
+                        }
+
+                    },
+                    error: function(request, message, error) {
+                        debugger;
+                        swal(request.responseJSON);
+                    }
+                })
+                       @* swal("Recovery Request Sended Successfully!");*@
+                }
+
+        function sendreview(string) {
+
+            swal({
+                title: "Are you sure you want to review ?",
+                text: "This Record Send TO ACL For Review!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        debugger;
+                        var result = string.split('(');
+                        var data = result[1].split(')');
+                        window[result[0]](data[0]);
+                    }
+                    else {
+                        swal("Your Record is safe!");
+                    }
+                });
+        }
+
+
+
+        function SendACL(id) {
+            debugger;
+            var myData = {
+                id: id,
+                URL: document.URL,
+               
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/NFormApplication/SendtoACLFromClerk",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    dataType: "json",
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+
+
+                        if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/NFormApplication/Index";
+                                });
+                        }
+                        else {
+                            swal(data.data.ErrorMassage);
+                        }
+
+                    },
+                    error: function(request, message, error) {
+                        debugger;
+                        swal(request.responseJSON);
+                    }
+                })
+
+        }
+
+         function SendReviews(id,ApplicationID) {
+            debugger;
+             var Codereview = $('#Codereview_' + id).val();
+              var reviewFile = $('#reviewfiles_' + id).val();
+               var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+            if ($("#Codereview_" + id).val() == "0" || $("#Codereview_" + id).val() == "") {
+                ErrorCnt++;
+                $("#Spanremarks_" +id).show();
+            }
+             if ($("#reviewfiles_" + id).val() == "0" || $("#reviewfiles_" + id).val() == "") {
+                ErrorCnt++;
+                $("#SpanReviewdoc_" + id).show();
+            }
+             @*if ($("#reviewfiles").val() == "") {
+            if ($("#fileUpload").val() == "0" || $("#fileUpload").val() == "") {
+                ErrorCnt++;
+                $('#SpanfileUpload').show();
+            }
+             }*@
+              if (ErrorCnt > 0) {
+                return false;
+            }
+             if (ErrorCnt == 0) {
+                 @*var myData = {
+                     id: ApplicationID,
+                     URL: document.URL,
+                     ReviewReason: Codereview,*@
+                  var IDs = ApplicationID;
+				  var URL = document.URL;
+                 var ReviewReason = Codereview;
+                  var ReviewDoc = reviewFile;
+                  debugger;
+                  var files = $('#reviewfiles_' + id).prop("files");
+                  @*var files = $('#chaalnafile').prop("files");*@
+                  @*var files = ReviewDoc.prop("files");*@
+                  var url = "/NFormApplication/SendReviewtoACL?handler=MyUploader" + "&Ids=" + IDs + "&URL=" + URL + "&ReviewReason=" + ReviewReason + "&ReviewDoc=" + ReviewDoc ;
+                    formData = new FormData();
+				    formData.append("MyUploader", files[0]);
+				 
+                @* };*@
+                 jQuery.ajax
+                     ({
+                         type: 'POST',
+                         url: url,
+                         headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                         @*dataType: "json",*@
+                         data: formData,
+                         cache: false,
+					     contentType: false,
+					     processData: false,
+                         success: function(repo) {
+                             debugger;
+
+
+                             if (repo.status.ErrorCode == 0) {
+                                 swal(repo.status.ErrorMassage)
+                                     .then((value) => {
+                                         window.location.href = "/NFormApplication/Index";
+                                     });
+                             }
+                             else {
+                                 swal(repo.status.ErrorMassage);
+                             }
+
+                         },
+                         error: function(request, message, error) {
+                             debugger;
+                             swal(request.responseJSON);
+                         }
+                     });
+             }
+
+        }
+
+      
+    </script>
+
+    <script>
+
+          function CheckSave(id,ApplicationID) {
+            debugger;
+
+              var Comments = $('#Comments_' + id).val();
+
+                var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+
+            if ($("#Comments_" + id).val() == "0" || $("#Comments_" + id).val() == "") {
+                ErrorCnt++;
+                $("#Spancomment_"+id).show();
+            }
+
+              if (ErrorCnt > 0) {
+                return false;
+            }
+
+              if (ErrorCnt == 0) {
+
+                  var myData = {
+                      Comments: Comments,
+                      id: ApplicationID,
+                      URL: document.URL,
+                  };
+                  $.ajax
+                      ({
+                          type: "POST",
+                          url: "/NFormApplication/SendtoCommentFromClerk",
+                          headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                          dataType: "json",
+                          data: myData,
+                          success: function(data) {
+                              debugger;
+
+
+                              if (data.data.ErrorCode == 0) {
+                                  swal(data.data.ErrorMassage)
+                                      .then((value) => {
+                                          window.location.href = "/NFormApplication/Index";
+                                      });
+                              }
+                              else {
+                                  swal(data.data.ErrorMassage);
+                              }
+
+                          },
+                          error: function(request, message, error) {
+                              debugger;
+                              swal(request.responseJSON);
+                          }
+                      })
+
+              }
+
+        }
+        </Script>
+
+}

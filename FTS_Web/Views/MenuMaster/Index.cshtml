@@ -1,0 +1,136 @@
+﻿@model  IEnumerable<FTS.Model.Entities.MenuMasterModel>
+@{
+     ViewBag.Title = "MENU LIST";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+
+                                        <a id="Add" href="/MenuMaster/AddMenuMaster/?menuid=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+                                              <br>
+                                        <br>
+                                    </div>
+
+                                    <table id="MenuList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                @* <th style="width:2%;" id="roleID">Role ID</th>*@
+                                                   @*<th id="EmployeeID"> Employee ID </th>*@
+                                                  <th id="MenuId"> MenuId  </th>
+                                                 @* <th id="ParentMenuId"> ParentMenuId </th>*@
+                                                  <th id="MenuName"> MenuName </th>
+                                                  <th id="MenuDescription"> MenuDescription </th>
+                                                   <th id="Icon"> Icon </th>
+                                                 @* <th id="PageName"> PageName </th>
+                                                  <th id="PageURL"> PageURL </th>
+                                                  <th id="NodeLevel"> NodeLevel </th>*@
+                                                  <th id="Edit">Action</th>
+                                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                   
+                                                    @*<td valign="top" class="text-left">@item.EmployeeID </td>*@
+                                                    <td valign="top" class="text-left">@item.MenuId </td>
+                                                  @*  <td valign="top" class="text-left">@item.ParentMenuId </td>*@
+                                                    <td valign="top" class="text-left">@item.MenuName </td>
+                                                    <td valign="top" class="text-left">@item.MenuDescription </td>
+                                                     <td valign="top" class="text-left">@item.Icon </td>
+                                                  @*  <td valign="top" class="text-left">@item.PageName </td>
+                                                    <td valign="top" class="text-left">@item.PageURL </td>
+                                                    <td valign="top" class="text-left">@item.NodeLevel </td>*@
+                                            
+                                                <td>
+                                                     <a id="Edit" href="/MenuMaster/AddMenuMaster/?menuid=@item.EncryptedId" ><i class="fas fa-pen"></i></a>
+                                                  @*  <a id="Delete" onclick="return DeleteMenuRecord(@item.MenuId);"><i class="fas fa-trash-alt"></i></a>*@
+                                                     <a id="Delete" onclick="DeleteConformation('DeleteMenuRecord('+@item.MenuId+')')"><i class="fas fa-trash-alt"></i></a>
+
+                                                     
+                                                </td>
+
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+      $( document ).ready(function() {
+        $('#MenuList').dataTable( {} );
+    });
+
+ 
+   function DeleteMenuRecord(MenuId) {
+        debugger;
+                var myData = {
+                    MenuId: MenuId,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/MenuMaster/DeleteMenuRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/MenuMaster/Index";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+@*
+                            if (data.data.ErrorCode == 0) {
+                                window.location.href = "/MenuMaster/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }*@
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                        }
+                    })
+           
+    }
+
+        </script>
+
+}

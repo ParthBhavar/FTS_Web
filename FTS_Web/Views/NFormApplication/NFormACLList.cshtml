@@ -1,0 +1,230 @@
+﻿@model IEnumerable<FTS.Model.Entities.NFormApplicationModel>
+@{
+    ViewBag.Title = "Gratuity List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    ;
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    @*   <div id="Filter" class="dataTables_filter float-right mx-3">
+                                <a id="Add" href="/ReinstatementAppliaction/AddReinstatementAppliaction/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i>Add New</a>
+                                <br>
+                                <br>
+                                </div>*@
+                                    <table id="NFormACLList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:2%;" id="roleName">ID</th>
+                                                <th style="width:5%;" id="roleName">AppID</th>
+                                                <th style="width:5%;" id="roleName">Mode</th>
+                                                <th style="width:20%;" id="roleName">Name</th>
+                                                <th style="width:10%;" id="roleName">Application Date</th>
+                                                <th style="width:10%;" id="roleName">Status</th>
+                                                <th style="width:10%;" id="roleName">Resolution Status</th>
+                                                <th style="width:10%;" id="roleName">HearingDate</th>
+                                                <th style="width:60%;" id="Edit">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.AppID </td>
+                                                    <td valign="top" class="text-left">@item.ApplicationMode </td>
+                                                    <td valign="top" class="text-left">@item.Name </td>
+                                                    <td valign="top" class="text-left">@item.AppDate </td>
+                                                    <td valign="top" class="text-left">@item.Status </td>
+                                                    <td valign="top" class="text-left">@item.ResolutionStatus </td>
+                                                    <td valign="top" class="text-left">@item.HearingDateString </td>
+
+                                                    <td> 
+                                                     <div class="row">
+                                                        @if(@item.ActionCode == 12)
+                                                        {
+                                                          <div class="col-auto">
+                                                              <a id="Edit"  class="btn btn-outline-primary ml-3 mt-1"  title="Case Resolution" href="/NFormApplication/AddNFormHearingALC/?id=@item.EncryptedId&ISNew=1&ISView=0"><i class="fas fa-check-circle"></i>Resolution</a>
+                                                          </div>
+                                                        }
+                                                        @*@if (@item.ActionCode != 4 && @item.ActionCode != 7 && @item.ActionCode != 9 && @item.ActionCode != 8 && @item.ActionCode != 10)*@
+                                                        @if (@item.ActionCode == 2 || @item.ActionCode == 3 || @item.ActionCode == 6)
+                                                        {
+                                                           <div class="col-auto">
+                                                              <a id="Edit" class="btn btn-outline-primary ml-2 mt-1"  title="Hearing" href="/NFormApplication/AddNFormHearingALC/?id=@item.EncryptedId&ISNew=0&ISView=0"><i class="fas fa-calendar-alt"></i>Hearing</a>
+                                                          </div>
+                                                           <div class="col-auto">
+                                                              <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  title="Case Resolution" href="/NFormApplication/AddNFormHearingALC/?id=@item.EncryptedId&ISNew=1&ISView=0"><i class="fas fa-check-circle"></i>Resolution</a>
+                                                            </div>
+                                                            @* @if(@item.UserMode == 1 && @item.IsSubmit == true)
+                                                {
+                                                <a id="Edit" href="/ReinstatementAppliaction/AddReinstatementAppliaction/?id=@item.EncryptedId" ><i class="fas fa-calendar-alt"></i></a>
+                                                }*@
+                                                            @* <a id="Delete" onclick="return DeletePositionRecord(@item.ApplicationID);"><i class="fas fa-trash-alt"></i></a>*@
+                                                        }
+                                                        else if (@item.ActionCode != 12)
+                                                        {
+                                                           <div class="col-auto">
+                                                              <a id="Edit"  class="btn btn-outline-primary ml-3 mt-1" title="View" href="/NFormApplication/AddNFormHearingALC/?id=@item.EncryptedId&ISNew=0&ISView=2"><i class="fas fa-eye"></i>View</a>
+                                                           </div>
+                                                        }
+                                                            @if (@item.ActionCode == 8 || @item.ActionCode == 10 || @item.ActionCode == 13)
+                                                        {
+                                                                @if (@item.ActionCode != 13)
+                                                                {
+                                                                    <div class="col-auto">
+                                                                        <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  title=" Review Hearing" href="/NFormApplication/AddNFormHearingALC/?id=@item.EncryptedId&ISNew=0&ISView=1"><i class="fas fa-calendar-alt"></i>Hearing</a>
+                                                                    </div>
+                                                                }
+                                                                @if (@item.ActionCode == 13)
+                                                                {
+                                                                    <div class="col-auto">
+                                                                        <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  title="Review Resolution" href="/NFormApplication/AddNFormHearingALC/?id=@item.EncryptedId&ISNew=2&ISView=0"><i class="fas fa-check-circle"></i>Resolution</a>
+                                                                    </div>
+                                                                }
+                                                            }
+
+                                                        @if (@item.ActionCode == 7)
+                                                        {
+                                                             <div class="col-auto">
+                                                                  <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  title="Approve Review" onclick="Verifyofreview('reviewconformation(@item.EncryptedId,8)')"><i class="fas fa-check"></i>Approve</a>
+                                                            </div>
+                                                             <div class="col-auto">
+                                                                  <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  title="Reject Review" onclick="Verifyofreview('reviewconformation(@item.EncryptedId,9)')"><i class="fas fa-times"></i>Reject</a>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a data-toggle="modal" class="btn btn-outline-primary ml-3 mt-1"  data-target="#exampleModal_@item.ID" id="DivAssign"><i class="fas fa-comments"></i>Comments</a>
+                                                            </div>
+                                                        }
+
+                                                     </div>
+                                                        <div class="modal fade" id="exampleModal_@item.ID">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                            Review Reason by Applicant
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">
+                                                                                ×
+                                                                            </span>
+                                                                        </button>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <div class="col-md-6">
+                                                                                    <textarea id="Comments_@item.ID" name="w3review" rows="4" cols="50" disabled>@item.ReviewReason</textarea>
+                                                                                    <span class="text-danger ValidationSpan" id="Spancomment_@item.ID" style="display:none;">Please Enter Comment</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        $(document).ready(function() {
+            $('#NFormACLList').dataTable({});
+        });
+
+        function Verifyofreview(string) {
+
+            swal({
+                title: "Are you sure?",
+                text: "",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        debugger;
+                        var result = string.split('(');
+                        var data = result[1].split(',')[0];
+                        var data1 = result[1].split(',')[1].split(')')[0];
+                        window[result[0]](data, data1);
+                    }
+                    else {
+                        swal("Your Recored is safe!");
+                    }
+                });
+        }
+
+        function reviewconformation(string, Status) {
+            debugger;
+            var myData = {
+                id: string,
+                Status: Status,
+                URL: document.URL,
+            };
+            $.ajax
+                ({
+                    type: "POST",
+                    url: "/NFormApplication/ApproveOrRejectReviewFromACL",
+                    headers: { "XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value },
+                    dataType: "json",
+                    data: myData,
+                    success: function(data) {
+                        debugger;
+
+
+                        if (data.data.ErrorCode == 0) {
+                            swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/NFormApplication/NFormACLList";
+                                });
+                        }
+                        else {
+                            swal(data.data.ErrorMassage);
+                        }
+
+                    },
+                    error: function(request, message, error) {
+                        debugger;
+                        swal(request.responseJSON);
+                    }
+                })
+
+        }
+    </script>
+
+}

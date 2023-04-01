@@ -1,0 +1,87 @@
+﻿@model  IEnumerable<FTS.Model.Entities.ConciliationApplicationModel>
+@{
+     ViewBag.Title = "ACOL List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        @*<a id="Add" href="/ReinstatementAppliaction/AddReinstatementAppliaction/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i>Add New</a>*@
+                                              <br>
+                                        <br>
+                                    </div>
+                                    <table id="ConciliationDCLClerkList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                  <th style="width:10%;" id="roleName">Sr.No.</th>
+                                                 <th style="width:10%;" id="roleName">Referenece No.</th>
+                                                 <th style="width:10%;" id="roleName">Application Id</th>
+                                                  <th style="width:20%;" id="roleName">Applicant Name</th>
+                                                   <th style="width:10;" id="roleName">Application Mode</th>
+                                                   <th style="width:10%;" id="roleName">Application Date</th>
+                                                   <th style="width:20%;" id="roleName">Status</th>
+                                                  <th  style="width:20%;" id="Edit">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @foreach (var item in Model)
+                                          {
+                                            <tr> 
+                                                @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                 <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.AppID </td>
+                                                        <td valign="top" class="text-left">@item.ApplicationID </td>
+                                                <td valign="top" class="text-left">@item.ApplicantName </td>
+                                                   <th style="width:30;" id="roleName">@item.ApplicationMode</th>
+                                                  <td valign="top" class="text-left">@item.AppDate </td>
+                                                   <th style="width:30;" id="roleName">@item.StatusName</th>
+                                                <td>
+                                                     @*<a id="Edit" href="/ConciliationAppliaction/AddConciliationHearingALC/?id=@item.EncryptedId" ><i class="fas fa-pen"></i></a>*@
+
+                                                     @*<a id="Edit"  title="Hearing" href="/ConciliationApplication/AddConciliationHearingACL/?id=@item.EncryptedId&ISNew=0" ><i class="fas fa-calendar-alt"></i></a>
+                                                     <a id="Edit"  title="Settlement" href="/ConciliationApplication/AddConciliationHearingACL/?id=@item.EncryptedId&ISNew=1" ><i class="fas fa-check-circle"></i></a>*@
+                                                     <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  title="Verify" href="/ConciliationApplication/AddConciliationDCLClerk/?id=@item.EncryptedId&ISNew=2" ><i class="fas fa-share"></i>Forward DCL</a>
+                                                    @* @if(@item.UserMode == 1 && @item.IsSubmit == true)
+                                                        {
+                                                         <a id="Edit" href="/ReinstatementAppliaction/AddReinstatementAppliaction/?id=@item.EncryptedId" ><i class="fas fa-calendar-alt"></i></a>
+                                                        }*@
+                                                        @* <a id="Delete" onclick="return DeletePositionRecord(@item.ApplicationID);"><i class="fas fa-trash-alt"></i></a>*@
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <script>
+
+      $( document ).ready(function() {
+        $('#ConciliationDCLClerkList').dataTable( {} );
+    });
+
+        </script>
+  
+}

@@ -1,0 +1,517 @@
+﻿@model FTS.Model.Entities.RegistrationCLRAModel
+@{
+    ViewBag.Title = "Registration CLRA";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+ <div class="content-wrapper">
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Application For Registration - CLRA</h3>
+                        <div class="form-group">
+                            <div class="row">                             
+                               <div class="col-md-12">
+                                    
+                                    @Html.Label("Establishment Name:")<span class="text-danger"> *</span>  
+                                     @Html.HiddenFor(e => e.RegistrationIDEdit, new { @ID="RegistrationID"})
+                                    @Html.TextBoxFor(e => e.EstablishmentName, new { @class = "form-control", @ID="EstablishmentName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanEstablishmentName" style="display:none;">Please Add Establishment Name</span>
+                                 
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">                             
+                                <div class="col-md-12">
+                                    
+                                    @Html.Label("Address Of The Establishment:")<span class="text-danger"> *</span>                                       
+                                    @Html.TextAreaFor(e => e.EstablishmentAddress, new { @class = "form-control", @ID="EstablishmentAddress", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanEstablishmentAddress" style="display:none;">Please Add Establishment Address</span>
+                                 
+                                </div>
+                             </div>
+                        </div>
+
+
+                       <div class="form-group">                              
+                            <div class="row">                                            
+                                <div class="col-md-6">                                
+                                @Html.Label(" Establishment District:")<span class="text-danger"> *</span>  
+                                <br>
+                                @Html.DropDownListFor(e => e.DistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID", })
+                                <span class="text-danger ValidationSpan" id="SpanDistrictID" style="display:none;">Please Select District ID </span>
+                                </div>
+
+                               <div class="col-md-6">   
+                               @Html.Label("Establishment Taluka:") <span class="text-danger"> *</span>  
+                               <br>
+                               @Html.DropDownListFor(e => e.TalukaID, new SelectList(Model.Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TalukaID", })
+                               <span class="text-danger ValidationSpan" id="SpanTalukaID" style="display:none;">Please Select Taluka</span>
+                               </div>
+                            </div>
+                       </div>
+
+
+                       <div class="form-group">                              
+                           <div class="row">                                            
+                               <div class="col-md-6"> 
+                                    
+                                    @Html.Label("Pincode:") <span class="text-danger"> *</span>                                    
+                                    @Html.TextBoxFor(e => e.Pincode, new { @class = "form-control", @ID="Pincode", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanPincode" style="display:none;">Please Add Pincode</span>
+                                    
+                               </div>
+                           </div>
+                       </div>
+
+
+                       <div class="form-group">
+                            <div class="row">                             
+                               <div class="col-md-12">
+                                   
+                                    @Html.Label("Type Of Business/Trade/Industry/Manufacturer/Occupation Carried on in the Establishment:") <span class="text-danger"> *</span>                               
+                                    @Html.TextBoxFor(e => e.TypeOfBusinessTrade, new { @class = "form-control", @ID="TypeOfBusinessTrade", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanTypeOfBusinessTrade" style="display:none;">Please Add Type Of Business/Trade</span>
+                                   
+                                </div>
+                             </div>
+                        </div>
+
+                        <h4 class="card-title">Principal Employer Information:</h4>
+
+                         <div class="form-group">
+                            <div class="row">                             
+                                <div class="col-md-12">
+                                   
+                                    @Html.Label("Principal Employer Name:")<span class="text-danger"> *</span>                                      
+                                    @Html.TextBoxFor(e => e.PrincipalEmployerName, new { @class = "form-control", @ID="PrincipalEmployerName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanPrincipalEmployerName" style="display:none;">Please Add Principal Employer Name</span>
+                               
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class="form-group">    
+                             <div class="row">  
+                                                             
+                                      <div class="col-md-12">
+                                       @Html.Label("Father's Name (In Case Of Individuals):")<span class="text-danger"> *</span>                                    
+                                       @Html.TextBoxFor(e => e.FatherName, new { @class = "form-control", @ID="FatherName", required = "required" })
+                                       <span class="text-danger ValidationSpan" id="SpanFatherName" style="display:none;">Please Add Father Name</span>
+                                     </div>                                      
+                                
+                             </div>
+                        </div>
+
+                        <div class="form-group">    
+                             <div class="row">  
+                                                             
+                                      <div class="col-md-12">
+                                       @Html.Label("Principal Employer Address:")<span class="text-danger"> *</span>                                    
+                                       @Html.TextAreaFor(e => e.PrincipalEmployerAddress, new { @class = "form-control", @ID="PrincipalEmployerAddress", required = "required" })
+                                       <span class="text-danger ValidationSpan" id="SpanPrincipalEmployerAddress" style="display:none;">Please Add Principal Employer Address</span>
+                                     </div>                                      
+                               
+                             </div>
+                        </div>
+
+                        <div class="form-group">                              
+                            <div class="row">                                            
+                                <div class="col-md-6">                                
+                                @Html.Label("Employer District:")<span class="text-danger"> *</span>  
+                                <br>
+                                @Html.DropDownListFor(e => e.EmpDistrictID, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EmpDistrictID", })
+                                <span class="text-danger ValidationSpan" id="SpanEmpDistrictID" style="display:none;">Please Select District  </span>
+                                </div>
+
+                               <div class="col-md-6">   
+                               @Html.Label("Employer Taluka:")<span class="text-danger"> *</span>   
+                               <br>
+                               @Html.DropDownListFor(e => e.EmpTalukaID, new SelectList(Model.Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="EmpTalukaID", })
+                               <span class="text-danger ValidationSpan" id="SpanEmpTalukaID" style="display:none;">Please Select Taluka</span>
+                               </div>
+                            </div>
+                       </div>
+                                
+                       
+                        <div class="form-group">                              
+                           <div class="row">                                            
+                               <div class="col-md-6"> 
+                                   
+                                    @Html.Label("Pincode:")<span class="text-danger"> *</span>                                   
+                                    @Html.TextBoxFor(e => e.EmpPincode, new { @class = "form-control", @ID="EmpPincode", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanEmpPincode" style="display:none;">Please Add Pincode</span>
+                                   
+                               </div>
+                           </div>
+                       </div>
+                       <h4 class="card-title">Contractor's Details:</h4>
+                       
+                        <div class="form-group">    
+                             <div class="row">  
+                                                            
+                                      <div class="col-md-12">
+                                       @Html.Label("Contractor Name:")<span class="text-danger"> *</span>                                    
+                                       @Html.TextBoxFor(e => e.ContractorName, new { @class = "form-control", @ID="ContractorName", required = "required" })
+                                       <span class="text-danger ValidationSpan" id="SpanContractorName" style="display:none;">Please Add Contractor Name </span>
+                                     </div>                                      
+                                
+                             </div>
+                        </div>
+                       
+                       
+                       <div class="form-group">    
+                             <div class="row">  
+                                                               
+                                      <div class="col-md-12">
+                                       @Html.Label("Contractor Address:")<span class="text-danger"> *</span>                                    
+                                       @Html.TextAreaFor(e => e.ContractorAddress, new { @class = "form-control", @ID="ContractorAddress", required = "required" })
+                                       <span class="text-danger ValidationSpan" id="SpanContractorAddress" style="display:none;">Please Add Contractor Address</span>
+                                     </div>                                      
+                                
+                             </div>
+                        </div>                     
+                       
+                                          
+                       <div class="form-group">                              
+                              <div class="row">                                            
+                                   <div class="col-md-6"> 
+                                   @Html.Label("Nature Of Work:")<span class="text-danger"> *</span>                                  
+                                   @Html.TextBoxFor(e => e.NatureOfWork, new { @class = "form-control", @ID="NatureOfWork", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanNatureOfWork" style="display:none;">Please Add Nature Of Work</span>
+                                   </div>
+
+                                   <div class="col-md-6">
+                                   @Html.Label("Max No Cont Lab:")<span class="text-danger"> *</span>                                   
+                                   @Html.TextBoxFor(e => e.MaxNoContLab, new { @class = "form-control", @ID="MaxNoContLab", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanMaxNoContLab" style="display:none;">Please Add Max. No. Cont. Lab.</span>
+                                   </div>
+                              </div>
+                        </div>                             
+                               
+
+                       <div class="form-group">                              
+                            <div class="row">                                            
+                                 <div class="col-md-6">                                  
+                                  @Html.Label("Estimated Date Of Commencement:")<span class="text-danger"> *</span>     
+                                  <br>
+                                  @Html.TextBoxFor(e => e.EstimateddateofCommencement, new { @class = "form-control datepicker", @ID="EstimateddateofCommencement", required = "required" })
+                                 <span class="text-danger ValidationSpan" id="SpanEstimateddateofCommencement" style="display:none;">Please Add Estimated Date of Commencement</span>
+                                 </div>
+
+                                 <div class="col-md-6">                                  
+                                 @Html.Label("Estimated Date Of Completion:")<span class="text-danger"> *</span>   
+                                 <br>
+                                 @Html.TextBoxFor(e => e.EstimatedDateOfCompletion, new { @class = "form-control datepicker", @ID="EstimatedDateOfCompletion", required = "required" })
+                                 <span class="text-danger ValidationSpan" id="SpanEstimatedDateOfCompletion" style="display:none;">Please Add Estimated Date of Completion</span>
+                                 </div>
+                            </div>
+                       </div>
+
+
+                       <h4 class="card-title">Additional Information:</h4>
+
+                       <div class="form-group">                              
+                            <div class="row">                                            
+                                 <div class="col-md-6">  
+                                 @Html.Label("Registration Fees:")<span class="text-danger"> *</span>                                     
+                                 @Html.TextBoxFor(e => e.RegistrationFees, new { @class = "form-control", @ID="RegistrationFees", required = "required" })
+                                 <span class="text-danger ValidationSpan" id="SpanRegistrationFees" style="display:none;">Please Add Registration Fees</span>
+                                 </div>
+
+                                 <div class="col-md-6">                                   
+                                 @Html.Label("Treasury:")<span class="text-danger"> *</span>                                          
+                                 @Html.TextBoxFor(e => e.Treasury, new { @class = "form-control", @ID="Treasury", required = "required" })
+                                 <span class="text-danger ValidationSpan" id="SpanTreasury" style="display:none;">Please Add Treasury</span>
+                                 </div>
+                             </div>
+                       </div>
+
+                      <div class="form-group">                              
+                           <div class="row">                                            
+                                 <div class="col-md-6">  
+                                 @Html.Label("Challan Number:")<span class="text-danger"> *</span>    
+                                 @Html.TextBoxFor(e => e.ChallanNumber, new { @class = "form-control", @ID="ChallanNumber", required = "required" })
+                                 <span class="text-danger ValidationSpan" id="SpanChallanNumber" style="display:none;">Please Add Challan Number</span>
+                                 </div>  
+
+                                 <div class="col-md-6">
+                                 @Html.Label("Challan Date:")<span class="text-danger"> *</span>       
+                                 <br>
+                                 @Html.TextBoxFor(e => e.ChallanDate, new { @class = "form-control", @ID="ChallanDate", required = "required" })
+                                 <span class="text-danger ValidationSpan" id="SpanChallanDate" style="display:none;">Please Add Challan Date</span>
+                                 </div> 
+                            </div>
+                      </div>
+
+                       <div class="form-group">    
+                             <div class="row"> 
+                                      <div class="col-md-12">
+                                       @*<div class="col-md-1" style="margin-top: auto;">*@                                      
+                                       @Html.CheckBoxFor(e => e.Declaration, new { @ID="Declaration"})
+                                       <span>I hereby declare that the particulars given above are true to the best of my knowledge and beliefs.</span>
+                                        @*@Html.Label("I hereby declare that the particulars given above are true to the best of my knowledge and beliefs.")*@
+                                      <span class="text-danger ValidationSpan" id="SpanDeclaration" style="display:none;">Please Check Declaration</span>
+                                     </div>                                      
+                             </div>
+                        </div>           
+                               
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitRegistrationCLRADetails();" />
+                            @Html.ActionLink("Cancel", "index", "RegistrationCLRA", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+      
+    
+
+}
+<script>
+      $("#ChallanDate").kendoDatePicker({
+       format :"dd-MM-yyyy"
+    }); 
+</script>
+<script>     
+        function SubmitRegistrationCLRADetails() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#EstablishmentName").val() == "0" || $("#EstablishmentName").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentName').show();
+            }            
+            
+            if ($("#EstablishmentAddress").val() == "0" || $("#EstablishmentAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstablishmentAddress').show();
+            }
+             if ($("#DistrictID").val() == "0" || $("#DistrictID").val() == "") {
+                ErrorCnt++;
+                $('#SpanDistrictID').show();
+            }
+             if ($("#TalukaID").val() == "0" || $("#TalukaID").val() == "") {
+                ErrorCnt++;
+                $('#SpanTalukaID').show();
+            }
+             if ($("#Pincode").val() == "0" || $("#Pincode").val() == "") {
+                ErrorCnt++;
+                $('#SpanPincode').show();
+            }
+             if ($("#TypeOfBusinessTrade").val() == "0" || $("#TypeOfBusinessTrade").val() == "") {
+                ErrorCnt++;
+                $('#SpanTypeOfBusinessTrade').show();
+            }
+             if ($("#PrincipalEmployerName").val() == "0" || $("#PrincipalEmployerName").val() == "") {
+                ErrorCnt++;
+                $('#SpanPrincipalEmployerName').show();
+            }
+             if ($("#FatherName").val() == "0" || $("#FatherName").val() == "") {
+                ErrorCnt++;
+                $('#SpanFatherName').show();
+            }
+            if ($("#PrincipalEmployerAddress").val() == "0" || $("#PrincipalEmployerAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanPrincipalEmployerAddress').show();
+            }
+
+            if ($("#EmpDistrictID").val() == "0" || $("#EmpDistrictID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmpDistrictID').show();
+            }
+
+            if ($("#EmpTalukaID").val() == "0" || $("#EmpTalukaID").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmpTalukaID').show();
+            }
+             if ($("#EmpPincode").val() == "0" || $("#EmpPincode").val() == "") {
+                ErrorCnt++;
+                $('#SpanEmpPincode').show();
+            }
+
+             if ($("#ContractorName").val() == "0" || $("#ContractorName").val() == "") {
+                ErrorCnt++;
+                $('#SpanContractorName').show();
+            }
+
+             if ($("#ContractorAddress").val() == "0" || $("#ContractorAddress").val() == "") {
+                ErrorCnt++;
+                $('#SpanContractorAddress').show();
+            }
+            if ($("#NatureOfWork").val() == "0" || $("#NatureOfWork").val() == "") {
+                ErrorCnt++;
+                $('#SpanNatureOfWork').show();
+            }
+            if ($("#MaxNoContLab").val() == "0" || $("#MaxNoContLab").val() == "") {
+                ErrorCnt++;
+                $('#SpaMaxNoContLab').show();
+            }
+            if ($("#EstimateddateofCommencement").val() == "0" || $("#EstimateddateofCommencement").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstimateddateofCommencement').show();
+            }
+            if ($("#EstimatedDateOfCompletion").val() == "0" || $("#EstimatedDateOfCompletion").val() == "") {
+                ErrorCnt++;
+                $('#SpanEstimatedDateOfCompletion').show();
+            }
+               if ($("#RegistrationFees").val() == "0" || $("#RegistrationFees").val() == "") {
+                ErrorCnt++;
+                $('#SpanRegistrationFees').show();
+            }
+               if ($("#Treasury").val() == "0" || $("#Treasury").val() == "") {
+                ErrorCnt++;
+                $('#SpanTreasury').show();
+            }
+               if ($("#ChallanNumber").val() == "0" || $("#ChallanNumber").val() == "") {
+                ErrorCnt++;
+                $('#SpanChallanNumber').show();
+            }
+            if ($("#ChallanDate").val() == "0" || $("#ChallanDate").val() == "") {
+                ErrorCnt++;
+                $('#SpanChallanDate').show();
+            }
+            if ($("#Declaration").val() == "0" || $("#Declaration").val() == "") {
+                ErrorCnt++;
+                $('#SpanDeclaration').show();
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    RegistrationID: $('#RegistrationID').val(),
+                    EstablishmentName: $('#EstablishmentName').val(),
+                     EstablishmentAddress: $('#EstablishmentAddress').val(),
+                     DistrictID: $('#DistrictID').val(),
+                     TalukaID: $('#TalukaID').val(),
+                     Pincode: $('#Pincode').val(),                     
+                     TypeOfBusinessTrade: $('#TypeOfBusinessTrade').val(),
+                     PrincipalEmployerName: $('#PrincipalEmployerName').val(),
+                     FatherName: $('#FatherName').val(),
+                     PrincipalEmployerAddress: $('#PrincipalEmployerAddress').val(),
+                     EmpDistrictID: $('#EmpDistrictID').val(),
+                     EmpTalukaID: $('#EmpTalukaID').val(),
+                     EmpPincode: $('#EmpPincode').val(),                    
+                     ContractorName: $('#ContractorName').val(),
+                     ContractorAddress: $('#ContractorAddress').val(),  
+                     NatureOfWork: $('#NatureOfWork').val(),
+                     MaxNoContLab: $('#MaxNoContLab').val(),
+                     EstimateddateofCommencement: $('#EstimateddateofCommencement').val(),
+                     EstimatedDateOfCompletion: $('#EstimatedDateOfCompletion').val(),
+                     RegistrationFees: $('#RegistrationFees').val(),
+                     Treasury: $('#Treasury').val(),
+                     ChallanNumber: $('#ChallanNumber').val(),
+                     ChallanDate: $('#ChallanDate').val(),
+                     Declaration: $('#Declaration').val(),
+                     IsActive: $('#IsActive').val(),
+                    //IsDeleted: 0
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/RegistrationCLRA/SaveRegistrationCLRA",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                window.location.href = "/RegistrationCLRA/Index";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                                alert('Something went wrong!');
+                            }
+
+                        },
+
+                        error: function() {
+                            alert('Something went wrong!');
+                        }
+                    })
+            }
+    }
+        $(function () {
+        $("#DistrictID").change(function () {
+             
+                $.ajax({
+                    type: "GET",
+                    url: "/RegistrationCLRA/AllList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#RegistrationID").val(), DistrictID: $("#DistrictID").val() },
+                    success: function (response) {                        
+                       
+                        $("#TalukaID").empty();
+                        var row = "";
+                         row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                          $("#TalukaID").html(row).trigger('chosen:updated');
+
+                       @* if (response.data.AreaList != "")
+                        {
+                      bindAreaDropdown(response.data.AreaList);
+                     
+                        }*@
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        //respone will be returned here
+                        $("#error").val(response.responseText);
+                    }
+                });
+            });
+        });
+
+        $(function () {
+        $("#EmpDistrictID").change(function () {
+             
+                $.ajax({
+                    type: "GET",
+                    url: "/RegistrationCLRA/AllList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#RegistrationID").val(), DistrictID: $("#EmpDistrictID").val() },
+                    success: function (response) {                        
+                       
+                        $("#NewTalukaID").empty();
+                        var row = "";
+                         row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                          $("#EmpTalukaID").html(row).trigger('chosen:updated');
+
+                       @* if (response.data.AreaList != "")
+                        {
+                      bindAreaDropdown(response.data.AreaList);
+                     
+                        }*@
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        //respone will be returned here
+                        $("#error").val(response.responseText);
+                    }
+                });
+            });
+        });
+
+   </script>
+
+     

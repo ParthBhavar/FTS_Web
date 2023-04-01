@@ -1,0 +1,1226 @@
+﻿@model FTS.Model.Entities.ConciliationApplicationModel
+@{
+    ViewBag.Title = "Conciliation Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+          <br />
+    <section>
+        <h3 style="font-weight:bold;">Conciliation Trade Union Details</h3>
+        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 pull-right text-right text-danger"><span class="required">All <span class="text-danger">*</span> fields are compulsory</span></div>
+    </section>   
+    @Html.HiddenFor(e => e.ApplicationID , new { @ID="getApplicationID"})
+    @Html.HiddenFor(e => e.ISNew , new { @ID="getISNew"})
+       @Html.HiddenFor(e => e.IP_Address , new { @ID="IP_Address"})
+ <div class="content-wrapper">
+
+        <div class="row" id="Establis">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                         <nav>
+            <div class="nav nav-pills nav-fill" id="nav-tab" style="padding-bottom: 0rem;">
+              <a class="nav-link" id="step1-tab" data-bs-toggle="tab">Step 1</a>
+                 <a class="nav-link" id="step1-tab" data-bs-toggle="tab">Step 2</a>
+                  <a class="nav-link active" id="step1-tab " data-bs-toggle="tab">Step 3</a>
+                  <a class="nav-link" id="step4-tab" data-bs-toggle="tab">Step 4</a>
+
+             @* @if(@Model.IsSubmit == true )
+             {
+              <a class="nav-link" id="step4-tab" data-bs-toggle="tab"  href="/ConciliationApplication/AddConcilUploadDocument?ApplicationID=@Model.ApplicationID">Step 4</a>
+             }
+              else
+             {
+                 <a class="nav-link" id="step4-tab" data-bs-toggle="tab">Step 4</a>
+             }*@
+            </div>
+          </nav>
+          <br>
+           <div>
+              <a id="Edit" class="btn btn-info" onclick="Fn_AddNewTradUniondetails()" ><i class="fas fa-folder-plus"></i> More TradeUnion </a>
+           </div>
+            <br>
+                <div id="TextBoxContainer">
+
+                </div>
+                       @*    <div class="form-group">
+                            <div class="row">
+                                 <div class="col-md-6">
+                                     @Html.Label("Union Registration Number: / યુનિયન રજીસ્ટ્રેશન નંબર:")<span class="text-danger">*</span>
+                                    <input id="ddlRegistrationNo" class="form-control" value="@Model.TradeUnionRegistrationNo" style="width:100%;" />
+                                </div>
+                                <div class="col-md-6">
+                                     @Html.Label("Name of Trade Union: / ટ્રેડ યુનિયનનું નામ:")<span class="text-danger">*</span>
+                                    @Html.HiddenFor(e => e.ApplicationID , new { @ID="ApplicationID"})
+                                    @Html.HiddenFor(e => e.TradeUnionTaluka , new { @ID="TradunionID"})
+                                   @Html.HiddenFor(e => e.TradeUnionRegistrationNo , new { @ID="RegistrationNo"})
+                                    @Html.TextBoxFor(e => e.TradeUnionRegistrationName, new { @class = "form-control", @ID="txt_RegistrationName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanApplicantName" style="display:none;">Please Enter TradeUnion Registration Name</span>
+                                </div>
+                            </div>
+                        </div>
+                 
+                           <div class="form-group">
+                            <div class="row">
+                                  <div class="col-md-5">
+                                    @Html.Label("Permanent Address: /કાયમી સરનામુ:")<span class="text-danger">*</span>
+                                   @Html.TextAreaFor(e => e.TradeUnionAddress, new { @class = "form-control", @ID="PAddress", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanTradAddress" style="display:none;">Please Enter Address</span>
+                                  </div>
+                                   <div class="col-md-2 pt-4">
+                                    @Html.Label("Copy Permanent Address:")
+                                    @Html.CheckBox("SameasPaddress", new { @ID="SameasPaddress"})
+                                    </div>
+                                  <div class="col-md-5">
+                                      @Html.Label("Secondary Address: / ગૌણ સરનામું")
+                                   @Html.TextAreaFor(e => e.SAddress, new { @class = "form-control", @ID="SAddress", required = "required" })
+                                </div>
+                                 
+                        </div>
+                         </div>  
+
+                           <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("District: / જિલ્લો:")<span class="text-danger">*</span>
+                                    @Html.DropDownListFor(e => e.TradeUnionDistrict, new SelectList(Model.Districtlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DistrictID"})
+                                   <span class="text-danger ValidationSpan" id="Spandistrict" style="display:none;">Please Select District</span>
+                                </div>
+
+                                 <div class="col-md-4">
+                                    @Html.Label("Taluka: / તાલુકો:")<span class="text-danger">*</span>
+                                   @Html.DropDownListFor(e => e.TradeUnionTaluka, new SelectList(Model.Talukalist,"DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="TalukaID" })
+                                <span class="text-danger ValidationSpan" id="Spantaluka" style="display:none;">Please Select Taluka</span>
+                                </div>
+                                   <div class="col-md-4">
+                                    @Html.Label("Pincode: / પીન કોડ:")<span class="text-danger">*</span>
+                                      @Html.TextBoxFor(e => e.TradeUnionPincode, new { @class = "form-control", @ID="Pincode", required = "required",maxlength="6", oninput="numberOnly(this.id);" })
+                                       <span class="text-danger ValidationSpan" id="Spanpincode" style="display:none;">Please Enter Pincode</span>
+                                       <span class="text-danger ValidationSpan" id="Spanlengthpincode" style="display:none;">Please Enter 6 digit pin code</span>
+                                        <span class="text-danger ValidationSpan" id="spaninvalid" style="display:none;">Invalid Pincode</span>
+                                </div>
+                               
+                               
+                        </div>
+                         </div>  
+
+                           <div class="form-group">
+                            <div class="row">
+                           <div class="col-md-4">
+                                    @Html.Label("Employees in Establishment: / સ્થાપનામાં કર્મચારીઓ:")
+                                   @Html.TextBoxFor(e => e.TotalWorkingEmpInEstablishment, new { @class = "form-control", @ID="txtWorkingEmpEstabl", required = "required" })
+                                <span class="text-danger ValidationSpan" id="SpanTotalEstablish" style="display:none;">Please Select Taluka</span>
+                                </div>
+                             <div class="col-md-4">
+                                    @Html.Label("Employees in Union: / યુનિયનમાં કર્મચારીઓ:")
+                                  @Html.TextBoxFor(e => e.TotalNoOfWorkingEmpInUnion, new { @class = "form-control", @ID="txtTotalNoOfWorkingEmpInUnion", required = "required" })
+                                <span class="text-danger ValidationSpan" id="Spanempunion" style="display:none;">Please enter Working employee in union</span>
+                                </div>
+                                 <div class="col-md-4">
+                                    @Html.Label("Employees under Demand: / માંગ હેઠળ કર્મચારીઓ")
+                                   @Html.TextBoxFor(e => e.NumberOfEmpUnderDemand, new { @class = "form-control", @ID="txtNumberOfEmpUnderDemand", required = "required" })
+                                <span class="text-danger ValidationSpan" id="SpanNumberOfEmpDemand" style="display:none;">This field can't be empty</span>
+                                <span class="text-danger ValidationSpan" id="Spangreatervalidation" style="display:none;">Employees under Demand Can't be greater than Employees in Establishment</span>
+                            </div>
+                        </div>
+                         </div>  
+                           <div class="form-group">
+                            <div class="row">
+                          
+                             <div class="col-md-6">
+                                    @Html.Label("Department Name: / વિભાગનું નામ: ")
+                                    @Html.TextBoxFor(e => e.DepartmentName, new { @class = "form-control", @ID="txtDepartmentName", required = "required" })
+                                <span class="text-danger ValidationSpan" id="Spandeptname" style="display:none;">Please Select Taluka</span>
+                             </div>
+                                  
+                             <div class="col-md-6">
+                                    @Html.Label("Business of Establishment: / સ્થાપના વ્યવસાય:")
+                                    @Html.TextBoxFor(e => e.BusinessOfEstablishment, new { @class = "form-control", @ID="txtBusinessOfEstablishment", required = "required" })
+                                <span class="text-danger ValidationSpan" id="Spantaluka" style="display:none;">Please Select Taluka</span>
+                             </div>
+                        </div>
+                         </div>  
+                           <div class="form-group">
+                            <div class="row">
+                           <div class="col-md-6">
+                                    @Html.Label("Demand: / માંગ:")<span class="text-danger">*</span>
+                                   @Html.TextBoxFor(e => e.Demand, new { @class = "form-control", @ID="txtDemand", required = "required" })
+                                <span class="text-danger ValidationSpan" id="Spandemank" style="display:none;">Please Enter Demand</span>
+                                </div>
+                             <div class="col-md-6">
+                                    @Html.Label("Remarks: / ટિપ્પણી:")
+                                   @Html.TextBoxFor(e => e.Remarks, new { @class = "form-control", @ID="txtRemarks", required = "required" })
+                             </div>
+                        </div>
+                         </div> *@
+
+                          <div class="form-group">
+                            @if(@Model.IsSubmit == true )
+                            {
+                                 <a id="Edit" class="btn btn-info"  href="/ConciliationApplication/AddConciliationEstablishment?ApplicationID=@Model.ApplicationID&ISNew=1" > Previous</a>
+                                 <a id="Edit" class="btn btn-info"  href="/ConciliationApplication/AddConcilUploadDocument?ApplicationID=@Model.ApplicationID" > Next</a>
+                            }
+                            else
+                            {
+                            <a id="Edit" class="btn btn-info"  href="/ConciliationApplication/AddConciliationEstablishment?ApplicationID=@Model.ApplicationID&ISNew=1" > Previous</a>
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitAppliaction();" />
+                            }
+                            @Html.ActionLink("Cancel", "index", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    </div>
+ <script>
+
+      $("#txtNumberOfEmpUnderDemand").change(function () {
+            var workingempest = parseInt(document.getElementById("txtWorkingEmpEstabl").value);
+            var numberempdemand = parseInt(document.getElementById("txtNumberOfEmpUnderDemand").value);
+            if (workingempest < numberempdemand) {
+                swal("Employees under Demand Can't be greater than Employees in Establishment");
+                document.getElementById("txtNumberOfEmpUnderDemand").value = "";
+            }
+        });
+         
+     
+       
+
+          $(document).ready(function () {
+            debugger;
+             
+            @*bindTradunionDropdown(@Html.Raw(Json.Serialize(Model.TradunionList)));*@
+            GetTradeunionRecord();
+           @* bindAreaDropdown(@Html.Raw(Json.Serialize(Model.AreaList))); *@
+            Districtlist = @Html.Raw(Json.Serialize(Model.Districtlist))
+
+             if ($("#Pincode_").val() == "0") {
+                 $("#Pincode_").val(""); 
+              }
+       if ($("#WorkingEmpEstabl_").val() == "0"){
+           $("#WorkingEmpEstabl_").val("");
+       }
+       if ($("#TotalNoOfWorkingEmpInUnion_").val() == "0"){
+           $("#TotalNoOfWorkingEmpInUnion_").val("");
+       }
+       if ($("#NumberOfEmpUnderDemand_").val() == "0"){
+           $("#NumberOfEmpUnderDemand_").val("");
+       }
+            });
+              
+
+     function bindAreaDropdown(obj) {
+    debugger;
+    $("#ddlArea").kendoMultiColumnComboBox({
+        dataTextField: "DisplayValue",
+        ataValueField: "DataValue",
+        height: 520,
+        columns: [
+            { field: "displayValue", title: "Registration Name", width: 200 },
+        ],
+        filter: "contains",
+        filterFields: ["DisplayValue"],
+        dataSource: {
+            data: obj
+        },
+        change: function(e) {
+            debugger;
+            if (this.dataSource.data().length > 0) {
+                if (this.dataSource.data()[this.selectedIndex] != undefined) {
+                    $('#ZoneID').val(this.dataSource.data()[this.selectedIndex].ZoneID);
+                    $('#AreaID').val(this.dataSource.data()[this.selectedIndex].DataValue);
+                    @*$('#ddlArea').val(this.dataSource.data()[this.selectedIndex].areaID);*@
+        }
+            }
+        }
+      
+
+    });
+    }
+
+     @*function bindTradunionDropdown(obj) {
+             debugger;
+        $("#ddlRegistrationNo").kendoMultiColumnComboBox({
+            dataTextField: "RegistrationNo",
+            DataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "RegistrationNo", title: "Regis. No", width: 100 },
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue","RegistrationNo"],
+            dataSource: {
+                data: obj
+            },
+             change: function (e) {
+                debugger;
+                if (this.dataSource.data().length > 0) {
+         
+        if (this.dataSource.data()[this.selectedIndex] != undefined) {
+                    $('#txt_RegistrationName').val(this.dataSource.data()[this.selectedIndex].DisplayValue);
+                    $('#RegistrationNo').val(this.dataSource.data()[this.selectedIndex].RegistrationNo);
+        }
+         else{
+                   $('#ddlArea').data("kendoMultiColumnComboBox").value('');
+                      swal("Please Select Valid Area");
+                   }
+                }
+            }
+
+        });
+    }*@
+    function bindTradunionDropdown(id) {
+             debugger;
+        $("#ddlTradeRegistrationNo_"+id).kendoMultiColumnComboBox({
+            dataTextField: "RegistrationNo",
+            DataValueField: "DataValue",
+            height: 520,
+            columns: [
+                { field: "RegistrationNo", title: "Regis. No", width: 100 },
+                { field: "DisplayValue", title: "Registration Name", width: 200 },
+            ],
+            filter: "contains",
+            filterFields: ["DisplayValue","RegistrationNo"],
+            dataSource: { 
+                data: @Html.Raw(Json.Serialize(Model.TradunionList)),
+            },
+             change: function (e) {
+                debugger;
+                if (this.dataSource.data().length > 0) {
+         
+        if (this.dataSource.data()[this.selectedIndex] != undefined) {
+                    $('#TradeUnionRegistrationName_'+ id).val(this.dataSource.data()[this.selectedIndex].DisplayValue);
+                    $('#TradeUnionRegistrationNo_'+ id).val(this.dataSource.data()[this.selectedIndex].RegistrationNo);
+                     $('#ddlTradeRegistrationNo_'+id).val(this.dataSource.data()[this.selectedIndex].RegistrationNo);
+        }
+         @*else{
+                   $('#ddlArea').data("kendoMultiColumnComboBox").value('');
+                      swal("Please Select Valid Area");
+                   }*@
+                }
+            }
+
+        });
+    }
+
+     $(function () {
+        $("#DistrictID").change(function () {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: "/ConciliationApplication/AllList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#EstablisDetailID").val(), DistrictID: $("#DistrictID").val() },
+                    success: function (response) {
+                        
+                        $("#ddlArea").kendoMultiColumnComboBox().empty();
+                        $("#TalukaID").empty();
+                        var row = "";
+                         row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                          $("#TalukaID").html(row).trigger('chosen:updated');
+
+                        if (response.data.AreaList != "")
+                        {
+                      bindAreaDropdown(response.data.AreaList);
+                     
+                        }
+                    },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                   @* error: function (response) {
+                        respone will be returned here
+                        $("#error").val(response.responseText);
+                    }*@
+                    error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                });
+            });
+        });
+
+            $("#txtWorkingEmpEstabl").bind("keypress", function (e) {
+        debugger
+       var keyCode = e.which ? e.which : e.keyCode
+       if (!(keyCode >= 48 && keyCode <= 57)) {
+
+           return false;
+       } 
+
+   });
+
+    $("#Pincode").bind("keypress", function (e) {
+        debugger
+       var keyCode = e.which ? e.which : e.keyCode
+       if (!(keyCode >= 48 && keyCode <= 57)) {
+           return false;
+       } 
+
+   });   
+   
+            $("#TotalNoOfWorkingEmpInUnion").bind("keypress", function (e) {
+        debugger
+       var keyCode = e.which ? e.which : e.keyCode
+       if (!(keyCode >= 48 && keyCode <= 57)) {
+
+           return false;
+       } 
+
+   }); 
+
+   $("#NumberOfEmpUnderDemand").change(function () {
+            var workingempest = parseInt(document.getElementById("txtWorkingEmpEstabl").value);
+            var numberempdemand = parseInt(document.getElementById("txtNumberOfEmpUnderDemand").value);
+            if (workingempest < numberempdemand) {
+                swal("Employees under Demand Can't be greater than Employees in Establishment");
+                document.getElementById("txtNumberOfEmpUnderDemand").value = "";
+            }
+        });
+
+   $("#txtNumberOfEmpUnderDemand").bind("keypress", function (e) {
+        debugger
+       var keyCode = e.which ? e.which : e.keyCode
+       if (!(keyCode >= 48 && keyCode <= 57)) {
+
+           return false;
+       } 
+
+   });
+    function callChangefunc(id){
+          $.ajax({
+                    type: "GET",
+                    url: "/ConciliationApplication/AllList",
+                    headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                    data: { mode: $("#TradeDetailID_"+id).val(), DistrictID: $("#DistrictID_"+id).val() },
+                    success: function (response) {
+                        debugger;
+                        $("#ddlArea_"+id).kendoMultiColumnComboBox().empty();
+                        $("#TalukaID_"+id).empty();
+                        var row = "";
+                         row += "<option value='none' selected>Select</option>";
+                         for (var i = 0; i < response.data.Talukalist.length; i++) {
+                            row += "<option value=" + response.data.Talukalist[i].DataValue + ">" + response.data.Talukalist[i].DisplayValue + "</option>";
+                        }
+                          $("#TalukaID_"+id).html(row).trigger('chosen:updated');
+
+                         @* if (response.data.AreaList != "") {
+                            $("#DivArea_").show();
+                            bindAreaDropdown(response.data.AreaList);
+
+                        }
+                        else {
+                            $("#DivArea_"+id).hide();
+                        }*@
+                          
+                        if (response.data.AreaList != "")
+                        {
+                          $("#DivArea_" + id).show();    
+                      bindAreaDropdown(id,response.data.AreaList);
+                    
+                        }
+                          else {
+                    $("#DivArea_" + id).hide();
+                    $("#ZoneID_" + id).val();
+                    $("#AreaID_" + id).val();
+                }
+                    },
+                    failure: function (response) {
+                        swal(response.responseText);
+                    },
+                    @*error: function (response) {
+                        respone will be returned here
+                        $("#error").val(response.responseText);
+                    }*@
+                    error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                });
+         }
+            
+        function SubmitAppliaction() {
+            debugger;
+             var ErrorCnt = 0;
+           @*   var pincodeEx = /^[1-9][0-9]{5}$/;*@
+              var pincoderegx = "[1-9][1-9][0-9]{4}$";
+             var pincode = $("#Pincode").val();
+            $('.ValidationSpan').hide();
+             var i = E;
+             var v;
+             for (v = 0; v < i; ++v) {
+
+            if ($("#TradeUnionRegistrationName_" + v + "").val() == "0" || $("#TradeUnionRegistrationName_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanEstablishmentName_" + v + "").show();
+            }
+   
+            if ($("#TotalWorkingEmpInEstablishment_" + v + "").val() == "0" || $("#TotalWorkingEmpInEstablishment_" + v + "").val() == "") {
+                ErrorCnt++;
+                 $("#SpanTotalEstablish_" + v + "").show();
+            }
+           @* if ($("#txtWorkingEmpEstabl").val() != "0" || $("#txtWorkingEmpEstabl").val() != "") {
+                if ($("#txtNumberOfEmpUnderDemand").val() > $("#txtWorkingEmpEstabl").val()) {
+                ErrorCnt++;
+                $('#Spangreatervalidation').show();
+                }
+            }*@
+
+            if ($("#Demand_" + v + "").val() == "0" || $("#Demand_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#Spandemank_" + v + "").show();
+            }
+
+            if ($("#TotalNoOfWorkingEmpInUnion_" + v + "").val() == "0" || $("#TotalNoOfWorkingEmpInUnion_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#Spanempunion_" + v + "").show();
+            }    
+             if ($("#NumberOfEmpUnderDemand_" + v + "").val() == "0" || $("#NumberOfEmpUnderDemand_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanNumberOfEmpDemand_" + v + "").show();
+            }
+            @*if ($("#TradeUnionSAddress_" + v + "").val() == "0" || $("#TradeUnionSAddress_" + v + "").val() == "") {
+                ErrorCnt++;
+                $('#Spanempunion').show();
+            }*@
+             if ($("#TradeUnionPAddress_" + v + "").val() == "0" || $("#TradeUnionPAddress_" + v +"").val() == "") {
+                ErrorCnt++;
+                 $("#SpanPAddress_" + v + "").show();
+            }
+              if ($("#DistrictID_" + v + "").val() == "0" || $("#DistrictID_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanDistrictddl_" + v + "").show();
+            }
+             if ($("#TalukaID_" + v + "").val() == "0" || $("#TalukaID_" + v + "").val() == "") {
+                ErrorCnt++;
+                 $("#Spantaluka_" + v + "").show();
+            }
+              var pincode = $("#Pincode_" + v + "").val();
+             if ($("#Pincode_" + v + "").val() == "0" || $("#Pincode_" + v + "").val() == "") {
+                ErrorCnt++;
+                $("#SpanPincode_" + v + "").show();
+             }
+             else if(!pincode.match(pincoderegx)) {
+                ErrorCnt++;
+                @*$('#spaninvalid').show();*@
+                 $("#Spanvalidpincode_" + v + "").show();
+             }
+             
+
+          @*  if ($("#Pincode_" + v + "").val().length < 6 ) {
+                ErrorCnt++;
+                $('#Spanvalidpincode_').show();
+            }*@
+           
+             
+            
+
+@*            if ($("#TerminationDate").val() == "0" || $("#TerminationDate").val() == "") {
+                ErrorCnt++;
+                $('#SpanTerminationDate').show();
+            }*@
+            }
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+               @* var myData = {
+                    TradeUnionRegistrationNo: $('#RegistrationNo').val(),
+                    ApplicationID: $('#ApplicationID').val(),
+                    TradunionID: $('#TradunionID').val(),
+                    TradeUnionRegistrationName: $('#txt_RegistrationName').val(),
+                    TradeUnionDistrict: $('#DistrictID').val(),
+                    TradeUnionTaluka: $('#TalukaID').val(),
+                    TotalWorkingEmpInEstablishment: $('#txtWorkingEmpEstabl').val(),
+                    TotalNoOfWorkingEmpInUnion: $('#txtTotalNoOfWorkingEmpInUnion').val(),
+                    NumberOfEmpUnderDemand: $('#txtNumberOfEmpUnderDemand').val(),
+                    DepartmentName: $('#txtDepartmentName').val(),
+                    BusinessOfEstablishment: $('#txtBusinessOfEstablishment').val(),
+                    Demand: $('#txtDemand').val(),
+                    Remarks: $('#txtRemarks').val(),
+                    TradeUnionAddress: $('#PAddress').val(),
+                    TradeUnionAddress1: $('#SAddress').val(),
+                    TradeUnionPincode: $('#Pincode').val(),
+                    Department: $('#Department').val(),
+                    ZoneID: $('#ZoneID').val(),
+                    AreaID: $('#AreaID').val(),
+                    URL: document.URL,
+                };*@
+               
+                 var myData = {
+                    XMLString: GetXMLString(),
+                    @*isReqiredTradDetail: $('#isReqiredTradDetail').val()*@
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ConciliationApplication/SaveConciliationTradunionRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                var ApplicationID = data.data.ApplicationID;
+                                var ISNew =  data.data.IsNew;
+                                 var Querystring = "ApplicationID=" + ApplicationID + "&ISNew=" + ISNew;
+                                 @*var Querystring = "ApplicationID=" + ApplicationID;*@
+                                window.location.href = "/ConciliationApplication/AddConcilUploadDocument?" + Querystring;
+                           @* }*@
+                          @*  else
+                            {
+                                    var Querystring = "ApplicationID=" + ApplicationID;
+                                    window.location.href = "/ConciliationApplication/AddConcilUploadDocument?" + Querystring;
+                            }*@
+                            }
+                            else {
+                                swal(data.data.errorMassage);
+                            }
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+     $('#SameasPaddress').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+          var val = $('#PAddress').val();
+           $('#SAddress').val(val);
+            $('#SAddress').attr("disabled", true);
+         } 
+        else{
+            $('#SAddress').attr("disabled", false);
+        }
+    });
+     function CopyAddress(id) {
+              debugger;
+              if ($("#SameasPaddress_" + id).is(':checked')) {
+                  var val = $("#TradeUnionPAddress_" + id).val();
+                  $("#TradeUnionSAddress_" + id).val(val);
+                  $("#TradeUnionSAddress_" + id).attr("disabled", "disabled");
+              }
+           else
+        {
+            @*$("#SAddress_"+id).val("");*@
+            $("#TradeUnionSAddress_"+id).prop("disabled", false); // 
+        }      
+        } 
+         function calculateTradunion(id) {
+          debugger;
+         @* var workingempest = $("#TotalWorkingEmpInEstablishment_" + id).val();
+         var numberempdemand = $("#NumberOfEmpUnderDemand_"+ id).val();*@
+
+         var workingempest = parseInt(document.getElementById("TotalWorkingEmpInEstablishment_" + id).value);
+         var numberempdemand = parseInt(document.getElementById("NumberOfEmpUnderDemand_" + id).value);
+        
+        if (workingempest < numberempdemand) {
+              swal("Employees under Demand Can't be greater than Employees in Establishment");
+                $("#NumberOfEmpUnderDemand_" + id).val("");
+        }
+      }
+       
+
+     $('#TotalWorkingEmpInEstablishment').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+          var val = $('#PAddress').val();
+           $('#SAddress').val(val);
+        } 
+    });
+     $('#TotalWorkingEmpInEstablishment').click(function () {
+        //check if checkbox is checked
+        if ($(this).is(':checked')) {
+
+          var val = $('#PAddress').val();
+           $('#SAddress').val(val);
+           
+        } 
+    });
+
+
+
+     function numberOnly(id) {
+    var element = document.getElementById(id);
+    element.value = element.value.replace(/[^0-9]/gi, "");
+}
+ 
+
+@*Conciliation Trad Union detail*@
+  var E = 0;
+ function Fn_AddNewTradUniondetails() {
+  
+                    debugger
+                    var i;
+                    var ApplicationID = $('#getApplicationID').val();
+                    var TradeDetailID = 0;
+
+                 
+                  @*  var AddEducationdetails = "<div class='row'>";*@
+                    var AddEducationdetails = "";
+                     AddEducationdetails += "<div id='DivEstablis_" + E + "'><a class='ml-3' id='Delete'  style='float: right;' onclick='Removeestblish("+E+")'><i class='fas fa-trash-alt'></i></a>";
+                   AddEducationdetails += "<fieldset class='border p-2'>";
+                   @*AddEducationdetails += "<legend  class='w-auto'>Establishment Detail:"+E+" </legend>";*@
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Union Registration Number: / યુનિયન રજીસ્ટ્રેશન નંબર:</label>";
+                     AddEducationdetails += "<input type='hidden' name='ApplicationID_" + E + "' value='"+ApplicationID+"' id='ApplicationID_" + E + "' />";
+                    AddEducationdetails += "<input type='hidden' name='TradeDetailID_" + E + "' value='"+TradeDetailID+"' id='TradeDetailID_" + E + "' />";
+                    AddEducationdetails += "<input type='hidden' name='TradeUnionRegistrationNo_" + E + "'  id='TradeUnionRegistrationNo_" + E + "' />";
+                    AddEducationdetails +=   "<input class='form-control' style='width: 100%;' id='ddlTradeRegistrationNo_"+E+"' name='ddlTradeRegistrationNo_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Name of Trade Union: / ટ્રેડ યુનિયનનું નામ:<span class='text-danger'>*</span></label>";
+                    AddEducationdetails +=   "<input class='form-control'' id='TradeUnionRegistrationName_"+E+"' name='TradeUnionRegistrationName_"+E+"'  type='text' value=''>";
+                      AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEstablishmentName_" + E + "' style='display:none;'>Please Enter Trade Union Name </span>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+                    @* AddEducationdetails += "<div class='col-md-3'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Establishment Email Address: / સ્થાપના ઈમેલ સરનામું:</label>";
+                    AddEducationdetails += "<input class='form-control'' id='EstablishEmailId_"+E+"' name='EstablishEmailId_"+E+"'  type='text' value=''>";
+                      AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEstablishmentEmail_" + E + "' style='display:none;'>Please Enter Establishment Email Address </span>";
+                    AddEducationdetails += "</div>";
+                      
+                    AddEducationdetails += "<div class='col-md-3'>";
+                    AddEducationdetails += "<label for='MobileNo'>Mobile No.: / મોબાઈલ નમ્બર.</label>";
+                    AddEducationdetails += "<input class='form-control'' id='MobileNo_"+E+"' name='MobileNo_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanMobileNo_" + E + "' style='display:none;'>Please Enter Mobile Number </span>";
+                    AddEducationdetails += "</div>";*@
+                    
+                   @* AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";*@
+
+                 @*   AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";*@
+                        
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+                    AddEducationdetails += "<div class='col-md-5'>";
+                    AddEducationdetails += "<label for='P_Address'>Permanent Address: / કાયમી સરનામું:<span class='text-danger ml-1'>*</span></label>";
+                    AddEducationdetails +=   "<textarea  class='form-control'' id='TradeUnionPAddress_"+E+"' name='TradeUnionPAddress_"+E+"'  type='text' value=''></textarea>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanPAddress_" + E + "' style='display:none;'>Please Enter Permanent Address </span>";
+                    AddEducationdetails += "</div>";
+                     AddEducationdetails += "<div class='col-md-2' style='margin-top: auto;'>";
+                         AddEducationdetails += "<label for='Pin_code'>Copy Permanent Address</label>";
+                         AddEducationdetails +=   "&nbsp;<input  id='SameasPaddress_"+E+"' name='SameasPaddress_"+E+"'  type='checkbox' onclick='CopyAddress("+E+")'>";
+                           AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanPAddress_" + E + "' style='display:none;'>Please Enter Permanent Address</span>";
+                        AddEducationdetails += "</div>";
+                    AddEducationdetails += "<div class='col-md-5'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Secondary Address: / ગૌણ સરનામું:</label>";
+                    AddEducationdetails +=   "<textarea class='form-control'' id='TradeUnionSAddress_"+E+"' name='TradeUnionSAddress_"+E+"'  type='text' value=''></textarea>";
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>District : / જિલ્લો: <span class='text-danger ml-1'>*</span> </label>";
+                    AddEducationdetails += "<select class='chosen-select form-control' name='DistrictID_" + E + "' id='DistrictID_" + E + "' onchange='callChangefunc("+E+")'>";
+                    AddEducationdetails += "<option value='0'>Select</option>";
+                   
+                    for (i = 0; i < Districtlist.length; ++i) {
+                        AddEducationdetails += "<option value=" + Districtlist[i].DataValue + ">" + Districtlist[i].DisplayValue +"</option>";
+                    }
+                    AddEducationdetails += "</select>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanDistrictddl_" + E + "' style='display:none;'>Please Select District </span>";
+
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Taluka : / તાલુકો:<span class='text-danger ml-1'>*</span> </label>";
+                    AddEducationdetails += "<select class='chosen-select form-control' name='TalukaID_" + E + "' id='TalukaID_" + E + "'>";
+                    AddEducationdetails += "<option value='0'>Select</option>";
+                    AddEducationdetails += "</select>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spantaluka_" + E + "' style='display:none;'>Please Select Taluka </span>";
+
+                    AddEducationdetails += "</div>";
+
+                
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Pin_code'>Pincode :/ પીન કોડ:<span class='text-danger ml-1'>*</span></label>";
+                    AddEducationdetails +=   "<input class='form-control'' id='Pincode_"+E+"' name='Pincode_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "<input type='hidden' name='IsActive_" + E + "' id='IsActive_" + E + "' value='true'/>";
+                           AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanPincode_" + E + "' style='display:none;'>Please Enter pincode </span>";
+                           AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spanvalidpincode_" + E + "' style='display:none;'>Please Enter valid pincode </span>";
+
+                    AddEducationdetails += "</div>";
+
+                   @* AddEducationdetails += "</fieldset>";*@
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+@*newline*@
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Employees in Establishment : / સ્થાપનામાં કર્મચારીઓ: <span class='text-danger ml-1'>*</span></label>";
+                    AddEducationdetails +=   "<input class='form-control'' oninput='numberOnly(this.id);' id='TotalWorkingEmpInEstablishment_"+E+"' name='TotalWorkingEmpInEstablishment_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan' id='SpanTotalEstablish_" + E + "' style='display:none;'>Please Select Taluka</span>";
+                    
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Employees in Union : / યુનિયનમાં કર્મચારીઓ:<span class='text-danger ml-1'>*</span></label>";
+                    AddEducationdetails += "<input class='form-control'' oninput='numberOnly(this.id);' id='TotalNoOfWorkingEmpInUnion_"+E+"'  name='TotalNoOfWorkingEmpInUnion_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan' id='Spanempunion_" + E + "' style='display:none;'>Please enter Working employee in union</span>";
+                    AddEducationdetails += "</div>";
+
+                
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Pin_code'>Employees under Demand: / માંગ હેઠળ કર્મચારીઓ:<span class='text-danger ml-1'>*</span></label>";
+                    AddEducationdetails +=   "<input class='form-control'' oninput='numberOnly(this.id);' id='NumberOfEmpUnderDemand_"+E+"' name='NumberOfEmpUnderDemand_"+E+"' onchange='calculateTradunion(" + E + ")' type='text' value=''>";
+                    AddEducationdetails += " <span class='text-danger ValidationSpan' id='SpanNumberOfEmpDemand_" + E + "' style='display:none;'>Please Enter Employees under Demand</span>";
+
+                    AddEducationdetails += "</div>";
+
+                    @*AddEducationdetails += "</fieldset>";*@
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+@*new line*@
+                     AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Department Name: / વિભાગનું નામ: </label>";
+                    AddEducationdetails +=   "<input class='form-control'' id='DepartmentName_"+E+"' name='DepartmentName_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan' id='SpanTotalEstablish_" + E + "' style='display:none;'>Please Select Taluka</span>";
+                    
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Business of Establishment: / સ્થાપના વ્યવસાય:</label>"; 
+                    AddEducationdetails += "<input class='form-control'' id='BusinessOfEstablishment_"+E+"' name='BusinessOfEstablishment_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan' id='Spanempunion_" + E + "' style='display:none;'>Please enter Working employee in union</span>";
+                    AddEducationdetails += "</div>";
+
+
+                    @*AddEducationdetails += "</fieldset>";*@
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+@*line 3*@
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Pin_code'>Demand: / માંગ:<span class='text-danger'>*</span></label>";
+                    AddEducationdetails +=   "<input class='form-control'' id='Demand_"+E+"' name='Demand_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += " <span class='text-danger ValidationSpan' id='Spandemank_" + E + "' style='display:none;'>Please Enter Demand</span>";
+
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Remarks: / ટિપ્પણી:</label>"; 
+                    AddEducationdetails += "<input class='form-control'' id='Remarks_"+E+"' name='Remarks_"+E+"'  type='text' value=''>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan' id='Spanempunion_" + E + "' style='display:none;'>Please enter Working employee in union</span>";
+                    AddEducationdetails += "</div>";
+
+
+                    AddEducationdetails += "</fieldset>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+                     AddEducationdetails += "</Br>"
+                     AddEducationdetails += "</Br>"
+
+                    $("#TextBoxContainer").append(AddEducationdetails);
+                     bindTradunionDropdown(E);
+                     bindAreaDropdown(E,"");
+                     $(".chosen-select").chosen();
+                     @*if( $("#EstablishEmailId_" + E).val().length > 1)
+                         {
+                             $("#DivEstablis_" + E).attr("disabled", "disabled");
+                         }
+                         else
+                         {
+                             $("#DivEstablis_" + E).attr("Enabled", "Enabled");
+                         }*@
+                        
+                    E++;
+
+    }
+
+    
+function GetTradeunionRecord() {
+       
+            $.ajax({
+                type: 'POST',
+                url: "/ConciliationApplication/ConciliationTradunion",
+                headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                data: { ApplicationID: $('#getApplicationID').val(), ISNew: $('#getISNew').val() },
+                success: function (data) {
+                    debugger;
+                    var i;
+                    for (E = 0; E < data.data.length; E++) {
+                        
+                        debugger;
+                        @*  var AddEducationdetails = "<div class='row'>";*@
+                    var AddEducationdetails = "";
+                         AddEducationdetails += "<div id='DivEstablis_" + E + "'><a class='ml-3' id='Delete' style='float: right;' onclick='Removeestblish("+E+")'><i class='fas fa-trash-alt'></i></a>";
+                        AddEducationdetails += "<fieldset class='border p-2'>";
+                        @*AddEducationdetails += "<legend  class='w-auto'>Establishment Detail:" + E + " </legend>";*@
+                        AddEducationdetails += "<div class='form-group'>";
+                        AddEducationdetails += "<div class='row'>";
+                        AddEducationdetails += "<div class='col-md-6'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Union Registration Number: / યુનિયન રજીસ્ટ્રેશન નંબર:</label>";
+                         AddEducationdetails += "<input type='hidden' name='ApplicationID_" + E + "' value='"+data.data[E].ApplicationID+"' id='ApplicationID_" + E + "' />";
+                         AddEducationdetails += "<input type='hidden' name='TradeDetailID_" + E + "' value='"+data.data[E].TradeDetailID+"' id='TradeDetailID_" + E + "' />";
+                         AddEducationdetails += "<input type='hidden' name='TradeUnionRegistrationNo_" + E + "' value='"+data.data[E].TradeUnionRegistrationNo+"' id='TradeUnionRegistrationNo_" + E + "' />";
+                        AddEducationdetails += "<input class='form-control' style='width: 100%;' id='ddlTradeRegistrationNo_" + E + "' name='ddlTradeRegistrationNo_" + E + "'  type='text' value='"+data.data[E].TradeUnionRegistrationNo+"'>";
+                         AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanddlTradeUnionRegistrationNo_" + E + "' style='display:none;'>Please Enter TradeUnion Code</span>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "<div class='col-md-6'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Name of Trade Union: /ટ્રેડ યુનિયનનું નામ:<span class='text-danger'>*</span></label>";
+                        AddEducationdetails += "<input class='form-control'' id='TradeUnionRegistrationName_" + E + "' name='TradeUnionRegistrationName_" + E + "'  type='text' value='"+data.data[E].TradeUnionRegistrationName+"'>";
+                        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEstablishmentName_" + E + "' style='display:none;'>Please Enter Trade Union Name </span>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+
+                         @*AddEducationdetails += "<div class='col-md-6'>";
+                        AddEducationdetails += "<label for='EstablishEmailId'>Email Address: / ઈમેલ સરનામું:</label>";
+                        AddEducationdetails += "<input class='form-control'' id='EstablishEmailId_" + E + "' name='EstablishEmailId_" + E + "'  type='text' value='"+data.data[E].EstablishEmailId+"'>";
+                        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanEstablishmentName_" + E + "' style='display:none;'>Please Enter Establishment Name </span>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "<div class='col-md-6'>";
+                        AddEducationdetails += "<label for='MobileNo'>Mobile No: / મોબાઈલ નમ્બર:</label>";
+                        AddEducationdetails += "<input class='form-control' oninput='numberOnly(this.id);' ' id='MobileNo_" + E + "' maxlength='10' name='MobileNo_" + E + "'  type='text' value='"+data.data[E].MobileNo+"'>";
+                        AddEducationdetails += "<span class='text-danger ValidationSpan' ' id='SpanMobileNo_" + E + "' style='display:none;'>Please Enter Mobile Number </span>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";*@
+                        @*   AddEducationdetails += "</div>";
+                            AddEducationdetails += "</div>";*@
+
+                        AddEducationdetails += "<div class='form-group'>";
+                        AddEducationdetails += "<div class='row'>";
+                        AddEducationdetails += "<div class='col-md-5'>";
+                        AddEducationdetails += "<label for='P_Address'>Permanent Address: /કાયમી સરનામું:<span class='text-danger'>*</span></label>";
+                        AddEducationdetails += "<textarea class='form-control'' id='TradeUnionPAddress_" + E + "' name='TradeUnionPAddress_" + E + "'  type='text'>"+data.data[E].TradeUnionPAddress+"</textarea>";
+                            AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanPAddress_" + E + "' style='display:none;'>Please Enter Permanent Address </span>";
+                        AddEducationdetails += "</div>";
+                         AddEducationdetails += "<div class='col-md-2' style='margin-top: auto;'>";
+                         AddEducationdetails += "<label for='Pin_code'>Copy Permanent Address</label>";
+                         AddEducationdetails +=   "&nbsp;<input  id='SameasPaddress_"+E+"' name='SameasPaddress_"+E+"'  type='checkbox' onclick='CopyAddress("+E+")'>";
+                       
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "<div class='col-md-5'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Secondary Address: / ગૌણ સરનામું:</label>";
+                        AddEducationdetails += "<textarea class='form-control'' id='TradeUnionSAddress_" + E + "' name='TradeUnionSAddress_" + E + "'  type='text' >"+data.data[E].TradeUnionSAddress+"</textarea>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+
+
+                        AddEducationdetails += "<div class='form-group'>";
+                        AddEducationdetails += "<div class='row'>";
+
+                        AddEducationdetails += "<div class='col-md-4'>";
+                        AddEducationdetails += "<label for='District_Name'>District: / જિલ્લો:<span class='text-danger ml-1'>*</label>";
+                        AddEducationdetails += "<select class='chosen-select form-control' name='DistrictID_" + E + "' value='"+data.data[E].DistrictID+"' id='DistrictID_" + E + "' onchange='callChangefunc(" + E + ")'>";
+
+                        AddEducationdetails += "<option value='0'>Select</option>";
+                        for (i = 0; i < data.data[E].Districtlist.length; ++i)
+                        {
+                             if (data.data[E].Districtlist[i].DataValue == data.data[E].DistrictID) 
+                            {
+                                AddEducationdetails +=  "<option value=" + data.data[E].Districtlist[i].DataValue + " selected='selected'>" + data.data[E].Districtlist[i].DisplayValue + "</option>";
+                            }
+                            else
+                            {
+
+                                AddEducationdetails += "<option value=" + data.data[E].Districtlist[i].DataValue + ">" + data.data[E].Districtlist[i].DisplayValue + "</option>";
+                            }
+                        }
+                        AddEducationdetails += "</select>";
+                        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanDistrictddl_" + E + "' style='display:none;'>Please Select District </span>";
+                        AddEducationdetails += "</div>";
+
+                        AddEducationdetails += "<div class='col-md-4'>";
+                            AddEducationdetails += "<label for='Taluka_Name'>Taluka: / તાલુકો:<span class='text-danger ml-1'>*</span> </label>";
+                        AddEducationdetails += "<select class='chosen-select form-control' name='TalukaID_" + E + "' value='"+data.data[E].TalukaID+"' id='TalukaID_" + E + "'>";
+                        AddEducationdetails += "<option value='0'>Select</option>";
+                        for (i = 0; i < data.data[E].Talukalist.length; ++i) 
+                        {
+                            if (data.data[E].Talukalist[i].DataValue == data.data[E].TalukaID) {
+                                AddEducationdetails += "<option value=" + data.data[E].Talukalist[i].DataValue + " selected='selected'>" + data.data[E].Talukalist[i].DisplayValue + "</option>";
+                            }
+                            else {
+                                AddEducationdetails += "<option value=" + data.data[E].Talukalist[i].DataValue + ">" + data.data[E].Talukalist[i].DisplayValue + "</option>";
+                            }
+                        }
+                        AddEducationdetails += "</select>";
+                        AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spantaluka_" + E + "' style='display:none;'>Please Select Taluka </span>";
+
+                        AddEducationdetails += "</div>";
+
+
+                        @*AddEducationdetails += "<div class='col-md-3' id='DivArea' style='display:none;'>";*@
+                       @* AddEducationdetails += "<div class='col-md-3' id='DivArea_" + E + "'>";
+                        AddEducationdetails += "<label for='Applicant_Name'>Area: / વિસ્તાર: </label>";
+                        AddEducationdetails += "<input type='hidden' name='ZoneID_" + E + "' value='"+data.data[E].ZoneID+"' id='ZoneID_" + E + "' />";
+                        AddEducationdetails += "<input type='hidden' name='AreaID_" + E + "' value='"+data.data[E].AreaID+"' id='AreaID_" + E + "' />";
+                        AddEducationdetails += "<input style='width: 100%;' class='form-control'' id='ddlArea_" + E + "'  value='"+data.data[E].AreaID+"' name='ddlArea_" + E + "'  type='text'>";
+                        AddEducationdetails += "</div>";*@
+
+                          AddEducationdetails += "<div class='col-md-4'>";
+                        AddEducationdetails += "<label for='Pin_code'>Pincode: / પીન કોડ:<span class='text-danger'>*</span></label>";
+@*                        AddEducationdetails += "<input class='form-control'' id='Pincode_" + E + "' name='Pincode_" + E + "'  type='text' value='"+data.data[E].Pincode+"'>";*@
+                           AddEducationdetails += "<input class='form-control'' oninput='numberOnly(this.id);' id='Pincode_" + E + "' maxlength='6' name='Pincode_" + E + "'  type='text' value='"+data.data[E].TradeUnionPincode+"'>";
+                           AddEducationdetails += "<input type='hidden' name='IsActive_" + E + "' id='IsActive_" + E + "' value='true'/>";
+                           AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanPincode_" + E + "' style='display:none;'>Please Enter pincode </span>";
+                                AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spanvalidpincode_" + E + "' style='display:none;'>Please Enter valid pincode </span>";
+                        AddEducationdetails += "</div>";
+
+                        @*AddEducationdetails += "</fieldset>";*@
+                        AddEducationdetails += "</div>";
+                        AddEducationdetails += "</div>";
+
+      @*newline*@       AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Employees in Establishment : / સ્થાપનામાં કર્મચારીઓ: <span class='text-danger ml-1'>*</span></label>";
+                    AddEducationdetails +=   "<input class='form-control'' oninput='numberOnly(this.id);' id='TotalWorkingEmpInEstablishment_"+E+"' name='TotalWorkingEmpInEstablishment_"+E+"'  type='text' value='"+data.data[E].TotalWorkingEmpInEstablishment+"'>";
+                     AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanTotalEstablish_" + E + "' style='display:none;'>Please Enter Establishment Employees </span>";
+                    
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Employees in Union : / યુનિયનમાં કર્મચારીઓ:<span class='text-danger ml-1'>*</span></label>";
+                    AddEducationdetails += "<input class='form-control'' oninput='numberOnly(this.id);' id='TotalNoOfWorkingEmpInUnion_"+E+"' name='TotalNoOfWorkingEmpInUnion_"+E+"'  type='text' value='"+data.data[E].TotalNoOfWorkingEmpInUnion+"'>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spanempunion_" + E + "' style='display:none;'>Please enter Working employee in union</span>";
+                    AddEducationdetails += "</div>";
+
+                
+                    AddEducationdetails += "<div class='col-md-4'>";
+                    AddEducationdetails += "<label for='Pin_code'>Employees under Demand: / માંગ હેઠળ કર્મચારીઓ:<span class='text-danger ml-1'>*</span></label>";
+                    AddEducationdetails +=   "<input class='form-control'' oninput='numberOnly(this.id);' id='NumberOfEmpUnderDemand_"+E+"' name='NumberOfEmpUnderDemand_"+E+"' onchange='calculateTradunion(" + E + ")'   type='text' value='"+data.data[E].NumberOfEmpUnderDemand+"'>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanNumberOfEmpDemand_" + E + "' style='display:none;'>Please Enter Employees under Demand</span>";
+
+                    AddEducationdetails += "</div>";
+
+                    @*AddEducationdetails += "</fieldset>";*@
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+@*new line*@
+                     AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Department Name: / વિભાગનું નામ: </label>";
+                    AddEducationdetails +=   "<input class='form-control'' id='DepartmentName_"+E+"' name='DepartmentName_"+E+"'  type='text' value='"+data.data[E].DepartmentName+"'>";
+                    AddEducationdetails += "<span class='text-danger ValidationSpan'' id='SpanTotalEstablish_" + E + "' style='display:none;'>This field can't be empty</span>";
+                    
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Business of Establishment: / સ્થાપના વ્યવસાય:</label>"; 
+                    AddEducationdetails += "<input class='form-control'' id='BusinessOfEstablishment_"+E+"' name='BusinessOfEstablishment_"+E+"'  type='text' value='"+data.data[E].BusinessOfEstablishment+"'>";
+                     AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spanempunion_" + E + "' style='display:none;'>Please enter Working employee in union</span>";
+                    AddEducationdetails += "</div>";
+
+
+                    @*AddEducationdetails += "</fieldset>";*@
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+@*line 3*@
+                    AddEducationdetails += "<div class='form-group'>";
+                    AddEducationdetails += "<div class='row'>";
+
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Pin_code'>Demand: / માંગ:<span class='text-danger'>*</span></label>";
+                    AddEducationdetails +=   "<input class='form-control'' id='Demand_"+E+"' name='Demand_"+E+"'  type='text' value='"+data.data[E].Demand+"'>";
+                     AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spandemank_" + E + "' style='display:none;'>Please Enter Demand</span>";
+
+                    AddEducationdetails += "</div>";
+
+                    AddEducationdetails += "<div class='col-md-6'>";
+                    AddEducationdetails += "<label for='Applicant_Name'>Remarks: / ટિપ્પણી:</label>"; 
+                    AddEducationdetails += "<input class='form-control'' id='Remarks_"+E+"' name='Remarks_"+E+"'  type='text' value='"+data.data[E].Remarks+"'>";
+                     AddEducationdetails += "<span class='text-danger ValidationSpan'' id='Spanempunion_" + E + "' style='display:none;'>Please enter Working employee in union</span>";
+
+                    AddEducationdetails += "</div>";
+
+
+                    AddEducationdetails += "</fieldset>";
+                    AddEducationdetails += "</div>";
+                    AddEducationdetails += "</div>";
+
+                        AddEducationdetails += "</Br>"
+                        AddEducationdetails += "</Br>"
+
+                        $("#TextBoxContainer").append(AddEducationdetails);
+                        bindTradunionDropdown(E);
+                        bindAreaDropdown(E, data.data[E].AreaList);
+                        $(".chosen-select").chosen();
+                        if (data.data[E].EstablisDetailID > 0 && data.data[E].AreaID > 0) {
+                            $("#DivArea_" + E).show();
+                        }
+                        else 
+                        {
+                           $("#DivArea_" + E).hide();
+                           $("#ZoneID_" + E).val(0);
+                           $("#AreaID_" + E).val(0);
+                        }
+                        if ($("#Pincode_" + E).val() == "0") {
+                            $("#Pincode_" + E).val(""); 
+                       }
+                       if ($("#TotalWorkingEmpInEstablishment_" + E).val() == "0") {
+                            $("#TotalWorkingEmpInEstablishment_" + E).val(""); 
+                       }
+                       if ($("#TotalNoOfWorkingEmpInUnion_" + E).val() == "0") {
+                            $("#TotalNoOfWorkingEmpInUnion_" + E).val(""); 
+                       }
+                       if ($("#NumberOfEmpUnderDemand_" + E).val() == "0") {
+                            $("#NumberOfEmpUnderDemand_" + E).val(""); 
+                       }
+
+                        //E++;
+                         @*if( $("#EstablishEmailId_" + E).val().length > 1)
+                         {
+                             $("#DivEstablis_" + E).attr("disabled", "disabled");
+                         }
+                         else
+                         {
+                             $("#DivEstablis_" + E).attr("Enabled", "Enabled");
+                         }*@
+
+                    }
+
+                    $(".requiredvalid1").each(function () {
+                        $(this).parent().find("label").hide();
+                    });
+                }
+            });
+
+    }
+
+
+    function GetXMLString() {
+          debugger;
+            var xml = '';
+            xml += '<DataTable>';
+          var i = E;
+          var v;
+          for (v = 0; v < i; ++v) {
+               xml += '<DataRow>';
+              xml += "<" + "ApplicationID" + ">" + $("#ApplicationID_" + v + "").val() + "</" + "ApplicationID" + ">";
+              xml += "<" + "TradeDetailID" + ">" + $("#TradeDetailID_" + v + "").val() + "</" + "TradeDetailID" + ">";
+              xml += "<" + "TradeUnionRegistrationNo" + ">" + $("#ddlTradeRegistrationNo_" + v + "").val() + "</" + "TradeUnionRegistrationNo" + ">";
+              xml += "<" + "TradeUnionRegistrationName" + ">" + $("#TradeUnionRegistrationName_" + v + "").val() + "</" + "TradeUnionRegistrationName" + ">";
+              xml += "<" + "TradeUnionPAddress" + ">" + $("#TradeUnionPAddress_" + v + "").val() + "</" + "TradeUnionPAddress" + ">";
+              xml += "<" + "TradeUnionSAddress" + ">" + $("#TradeUnionSAddress_" + v + "").val() + "</" + "TradeUnionSAddress" + ">";
+              xml += "<" + "DistrictID" + ">" + $("#DistrictID_" + v + "").val() + "</" + "DistrictID" + ">";
+              xml += "<" + "TalukaID" + ">" + $("#TalukaID_" + v + "").val() + "</" + "TalukaID" + ">";
+              xml += "<" + "Pincode" + ">" + $("#Pincode_" + v + "").val() + "</" + "Pincode" + ">";
+
+              xml += "<" + "TotalNoOfWorkingEmpInUnion" + ">" + $("#TotalNoOfWorkingEmpInUnion_" + v + "").val() + "</" + "TotalNoOfWorkingEmpInUnion" + ">";
+              xml += "<" + "TotalWorkingEmpInEstablishment" + ">" + $("#TotalWorkingEmpInEstablishment_" + v + "").val() + "</" + "TotalWorkingEmpInEstablishment" + ">";
+              
+              xml += "<" + "NumberOfEmpUnderDemand" + ">" + $("#NumberOfEmpUnderDemand_" + v + "").val() + "</" + "NumberOfEmpUnderDemand" + ">";
+              xml += "<" + "BusinessOfEstablishment" + ">" + $("#BusinessOfEstablishment_" + v + "").val() + "</" + "BusinessOfEstablishment" + ">";
+              xml += "<" + "Demand" + ">" + $("#Demand_" + v + "").val() + "</" + "Demand" + ">";
+              xml += "<" + "Remarks" + ">" + $("#Remarks_" + v + "").val() + "</" + "Remarks" + ">";
+              xml += "<" + "DepartmentName" + ">" + $("#DepartmentName_" + v + "").val() + "</" + "DepartmentName" + ">";
+
+               if ($("#IsActive_" + v + "").val() == "true") {
+                  xml += "<" + "IsActive" + ">" + 1 + "</" + "IsActive" + ">";
+              }
+              else {
+                  xml += "<" + "IsActive" + ">" + 0 + "</" + "IsActive" + ">";
+              }
+
+              @*debugger;
+              if ($("#isReqiredTradDetail").val() == "true") {
+                  xml += "<" + "isReqiredTradDetail" + ">" + 1 + "</" + "isReqiredTradDetail" + ">";
+              }
+              else {
+                  xml += "<" + "isReqiredTradDetail" + ">" + 0 + "</" + "isReqiredTradDetail" + ">";
+              }
+              xml += "<" + "URL" + ">" + document.URL + "</" + "URL" + ">";
+              xml += "<" + "IP_Address" + ">" + $("#IP_Address").val() + "</" + "IP_Address" + ">";*@
+
+              xml += '</DataRow>';
+          }
+            xml += '</DataTable>'
+            return xml;
+        }
+
+          @*function Removeestblish(id) {
+              debugger;
+               $("#DivEstablis_"+id).hide();
+             $("#IsActive_"+id).val("false");
+              }*@
+
+               function Removeestblish(id) {
+              debugger;
+
+        var i = E;
+        var G = 0;
+
+         for (v = 0; v < i; ++v) 
+         {
+             if ($("#DivEstablis_" + v + "").is(":visible")) {
+                 G++;
+             }
+         }
+
+             if (G > 1) {
+                 $("#DivEstablis_" + id).hide();
+                 $("#IsActive_" + id).val("false");
+             }
+             else {
+                  swal("At least 1 Establishment required")
+            return false;
+             }
+              } 
+
+        @*  function CopyAddress(id) {
+              debugger;
+              if ($("#SameasPaddress_" + id).is(':checked')) {
+
+                  var val = $("#PAddress_" + id).val();
+                  $("#SAddress_" + id).val(val);
+                  $("#SAddress_" + id).attr("disabled", "disabled");
+              }
+           else
+        {
+            $("#SAddress_"+id).prop("disabled", false); // 
+        }      
+        } *@
+         function numberOnly(id) {
+    var element = document.getElementById(id);
+    element.value = element.value.replace(/[^0-9]/gi, "");
+}
+     
+</Script>
+  <Script>
+     
+  </Script>
+ }

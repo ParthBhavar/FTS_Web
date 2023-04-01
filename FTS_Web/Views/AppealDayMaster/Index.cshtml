@@ -1,0 +1,106 @@
+﻿@model  IEnumerable<FTS.Model.Entities.AppealDayMasterModel>
+@{
+    ViewBag.Title = "Appeal Day Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>       
+
+    <div class="content-wrapper">
+        <div class="row">           
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <a id="Add" href="/AppealDayMaster/AddAppealDayMaster/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle"></i>Add New</a>
+                                            </div>
+                                    <table id="AppealDayList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                               
+                                                  <th style="width:20%;" id="days">Days</th>
+                                                  <th  style="width:2%;" id="Edit">Action</th>
+                                                 
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                              
+                                                <td valign="top" class="text-left">@item.Days </td>
+                                                <td>
+                                                     <a id="Edit" href="/AppealDayMaster/AddAppealDayMaster/?id=@item.EncryptedId" ><i class="fas fa-pen"></i></a>
+                                                    <a id="Delete" onclick="DeleteConformation('DeleteAppealDayRecord('+@item.ID+')')"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>           
+                                        }
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <script>
+
+      $( document ).ready(function() {
+       // AppealDayList();
+        //$('#AppealDayList').DataTable();
+        $('#AppealDayList').dataTable( {} );
+    });
+
+   
+    function DeleteBranchRecord(ID) {
+        debugger;
+                var myData = {
+                    ID: iD,
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/AppealDayMaster/DeleteAppealDayRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/AppealDayMaster/Index";
+                                });
+                                
+                               
+                            }
+                            else {
+                                alert(data.data.ErrorMassage);
+                            }
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            alert(request.responseJSON);
+                          }
+                    })
+           
+    }
+
+        </script>
+
+}

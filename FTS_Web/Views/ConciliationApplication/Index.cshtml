@@ -1,0 +1,200 @@
+﻿@model IEnumerable<FTS.Model.Entities.ConciliationApplicationModel>
+@{
+    ViewBag.Title = "Conciliation Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>
+    @if (TempData["message"] != null)
+    {
+        <script>swal('@TempData["message"]');</script>
+    }
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3 mb-3">
+                                        <a id="Add" href="/ConciliationApplication/AddConciliationApplication/?id=" class="btn btn-outline-primary"><i class="fas fa-plus-circle mr-1"></i>Add New</a>
+                                    </div>
+                                    <br>
+                                    <table id="ConciliationList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                @*  <th style="width:10%;" id="team-list">Sr.No.</th>*@
+                                                <th style="width:5%;" id="roleName">Sr.No.</th>
+                                                <th style="width:10%;" id="roleName">Referenece No.</th>
+                                                <th style="width:5%;" id="roleName">Application Id</th>
+                                                <th style="width:10%;" id="roleName">Applicant Name</th>
+                                                <th style="width:10;" id="roleName">Application Mode</th>
+                                                <th style="width:10%;" id="roleName">Application Date</th>
+                                                <th style="width:20%;" id="roleName">Status</th>
+                                                <th style="width:30%;" id="Edit">Action</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.AppID </td>
+                                                    <td valign="top" class="text-left">@item.ApplicationID </td>
+                                                    <td valign="top" class="text-left">@item.ApplicantName </td>
+                                                    <td style="width:20;" id="roleName">@item.ApplicationMode</td>
+                                                    <td valign="top" class="text-left">@item.AppDate </td>
+                                                    <td style="width:20;" id="roleName">@item.StatusName 
+                                                        @if (@item.IsSubmit == true)
+                                                        {
+                                                            <a id="Edit" title="Status History" href="/ConciliationApplication/ApplicantStatusHistory/?id=@item.EncryptedId&ISNew=0" ><i class="fas fa-history ml-2"></i></a>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <div class="row">
+                                                         <div class="col-auto">
+                                                        @if (@item.IsSubmit == true && @item.ActionCode != 13 && @item.ActionCode != 11)
+                                                        {
+                                                          
+                                                             <a id="Edit" class="btn btn-outline-primary ml-3 mt-1" href="/ConciliationApplication/AddConciliationApplication/?id=@item.ApplicationID"><i class="fas fa-eye"></i> View </a>
+                                                        }
+                                                        else
+                                                        {
+                                                             <a id="Edit" class="btn btn-outline-primary ml-3 mt-1"  href="/ConciliationApplication/AddConciliationApplication/?id=@item.ApplicationID"><i class="fas fa-pen"></i> Edit </a>
+                                                        }
+                                                        </div>
+                                                         <div class="col-auto">
+                                                        @if(@item.IsSubmit == true)
+                                                        {
+                                                            <a  class="btn btn-outline-primary ml-3 mt-1" href="/ConciliationApplication/pdf/?ApplicationId=@item.ApplicationID" >
+                                                            <i class="fa fa-download ml-2"></i> Download</a>
+                                                        }
+                                                        </div>
+                                                         <div class="col-auto">
+                                                        @if (@item.UserMode == 1)
+                                                        {
+                                                            @if (@item.ActionCode == 1 || @item.ActionCode == 2 || @item.ActionCode == 18)
+                                                            {
+                                                                <a  id="Edit" class="btn btn-outline-primary ml-3 mt-1"  title="Forward To ACL" href="/ConciliationApplication/AddConciliationACLClerk/?id=@item.ApplicationID"><i class="fas fa-share"> </i>Forward ACL</a>
+                                                            }
+                                                        }
+                                                        else @if (@item.UserMode == 2)
+                                                        {
+                                                             @if (@item.ActionCode == 11 || @item.ActionCode == 13)
+                                                            {
+                                                                 <a  class="btn btn-outline-primary ml-3 mt-1"  data-toggle="modal" data-target="#exampleModal_@item.ID" id="DivAssign"><i class="fas fa-comments"></i> comments </a>
+                                                            }
+                                                        }
+                                                         </div>
+                                                        </div>
+                                                              <div class="modal fade" id="exampleModal_@item.ID">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">
+                                                                             Query Remarks
+                                                                        </h5>
+                                                                        <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">
+                                                                                ×
+                                                                            </span>
+                                                                        </button>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                      <div class="col-md-6">
+                                          <textarea id="Comments_@item.ID" name="w3review" rows="4" cols="50">@item.Query</textarea>
+                                           <span class="text-danger ValidationSpan" id="Spancomment_@item.ID" style="display:none;">Please Enter Comment</span>
+                                 </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                   @* Applicant Not showing *@
+                                                                    @if (@item.UserMode == 1){
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">
+                                                                            Close
+                                                                        </button>
+
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                         onclick="CheckSave(@item.ID,'@item.EncryptedId')">
+                                                                            save
+                                                                        </button>
+                                                                    </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script>
+
+
+    $(document).ready(function() {
+        $('#ConciliationList').dataTable({});
+    });
+
+            //function DeleteRoleRecord(roleID) {
+            //debugger;
+            //        var myData = {
+            //            RoleID: roleID,
+            //        };
+            //        $.ajax
+            //            ({
+            //                type: "POST",
+            //                url: "/ConciliationApplication/Index",
+            //                dataType: "json",
+            //                data: myData,
+            //                success: function(data) {
+            //                    debugger;
+            //                    if (data.data.errorCode == 0) {
+            //                        window.location.href = "/ConciliationApplication/Index";
+            //                        alert(data.data.errorMassage);
+            //                    }
+            //                    else {
+            //                        alert('Something went wrong!');
+            //                    }
+
+            //                },
+
+            //                error: function() {
+            //                    alert('Something went wrong!');
+            //                }
+            //            })
+
+
+
+</script>
+

@@ -1,0 +1,118 @@
+﻿@model FTS.Model.Entities.MRoleMaster
+@{
+    ViewBag.Title = "Role Master";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+ <div class="content-wrapper">
+     @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"> @ViewBag.Title</h4>
+
+                        <div class="form-group">
+                            <div class="row">
+                               @* <div class="col-md-1">
+                                    @Html.Label("Role ID")
+                                  @Html.TextBoxFor(e => e.RoleID, new { @class = "form-control", @type = "number" ,@ID="RoleID",@readonly="readonly"})
+                                </div>*@
+                                <div class="col-md-3">
+                                    @Html.Label("Role Name")
+                                    @Html.HiddenFor(e => e.RoleIDEdit , new { @ID="RoleID"})
+                                    @Html.TextBoxFor(e => e.RoleName, new { @class = "form-control", @ID="RoleName", required = "required" })
+                                     <span class="text-danger ValidationSpan" id="SpanRoleName" style="display:none;">Please Insert Role Name</span>
+                                </div>
+                                  <div class="col-md-3">
+                                    @Html.Label("Parent Role")
+                                    @Html.DropDownListFor(M => M.ParentRoleID, new SelectList(Model.Positionlist, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="ParentRoleID", })
+                                    <span class="text-danger ValidationSpan" id="SpanParentRoleID" style="display:none;">Please Select Parent Role </span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.Label("Level")
+                                    @Html.TextBoxFor(e => e.Level, new { @class = "form-control", @type = "number", @ID="Level", required = "required" })
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span>
+                                </div>
+                                 <div class="col-md-1" style="margin-top: auto;">
+                                    @Html.Label("IsActive")
+                                    @Html.CheckBoxFor(e => e.IsActive, new { @ID="IsActive"})
+                                    <span class="text-danger ValidationSpan" id="SpanLevel" style="display:none;">Please Select Level</span> 
+                                </div>
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Submit" onclick="SubmitRoleMaster();" />
+                            @Html.ActionLink("Cancel", "index", "RoleMaster", new { area = "" }, new { @class = "btn btn-primary" })
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+  <script>
+     
+        function SubmitRoleMaster() {
+            debugger;
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#RoleName").val() == "0" || $("#RoleName").val() == "") {
+                ErrorCnt++;
+                $('#SpanRoleName').show();
+            }
+
+            //  if ($("#ParentRoleID").val() == "0" || $("#ParentRoleID").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanParentRoleID').show();
+            //}
+
+            //if ($("#Level").val() == "0" || $("#Level").val() == "") {
+            //    ErrorCnt++;
+            //    $('#SpanLevel').show();
+            //}
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    RoleID: $('#RoleID').val(),
+                    RoleName: $('#RoleName').val(),
+                    ParentRoleID: $('#ParentRoleID').val(),
+                    Level: $('#Level').val(),
+                    IsActive: $('#IsActive').val(),
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/RoleMaster/SaveRoleRecord",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+
+                             if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                    window.location.href = "/RoleMaster/Index";
+                                });
+                             }
+                            else {
+                                swal(data.data.ErrorMassage);
+                             }
+                        },
+
+                         error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+   </script>

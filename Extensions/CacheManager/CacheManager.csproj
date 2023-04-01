@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>eQuo.CacheManager</RootNamespace>
+    <AssemblyName>CacheManager</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="GenericMemoryCacheManager.cs" />
+    <Compile Remove="GenericRedisCacheManager.cs" />
+    <Compile Remove="IGenericCache.cs" />
+    <Compile Remove="RedisDictionary.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RedLock.net" Version="2.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Configuration\Configuration\FTS.Configuration.csproj" />
+  </ItemGroup>
+
+</Project>

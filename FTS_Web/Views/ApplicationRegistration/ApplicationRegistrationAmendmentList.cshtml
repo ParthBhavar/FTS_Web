@@ -1,0 +1,73 @@
+﻿@model IEnumerable<FTS.Model.Entities.ApplicationRegistrationModel>
+@{
+    ViewBag.Title = "Application Registration Amendment List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    ;
+    <br />
+    <section>
+        <h3 style="font-weight:bold;"> @ViewBag.Title</h3>
+    </section>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <div id="Filter" class="dataTables_filter float-right mx-3">
+                                        <br>
+                                        <br>
+                                    </div>
+                                    <table id="ApplicationList" class="display expandable-table" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:2%;" id="roleName">ID</th>
+                                                <th style="width:5%;" id="roleName">AppID</th>
+                                                <th style="width:20%;" id="roleName">Name</th>
+                                                <th style="width:20%;" id="roleName">Application Type</th>
+                                                <th style="width:2%;" id="Edit">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    @*<td valign="top" class="text-left">@item.RoleID </td>*@
+                                                    <td valign="top" class="text-left">@item.ID </td>
+                                                    <td valign="top" class="text-left">@item.AppID </td>
+                                                    <td valign="top" class="text-left">@item.EstablishmentName </td>
+                                                    <td valign="top" class="text-left">@item.Applicationtype</td>
+                                                    <td>
+                                                        <a id="Edit" href="/ApplicationRegistration/_ApplicationRegistrationDetail/?id=@item.EncryptedId&ISAL=0&ISDL=0&ISView=0&ISHO=0&ISAmendment=1"><i class="fas fa-pen"></i></a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#ApplicationList').dataTable({});
+        });
+
+    </script>
+
+}

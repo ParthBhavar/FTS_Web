@@ -1,0 +1,255 @@
+﻿@model FTS.Model.Entities.ConciliationApplicationModel
+@{
+    ViewBag.Title = "Conciliation Application";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+       <br />
+    <section>
+        <h3 style="font-weight:bold;">Conciliation Application</h3>
+    </section>   
+
+
+     Html.RenderPartial("_DetailView");
+
+ <div class="content-wrapper">
+
+        <div class="row">
+                  
+            <div class="col-12 grid-margin stretch-card">
+                  
+                <div class="card">
+                   
+                    <div class="card-body">
+               
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                     @Html.HiddenFor(e => e.ApplicationID , new { @id="ApplicationID"})
+                                    @*  @html.checkboxfor(e => e.ispus, new { @id="ispus"})
+                                      @html.label("is public utility services")*@
+                                </div>
+                               @* <div class="col-md-6">
+                                    @html.checkboxfor(e => e.isquery, new { @id="isquery"})
+                                      @html.label("is query")
+                                </div>*@
+                              
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <div class="row">
+                                  <div class="col-md-6">
+                                     @Html.Label("Suggest Refer To")<span class="text-danger">*</span>
+                                     @Html.DropDownListFor(e => e.DCLReferStatusID, new SelectList(Model.ReferStatuList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DCLReferStatusID" ,@width ="15px"})
+                                   <span class="text-danger ValidationSpan" id="SpanHearingReason" style="display:none;">Please Select</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" id="divquery" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                     @Html.Label("Query Remarks")<span class="text-danger">*</span>
+                                   @Html.TextAreaFor(e => e.Query, new { @class = "form-control", @ID="@Query", required = "required" })
+                                   <span class="text-danger ValidationSpan" id="SpanQuery" style="display:none;">Please Enter Reamrk</span>
+                               
+                                </div>
+                                 @*<div class="col-md-4">
+                                     @Html.Label("Suggest Refer To")<span class="text-danger">*</span>
+                                     @Html.DropDownListFor(e => e.DCLReferStatusID, new SelectList(Model.ReferStatuList, "DataValue","DisplayValue"),"Select", new { @class = "chosen-select form-control",@ID="DCLReferStatusID" ,@width ="15px"})
+                                   <span class="text-danger ValidationSpan" id="SpanHearingReason" style="display:none;">Please Select</span>
+                                </div>*@
+                            </div>
+                        </div>
+                     
+                          <div class="form-group">
+                              @Html.ActionLink("Cancel", "ConciliationDCLClerkList", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Save" onclick="SubmitDCLClerk();" />
+                          </div>  
+                          <div class="form-group" id="divquerybtn" style="display:none">
+                              @Html.ActionLink("Cancel", "ConciliationDCLClerkList", "ConciliationApplication", new { area = "" }, new { @class = "btn btn-primary" })
+                            <input type="button" id="btnsubmit" class="btn btn-primary" value="Query" onclick="SubmitQuery();" />
+                          </div>          
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+ <script>
+       $(document).ready(function () {
+            debugger;
+            document.getElementById("DCLReferStatusID_chosen").style.width = "320px";
+       @*    $("#DivHearing").hide();*@
+        @*   $("#DivSettlement").hide();
+           $("#DivSendtolabour").hide();*@
+            if($('#IsPUS').val() ==true)
+            {
+                 $("#divsubmit").show();
+            }
+            
+            });
+
+ function SubmitDCLClerk() {
+            debugger;
+
+             var ErrorCnt = 0;
+               var regEx = /^[5-9][0-9]{9}$/;
+            $('.ValidationSpan').hide();
+            @*if ($("#HearingReason").val() == "0" || $("#HearingReason").val() == "") {
+                ErrorCnt++;
+                $('#SpanHearingreason').show();
+            }*@
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    @*IsPUS: $('#IsPUS').val(),*@
+                     DCLReferStatusID : $('#DCLReferStatusID').val(),
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        @*url: "/ConciliationApplication/UpdateClerkStatustoACL",*@
+
+                        url: "/ConciliationApplication/UpdateStatusByDCLClerk",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                     window.location.href = "/ConciliationApplication/ConciliationDCLClerkList";
+                                });
+                            }
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/ConciliationApplication/ConciliationACLList";
+                                alert(data.data.ErrorMassage);
+                            }*@
+                            @*else {
+                                alert('Something went wrong!');
+                            }*@
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+
+ function SubmitQuery() {
+            debugger;
+
+             var ErrorCnt = 0;
+            $('.ValidationSpan').hide();
+            if ($("#SendLCRemark").val() == "0" || $("#SendLCRemark").val() == "") {
+                ErrorCnt++;
+                $('#SpanHearingRemark').show();
+            }
+
+
+            if (ErrorCnt > 0) {
+                return false;
+            }
+
+            if (ErrorCnt == 0) {
+                var myData = {
+                    ApplicationID: $('#ApplicationID').val(),
+                    IsQuery: $('#IsQuery').val(),
+                    Query: $('#Query').val(),
+                   
+                };
+                $.ajax
+                    ({
+                        type: "POST",
+                        url: "/ConciliationApplication/UpdateQueryByACLClerk",
+                        headers: {"XSRF-TOKEN": document.getElementsByName("__RequestVerificationToken")[0].value},
+                        dataType: "json",
+                        data: myData,
+                        success: function(data) {
+                            debugger;
+                            if (data.data.ErrorCode == 0) {
+                                swal(data.data.ErrorMassage)
+                                .then((value) => {
+                                     window.location.href = "/ConciliationApplication/ConciliationDCLClerkList";
+                                });
+                            }
+                            else {
+                                swal(data.data.ErrorMassage);
+                            }
+                            @*if (data.data.ErrorCode == 0) {
+                                window.location.href = "/ConciliationApplication/ConciliationACLList";
+                                alert(data.data.ErrorMassage);
+                            }
+                            else {
+                              alert(data.data.ErrorMassage);
+                            }*@
+
+                        },
+
+                        error: function (request, message, error) 
+                        {
+                            debugger; 
+                            swal(request.responseJSON);
+                          }
+                    })
+            }
+    }
+ 
+
+       $('#IsQuery').click(function () {
+        //check if checkbox is checked
+        debugger;
+        if ($(this).is(':checked')) {
+
+           $("#divquery").show(); 
+            $("#IsPUS").attr("disabled",true);
+            $("#divquerybtn").show();
+            $("#divsubmit").hide();
+        } 
+        else{
+            $("#divquery").hide();  
+             $("#IsPUS").attr("disabled",false);
+              $("#divsubmit").show();
+              $("#divquerybtn").hide(); 
+        }
+    });
+
+     $('#IsPUS').click(function () {
+        //check if checkbox is checked
+        debugger;
+        if ($(this).is(':checked')) {
+
+           $("#IsQuery").attr("disabled",true); 
+            $("#divquerybtn").hide();
+             $("#divsubmit").show();
+        } 
+        else{
+
+            $("#IsQuery").attr("disabled",false); 
+             $("#divsubmit").hide();
+        }
+    });
+
+     </Script>
+  
+ }
+
+ 

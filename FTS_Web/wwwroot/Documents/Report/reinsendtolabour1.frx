@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/11/2022 18:23:28" ReportInfo.Modified="10/17/2022 18:52:45" ReportInfo.CreatorVersion="2022.3.9.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlq/K/ICGBqSJZHyPIlONiZf6urvRUubsXOXIPJ1G5wYbG2jECpz0fpzZnWIFcQol0GkM5Qo4PKxMYuBkiTAd/Mp8E318vXoaFulVegY+qnKdCORnw/tftCNZghAWRUBPoNpWC9n8+HQmfOjOxL9S8aUdNOqqohRGQXoRvzbhjghzXkAmIcSbbw5XAPcrZWTyrC/hbUVI4ifhJp+S2Q8LKi5APw0PyS6kawc0nrqnSdgwI=">
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" TableName="Table1">
+        <Column Name="DictrictACLOffice" DataType="System.String"/>
+        <Column Name="AppID" DataType="System.String"/>
+        <Column Name="ApplicantDetail" DataType="System.String"/>
+        <Column Name="Establishmentdetail" DataType="System.String"/>
+        <Column Name="ACLName" DataType="System.String"/>
+        <Column Name="LCAddress" DataType="System.String"/>
+        <Column Name="Date" DataType="System.String"/>
+        <Column Name="SendLCDate" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Guides="37.8" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="94.5">
+      <TextObject Name="Text3" Left="151.2" Width="396.9" Height="47.25" Text="નાયબ શ્રમ આયુક્તશ્રીની કચેરી" Font="Arial Unicode MS, 24pt, style=Bold"/>
+      <TextObject Name="Text1" Left="207.9" Top="47.25" Width="330.75" Height="37.8" Text="[Table1.DictrictACLOffice]" Font="Arial Unicode MS, 16pt"/>
+      <ShapeObject Name="Shape1" Left="9.45" Width="680.4" Height="94.5"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="98.5" Width="718.2" Height="236.25">
+      <TextObject Name="Text4" Left="18.9" Top="28.35" Width="47.25" Height="18.9" Text="પ્રતિ," Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text5" Left="18.9" Top="47.25" Width="94.5" Height="18.9" Text="રજીસ્‍ટ્રાર શ્રી" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text6" Left="18.9" Top="66.15" Width="94.5" Height="18.9" Text="[Table1.LCAddress]" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text7" Left="500.85" Top="28.35" Width="160.65" Height="18.9" Text="આઇડી.આર. નં. [Table1.AppID]" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text18" Left="500.85" Top="56.7" Width="141.75" Height="18.9" Text="તારીખ:-[Table1.Date]" Font="Arial Unicode MS, 10pt"/>
+      <ShapeObject Name="Shape2" Left="9.45" Top="18.9" Width="189" Height="141.75"/>
+      <ShapeObject Name="Shape3" Left="491.4" Top="18.9" Width="198.45" Height="141.75"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="338.75" Width="718.2" Height="538.65">
+      <TextObject Name="Text8" Left="18.9" Top="28.35" Width="680.4" Height="37.8" Text="વિષય: ઔદ્યોગિક તકરાર અધિનિયમ, ૧૯૪૭ ની કલમ ૧૦ (૧) સી અન્વયે પડતર દિવસોના પગાર સહિત નોકરીમાં પુનઃ&#13;&#10;           સ્થાપિત કરવા અંગેનો ઔદ્યોગિક વિવાદ ન્યાય નિર્ણય કરવા બાબત." Font="Arial Unicode MS, 10pt, style=Bold"/>
+      <TextObject Name="Text9" Left="47.25" Top="103.95" Width="680.4" Height="37.8" Text="સંસ્થા:   [Table1.Establishmentdetail]" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text10" Left="28.35" Top="160.65" Width="557.55" Height="18.9" Text="કામદાર:    [Table1.ApplicantDetail]" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text11" Left="28.35" Top="207.9" Width="623.7" Height="75.6" Text="આ કચેરીના તારીખ  [Table1.SendLCDate]   નાહુકમ અને આઇ.ડી.આર. નં. [Table1.AppID]  નીનકલશ્રી છે.&#13;&#10;[Table1.LCAddress] ના લેબર કોર્ટ,  [Table1.LCAddress] ઔદ્યોગિક તકરાર અધિનિયમ ૧૯૪૭ ના ૧૪ માની કલમ ૧૦ (૧) સી અન્વયે ન્યાય નિર્ણય માટે&#13;&#10;સુપ્રત કરવા અંગે આપની જાણ તથા જરૂરી કાર્યવાહી માટે બીડેલ છે." Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text12" Left="28.35" Top="292.95" Width="94.5" Height="18.9" Text="મહાશય શ્રી," Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text13" Left="56.7" Top="330.75" Width="623.7" Height="56.7" Text="હુકમની નકલ વિવાદ ના પક્ષકારોને સીધી મોકલવામાં આવી છે, આ કચેરી પાસેના વિવાદને લગતા કાગળોની અસલ ફાઈલ &#13;&#10;આ સાથે બીડેલ છે. જે કામ પુરૂ થયે આ કચેરીને પરત મોકલવા વિનંતી છે." Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text14" Left="548.1" Top="406.35" Width="122.85" Height="18.9" Text="આપનો વિશ્વાસુ," Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text15" Left="548.1" Top="434.7" Width="122.85" Height="18.9" Text="[Table1.ACLName]" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text16" Left="548.1" Top="463.05" Width="151.2" Height="18.9" Text="મદદનીશ શ્રમ આયુક્ત,&#13;&#10;" Font="Arial Unicode MS, 10pt"/>
+      <TextObject Name="Text17" Left="548.1" Top="491.4" Width="189" Height="18.9" Text="અમદાવાદ વિભાગ, અમદાવાદ" Font="Arial Unicode MS, 10pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="881.4" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

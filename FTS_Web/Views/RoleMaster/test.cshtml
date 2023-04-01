@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@if (ViewData.ContainsKey("ReportName"))
+{
+    <a class="btn btn-danger" asp-controller="Home" asp-action="Pdf" asp-route-report="@ViewData["ReportName"]">Download PDF</a>
+}
+@if (ViewData.ContainsKey("Report"))
+{
+    @Html.Raw(ViewData["Report"])
+}
